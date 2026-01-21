@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-21 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-21</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-21</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-8aed57b61457655e8354f1b68b34ed1cc0a222ef</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/8aed57b61457655e8354f1b68b34ed1cc0a222ef" target="_blank">Keep CALM and Explore: Language Models for Action Generation in Text-based Games</a></p>
+                <p><strong>Paper Venue:</strong> Conference on Empirical Methods in Natural Language Processing</p>
+                <p><strong>Paper TL;DR:</strong> This paper proposes the Contextual Action Language Model (CALM) to generate a compact set of action candidates at each game state, and combines CALM with a reinforcement learning agent which re-ranks the generated action candidates to maximize in-game rewards.</p>
+                <p><strong>Paper Abstract:</strong> Text-based games present a unique challenge for autonomous agents to operate in natural language and handle enormous action spaces. In this paper, we propose the Contextual Action Language Model (CALM) to generate a compact set of action candidates at each game state. Our key insight is to train language models on human gameplay, where people demonstrate linguistic priors and a general game sense for promising actions conditioned on game history. We combine CALM with a reinforcement learning agent which re-ranks the generated action candidates to maximize in-game rewards. We evaluate our approach using the Jericho benchmark, on games unseen by CALM during training. Our method obtains a 69% relative improvement in average game score over the previous state-of-the-art model. Surprisingly, on half of these games, CALM is competitive with or better than other models that have access to ground truth admissible actions. Code and data are available at this https URL.</p>
+                <p><strong>Cost:</strong> 0.017</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e21.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e21.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>CALM (GPT-2)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Contextual Action Language Model (GPT-2 variant)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A pretrained GPT-2 conditional language model trained on human gameplay transcripts to generate context-conditioned action candidate lists for text-adventure agents; candidates are re-ranked by a DRRN RL agent to maximize rewards.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>CALM (GPT-2) + DRRN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>CALM is a language-model-based action generator (GPT-2 fine-tuned on ClubFloyd transcripts) that, given a short context, emits a ranked set of candidate text actions; these top-k candidates are supplied to a Deep Reinforcement Relevance Network (DRRN) which learns Q-values over candidates and selects actions during gameplay.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-2 (117M, pretrained then fine-tuned)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>short-term context window (local history)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>context window concatenation: the LM conditions on a short context c (practically (o_{t-1}, a_{t-1}, o_t) or equivalently optionally longer histories) concatenated into the LM input to generate actions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (28 man-made text games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>avg.normalized score: 9.4% (average normalized score across 28 Jericho games when CALM (GPT-2) generates top-30 actions and DRRN is trained on them)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>CALM (n-gram) baseline avg.normalized score: 5.5% (serves as a context-limited / simpler-generation comparison reported in the paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Conditioning a powerful pretrained LM (GPT-2) on a short context window yields more diverse and complex action candidates (higher recall of gold/admissible actions and gold-action recall), which when combined with RL (DRRN) produces substantially better gameplay than a simple n-gram action generator; CALM (GPT-2) attained 9.4% avg.normalized score, outperforming the n-gram CALM (5.5%) and other handicapped-free baselines, and in some games even outperformed agents with access to ground-truth admissible actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Memory use is limited to a short context window (practically 2-step history); there is no explicit long-term or episodic memory module. CALM's action set size k trades off precision vs recall (larger k finds more admissible actions but lowers precision). RL (DRRN) sometimes fails to fully exploit high-scoring trajectories seen during exploration, suggesting the reduced action space alone does not guarantee optimal learning. CALM is not fine-tuned during RL to avoid overfitting, which may limit adaptation to specific games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Keep CALM and Explore: Language Models for Action Generation in Text-based Games', 'publication_date_yy_mm': '2020-10'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e21.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e21.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>CALM (n-gram)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Contextual Action Language Model (n-gram variant)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A bi-gram language-model-based action generator trained on human gameplay transcripts that produces verb-object style action candidates, used as the candidate set for a DRRN agent.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>CALM (n-gram) + DRRN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An action generator based on n-gram counts (best performing was bigram with smoothing) that enumerates verb phrases and detected nouns to form candidate actions; the candidate list is passed to DRRN which learns Q-values and selects actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>n-gram (bigram) language model</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>current-observation conditioning only (no history)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>stateless generation: the n-gram model is trained/used conditioned only on the current observation (o_t) and a restricted verb/object product set, not on prior steps</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (28 man-made text games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>avg.normalized score: 5.5% (average normalized score across 28 Jericho games when CALM (n-gram) generates top-30 actions and DRRN is trained on them)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>The n-gram CALM captures common simple actions (primarily single- or two-token verb-object patterns) and works reasonably for easy games, but it cannot generate many complex multi-token actions (e.g. 'open case with key'), leading to lower recall of gold actions and worse gameplay vs the GPT-2 CALM.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Limited expressivity due to the verb+object generation assumption; lower recall of complex admissible/gold actions; conditions only on current observation (no short-term history), which reduces contextual action generation capability.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Keep CALM and Explore: Language Models for Action Generation in Text-based Games', 'publication_date_yy_mm': '2020-10'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e21.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e21.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Graph-Constrained A2C (KG-A2C)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A baseline RL agent that constructs and uses a game knowledge graph to augment state representation and constrain the action space during learning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Graph constrained reinforcement learning for natural language action spaces</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An actor-critic RL agent that builds an evolving knowledge graph representing discovered game entities and relations; the graph augments the agent's state representation and constrains/filters generated actions during learning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>structured knowledge graph (state/episodic memory-like representation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>the game knowledge graph augments the state representation used by the policy and is used to constrain the types of actions produced/considered during learning (graph-augmented state encoding and action filtering)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (28 man-made text games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>avg.normalized score: 10.8% (reported baseline performance from the paper's comparisons)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Using an explicit structured memory (knowledge graph) improves the agent's ability to constrain and explore the action space; KG-A2C is a competitive baseline that, in the Jericho benchmark, attains a higher average normalized score than some handicap-free baselines but in this paper is still outperformed by DRRN on average and is roughly comparable to CALM (GPT-2) in some games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>KG-A2C as reported relies on the admissible-action handicap during learning in prior work (used as auxiliary guidance) and building / maintaining the knowledge graph is an additional overhead; direct comparisons with/without the graph are not provided in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Keep CALM and Explore: Language Models for Action Generation in Text-based Games', 'publication_date_yy_mm': '2020-10'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Graph constrained reinforcement learning for natural language action spaces <em>(Rating: 2)</em></li>
+                <li>Towards solving text-based games by producing adaptive action spaces <em>(Rating: 2)</em></li>
+                <li>Learning to speak and act in a fantasy text adventure game <em>(Rating: 2)</em></li>
+                <li>Deep reinforcement learning with a natural language action space <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-20 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-20</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-20</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-6263f69b0154fb090fc76f792c1a4aa182e24294</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/6263f69b0154fb090fc76f792c1a4aa182e24294" target="_blank">Language Models are Few-Shot Butlers</a></p>
+                <p><strong>Paper Venue:</strong> Conference on Empirical Methods in Natural Language Processing</p>
+                <p><strong>Paper TL;DR:</strong> A two-stage procedure to learn from a small set of demonstrations and further improve by interacting with an environment is introduced and shows that language models fine-tuned with only 1.2% of the expert demonstrations and a simple reinforcement learning algorithm achieve a 51% absolute improvement over existing methods in the ALFWorld environment.</p>
+                <p><strong>Paper Abstract:</strong> Pretrained language models demonstrate strong performance in most NLP tasks when fine-tuned on small task-specific datasets. Hence, these autoregressive models constitute ideal agents to operate in text-based environments where language understanding and generative capabilities are essential. Nonetheless, collecting expert demonstrations in such environments is a time-consuming endeavour. We introduce a two-stage procedure to learn from a small set of demonstrations and further improve by interacting with an environment. We show that language models fine-tuned with only 1.2% of the expert demonstrations and a simple reinforcement learning algorithm achieve a 51% absolute improvement in success rate over existing methods in the ALFWorld environment.</p>
+                <p><strong>Cost:</strong> 0.009</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e20.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e20.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GPT2-Agents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>GPT2-medium agents (GPT, GPT_partial, GPT*_partial)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Autoregressive GPT2-medium language models fine-tuned to generate actions in the ALFWorld text-game environment; trained via supervised action modeling on expert demonstrations and augmented by iterated action modeling (replaying successful trajectories) to improve performance with few demonstrations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>GPT / GPT_partial / GPT*_partial</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>GPT2-medium (345M) autoregressive models used as agents: GPT is fine-tuned on the full demonstration set, GPT_partial is fine-tuned on a small subset (42 demos), and GPT*_partial is GPT_partial further trained with iterated action modeling (IAM) using successful interaction trajectories.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT2-medium (345M)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>context-window concatenation (short-term context) and dataset-based replay of successful trajectories (experience replay via iterated action modeling)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Short-term memory: goal + past observations and actions are concatenated (with modality markers) into the model input up to a max sequence length (1000 tokens) with a sliding context window; Longer-term memory / experience: successful interaction trajectories are stored and added to the imitation training data (iterated action modeling) to fine-tune the same action-generation head.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>GPT*_partial (using iterated action modeling): ALFWorld goals success rate — 69% (seen split), 60% (unseen split). Human-annotated goals (out-of-distribution) success rate — 37% (unseen split).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>GPT_partial (before iterated action modeling): ALFWorld goals success rate — 47% (seen split), 40% (unseen split). Full-data GPT (no IAM, but trained on full demonstrations) achieves 91% (seen) and 95% (unseen).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>1) Concatenating recent observations/actions into the transformer context plus fine-tuning on demonstrations yields strong action-generation agents. 2) Iterated Action Modeling (treating successful trajectories as extra demonstrations) improves a limited-demonstration agent (GPT_partial) by 22% (seen) and 20% (unseen), allowing GPT*_partial to recover a large fraction of the full-data GPT performance while using only ~1.2% of demonstrations. 3) This combination (context-window + IAM) obviates the need for an explicit external memory module in this work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Memory is implemented only as concatenated context limited by the model's max sequence length (1000 tokens) and a sliding window, so long-horizon history beyond that is not explicitly retained. The longer-term "memory" is dataset-level (replaying successful trajectories) rather than an external or retrieval-augmented memory system. No experiments compare to explicit external memory architectures, and performance still lags behind the full-demonstration model when demonstrations are scarce.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Language Models are Few-Shot Butlers', 'publication_date_yy_mm': '2021-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e20.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e20.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>CALM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Contextual Action Language Model (CALM)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A GPT2-small based action-generation model fine-tuned on gameplay transcripts to produce candidate actions conditioned on recent observations and actions, used to prune the action space for downstream RL agents.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Keep CALM and explore: Language models for action generation in text-based games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>CALM (from Yao et al., 2020)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>GPT2-small (117M) fine-tuned on a corpus of gameplay transcripts to generate small lists of action candidates from the last few observations/actions; candidate list is passed to game-specific RL models to pick actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT2-small (117M)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>short-term context window (conditioning on the last few observations and actions)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Generation conditioned on a short recent context; CALM provides a candidate set of actions based on recent history which downstream components select among.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Various text-based games (ClubFloyd dataset); attempted in ALFWorld (preliminary experiments mentioned)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Not reported numerically for ALFWorld here; authors of the present paper state preliminary experiments with CALM in ALFWorld showed it was unable to produce valid actions in terms of grammar and task completion (negative qualitative result).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>CALM demonstrates the idea of using a language model to prune action spaces by conditioning on recent context, but according to this paper, CALM did not transfer effectively to ALFWorld and failed to produce valid actions in that environment.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>CALM relies on short-term context and a transferable action-generation prior; it struggled with environment-specific generative grammars and task completion in ALFWorld, indicating limitations when general LM-based action models are applied without game-specific demonstrations or adaptation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Language Models are Few-Shot Butlers', 'publication_date_yy_mm': '2021-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Keep CALM and explore: Language models for action generation in text-based games. <em>(Rating: 2)</em></li>
+                <li>ALFWORLD: Aligning text and embodied environments for interactive learning <em>(Rating: 2)</em></li>
+                <li>Deep reinforcement learning with a natural language action space <em>(Rating: 2)</em></li>
+                <li>Learning to reach goals via iterated supervised learning <em>(Rating: 2)</em></li>
+                <li>Interactive fiction games: A colossal adventure <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

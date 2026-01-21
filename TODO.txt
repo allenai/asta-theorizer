@@ -1,0 +1,205 @@
+TODOs:
+
+- Clean up main files: 
+    - * ExtractionUtils.py
+    - * MistralOCRStore.py
+    - * PaperFinderRequests.py
+    - * PaperStore.py
+    - RatingsABTestPreprocessingMatchedControls2.py
+    - * SchemaExtractionQueue.py
+    - * SemanticScholar.py
+    - * Struct.py
+    - * Theorizer.py
+    - * TheorizerProcessing.py
+    - * TheorizerServer.py
+    - * TheorizerWebInterface.py
+    
+    
+- * Remove the internal 'evaluation' bits from the UI/Server. 
+- Clean up the evaluation found in the paper, separate into scripts. 
+- Clean up/add the HTML export.
+
+- * Make Theorizer switchable between LLM baseline and Literature-supported. 
+- * Make Theorizer switchable between accuracy-focused and novelty-focused objectives.
+
+
+Prompts:
+- Information extraction from a paper given an extraction schema and a query: SchemaExtractionQueue.py, line ~284 (`extract_entities_from_paper()`)
+- The bulk of the remaining prompts are in TheorizerProcessing.py
+
+
+TODO:
+    - * Added 'generation objective' parameter to theory generation workflow, but need to add this into the UI/API/Requests.
+        - * Added to UI
+        - Hasn't been added to an API example yet
+        
+        
+TODO: Sanitize paper full-text from e.g. evaluation files.
+
+TODO: Requirements.txt
+
+
+    
+    
+    
+Examples:
+
+
+Output: EvaluationLLMAsAJudge.py
+
+---
+LLM-as-a-judge evaluation complete.
+
+Final average evaluation scores (formatted):
+Dimension                      Average Score   Counts              
+factual_accuracy               6.18            45                  
+specificity                    7.36            45                  
+novelty                        5.73            45                  
+testability                    7.98            45                  
+plausibility                   7.24            45                  
+empirical_testing              2.69            45                  
+
+Results saved to: theorystore-example-single-laws.llm_as_a_judge_evaluated.20260113-130652.json
+---
+
+
+Output: EvaluationPredictiveAccuracy.py
+
+---
+Summary of predictive accuracy evaluations:
+Precision:
+{
+    "average_evaluation": {
+        "support": 1.0,
+        "contradict": 0.0,
+        "count": 2
+    }
+}
+
+Recall:
+{
+    "count_theories_has_data": 2,
+    "count_theories_no_data": 0,
+    "proportion_theories_with_data": 1.0,
+    "count_elems_has_data": 6,
+    "count_elems_no_data": 5,
+    "proportion_elems_with_data": 0.5454545454545454
+}
+
+Other:
+{
+    "count_total_papers_evaluated": 20,
+    "count_total_papers_with_relevant_info": 9,
+    "avg_papers_with_relevant_info": 4.5,
+    "count_total_laws_with_relevant_info": 2
+}
+Wrote summary to: theorystore-example-predictive-evaluation/predictive-accuracy-evaluation/claude_sonnet_4_5_20250929/predictive_accuracy_summary.json
+Predictive accuracy evaluation complete.
+---
+
+
+
+Output: EvaluationSurprisal.py
+
+---
+Surprisal / Belief Elicitation evaluation complete.
+--------------------------------------------------------------------------------
+
+Total laws evaluated: 45
+Model used: gpt-4.1-2025-04-14
+Number of samples per law: 10
+Average (of average) probability that the model believes the laws to be true: 0.809
+Standard deviation of the average probabilities: 0.045
+
+Results saved to: theorystore-example-single-laws.surprise_evaluated.20260114-104415.json
+---
+
+
+Output: 
+
+---
+Completed Qualified Novelty Evaluation.
+
+--------------------------------------------------------------------------------
+Found 5 novelty evaluation files in: qualified-novelty-evaluations/literature-supported/
+Novelty Evaluation Histogram:
+{
+    "path_in": "qualified-novelty-evaluations/literature-supported/",
+    "histogram_proportions": {
+        "phenomenon_effect": {
+            "not_novel": 1.0,
+            "novel": 0.0
+        },
+        "explanatory_mechanistic": {
+            "not_novel": 0.2,
+            "novel": 0.8
+        },
+        "unification": {
+            "not_novel": 0.4,
+            "novel": 0.6
+        },
+        "generalization_scope_expansion": {
+            "not_novel": 0.4,
+            "novel": 0.6
+        },
+        "constraint_limitation": {
+            "not_novel": 1.0,
+            "novel": 0.0
+        },
+        "conceptual_reframing_abstraction": {
+            "not_novel": 0.6,
+            "novel": 0.4
+        },
+        "empirical_synthesis_meta_regulariry": {
+            "not_novel": 0.6,
+            "novel": 0.4
+        }
+    },
+    "histogram_raw_counts": {
+        "phenomenon_effect": {
+            "not_novel": 4,
+            "novel": 0
+        },
+        "explanatory_mechanistic": {
+            "not_novel": 1,
+            "novel": 4
+        },
+        "unification": {
+            "not_novel": 2,
+            "novel": 3
+        },
+        "generalization_scope_expansion": {
+            "not_novel": 2,
+            "novel": 3
+        },
+        "constraint_limitation": {
+            "not_novel": 5,
+            "novel": 0
+        },
+        "conceptual_reframing_abstraction": {
+            "not_novel": 3,
+            "novel": 2
+        },
+        "empirical_synthesis_meta_regulariry": {
+            "not_novel": 3,
+            "novel": 2
+        }
+    },
+    "total_cost_all_evaluations": 5.84496665,
+    "num_evaluations": 5,
+    "average_cost_per_evaluation": 1.16899333,
+    "average_papers_per_evaluation": 23.0,
+    "stddev_papers_per_evaluation": 0.0,
+    "total_papers_evaluated": 115.0
+}
+
+
+
+Total Cost for all evaluations: $5.84
+Number of evaluations: 5
+Average Cost per evaluation: $1.17
+Average Number of papers evaluated per evaluation: 23.00 ± 0.00
+Total papers evaluated across all evaluations: 115
+Writing overall qualified novelty evaluation summary to: theorystore-example2-literaturesupported-qualified-novelty-evaluation.20260114-121058.json
+---
+

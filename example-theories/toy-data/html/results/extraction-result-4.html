@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-4 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-4</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-4</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-9dc5e34106d82704aa79e30a04f325af66e27103</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/9dc5e34106d82704aa79e30a04f325af66e27103" target="_blank">Positive Experience Reflection for Agents in Interactive Text Environments</a></p>
+                <p><strong>Paper Venue:</strong> Proceedings of the 1st Workshop for Research on Agent Language Models (REALM 2025)</p>
+                <p><strong>Paper TL;DR:</strong> This work introduces Sweet&Sour, a novel approach that addresses limitations in existing reflection methods by incorporating positive experiences and managed memory to enrich the context available to the agent at decision time.</p>
+                <p><strong>Paper Abstract:</strong> Intelligent agents designed for interactive environments face significant challenges in text-based games, a domain that demands complex reasoning and adaptability. While agents based on large language models (LLMs) using self-reflection have shown promise, they struggle when initially successful and exhibit reduced effectiveness when using smaller LLMs. We introduce Sweet&Sour, a novel approach that addresses these limitations in existing reflection methods by incorporating positive experiences and managed memory to enrich the context available to the agent at decision time. Our comprehensive analysis spans both closed- and open-source LLMs and demonstrates the effectiveness of Sweet&Sour in improving agent performance, particularly in scenarios where previous approaches fall short.</p>
+                <p><strong>Cost:</strong> 0.011</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e4.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e4.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Sweet&Sour</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Sweet&Sour (Positive and Negative Experience Reflection with Managed Memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A reflection method introduced in this paper that augments LLM-based agents by incorporating both positive (sweet) and negative (sour) experiences into self-reflection, together with a managed dual-buffer memory (short-term and long-term) to store reflection tuples for retrieval across attempts.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Sweet&Sour</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An LLM-based actor agent augmented with an explicit self-reflection module that (1) prompts the agent to verbalize why successful subgoals succeeded (positive experiences) as well as analyze failures, and (2) stores these verbalized reflections in a managed memory for later retrieval to inform subsequent planning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-4o; Mistral Large 2; Llama 3.1 8B (evaluated variants)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Managed memory (dual-buffer): short-term and long-term episodic-style reflection storage; entries are tuples (reflection_t, o_t, a_t, r_t).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Reflections are stored in short-term while collecting subgoal successes; at attempt end short-term is moved to long-term. Failed-attempt reflections are added immediately to long-term. Stored reflections are provided as additional context for the LLM's self-reflection and action generation across attempts (i.e., retrieved and concatenated into the agent's context).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ScienceWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Average success scores by underlying LLM — Llama 8B: 32.5/100; Mistral Large 2: 44.6/100; GPT-4o: 54.6/100.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Incorporating positive experiences into reflection and using a managed dual-buffer memory leads to substantial performance gains over prior reflection-only (failure-only) methods and baselines, with larger relative improvements for smaller models; Sweet&Sour achieved the highest averages across all evaluated LLMs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Evaluation limited to a single benchmark (ScienceWorld). Method relies on LLM-generated reflections and thus inherits limitations of LLM reasoning; an ablation that samples only from failures markedly reduces performance, showing sensitivity to the content of stored reflections.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Positive Experience Reflection for Agents in Interactive Text Environments', 'publication_date_yy_mm': '2024-11'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e4.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e4.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Sweet&Sour(fail-only ablation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Sweet&Sour (ablation: sample only from failures)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An ablation of Sweet&Sour where the agent's reflections are sampled only from failures (i.e., positive-experience reflections excluded), used to test the contribution of positive experiences.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Sweet&Sour (failures-only ablation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Same LLM-based agent and managed memory mechanism as Sweet&Sour but restricted to sampling reflections from failed attempts only (no positive-experience reflections).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-4o; Mistral Large 2; Llama 3.1 8B (evaluated variants)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Managed memory (dual-buffer) but effectively only using failure-derived long-term entries for reflection.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Failure reflections are placed into long-term and used as additional context across attempts; positive short-term entries are not used for sampling in this ablation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ScienceWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Average success scores (failures-only sampling) — Llama 8B: 24.6/100; Mistral Large 2: 31.1/100; GPT-4o: 44.9/100.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Sampling only from failures substantially reduces performance compared to the full Sweet&Sour approach, and yields results similar to prior failure-only reflection methods (evidence that positive-experience reflections materially improve outcomes).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Shows that excluding positive experiences degrades performance; does not eliminate other limitations of reflection-based methods (e.g., reliance on LLM reasoning and single-environment evaluation).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Positive Experience Reflection for Agents in Interactive Text Environments', 'publication_date_yy_mm': '2024-11'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e4.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e4.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A prior LLM-based agent that employs self-reflection by verbalizing reasons for failure and storing those reflections in a long-term memory which is used across subsequent attempts to improve performance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An agent built on the ReAct reasoning/acting paradigm that performs self-reflection on unsuccessful attempts, storing failure-derived reflections in a persistent long-term memory across rounds (it iteratively improves across up to four rounds using stored reflections).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-4o; Mistral Large 2; Llama 3.1 8B (evaluated variants in this study)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Long-term memory storing reflections from unsuccessful attempts (failure-only episodic memory).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Stored failure reflections form a persistent history (long-term memory) which is included as additional context for the LLM's reflections and subsequent action selection across attempts (retrieval and context concatenation across rounds).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ScienceWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Average success scores — Llama 8B: 21.7/100; Mistral Large 2: 27.6/100; GPT-4o: 45.3/100.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Reflexion (failure-only reflection + long-term memory) improves over non-reflective baselines on some settings but struggles when agents are initially successful and shows substantially worse efficacy for smaller LLMs compared to Sweet&Sour; it can get 'stuck' (tilt) because it does not reinforce successes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Focuses only on learning from failures, neglecting positive experiences which limits performance; performance drops markedly for smaller LLMs and on tasks where early successes are not leveraged (reported tendency to 'tilt').</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Positive Experience Reflection for Agents in Interactive Text Environments', 'publication_date_yy_mm': '2024-11'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Reflexion: Language agents with verbal reinforcement learning <em>(Rating: 2)</em></li>
+                <li>Self-refine: Iterative refinement with self-feedback <em>(Rating: 2)</em></li>
+                <li>Swiftsage: A generative agent with fast and slow thinking for complex interactive tasks <em>(Rating: 1)</em></li>
+                <li>Retroformer: Retrospective large language agents with policy gradient optimization <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

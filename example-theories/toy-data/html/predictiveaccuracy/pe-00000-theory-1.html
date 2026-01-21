@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Accuracy Evaluation for Theory theory-1 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Predictive Accuracy Evaluation for Theory theory-1</h1>
+        <div class="section">
+            <h2>Theory Statement Being Evaluated</h2>
+            <p><strong>Theory ID:</strong> theory-1</p>
+            <p><strong>Theory Statement:</strong> The benefit of memory augmentation to LLM agents in text games depends not just on the presence or volume of stored experience, but crucially on how memory is structured (graphs, attributes, summaries), accessed (contextual semantic retrieval, attribute filtering, embedding similarity, graph traversal), and composed/interleaved with ongoing reasoning. Unstructured, brute-force context window or naive concatenation yields information overload or sparsity and fails to scale in complex games.</p>
+            <p><strong>Number of Papers Evaluated:</strong> 36</p>
+            <p><strong>Number of Rubric Elements with Some Evidence:</strong> 4</p>
+        </div>
+        <hr>
+        <div class="section">
+            <h2>Predictions / Rubric Summary</h2>
+            <h3>Prediction 1: structured_vs_unstructured_memory</h3>
+            <p><strong>Specific Prediction:</strong> LLM agents using structured memory representations (e.g., knowledge graphs, belief graphs, attribute-indexed retrieval) outperform agents using unstructured memory (e.g., naive concatenation of full history or raw episodic logs) on complex text games with non-trivial state spaces and partial observability.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 33%;">Evaluation</th>
+                        <th style="width: 22%;">Support</th>
+                        <th style="width: 22%;">Contradict</th>
+                        <th style="width: 22%;">No Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Counts (# of papers)</strong></td>
+                        <td>16</td>
+                        <td>0</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proportions (%)</strong></td>
+                        <td>1.0</td>
+                        <td>0.0</td>
+                        <td>--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Prediction 2: selective_vs_brute_force_retrieval</h3>
+            <p><strong>Specific Prediction:</strong> LLM agents with selective, contextual memory retrieval mechanisms (e.g., semantic similarity, attribute filtering, graph traversal) outperform agents that use brute-force context inclusion or no retrieval filtering in text games requiring planning and reasoning.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 33%;">Evaluation</th>
+                        <th style="width: 22%;">Support</th>
+                        <th style="width: 22%;">Contradict</th>
+                        <th style="width: 22%;">No Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Counts (# of papers)</strong></td>
+                        <td>17</td>
+                        <td>0</td>
+                        <td>19</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proportions (%)</strong></td>
+                        <td>1.0</td>
+                        <td>0.0</td>
+                        <td>--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Prediction 3: hybrid_vs_single_modality_memory</h3>
+            <p><strong>Specific Prediction:</strong> LLM agents that combine structured memory (e.g., graphs, schemas) with episodic/reflection-based memory outperform agents relying solely on one memory modality (structured-only or episodic-only) in complex text games.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 33%;">Evaluation</th>
+                        <th style="width: 22%;">Support</th>
+                        <th style="width: 22%;">Contradict</th>
+                        <th style="width: 22%;">No Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Counts (# of papers)</strong></td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proportions (%)</strong></td>
+                        <td>1.0</td>
+                        <td>0.0</td>
+                        <td>--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Prediction 4: memory_structure_scaling</h3>
+            <p><strong>Specific Prediction:</strong> As text game complexity increases (larger state/action spaces, longer horizons, more partial observability), the performance gap between structured/selective memory agents and unstructured/naive memory agents widens in favor of structured/selective approaches.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 33%;">Evaluation</th>
+                        <th style="width: 22%;">Support</th>
+                        <th style="width: 22%;">Contradict</th>
+                        <th style="width: 22%;">No Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Counts (# of papers)</strong></td>
+                        <td>7</td>
+                        <td>1</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proportions (%)</strong></td>
+                        <td>0.875</td>
+                        <td>0.125</td>
+                        <td>--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Prediction 5: trivial_setting_boundary</h3>
+            <p><strong>Specific Prediction:</strong> In text games where full history fits within the LLM context window and state spaces are small, advanced structured memory and selective retrieval provide minimal or no performance improvement over simple full-history inclusion.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 33%;">Evaluation</th>
+                        <th style="width: 22%;">Support</th>
+                        <th style="width: 22%;">Contradict</th>
+                        <th style="width: 22%;">No Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Counts (# of papers)</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>36</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proportions (%)</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="height: 40px;"></div>
+        </div>
+        <div class="section">
+            <h2>Individual Paper Evaluations</h2>
+            <hr>
+            <h3>Paper 1: Learn to Memorize: Optimizing LLM-based Agents with Adaptive Memory Framework (2025-8)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1, comparing LTMemory (semantic retrieval) vs FUMemory (full history concatenation) and GAMemory (weighted retrieval) vs baselines across HotpotQA datasets. Section 5.2 reports: 'Our model with on-policy optimization outperforms other baselines in most cases' with Ours-on achieving 0.3186 vs FUMemory 0.3451 on Hard/GPT-4o-mini, but 0.4037 vs 0.2844 on Medium/Qwen-2.5.</p>
+                    <p><strong>Evidence in Support:</strong> Table 1 shows that selective retrieval methods (LTMemory, GAMemory, and the proposed methods with MoE gate function) generally outperform FUMemory (brute-force full history concatenation) on medium and easy difficulty levels, particularly with Qwen-2.5 and Llama-3.1 models. For example, on HotpotQA-Medium with Qwen-2.5, Ours-on achieves 0.4037 vs FUMemory's 0.2844.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> memory_structure_scaling</p>
+                    <p><strong>Overall Evaluation:</strong> contradict</p>
+                    <p><strong>Evidence Locator:</strong> Table 1, comparing performance across HotpotQA-Hard, HotpotQA-Medium, and HotpotQA-Easy difficulty levels for all memory methods. Section 5.2 notes: 'it appears that some LLMs exhibit limited dependence on memory for easy-level questions, possibly because they have encountered the necessary references to these questions in their pre-training corpus.'</p>
+                    <p><strong>Evidence in Support:</strong> None</p>
+                    <p><strong>Evidence in Contradiction:</strong> Table 1 shows that as task complexity decreases (Hard → Medium → Easy), the performance advantage of advanced memory methods (including selective retrieval methods like Ours-on, GAMemory, LTMemory) does not consistently widen compared to simpler methods. In fact, on Easy tasks with GPT-4o-mini, FUMemory (0.3645) performs comparably to or sometimes better than more sophisticated methods. The paper notes that on easy questions, 'some LLMs exhibit limited dependence on memory,' contradicting the prediction that the gap should widen with complexity.</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 2: Goal-Directed Search Outperforms Goal-Agnostic Memory Compression in Long-Context Memory Tasks (2025-11)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 compares SUMER (with selective semantic and keyword search tools) against 'Full Context' baseline and RAG baseline. SUMER-GRPO achieves 66.79 J vs Full Context 46.69 J and RAG 35.84 J overall. Section 4.2 states 'SUMER trained with GRPO...nearly doubling judge accuracy relative to the strongest compression-based baseline' and improves J from 48.55 (pre-RL baseline SUMER-Base with search) to 66.79.</p>
+                    <p><strong>Evidence in Support:</strong> SUMER with selective retrieval mechanisms (semantic search via embeddings and keyword search) substantially outperforms the Full Context baseline (which uses brute-force context inclusion) across all question types: overall J of 66.79 vs 46.69, representing a 43% improvement. The paper explicitly compares selective retrieval against full-history inclusion with quantitative performance metrics on the same task.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 3: O-Mem: Omni Memory System for Personalized, Long Horizon, Self-Evolving Agents (2025-11)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2, Section 4 (Performance Comparison), and Section 5 (Discussion on Direct RAG comparison). Table 2 compares O-Mem (structured memory with persona attributes, episodic memory, and working memory) against baselines including Mem0, MemoryOS, and A-Mem. Table 5 compares O-Mem against 'Direct RAG' which retrieves from raw, unstructured interaction history.</p>
+                    <p><strong>Evidence in Support:</strong> O-Mem (structured memory system) achieves 51.67% F1 on LoCoMo with GPT-4.1, significantly outperforming unstructured baselines: Mem0 (25.40% F1), MemoryOS (38.58% F1), and A-Mem (33.78% F1). Table 5 shows O-Mem (51.67% F1) also outperforms Direct RAG on complete raw interaction history (50.25% F1), demonstrating that structured memory representations outperform unstructured concatenation approaches.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 5 (Direct RAG comparison) and Section 5 (Discussion). Direct RAG represents brute-force retrieval from complete interaction history, while O-Mem employs selective retrieval mechanisms (semantic similarity for persona memory, keyword-based filtering for episodic memory, topic-based for working memory).</p>
+                    <p><strong>Evidence in Support:</strong> O-Mem with selective retrieval (51.67% F1) outperforms Direct RAG with full-history retrieval (50.25% F1) on LoCoMo benchmark. Furthermore, O-Mem achieves this with significantly lower token consumption (1.5K vs 2.6K tokens) and reduced latency (2.36s vs 4.01s), demonstrating that selective retrieval provides both performance and efficiency advantages over brute-force context inclusion.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> hybrid_vs_single_modality_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 6 (Ablation study on different components of O-Mem). This table systematically compares hybrid memory (WM + EM + PM) against single-modality configurations (WM only) and partial combinations (WM + EM).</p>
+                    <p><strong>Evidence in Support:</strong> Table 6 shows that the full hybrid system (WM + EM + PM) achieves 51.67% F1, outperforming WM-only (44.03% F1) and WM + EM without persona memory (49.62% F1). Even under token-controlled conditions that eliminate the confound of increased context, hybrid memory (51.67% F1) outperforms WM-only (46.07% F1) and WM + EM (50.10% F1), demonstrating that combining structured and episodic/reflection memory modalities provides superior performance.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 4: CAM: A Constructivist View of Agentic Memory for LLM-Based Reading Comprehension (2025-10)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2 and Section 5.2, where CAM (structured hierarchical memory with overlapping clustering) is compared against MemGPT and ReadAgent (unstructured tabular memory baselines) across NovelQA, QMSum, FABLES, MultiHop-RAG, ODSum-Story, and ODSum-Meeting. Table 2 shows CAM consistently outperforms unstructured baselines. Section 5.2 explicitly states: 'Structured memory approaches (e.g., RAPTOR, GraphRAG, and our CAM) demonstrate clearly stronger performance against those without explicit structures (e.g., ReadAgent and MemGPT), confirming the importance of memory structurality in reading comprehension tasks.'</p>
+                    <p><strong>Evidence in Support:</strong> Table 2 shows CAM achieves higher performance than unstructured baselines (MemGPT, ReadAgent) across all six benchmarks. For example, on NovelQA ACC-L, CAM achieves 52.3 vs ReadAgent's 42.3 and MemGPT's 40.8. Section 5.2 explicitly confirms 'structured memory approaches...demonstrate clearly stronger performance against those without explicit structures,' directly validating that structured memory (graphs, hierarchies) outperforms unstructured/tabular approaches.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Section 4.2 describes CAM's 'Prune-and-Grow' associative retrieval strategy and Section 5.4 (Table 3, rows 6-7) compares it against hierarchical traversal and global retrieval baselines. The paper states: 'CAM uses an LLM to select nodes from D that are helpful for answering the query...This Prune-and-Grow workflow combines global semantic matching and local structural exploration.' Table 3 shows CAM's default retrieval outperforms both hierarchical traversal and global retrieval alternatives.</p>
+                    <p><strong>Evidence in Support:</strong> Table 3 (rows 6-7) demonstrates that CAM's selective Prune-and-Grow retrieval (row 1: NovelQA R-L 25.4, ACC-L 52.3) outperforms both hierarchical traversal (row 6: 23.2, 46.5) and global retrieval (row 7: 24.5, 50.3) baselines. Section 5.4 confirms 'using either hierarchical traversal or global retrieval leads to performance degradation, validating the effectiveness of our Prune-and-Grow strategy,' demonstrating that selective, contextual retrieval outperforms both brute-force full-context and non-selective approaches.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 5: LiCoMemory: Lightweight and Cognitive Agentic Memory for Efficient Long-Term Reasoning (2025-11)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 and Section 4.2. The paper compares LiCoMemory (structured hierarchical graph) against baselines including LoCoMo (chunk-based unstructured retrieval), Memorybank, and MemOS on LongMemEval and LoCoMo benchmarks. Figure 5 ablation study shows 'w/o Structured retrieval' drops performance from 73.8/76.6 to 51.6/56.4, demonstrating that 'When retrieval is performed solely over extracted triples, ignoring session hierarchy and entity-relation structure, performance drops.'</p>
+                    <p><strong>Evidence in Support:</strong> LiCoMemory's structured hierarchical graph (CogniGraph) achieves 73.8% accuracy on LongMemEval compared to LoCoMo's unstructured chunk-based approach at 16.6% (Table 1 with GPT-4o-mini). The ablation study explicitly shows that removing structured retrieval causes severe degradation (73.8→51.6% accuracy), with the paper stating this 'indicating fragmented retrieval and weakened factual grounding.' The structured approach consistently outperforms unstructured baselines across all metrics.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Section 3.2 and Table 1. The paper describes selective retrieval using 'hierarchical analysis with an integrated temporally aware re-ranking mechanism' and 'top-down retrieval—from session summaries to triples and then to original chunks.' Table 1 shows LiCoMemory uses 1.7k tokens (selective) vs LoCoMo's 3.5k tokens and Memorybank's 4.1k tokens (brute-force/full context), achieving 73.8% vs 16.6% and 35.4% accuracy respectively.</p>
+                    <p><strong>Evidence in Support:</strong> LiCoMemory's selective retrieval mechanism achieves significantly higher accuracy (73.8% on LongMemEval) while using substantially fewer tokens (1.7k) compared to baseline methods that include more context (3.5-4.5k tokens). The paper explicitly states that selective retrieval 'ensures coherent and contextually relevant knowledge selection' and demonstrates better scaling. The system retrieves only top-15 relevant items through semantic similarity and hierarchical structure rather than including full history.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> memory_structure_scaling</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Figure 4 and Section 4.2. The paper evaluates performance across different subset complexities. Specifically, for Multi-Session subset (high complexity): LiCoMemory achieves 26.6% improvement over second-best baseline. For Single-Session subsets (lower complexity): improvements are smaller. The paper states 'LiCoMemory achieves substantial gains on the Multi-Session (26.6%) and Temporal Reasoning (15.9%) subsets... highlighting the effectiveness of our CogniGraph structure.'</p>
+                    <p><strong>Evidence in Support:</strong> The performance breakdown in Figure 4 shows that LiCoMemory's advantage increases with task complexity. On complex multi-session tasks, LiCoMemory achieves 26.6% improvement over the second-best baseline, while on simpler single-session tasks the improvements are smaller. On the Temporal-Reasoning subset (another complex task type), the improvement is 19.2% over MemOS. This pattern demonstrates that structured memory's performance gap widens as complexity increases, exactly as predicted.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 6: Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning (2025-8)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Figure 5(c) shows ablation of Memory Distillation. Without distillation (consuming all 60 retrieved memories), the agent achieves F1=34.37, B1=40.95, J=60.14. With distillation (filtering for relevant entries), performance improves to F1=37.51, B1=45.02, J=62.74. The paper states: 'Without distillation, the agent consumes all retrieved memories; with distillation, it filters for the most relevant ones.'</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares selective retrieval (Memory Distillation) against full-history inclusion (consuming all 60 retrieved memories) in an ablation study. The selective retrieval approach consistently outperforms the brute-force inclusion baseline across all metrics (F1 improvement from 34.37 to 37.51, B1 from 40.95 to 45.02, J from 60.14 to 62.74), demonstrating that filtering irrelevant entries reduces noise and enables more effective reasoning.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 7: Evaluating Long-Term Memory for Long-Context Question Answering (2025-10)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2 and Table 4 compare Full Context (unstructured naive concatenation) against RAG and A-Mem (structured memory with embeddings, attributes, tags). Section 4.1 and 4.3 report quantitative F1 scores across reasoning categories. For example, GPT-4o mini with RAG achieves 30.06 F1 on Multi-Hop vs 20.40 with Full Context; Qwen 7B with RAG achieves 23.14 vs 12.32 Full Context on Multi-Hop.</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares structured memory approaches (RAG with semantic retrieval, A-Mem with attribute-indexed retrieval and contextual tags) against Full Context baseline (naive concatenation of full history) on the LoCoMo text game dataset. Tables 2 and 4 show that structured approaches like RAG and A-Mem achieve competitive or superior performance to Full Context on most reasoning categories while reducing token usage by over 90%. Section 4.3 explicitly states that RAG substantially outperforms Full Context across foundation models.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2 compares RAG (selective top-k retrieval via semantic similarity) against Full Context (brute-force inclusion of all history). Section 4.1 reports F1 scores and token counts. Table 5 in Appendix A shows ablation of k values (5, 10, 20) for retrieval selectivity. Section 4.6 reports token efficiency: RAG uses 600-1500 tokens vs 23000+ for Full Context.</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares selective retrieval (RAG with top-k semantic similarity retrieval) against full-history inclusion (Full Context baseline) on the same LoCoMo tasks. Table 2 shows RAG achieves competitive or better performance than Full Context while reducing token usage by over 90% (Section 4.6). For example, GPT-4o mini with RAG uses 649 tokens vs 23132 for Full Context, while achieving 30.06 vs 20.40 F1 on Multi-Hop reasoning. This demonstrates selective retrieval outperforms brute-force context inclusion in both efficiency and often in accuracy.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> hybrid_vs_single_modality_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2 compares RAG (semantic-only), RAG+EpMem (hybrid semantic+episodic), and RAG+PromptOpt+EpMem (semantic+episodic+procedural). Section 4.4 reports: 'RAG+EpMem outperforms RAG on GPT-4o mini and Llama3.2 3B Instruct (respectively, 1.30 vs. 3.20 and 1.83 vs. 4.5 F1 ranking).' Table 2 shows GPT-4o mini RAG+EpMem achieves average ranking 1.66 vs RAG 2.66.</p>
+                    <p><strong>Evidence in Support:</strong> The paper explicitly compares hybrid memory (RAG+EpMem combining semantic and episodic memory) against single-modality RAG (semantic-only) on LoCoMo. Table 2 shows RAG+EpMem achieves better average F1 rankings than RAG alone for GPT-4o mini (1.66 vs 2.66) and Llama 3B Instruct (1.83 vs 4.50). Section 4.4 states improvements are seen in adversarial, temporal, and multi-hop reasoning categories, demonstrating that combining structured semantic memory with episodic reflections outperforms semantic memory alone.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 8: Memoria: A Scalable Agentic Memory Framework for Personalized Conversational AI (2025-12)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table I and Table II compare Memoria (using selective semantic retrieval with top-K=20 and exponential decay weighting) against Full Context (brute-force inclusion of entire 115K token conversation history). Table I shows Memoria achieves 87.1% vs 85.7% on Single-Session and 80.8% vs 78.2% on Knowledge-Update. Table II shows Memoria reduces inference time by 38.7% (260 vs 391 seconds, 320 vs 522 seconds) and token length from 115K to ~400 tokens.</p>
+                    <p><strong>Evidence in Support:</strong> Memoria's selective retrieval with semantic similarity and recency weighting outperforms full-context baseline on both accuracy metrics (Table I: 87.1% vs 85.7%, 80.8% vs 78.2%) and achieves substantial efficiency gains (Table II: 38.7% latency reduction, 115K to 400 tokens). This directly demonstrates that selective retrieval mechanisms outperform brute-force context inclusion in the conversational AI task evaluated.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 9: Intrinsic Memory Agents: Heterogeneous Multi-Agent LLM Systems through Structured Contextual Memory (2025-8)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Figure 2, Table 4, and Section 4.1. The paper compares Intrinsic Memory (structured, agent-specific memory) against multiple baselines including 'Empty' (no memory) and other memory mechanisms across PDDL, FEVER, and ALFWorld benchmarks. Quantitative performance metrics (mean rewards and standard deviations) are reported.</p>
+                    <p><strong>Evidence in Support:</strong> The Intrinsic Memory approach with structured, agent-specific memory templates outperforms all other memory mechanisms on PDDL (0.260 vs 0.224 for Empty baseline, p<0.05), shows competitive performance on FEVER (0.653 vs 0.646 for Empty), and demonstrates consistent performance on ALFWorld (0.048 vs 0.020 for Empty). The paper explicitly states that 'agent-specific memories aligned with conversational objectives' maintain 'both historical context and recent developments while preserving agent-specific perspectives.'</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 10: PISA: A Pragmatic Psych-Inspired Unified Memory System for Enhanced AI Agency (2025-10)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 and Table 2 show PISA (structured memory with schema-based organization) compared against multiple baselines including MemoryOS, Zep, AMem, Mem0, and LangMem on LOCOMO and AggQA benchmarks. The paper states 'PISA introduces a trimodal adaptation mechanism (i.e., schema updation, schema evolution, and schema creation) that preserves coherent organization' and describes its Schema Engine as hierarchical structured memory.</p>
+                    <p><strong>Evidence in Support:</strong> PISA, which uses structured memory (Schema Engine with hierarchical organization into Memory Pool, Buckets, and Schemas), achieves 63.58% average accuracy on LOCOMO compared to baselines (34.10-55.51%), and 83.67% (Med.) and 69.41% (Fin.) on AggQA compared to baselines (10.20-51.02% Med., 9.41-30.59% Fin.). The paper explicitly states that structured memory with schema-based organization outperforms other memory systems.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 3 shows ablation study PISA^{-R} on Fin. dataset where the retrieval module is 'blinded' to the memory's hierarchical structure. The paper states: 'we evaluated the Retrieval Module by 'blinding' it to the memory's hierarchical structure on the Fin dataset (PISA^{-R}). This led to a 17.64% decrease in overall performance, with a severe drop on hard tasks (from 78.57% to 50.00%).' Section 3.4 describes the Retrieval Module with task-aware retrieval strategies.</p>
+                    <p><strong>Evidence in Support:</strong> The ablation study shows that removing selective, structure-aware retrieval (PISA^{-R}) causes performance to drop from 69.41% to 51.77% overall on the Finance domain of AggQA, with especially severe drops on hard tasks (78.57% to 50.00%). The paper explicitly states this demonstrates 'that structural awareness is vital for the agent to efficiently orchestrate tools and solve complex analytical queries.'</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 11: Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects (2025-12)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 3 (LongMemEval results) comparing Full-context baselines against Hindsight with structured four-network memory organization. Section 7.4 states: 'HINDSIGHT with OSS-20B achieves 83.6% overall accuracy, a +44.6 point gain over the Full-context OSS-20B baseline (39.0%)'</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares structured memory (Hindsight's four-network architecture with world, experience, opinion, and observation networks) against unstructured full-context baselines. On LongMemEval, Hindsight with OSS-20B achieves 83.6% vs 39.0% for full-context OSS-20B baseline, and even outperforms full-context GPT-4o (60.2%). Similar gains are shown on LoCoMo where Hindsight consistently outperforms baselines across all metrics.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Section 4.2 describes four-way parallel retrieval (semantic, keyword, graph, temporal) with RRF fusion and cross-encoder reranking. Table 3 and 4 compare this selective retrieval against full-context baselines. Section 7.4: 'multi-session questions improve from 21.1% to 79.7% and temporal reasoning from 31.6% to 79.7%'</p>
+                    <p><strong>Evidence in Support:</strong> The paper implements selective retrieval through multi-strategy search (semantic vector search, BM25 keyword search, graph traversal, temporal filtering) with fusion and neural reranking, and compares this against full-context inclusion baselines. Results show substantial improvements: on LongMemEval, multi-session accuracy increases from 21.1% to 79.7%, temporal reasoning from 31.6% to 79.7%, demonstrating that selective retrieval outperforms brute-force context inclusion.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> memory_structure_scaling</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Section 7.1.1 describes LongMemEval S setting (~115k tokens, 50 sessions) and M setting (~1.5M tokens, 500 sessions). Section 7.4 states: 'The largest gains over the Full-context OSS-20B baseline appear exactly in the long-horizon categories LongMemEval was designed to stress: multi-session questions improve from 21.1% to 79.7% and temporal reasoning from 31.6% to 79.7%'</p>
+                    <p><strong>Evidence in Support:</strong> The paper evaluates on two complexity levels: LongMemEval S (~115k tokens, 50 sessions) and M (~1.5M tokens, 500 sessions). Results show that structured memory's advantage is largest in long-horizon categories (multi-session: +58.6 points, temporal reasoning: +48.1 points), demonstrating that the performance gap widens as complexity increases. The paper explicitly notes these are the categories 'LongMemEval was designed to stress' where context dilution is most problematic.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 12: LightMem: Lightweight and Efficient Memory-Augmented Generation (2025-10)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2 and Table 3 show comparisons between LightMem (which uses structured memory with topic segmentation, compression, and organized short-term/long-term memory) against Full Text and Naive RAG baselines (which represent unstructured approaches). Section 5.2 reports: 'On the LongMemEval benchmark, LightMem consistently outperforms...improving accuracy by 2.09%-6.40% with GPT and up to 7.67% with Qwen' compared to A-MEM, and substantially outperforms Full Text and Naive RAG.</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares LightMem's structured memory architecture (with topic-aware segmentation, sensory memory filtering, and hierarchical short-term/long-term memory) against unstructured baselines including Full Text (naive concatenation) and Naive RAG. Tables 2 and 3 demonstrate that LightMem achieves 68.64% accuracy vs. 56.80% for Full Text and 61.00% for Naive RAG on LongMemEval with GPT-4o-mini. Similar improvements are shown across both benchmarks and both model backbones, with structured memory consistently outperforming unstructured approaches in complex text-based conversational scenarios.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 13: Auto-scaling Continuous Memory for GUI Agent (2025-10)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2, Section 5.2. The paper compares 'Qwen2.5-VL-7B + Text-based Memory' (unstructured concatenation) vs 'Qwen2.5-VL-7B + CoMEM' (continuous structured embeddings) across MMInA, Mind2Web, and WebVoyager benchmarks.</p>
+                    <p><strong>Evidence in Support:</strong> CoMEM consistently and substantially outperforms text-based memory across all benchmarks. For Qwen2.5-VL-7B, CoMEM achieves 47.4% vs 34.2% on MMInA Wikipedia, 45.0% vs 31.4% on MMInA Shopping, 22.2% vs 7.1% on Mind2Web Shopping, and 54.5% vs 44.0% on WebVoyager. The paper explicitly states that text-based memories 'degrade beyond roughly ten retrieved items due to ballooning sequence length' while CoMEM shows 'monotonic gains as memory size and retrieved items scale.'</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 14: Graph-Augmented Large Language Model Agents: Current Progress and Future Prospects (2025-7)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Section 2.2.1 and 2.2.2 describe graph-organized memory systems. AriGraph (Anokhin et al., 2024) is cited as integrating 'semantic and episodic memories within a unified graph framework' and is 'embedded within the Ariadne cognitive system.' The paper states these graph-based memory architectures enable 'efficient recall of relevant past experiences' and support 'multi-hop reasoning,' contrasting with unstructured approaches.</p>
+                    <p><strong>Evidence in Support:</strong> The paper discusses multiple graph-organized memory systems (A-MEM, AriGraph) that structure agent experiences and knowledge as interconnected nodes and edges, enabling efficient retrieval and reasoning. The paper explicitly states that graph-based memory 'enables agents to efficiently recall relevant past experiences, identify patterns across interactions, and leverage historical context for better decision-making' compared to unstructured alternatives.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 15: BudgetMem: Learning Selective Memory Policies for Cost-Efficient Long-Context Processing in Language Models (2025-11)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table II shows BudgetMem (selective 30% budget storage) achieves F1=0.8042 with 72.4% memory savings vs. Baseline (100% storage) F1=0.8123 on long documents. Table III demonstrates this effect across document lengths.</p>
+                    <p><strong>Evidence in Support:</strong> BudgetMem with selective salience-based storage demonstrates 72.4% memory savings with only 1.0% F1 degradation on long documents (5K-10K tokens) compared to baseline full-storage RAG, showing selective retrieval outperforms brute-force context inclusion under resource constraints.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> memory_structure_scaling</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table III: Short documents (<500 tok): 9.7% F1 drop, 15.5% memory savings. Long documents (>5K tok): 1.0% F1 drop, 72.4% memory savings. Figure 1 and Section V-C analyze this scaling effect.</p>
+                    <p><strong>Evidence in Support:</strong> The performance advantage of selective memory over full storage increases dramatically with document length: memory savings increase from 15.5% (short) to 72.4% (long) while F1 degradation decreases from 9.7% to 1.0%, demonstrating that the gap widens in favor of selective approaches as complexity increases.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 16: Hierarchical Memory for High-Efficiency Long-Term Reasoning in LLM Agents (2025-7)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 compares H-MEM (hierarchical structured memory with position indexing) against baselines including LoCoMo (LCM.) which uses 'complete previous historical interaction information combined with the question' without special memory mechanisms. Section 4.2 states H-MEM 'consistently achieves the highest average F1 and BLEU-1 scores across all model and task configurations, with improvements of 14.98 and 12.77 points over the baselines.'</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares H-MEM's hierarchical structured memory architecture (organizing memory into Domain, Category, Memory Trace, and Episode layers with position index encoding) against LoCoMo baseline which uses naive concatenation of full history. Table 1 shows H-MEM substantially outperforms the unstructured baseline across all tasks (e.g., on Qwen-1.5B: H-MEM achieves 30.37 F1 vs. LoCoMo's 14.95 F1 average). The ablation study (Figure 5) shows removing hierarchical structure (w/o H&R) causes significant performance degradation.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Section 3.2 describes the selective retrieval mechanism: 'an index-based routing mechanism enables efficient, layer-by-layer retrieval without performing exhaustive similarity computations.' Table 2 and Figure 4 compare H-MEM's selective retrieval against MemoryBank's full similarity-based search, showing H-MEM is '5 times' faster. Ablation study (Figure 5) shows removing retrieval component (w/o R.) significantly degrades performance.</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares H-MEM's selective position index-based retrieval (which retrieves top-k at each hierarchical level using position indices to guide layer-by-layer search) against baseline approaches. Table 2 shows H-MEM achieves better F1/BLEU-1 scores than MemoryBank while using dramatically fewer compute operations (e.g., Adversarial task: H-MEM 4.38×10^7 ops vs. MemoryBank 7.34×10^9 ops). The ablation study demonstrates that removing the retrieval mechanism causes performance drops across all task types.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> memory_structure_scaling</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2 presents computational efficiency experiments where 'five task types—Single Hop, Multi Hop, Temporal, Open Domain, and Adversarial—are executed sequentially' with 'stored memory not cleared between task switches but continuously accumulated.' Figure 4 shows 'the calculation amount of baseline shows an almost exponential growth trend with the accumulation of memory, while H-MEM still shows a slow increase and gradually stabilizes trend.'</p>
+                    <p><strong>Evidence in Support:</strong> The paper evaluates performance as memory complexity increases through sequential execution of tasks with accumulating memory. Table 2 shows the performance gap widens dramatically: for simpler Single Hop tasks, H-MEM outperforms MemoryBank by ~9 F1 points with 2.6x fewer operations; but for complex Adversarial tasks with maximum accumulated memory, H-MEM outperforms by ~23 F1 points with 168x fewer operations. This demonstrates the advantage of structured/selective memory increases as complexity and memory size grows.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 17: Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions (2025-7)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2, Section 4.2, and Section 4.3.1. The paper compares 'Long-Context Agents' (treating full input as memory/unstructured) against 'Structure-Augmented RAG Agents' (using graphs, hierarchies) across multiple text-based tasks.</p>
+                    <p><strong>Evidence in Support:</strong> Table 2 shows that Structure-Augmented RAG agents like HippoRAG-v2 achieve 65.1% average on AR tasks, outperforming the unstructured long-context baseline GPT-4o-mini (49.2%). The paper states 'Most RAG Agents are better than the backbone model GPT-4o-mini in the tasks within the Accurate Retrieval Category' and demonstrates that structured methods like HippoRAG-v2 achieve competitive or superior performance compared to naive context concatenation approaches.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2, Section 4.2, Table 8 (Appendix D.3), and Section 4.3.2. The paper compares RAG agents with selective retrieval (BM25, embedding-based, graph-based) against Long-Context agents using full-history inclusion.</p>
+                    <p><strong>Evidence in Support:</strong> Table 2 demonstrates that selective retrieval agents (e.g., BM25 at 60.5% AR average, HippoRAG-v2 at 65.1%) outperform or match the performance of full-context baselines (GPT-4o-mini at 49.2% AR average) on accurate retrieval tasks. Section 4.3.2 shows that 'increasing the number of retrieved chunks generally improves performance across most tasks,' supporting the value of selective retrieval over brute-force inclusion.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 18: COSMIR: Chain Orchestrated Structured Memory for Iterative Reasoning over Long Context (2025-10)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 shows performance comparison between COSMIR (structured memory with Extract/Infer/Refine phases), CoA (free-form message passing), and TC (truncated context). Section 2 and Appendix A.1 provide explicit failure analysis of unstructured CoA summaries losing information.</p>
+                    <p><strong>Evidence in Support:</strong> COSMIR, which uses structured memory (Questions, Gathered Facts, Inferred Facts components per Equation 1), consistently outperforms CoA baseline across all three datasets and all three models in Table 1. For example, on InfBench-QA with GPT-4.1, COSMIR achieves 50.74 ROUGE-F1 vs CoA's 47.62. Section 2 explicitly demonstrates how COSMIR's structured memory preserves cross-chunk references while CoA's unstructured summaries lose critical information.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 compares COSMIR (selective extraction with memory budget k) against TC baseline (truncated full-history). Section 4.1 specifies 'the size of F_g is constrained to at most a k-fraction of the length of a chunk', and Section 4.2 describes Extract phase selecting 'evidence units relevant to the user query q and current question set Q'.</p>
+                    <p><strong>Evidence in Support:</strong> COSMIR with selective extraction (guided by question set Q and memory budget k) substantially outperforms the TC baseline which uses truncated full-history inclusion. For GPT-4.1 on InfBench-QA, COSMIR achieves 50.74 vs TC's 36.05 ROUGE-F1. The Extract phase explicitly performs selective retrieval by extracting only relevant evidence under budget constraints, with oldest facts pruned when budget is exceeded (Section 4.2).</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 19: Memento: Fine-tuning LLM Agents without Fine-tuning LLMs (2025-8)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 5(c) DeepResearcher shows Memento (with structured case-based memory) achieves F1=66.6/PM=80.4 vs. Online Executor (unstructured, no memory) F1=30.8/PM=60.7. Section 4.2 describes structured case memory with Write/Read operations and parametric Q-function.</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares Memento's structured case memory system (storing task-action-reward triplets with Q-function-based retrieval) against an Online Executor baseline that lacks structured memory. Across DeepResearcher benchmarks, Memento achieves substantial gains (F1: +35.8 points, PM: +19.7 points), demonstrating that structured memory representations outperform unstructured approaches in complex text-based research tasks.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 3 shows performance across different K values (retrieval count). K=4 achieves highest F1=64.5 and PM=78.5, while K=0 (no retrieval) scores F1=59.9/PM=72.2. Section 4.2 describes selective retrieval using Q-function and semantic similarity.</p>
+                    <p><strong>Evidence in Support:</strong> The paper explicitly evaluates selective retrieval mechanisms (Q-function-based case selection and semantic similarity) against no-retrieval baselines. Table 3 demonstrates that selective retrieval with K=4 cases yields optimal performance (F1=64.5, PM=78.5) compared to K=0 (no retrieval: F1=59.9, PM=72.2), showing that selective retrieval outperforms brute-force context inclusion in complex research tasks.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> memory_structure_scaling</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 2 shows GAIA performance across three difficulty levels. Memento achieves Level 1: 96.23%, Level 2: 90.70%, Level 3: 61.54%. Figure 1d shows OOD generalization gains of 4.7% to 9.6%. Table 5(c) compares Memento vs. baselines across complexity.</p>
+                    <p><strong>Evidence in Support:</strong> The paper evaluates Memento across GAIA's three difficulty levels (Level 1: simple, Level 2: moderate, Level 3: complex with up to 50 steps). While absolute performance decreases with complexity (as expected), the relative advantage of Memento's structured memory over baselines remains consistent or increases. Table 5(c) shows larger performance gaps for Memento vs. Online Executor on complex multi-hop datasets (e.g., Musique: +17.6 F1, +13.6 PM), supporting that structured memory's advantage scales with task complexity.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 20: Nemori: Self-Organizing Agent Memory Inspired by Cognitive Science (2025-8)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 3, Ablation Study section 4.3. The paper compares 'Nemori-s' (which uses direct semantic extraction from raw conversation logs) against 'Nemori (w/o e)' (which uses structured semantic memory with the Predict-Calibrate principle). The results show Nemori (w/o e) achieves 0.615 vs 0.518 for Nemori-s on gpt-4o-mini.</p>
+                    <p><strong>Evidence in Support:</strong> The ablation study directly compares structured memory approaches against less structured baselines. Nemori's structured dual-memory architecture (episodic + semantic with structured retrieval) achieves 0.744 overall LLM score, significantly outperforming all baselines including RAG-4096 (0.302) and LangMem (0.513). The comparison between Nemori (w/o e) at 0.615 and Nemori-s at 0.518 demonstrates that structured semantic memory with principled organization outperforms naive extraction from raw logs.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 and Table 2. Full Context baseline uses all conversation history (23,653 tokens average), while Nemori uses selective retrieval (2,745 tokens). Performance comparison shows Nemori at 0.744 vs Full Context at 0.723 on gpt-4o-mini.</p>
+                    <p><strong>Evidence in Support:</strong> The paper directly compares Nemori's selective retrieval mechanism (using semantic similarity, attribute filtering, and structured access) against the Full Context baseline (brute-force inclusion of all history). Nemori achieves comparable or better performance (0.744 vs 0.723 on gpt-4o-mini) while using 88% fewer tokens (2,745 vs 23,653), demonstrating the effectiveness of selective retrieval. On the more challenging LongMemEvals benchmark with 105K token contexts, Nemori (64.2% average accuracy) substantially outperforms Full Context (55.0%).</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> hybrid_vs_single_modality_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 3, Ablation Study section 4.3. The paper compares full Nemori (hybrid) at 0.744 against 'w/o e' (semantic-only) at 0.615 and 'w/o s' (episodic-only) at 0.705 on gpt-4o-mini.</p>
+                    <p><strong>Evidence in Support:</strong> The ablation study explicitly compares the hybrid dual-memory system against single-modality variants. Full Nemori with both episodic and semantic memory achieves 0.744, significantly outperforming semantic-only (0.615) and episodic-only (0.705) configurations. The paper states: 'Removing either episodic memory (w/o e) or semantic memory (w/o s) from the full Nemori model leads to performance degradation,' confirming the complementary roles of both memory types.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> memory_structure_scaling</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 (LoCoMo with 24K average tokens) and Table 4 (LongMemEvals with 105K average tokens). Nemori's advantage increases from 0.744 vs 0.723 on LoCoMo to 64.2% vs 55.0% on the longer LongMemEvals dataset.</p>
+                    <p><strong>Evidence in Support:</strong> The paper evaluates performance across two complexity levels: LoCoMo (24K tokens) and LongMemEvals (105K tokens). On the simpler LoCoMo benchmark, Nemori marginally outperforms Full Context (0.744 vs 0.723, a 2.9% advantage). On the more complex LongMemEvals benchmark, Nemori's advantage increases substantially (64.2% vs 55.0%, a 16.7% relative improvement). The paper explicitly states this: 'Nemori shows superior performance on user preference tasks...because its concise, high-quality structured memory enables the model to focus more effectively.'</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 21: Look Back to Reason Forward: Revisitable Memory for Long-Context LLM Agents (2025-9)</h3>
+            <ul>
+                <li>
+                    <p><strong>Prediction:</strong> structured_vs_unstructured_memory</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 and Table 5 compare ReMemR1 (structured memory with callback mechanism) against baselines. ReMemR1 uses structured memory with query-based retrieval over memory history, while the paper mentions 'naive concatenation' approaches implicitly through comparisons with full-context models like Qwen2.5 and R1-Distill.</p>
+                    <p><strong>Evidence in Support:</strong> ReMemR1 consistently outperforms unstructured/full-context baselines across all context lengths. On HotpotQA with 6400 documents, ReMemR1 achieves 80.8% accuracy (7B model) compared to Qwen2.5-1M's 0.0% and R1-Distill's 3.1%. Table 5 shows that without RL training, both structured approaches (MemAgent and ReMemR1) still substantially outperform what would be naive approaches, with MemAgent achieving 60.2% vs 14.1% at extreme lengths.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> selective_vs_brute_force_retrieval</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 3 compares ReMemR1 (with RL-driven selective callback/retrieval) against MemAgent (no retrieval) and MemAgent + rule-based callback. Section 3.4.2 explicitly analyzes 'RL-driven vs. rule-based memory callback'. The paper states 'the agent learns through reinforcement learning to generate informative queries that retrieve past evidence most relevant to the current step.'</p>
+                    <p><strong>Evidence in Support:</strong> ReMemR1 with selective, RL-driven retrieval consistently outperforms both no-retrieval (MemAgent) and rule-based retrieval baselines. On HotpotQA at 6400 documents, ReMemR1 achieves 66.1% vs MemAgent's 58.8%. On 2WikiMultiHopQA, ReMemR1 achieves 37.8% vs 25.9% for MemAgent. The paper notes 'RL-driven memory callback consistently outperforms both the vanilla MemAgent and the rule-based callback on both datasets across all context lengths.'</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+                <li>
+                    <p><strong>Prediction:</strong> memory_structure_scaling</p>
+                    <p><strong>Overall Evaluation:</strong> support</p>
+                    <p><strong>Evidence Locator:</strong> Table 1 presents performance across 8 different context lengths (50 to 6400 documents). Section 3.2 states: 'This advantage becomes increasingly evident as the document length grows, since in longer contexts important evidence is more likely to be overwritten or overlooked, amplifying the need for precise recall to preserve reasoning accuracy.'</p>
+                    <p><strong>Evidence in Support:</strong> The performance gap between structured memory (ReMemR1) and unstructured approaches widens as complexity increases. For the 7B model on HotpotQA, the gap between ReMemR1 and Qwen2.5-1M grows from 0.0% at 50 documents to 80.8% at 6400 documents. Similarly, R1-Distill drops from 40.6% to 3.1% while ReMemR1 maintains 80.8%. On 2WikiMultiHopQA, ReMemR1 maintains 50.3% at 6400 documents while Qwen2.5-1M drops to 0.0% and R1-Distill to 0.8%.</p>
+                    <p><strong>Evidence in Contradiction:</strong> None</p>
+                </li>
+            </ul>
+            <hr>
+            <h3>Paper 22: Smarter Together: Creating Agentic Communities of Practice through Shared Experiential Learning (2025-11)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 23: From Language to Action: A Review of Large Language Models as Autonomous Agents and Tool Users (2025-8)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 24: Teaching LLMs to See and Guide: Context-Aware Real-Time Assistance in Augmented Reality (2025-11)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 25: Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces (2025-11)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 26: Simulating Generative Social Agents via Theory-Informed Workflow Design (2025-8)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 27: MMAG: Mixed Memory-Augmented Generation for Large Language Models Applications (2025-12)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 28: MemOS: A Memory OS for AI System (2025-7)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 29: Evo-Memory: Benchmarking LLM Agent Test-time Learning with Self-Evolving Memory (2025-11)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 30: MemOrb: A Plug-and-Play Verbal-Reinforcement Memory Layer for E-Commerce Customer Service (2025-9)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 31: MemLoRA: Distilling Expert Adapters for On-Device Memory Systems (2025-12)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 32: MIRIX: Multi-Agent Memory System for LLM-Based Agents (2025-7)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 33: Learning on the Job: An Experience-Driven Self-Evolving Agent for Long-Horizon Tasks (2025-10)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 34: Text2Mem: A Unified Memory Operation Language for Memory Operating System (2025-9)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 35: Preference-Aware Memory Update for Long-Term LLM Agents (2025-10)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+            <h3>Paper 36: Memory Management and Contextual Consistency for Long-Running Low-Code Agents (2025-9)</h3>
+            <p class="empty-note">Paper did not contain any evidence rated as strongly testing any specific predictions in the rubric.</p>
+            <hr>
+        </div>
+
+    </div>
+</body>
+</html>

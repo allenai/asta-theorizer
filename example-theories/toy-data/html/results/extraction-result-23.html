@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-23 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-23</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-23</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-c6661578fea389a909644ba51dddeb692fed075f</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/c6661578fea389a909644ba51dddeb692fed075f" target="_blank">MemInsight: Autonomous Memory Augmentation for LLM Agents</a></p>
+                <p><strong>Paper Venue:</strong> Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing</p>
+                <p><strong>Paper TL;DR:</strong> The empirical results show the potential of MemInsight to enhance the contextual performance of LLM agents across multiple tasks, and the efficacy of the proposed approach in three task scenarios; conversational recommendation, question answering and event summarization.</p>
+                <p><strong>Paper Abstract:</strong> Large language model (LLM) agents have evolved to intelligently process information, make decisions, and interact with users or tools. A key capability is the integration of long-term memory capabilities, enabling these agents to draw upon historical interactions and knowledge. However, the growing memory size and need for semantic structuring pose significant challenges. In this work, we propose an autonomous memory augmentation approach, MemInsight, to enhance semantic data representation and retrieval mechanisms. By leveraging autonomous augmentation to historical interactions, LLM agents are shown to deliver more accurate and contextualized responses. We empirically validate the efficacy of our proposed approach in three task scenarios; conversational recommendation, question answering and event summarization. On the LLM-REDIAL dataset, MemInsight boosts persuasiveness of recommendations by up to 14%. Moreover, it outperforms a RAG baseline by 34% in recall for LoCoMo retrieval. Our empirical results show the potential of MemInsight to enhance the contextual performance of LLM agents across multiple tasks.</p>
+                <p><strong>Cost:</strong> 0.017</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e23.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e23.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>MemInsight</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>MemInsight: Autonomous Memory Augmentation for LLM Agents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An autonomous framework that generates structured attribute-value augmentations for LLM agent memories and uses attribute-based filtering and embedding-based retrieval (with priority or basic aggregation) to improve retrieval and downstream performance on QA, conversational recommendation, and event summarization.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>MemInsight-augmented LLM agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An LLM agent augmented with an autonomous memory augmentation pipeline (attribute mining, annotation/prioritization, and retrieval). Memory entries are annotated with attribute-value pairs (entity- or conversation-centric; turn- or session-level). Retrieval is via (a) attribute-based filtering using matching attributes or (b) embedding-based similarity over attribute embeddings (Titan Text Embeddings indexed with FAISS). Retrieved memory entries are integrated into the current prompt/context (top-k). Supports Basic and Priority augmentation ordering.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Backbone LLMs used for augmentation and tasks include Claude-3-Sonnet (primary backbone for augmentation), Mistral v1, Llama v3, and Claude-3-Haiku; Titan Text Embedding used for embedding-based retrieval; FAISS for index/search.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Structured attribute-augmented memory (attribute-value augmentations attached to episodic/dialogue memory entries) with optional dense vector encodings for embedding retrieval.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Memory instances are annotated with generated attributes and stored; retrieval is performed by attribute-based filtering (match attribute sets) or embedding-based similarity over attribute embeddings (averaging attribute embeddings or single embedding of all augmentations) and the retrieved top-k turns/entries are concatenated into the model context for generation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>LoCoMo (Question Answering & Event Summarization), LLM-REDIAL (Conversational Recommendation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Question Answering F1 (attribute-based/embedding settings): example: MemInsight (Claude-3-SonnetPriority) overall F1 = 30.1% vs baseline 26.1% (Claude-3-Sonnet no augmentation). Embedding-based retrieval Recall@k=5 on LoCoMo: MemInsight (Claude-3-SonnetPriority) overall recall = 60.5% vs DPR RAG baseline = 26.5% (Table 2). Conversational recommendation: genre-match R@1 improved from baseline 0.320 to 0.400 (MemInsight Claude-3-Sonnet embedding); LLM-based persuasiveness increases up to ~12-14% in embedding-based settings (paper reports up to 14% persuasiveness boost in abstract / up to 12% increase in highly persuasive recommendations in embedding-based retrieval).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Baseline results reported using same backbone but without MemInsight augmentation: QA baseline (Claude-3-Sonnet) overall F1 = 26.1%; DPR RAG baseline recall@5 = 26.5% (Table 1 & 2). Conversational recommendation baseline genre-match R@1 = 0.320 (Table 4).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Autonomous structured augmentations (attribute-value pairs) improve retrieval relevance and downstream performance: priority-based augmentation outperforms basic aggregation, embedding-based retrieval over attribute embeddings yields large recall gains over DPR RAG baselines (paper reports ~34% recall improvement in abstract / large absolute gains in Table 2), and augmentation reduces the amount of memory retrieved while preserving or improving recommendation persuasiveness and QA accuracy. Turn-level augmentations can yield more precise event summaries than session-level.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Augmentation quality depends on the backbone LLM used for attribute generation (less capable models produce less consistent or more generic attributes); occasional abstract/generic annotations (~0.86% of annotations were non-specific per DeepEval hallucination analysis); some categories (temporal and adversarial questions) see DPR or other baselines performing slightly better; current implementation limited to text-only inputs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'MemInsight: Autonomous Memory Augmentation for LLM Agents', 'publication_date_yy_mm': '2025-03'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e23.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e23.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>MemoryBank</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>MemoryBank: Enhancing large language models with long-term memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Prior work referenced and used as a GPT-based baseline in the paper; described in this paper as a model that augments LLMs with long-term memory to improve handling of historical context.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Memorybank: Enhancing large language models with long-term memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>MemoryBank agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A previously proposed LLM augmentation that provides long-term memory to LLMs; used in this paper as a GPT-based baseline for QA comparisons.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-4o (as used in this paper's baseline table labeling)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Long-term memory (described generally as long-term/episodic memory enhancements)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Not specified in detail in this paper; referenced as a long-term memory augmentation for LLMs (external/long-term memory implied).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>LoCoMo (Question Answering) — used as a baseline in comparisons</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Reported in this paper's Table 1 as overall F1 = 6.2% for MemoryBank (GPT-4o) on LoCoMo answer-generation task (used as a comparative baseline).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Included as a strong GPT-based baseline; MemInsight outperforms MemoryBank on the LoCoMo QA metrics reported in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>No implementation details or game-specific evaluations provided in this paper; only referenced and used as a baseline.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'MemInsight: Autonomous Memory Augmentation for LLM Agents', 'publication_date_yy_mm': '2025-03'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e23.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e23.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>ReadAgent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>ReadAgent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A referenced GPT-based baseline that 'utilizes external memory modules to support long-term reasoning' and is included for comparison on QA tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>ReadAgent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Described in this paper as a baseline agent that leverages external memory modules to support long-term reasoning; used as a GPT-based baseline for QA comparisons.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-4o (as listed in comparison table)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>External memory modules / long-term memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>External memory modules (paper states ReadAgent 'utilizes external memory modules' but provides no further integration detail here).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>LoCoMo (Question Answering) — used as a baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Reported in this paper's Table 1 as overall F1 = 8.5% for ReadAgent (GPT-4o) on LoCoMo answer-generation task.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Used as a comparative baseline; MemInsight reports higher QA accuracy and recall on LoCoMo than ReadAgent in this paper's experiments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>This paper does not provide ReadAgent implementation specifics or text-game evaluations; only the brief description that it uses external memory modules is given.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'MemInsight: Autonomous Memory Augmentation for LLM Agents', 'publication_date_yy_mm': '2025-03'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e23.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e23.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Ghost-in-Minecraft</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Ghost in the minecraft: Generally capable agents for open-world environments via large language models with text-based knowledge and memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Referenced prior work that couples LLM agents with text-based knowledge and memory to build agents for open-world environments (Minecraft) — mentioned in related work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Ghost in the minecraft: Generally capable agents for open-world environments via large language models with text-based knowledge and memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Referenced as an example of work that equips LLM agents with text-based knowledge and memory for open-world (game-like) environments; no experimental details provided in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Text-based knowledge and memory (as phrased in the cited paper title)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Minecraft / open-world environment (mentioned in the cited paper title) — not evaluated in this paper</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as relevant prior work demonstrating LLM agents augmented with memory for environment/interactive tasks; this paper does not extract details or results from that work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>No details provided in this paper; referenced only in related work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'MemInsight: Autonomous Memory Augmentation for LLM Agents', 'publication_date_yy_mm': '2025-03'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Ghost in the minecraft: Generally capable agents for open-world environments via large language models with text-based knowledge and memory <em>(Rating: 2)</em></li>
+                <li>Memorybank: Enhancing large language models with long-term memory <em>(Rating: 2)</em></li>
+                <li>MemoryBank: Enhancing large language models with long-term memory <em>(Rating: 1)</em></li>
+                <li>Arigraph: Learning knowledge graph world models with episodic memory for llm agents <em>(Rating: 1)</em></li>
+                <li>A-mem: Agentic memory for llm agents <em>(Rating: 1)</em></li>
+                <li>Think-in-memory: Recalling and post-thinking enable llms with long-term memory <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

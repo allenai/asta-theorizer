@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-1 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-1</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-1</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-70f2372ea589d0fa5af3fb618569e9677ecbbd62</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/70f2372ea589d0fa5af3fb618569e9677ecbbd62" target="_blank">Knowledge-enhanced Agents for Interactive Text Games</a></p>
+                <p><strong>Paper Venue:</strong> International Conference on Knowledge Capture</p>
+                <p><strong>Paper TL;DR:</strong> This paper proposes a knowledge-injection framework for improved functional grounding of agents in text-based games, and considers two forms of domain knowledge that are injected into learning-based agents: memory of previous correct actions and affordances of relevant objects in the environment.</p>
+                <p><strong>Paper Abstract:</strong> Communication via natural language is a key aspect of machine intelligence, and it requires computational models to learn and reason about world concepts, with varying levels of supervision. Significant progress has been made on fully-supervised non-interactive tasks, such as question-answering and procedural text understanding. Yet, various sequential interactive tasks, as in text-based games, have revealed limitations of existing approaches in terms of coherence, contextual awareness, and their ability to learn effectively from the environment. In this paper, we propose a knowledge-injection framework for improved functional grounding of agents in text-based games. Specifically, we consider two forms of domain knowledge that we inject into learning-based agents: memory of previous correct actions and affordances of relevant objects in the environment. Our framework supports two representative model classes: reinforcement learning agents and language model agents. Furthermore, we devise multiple injection strategies for the above domain knowledge types and agent architectures, including injection via knowledge graphs and augmentation of the existing input encoding strategies. We experiment with four models on the 10 tasks in the ScienceWorld text-based game environment, to illustrate the impact of knowledge injection on various model configurations and challenging task settings. Our findings provide crucial insights into the interplay between task properties, model architectures, and domain knowledge for interactive contexts.</p>
+                <p><strong>Cost:</strong> 0.011</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e1.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e1.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>RoBERTa+MCA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>RoBERTa with Memory of Previous Correct Actions (MCA)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A pre-trained encoder-only LM (roberta-large) fine-tuned as a multiple-choice action selector for ScienceWorld; augmented with a short-term episodic memory that records previous correct (rewarding) actions and appends them to the LM input using a sliding window.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>RoBERTa (pre-trained LM) agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>roberta-large is fine-tuned offline in a multiple-choice formulation: the current state (observation, inventory, task description) is concatenated with each candidate action and the LM scores them; at inference the LM scores all valid actions and top-p sampling is used to avoid loops.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>roberta-large</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>short-term episodic memory (Memory of Previous Correct Actions within the current episode)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>context-window concatenation: MCA is serialized as a string and appended to the LM input; implemented with a sliding window to limit tokens (window size A = 5 in experiments)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ScienceWorld (10 elementary-school science tasks)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>avg cumulative reward: 12.31 / 100 (RoBERTa with MCA, averaged across the 10 evaluated tasks; Table 2 'm' column average)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>avg cumulative reward: 11.43 / 100 (RoBERTa baseline without MCA; Table 2 'b' column average)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Appending a memory of previous correct actions (MCA) to RoBERTa yields a modest average improvement over the baseline (11.43 -> 12.31 avg cumulative reward, ~8% relative), but gains are task-dependent: MCA helped only a minority of tasks (3/10) and provided larger benefits when combined with affordance knowledge; MCA is limited by LM input length so a sliding window of recent correct actions (A=5) was used.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Memory must be derived from environment reward so it is unavailable at episode start; LM input token limits constrain the amount of episodic memory (necessitating a sliding window); MCA helped only some tasks and could be less effective than injecting affordances; RoBERTa required many more steps to finish in some cases (slower action selection) even when using MCA.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Knowledge-enhanced Agents for Interactive Text Games', 'publication_date_yy_mm': '2023-05'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e1.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e1.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Swift (Flan-T5) + history</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Swift (Flan-T5-based instruction-tuned LM) with action history</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An instruction-following Seq2Seq LM (Swift built on Flan-T5) that receives a structured state input including an action history field (last ten actions with rewards); the history can be included or omitted and the paper evaluates both variants.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Swift (instruction-tuned LM, Flan-T5-based)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A Seq2Seq instruction-tuned LM (flan-T5-base) trained on state->action pairs; its input template includes desc, step number, score, action history, observation, inventory, visited rooms, and the prompt 'What action should you do next?'; the model generates the next action.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>flan-T5-base (Swift implementation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>short-term action history (last ten actions within episode, each annotated with reward)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>structured Seq2Seq input field: the action history is included directly in the LM source sequence (the original Swift design uses the last ten actions with rewards); the paper also evaluated a variant where this history was omitted for comparison</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ScienceWorld (10 elementary-school science tasks)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>avg cumulative reward: 24.65 / 100 (Swift with its original 10-action history included; Table 2 'm' column average for Swift)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>avg cumulative reward: 27.86 / 100 (Swift baseline with the action history omitted for a fairer comparison; Table 2 'b' column average)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Contrary to expectation, including the full 10-action history in Swift harmed average performance on these ScienceWorld tasks (baseline without history 27.86 vs with history 24.65); eliminating action history improved results, indicating that naively providing the last ten actions (including unsuccessful ones) can introduce noise and degrade Seq2Seq LM decision-making in these environments. However, combining affordances with history (aff ⊕ m) produced the best average reported for Swift (31.31), showing complementary effects when memory is paired with relevant world knowledge.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Raw action-history inclusion can be detrimental (noise / irrelevant/incorrect actions), so content and formatting of history matter; fixed-size history (last 10) may contain many non-informative actions; token budget and input design constrain how much history can be provided; memory that mixes successful and unsuccessful actions may mislead the LM unless paired with additional structured knowledge (e.g., affordances).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Knowledge-enhanced Agents for Interactive Text Games', 'publication_date_yy_mm': '2023-05'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Swift-Sage: A Generative Agent with Fast and Slow Thinking for Complex Interactive Tasks <em>(Rating: 2)</em></li>
+                <li>ReAct: Synergizing Reasoning and Acting in Language Models <em>(Rating: 2)</em></li>
+                <li>Do as i can, not as i say: Grounding language in robotic affordances <em>(Rating: 2)</em></li>
+                <li>Keep CALM and explore: Language models for action generation in text-based games <em>(Rating: 2)</em></li>
+                <li>Grounding large language models in interactive environments with online reinforcement learning <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

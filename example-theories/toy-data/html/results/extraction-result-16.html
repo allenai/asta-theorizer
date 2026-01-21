@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-16 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-16</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-16</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-5278a8eb2ba2429d4029745caf4e661080073c81</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/5278a8eb2ba2429d4029745caf4e661080073c81" target="_blank">Generative Agents: Interactive Simulacra of Human Behavior</a></p>
+                <p><strong>Paper Venue:</strong> ACM Symposium on User Interface Software and Technology</p>
+                <p><strong>Paper TL;DR:</strong> This work describes an architecture that extends a large language model to store a complete record of the agent’s experiences using natural language, synthesize those memories over time into higher-level reflections, and retrieve them dynamically to plan behavior.</p>
+                <p><strong>Paper Abstract:</strong> Believable proxies of human behavior can empower interactive applications ranging from immersive environments to rehearsal spaces for interpersonal communication to prototyping tools. In this paper, we introduce generative agents: computational software agents that simulate believable human behavior. Generative agents wake up, cook breakfast, and head to work; artists paint, while authors write; they form opinions, notice each other, and initiate conversations; they remember and reflect on days past as they plan the next day. To enable generative agents, we describe an architecture that extends a large language model to store a complete record of the agent’s experiences using natural language, synthesize those memories over time into higher-level reflections, and retrieve them dynamically to plan behavior. We instantiate generative agents to populate an interactive sandbox environment inspired by The Sims, where end users can interact with a small town of twenty-five agents using natural language. In an evaluation, these generative agents produce believable individual and emergent social behaviors. For example, starting with only a single user-specified notion that one agent wants to throw a Valentine’s Day party, the agents autonomously spread invitations to the party over the next two days, make new acquaintances, ask each other out on dates to the party, and coordinate to show up for the party together at the right time. We demonstrate through ablation that the components of our agent architecture—observation, planning, and reflection—each contribute critically to the believability of agent behavior. By fusing large language models with computational interactive agents, this work introduces architectural and interaction patterns for enabling believable simulations of human behavior.</p>
+                <p><strong>Cost:</strong> 0.015</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e16.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e16.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GenAgents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Generative Agents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Language-model-driven interactive agents augmented with a persistent natural-language memory stream (observations), periodic higher-level reflections, and stored plans; retrieval and synthesis of memories condition the LLM to produce coherent, long-horizon, socially emergent behavior in a Sims-like sandbox.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Generative Agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An agent architecture built around a large language model (gpt-3.5-turbo) that records all perceptions as natural-language memory objects (observations), assigns importance scores at creation, periodically synthesizes higher-level reflections from accumulated events, generates hierarchical plans, and retrieves a compact subset of memories (including observations, reflections, and plans) to condition moment-to-moment action, dialogue, and re-planning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-3.5-turbo (ChatGPT)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Long-term episodic/diary-style memory stream stored as natural-language entries (observations), plus derived hierarchical reflections and stored temporal plans (i.e., episodic + semantic summaries + procedural plans).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>External memory stream with embedding- and LM-based indexing: each memory stores text, creation timestamp, last-access timestamp, and an importance score; retrieval ranks memories by a weighted combination of recency (exponential decay), importance (LM-produced integer), and relevance (embedding cosine similarity to a query), then concatenates top-ranked memories into the prompt (context-window conditioning). Reflections and plans are written back into the same memory stream.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Smallville sandbox (Sims-like) with an interview-based believability evaluation (no standard text-game benchmark)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>TrueSkill (believability) μ = 29.89, σ = 0.72 for the full architecture (observations + reflections + planning); information-diffusion: Isabella party known by 52% of agents at end of 2-day sim; Sam candidacy known by 32%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Ablations (same evaluation): no reflections: μ = 26.88 (σ = 0.69); no reflection & no planning: μ = 25.64 (σ = 0.68); fully ablated baseline (no observation, no reflection, no planning): μ = 21.21 (σ = 0.70); crowdworker-authored baseline: μ = 22.95 (σ = 0.69).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Storing and retrieving a natural-language memory stream plus generating periodic higher-level reflections and explicit planning substantially improves believability and emergent social behavior compared to ablations without these components; reflection and planning both contribute critically (ablation performance degrades monotonically as components are removed). Retrieval failures and occasional memory embellishments are dominant error modes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Not evaluated on standard text-adventure benchmarks; expensive in tokens and computation for multi-agent multi-day sims; retrieval failures (omitting relevant memories), rare hallucinated embellishments, context-window limits (necessitating retrieval instead of full dump), potential brittleness to memory/ prompt hacking, and some misapplied social/physical norms due to underspecified environment states.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Generative Agents: Interactive Simulacra of Human Behavior', 'publication_date_yy_mm': '2023-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e16.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e16.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>LLMs_text_adventure_mentions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Large language models applied to interactive fiction and text-adventure games (mentioned)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>The paper notes prior uses of large language models to create interactive fiction and text-adventure games, but treats these as first-order prompting applications that lack dynamic long-term memory and thus are a poor fit for long-horizon coherence.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Referenced class of systems where pretrained LMs are used to generate interactive narratives or act in text-adventure environments (cited in related work), typically via prompt templates/few-shot or chain-of-thought prompting without a persistent, dynamically updated memory stream.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>generic text-adventure / interactive fiction (no specific benchmark evaluation reported in this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>The paper observes that prior efforts using LLMs for interactive fiction/text-adventure tasks have been effective for generating momentary behavior but do not address long-term conditioning on extensive past experience due to context-window limits; motivating the need for external memory/retrieval and reflection.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>First-order prompting approaches struggle with long-term coherence because the full history does not fit in the model context window; no memory augmentation or performance comparisons provided in this paper for text-game settings.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Generative Agents: Interactive Simulacra of Human Behavior', 'publication_date_yy_mm': '2023-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e16.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e16.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Retrieval/Summarization Augmentations (mentions)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Retrieval-augmented and summarization-based augmentations of LMs (mentioned: Demonstrate-Search-Predict, recursive summarization)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>The paper cites prior work that augments language models with static knowledge bases plus retrieval (Demonstrate-Search-Predict) or with hierarchical summarization (recursively summarizing books) as related approaches to extend effective context beyond the model's window.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Prior methods that couple retrieval modules or recursive summarization with language models to supply additional context or compressed long-form content; referenced as antecedents to the generative agents' dynamic memory + retrieval + reflection pipeline.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>static knowledge base (retrieval-augmented) and summarization-derived compressed memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>External retrieval of documents/knowledge and recursive summarization to compress long texts before feeding into the LM; contrasted with the paper's dynamic episodic memory stream and embedding-based retrieval.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>These approaches show ways to augment LMs with extra context (retrieval and summarization), but they are typically static or summarization-centric rather than supporting continuously updated, per-agent episodic memory plus periodic reflective synthesis as required for believable long-term agent behavior.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Static KB retrieval and summarization do not by themselves address the need for dynamically updated, importance-weighted episodic memories and higher-level reflections for continual agent coherence; the paper positions its memory + reflection + planning architecture as extending these prior ideas.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Generative Agents: Interactive Simulacra of Human Behavior', 'publication_date_yy_mm': '2023-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Dungeons and Dragons as a Dialog Challenge for Artificial Intelligence <em>(Rating: 2)</em></li>
+                <li>Procedural Generation of Interactive Stories using Language Models <em>(Rating: 2)</em></li>
+                <li>Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP <em>(Rating: 2)</em></li>
+                <li>Recursively Summarizing Books with Human Feedback <em>(Rating: 2)</em></li>
+                <li>Social Simulacra: Creating Populated Prototypes for Social Computing Systems <em>(Rating: 2)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

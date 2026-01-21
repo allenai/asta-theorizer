@@ -1,0 +1,361 @@
+{
+    "recall": {
+        "count_theories_has_data": 1,
+        "count_theories_no_data": 1,
+        "proportion_theories_with_data": 0.5,
+        "count_elems_has_data": 4,
+        "count_elems_no_data": 9,
+        "proportion_elems_with_data": 0.3076923076923077
+    },
+    "precision": {
+        "average_evaluation": {
+            "support": 0.96875,
+            "contradict": 0.03125,
+            "count": 1
+        }
+    },
+    "other": {
+        "count_total_papers_evaluated": 39,
+        "count_total_papers_with_relevant_info": 21,
+        "avg_papers_with_relevant_info": 21.0,
+        "count_total_laws_with_relevant_info": 1
+    },
+    "raw_average_evaluations": [
+        {
+            "support": 0.96875,
+            "contradict": 0.03125,
+            "count": 4
+        }
+    ],
+    "raw_rubric_evaluations": [
+        [
+            {
+                "prediction_short_name": "structured_vs_unstructured_memory",
+                "rubric_elem": {
+                    "prediction_short_name": "structured_vs_unstructured_memory",
+                    "specific_prediction": "LLM agents using structured memory representations (e.g., knowledge graphs, belief graphs, attribute-indexed retrieval) outperform agents using unstructured memory (e.g., naive concatenation of full history or raw episodic logs) on complex text games with non-trivial state spaces and partial observability.",
+                    "operational_signals": [
+                        "Direct comparison between structured memory architectures (graphs, schemas, attributes) and unstructured/concatenation baselines",
+                        "Performance metrics such as task completion rate, score, success rate, or goal achievement in text games",
+                        "Ablation studies removing or replacing structured memory with full-history or unstructured approaches"
+                    ],
+                    "strong_test_requirement": "A paper must directly compare a structured memory method against an unstructured or naive concatenation baseline on the same text game environment, reporting quantitative task performance metrics.",
+                    "what_does_support_look_like": "Structured memory agents achieve significantly higher task completion rates, scores, or success rates than unstructured/naive concatenation baselines in complex or long-horizon text games.",
+                    "what_does_contradiction_look_like": "Unstructured or naive concatenation methods match or exceed the performance of structured memory methods on complex text games with non-trivial state spaces."
+                },
+                "counts": {
+                    "support": 16,
+                    "contradict": 0,
+                    "no_evidence": 20,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 1.0,
+                    "contradict": 0.0
+                }
+            },
+            {
+                "prediction_short_name": "selective_vs_brute_force_retrieval",
+                "rubric_elem": {
+                    "prediction_short_name": "selective_vs_brute_force_retrieval",
+                    "specific_prediction": "LLM agents with selective, contextual memory retrieval mechanisms (e.g., semantic similarity, attribute filtering, graph traversal) outperform agents that use brute-force context inclusion or no retrieval filtering in text games requiring planning and reasoning.",
+                    "operational_signals": [
+                        "Comparison between selective/contextual retrieval methods and full-history or no-retrieval baselines",
+                        "Explicit ablation of retrieval mechanisms (e.g., removing semantic retrieval, attribute filtering)",
+                        "Performance metrics in text games, particularly those with long horizons or large state spaces"
+                    ],
+                    "strong_test_requirement": "A paper must compare an agent with selective retrieval (e.g., embedding-based, attribute-based, or graph-based selection) against a baseline using full context or no retrieval on the same task, with quantitative performance metrics.",
+                    "what_does_support_look_like": "Selective retrieval agents demonstrate higher task performance and better scaling to complex or long-horizon games compared to full-history or no-retrieval baselines.",
+                    "what_does_contradiction_look_like": "Full-history inclusion or no-retrieval baselines achieve equal or superior performance to selective retrieval methods in complex text games."
+                },
+                "counts": {
+                    "support": 17,
+                    "contradict": 0,
+                    "no_evidence": 19,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 1.0,
+                    "contradict": 0.0
+                }
+            },
+            {
+                "prediction_short_name": "hybrid_vs_single_modality_memory",
+                "rubric_elem": {
+                    "prediction_short_name": "hybrid_vs_single_modality_memory",
+                    "specific_prediction": "LLM agents that combine structured memory (e.g., graphs, schemas) with episodic/reflection-based memory outperform agents relying solely on one memory modality (structured-only or episodic-only) in complex text games.",
+                    "operational_signals": [
+                        "Ablation studies comparing hybrid memory systems against structured-only or episodic-only variants",
+                        "Explicit architectural comparison of combined vs. single-modality memory systems",
+                        "Performance metrics in text games with partial observability and long planning horizons"
+                    ],
+                    "strong_test_requirement": "A paper must compare a hybrid memory architecture (combining structured and episodic/reflection components) against single-modality baselines (structured-only or episodic-only) on the same text game task with quantitative metrics.",
+                    "what_does_support_look_like": "Hybrid memory systems achieve higher task completion rates or scores than either structured-only or episodic-only memory systems in complex text games.",
+                    "what_does_contradiction_look_like": "Single-modality memory systems (structured-only or episodic-only) match or exceed the performance of hybrid memory architectures in complex text games."
+                },
+                "counts": {
+                    "support": 3,
+                    "contradict": 0,
+                    "no_evidence": 33,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 1.0,
+                    "contradict": 0.0
+                }
+            },
+            {
+                "prediction_short_name": "memory_structure_scaling",
+                "rubric_elem": {
+                    "prediction_short_name": "memory_structure_scaling",
+                    "specific_prediction": "As text game complexity increases (larger state/action spaces, longer horizons, more partial observability), the performance gap between structured/selective memory agents and unstructured/naive memory agents widens in favor of structured/selective approaches.",
+                    "operational_signals": [
+                        "Performance comparisons across multiple difficulty levels or game complexities",
+                        "Evaluation on simple vs. complex game variants with varying state space sizes or horizon lengths",
+                        "Explicit analysis of scaling behavior as task complexity increases"
+                    ],
+                    "strong_test_requirement": "A paper must evaluate both structured/selective and unstructured/naive memory approaches across at least two distinct complexity levels of text games, showing performance trends as complexity increases.",
+                    "what_does_support_look_like": "The performance advantage of structured/selective memory over unstructured/naive methods increases as game complexity (state space, horizon, partial observability) increases.",
+                    "what_does_contradiction_look_like": "Unstructured/naive memory methods maintain equal performance gaps or close the gap with structured/selective methods as game complexity increases."
+                },
+                "counts": {
+                    "support": 7,
+                    "contradict": 1,
+                    "no_evidence": 28,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0.875,
+                    "contradict": 0.125
+                }
+            },
+            {
+                "prediction_short_name": "trivial_setting_boundary",
+                "rubric_elem": {
+                    "prediction_short_name": "trivial_setting_boundary",
+                    "specific_prediction": "In text games where full history fits within the LLM context window and state spaces are small, advanced structured memory and selective retrieval provide minimal or no performance improvement over simple full-history inclusion.",
+                    "operational_signals": [
+                        "Comparison of advanced memory architectures vs. full-history baselines on small-scale or simple text games",
+                        "Explicit evaluation on tasks where context limits are not reached",
+                        "Performance metrics showing marginal differences in low-complexity settings"
+                    ],
+                    "strong_test_requirement": "A paper must compare advanced memory/retrieval methods against full-history baselines on trivial or small-scale text games where history fits in context, reporting performance metrics that show minimal or no advantage.",
+                    "what_does_support_look_like": "In small-scale games where full history fits in context, advanced memory structures show minimal (<5% relative) or no performance improvement over full-history baselines.",
+                    "what_does_contradiction_look_like": "Advanced memory structures show substantial (>10% relative) performance gains over full-history baselines even in trivial settings where all history fits in context."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 36,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            }
+        ],
+        [
+            {
+                "prediction_short_name": "hybrid_vs_single_modality_performance",
+                "rubric_elem": {
+                    "prediction_short_name": "hybrid_vs_single_modality_performance",
+                    "specific_prediction": "In complex, partially observable, multi-step text games, LLM agents with hybrid memory architectures (combining structured semantic representations such as knowledge/belief graphs with episodic/reflection-based memory) achieve higher task success rates and final scores than agents using only structured memory, only episodic memory, or naive in-context windowing alone.",
+                    "operational_signals": [
+                        "Direct comparison of hybrid memory agents against single-modality baselines (structured-only, episodic-only, or context-window-only)",
+                        "Task success rate, completion rate, score, or reward metrics in text game environments",
+                        "Environments characterized as partially observable, multi-step, or compositional (e.g., TextWorld, Jericho, interactive fiction)"
+                    ],
+                    "strong_test_requirement": "A paper must report performance metrics (e.g., success rate, score, reward) for both a hybrid memory agent and at least one single-modality baseline (structured-only, episodic-only, or window-only) on the same text game task with partial observability and multi-step requirements.",
+                    "what_does_support_look_like": "Hybrid memory agents consistently outperform all single-modality baselines across multiple tasks or environments, especially on complex or long-horizon scenarios.",
+                    "what_does_contradiction_look_like": "Single-modality memory agents (structured-only, episodic-only, or context-window-only) match or exceed hybrid memory agents' performance on complex, partially observable, multi-step text games."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 3,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            },
+            {
+                "prediction_short_name": "hybrid_vs_single_modality_sample_efficiency",
+                "rubric_elem": {
+                    "prediction_short_name": "hybrid_vs_single_modality_sample_efficiency",
+                    "specific_prediction": "In complex text games, LLM agents with hybrid memory architectures reach target performance thresholds in fewer episodes, steps, or interactions than agents using only a single memory modality.",
+                    "operational_signals": [
+                        "Learning curves showing performance vs. number of episodes, trials, or environment steps",
+                        "Comparative sample efficiency metrics (episodes to convergence, steps to threshold performance)",
+                        "Direct comparison between hybrid and single-modality memory agents"
+                    ],
+                    "strong_test_requirement": "A paper must report learning dynamics (e.g., performance over time/episodes) for both hybrid and single-modality memory agents, demonstrating convergence speed or sample efficiency differences.",
+                    "what_does_support_look_like": "Hybrid memory agents reach performance milestones significantly faster (fewer episodes or steps) than single-modality baselines.",
+                    "what_does_contradiction_look_like": "Single-modality memory agents converge as fast as or faster than hybrid memory agents to equivalent performance levels."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 3,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            },
+            {
+                "prediction_short_name": "hybrid_vs_single_modality_generalization",
+                "rubric_elem": {
+                    "prediction_short_name": "hybrid_vs_single_modality_generalization",
+                    "specific_prediction": "LLM agents with hybrid memory architectures demonstrate better zero-shot or few-shot generalization to new text game environments, unseen tasks, or harder variants compared to agents using only structured memory, only episodic memory, or naive context windowing.",
+                    "operational_signals": [
+                        "Transfer or generalization experiments (training on one set of games/tasks, testing on new or harder variants)",
+                        "Performance metrics on held-out environments or difficulty levels",
+                        "Explicit comparison of hybrid vs. single-modality agents on out-of-distribution tasks"
+                    ],
+                    "strong_test_requirement": "A paper must evaluate both hybrid and single-modality memory agents on at least one generalization scenario (new environment, unseen task type, or increased difficulty) distinct from training conditions.",
+                    "what_does_support_look_like": "Hybrid memory agents maintain higher performance or show smaller performance degradation on new/harder tasks compared to single-modality baselines.",
+                    "what_does_contradiction_look_like": "Single-modality memory agents generalize as well as or better than hybrid memory agents to new environments or harder task variants."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 3,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            },
+            {
+                "prediction_short_name": "hybrid_vs_full_history_scalability",
+                "rubric_elem": {
+                    "prediction_short_name": "hybrid_vs_full_history_scalability",
+                    "specific_prediction": "In long-horizon text games, hybrid memory agents achieve better or equivalent performance compared to full-history retention agents while using fewer tokens or reduced memory footprint.",
+                    "operational_signals": [
+                        "Comparison of hybrid memory vs. full-history or unlimited context baselines",
+                        "Performance metrics (success rate, score) alongside memory or token usage statistics",
+                        "Long-horizon or multi-episode task scenarios"
+                    ],
+                    "strong_test_requirement": "A paper must compare hybrid memory agents against full-history baselines on long-horizon tasks, reporting both performance and resource metrics (e.g., tokens, memory size, context length).",
+                    "what_does_support_look_like": "Hybrid memory agents match or exceed full-history performance while demonstrating lower token usage, memory footprint, or computational cost.",
+                    "what_does_contradiction_look_like": "Full-history retention consistently outperforms hybrid memory agents on long-horizon tasks, or hybrid memory requires comparable or greater resource usage without performance gains."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 3,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            },
+            {
+                "prediction_short_name": "no_benefit_short_horizon_tasks",
+                "rubric_elem": {
+                    "prediction_short_name": "no_benefit_short_horizon_tasks",
+                    "specific_prediction": "In text game tasks that require only short-term recall within the LLM's context window and have simple state/action structure, hybrid memory architectures show negligible performance improvement over naive in-context windowing or no memory augmentation.",
+                    "operational_signals": [
+                        "Comparison of memory-augmented vs. baseline agents on explicitly short-horizon or simple tasks",
+                        "Task descriptions indicating full observability, short episode length, or trivial state structure",
+                        "Performance metrics showing small or no effect size"
+                    ],
+                    "strong_test_requirement": "A paper must evaluate hybrid or augmented memory agents against minimal-memory baselines on tasks explicitly characterized as short-horizon, fully observable, or simple, reporting comparable performance metrics.",
+                    "what_does_support_look_like": "Performance differences between hybrid memory and baseline agents are minimal (within error margins or statistically insignificant) on short-horizon or simple tasks.",
+                    "what_does_contradiction_look_like": "Hybrid memory provides substantial performance gains even on tasks requiring only short-term recall within the context window and having trivial state structure."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 3,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            },
+            {
+                "prediction_short_name": "ablation_removing_structured_component",
+                "rubric_elem": {
+                    "prediction_short_name": "ablation_removing_structured_component",
+                    "specific_prediction": "Removing the structured memory component (e.g., knowledge graph, belief graph) from a hybrid memory agent results in degraded performance on complex text games, with the agent performing worse than the full hybrid system.",
+                    "operational_signals": [
+                        "Ablation studies explicitly disabling or removing structured memory components",
+                        "Performance comparison between full hybrid agent and structured-component-ablated variant",
+                        "Complex or compositional task environments"
+                    ],
+                    "strong_test_requirement": "A paper must report an ablation experiment that disables the structured memory component of a hybrid agent and compares performance to the full hybrid system on the same task.",
+                    "what_does_support_look_like": "Removing structured memory leads to measurable performance degradation (lower success rate, score, or reward) compared to the full hybrid agent.",
+                    "what_does_contradiction_look_like": "Ablating structured memory has no significant negative effect, or improves performance compared to the full hybrid system."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 3,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            },
+            {
+                "prediction_short_name": "ablation_removing_episodic_component",
+                "rubric_elem": {
+                    "prediction_short_name": "ablation_removing_episodic_component",
+                    "specific_prediction": "Removing the episodic or reflection-based memory component from a hybrid memory agent results in degraded performance on complex text games, with the agent performing worse than the full hybrid system.",
+                    "operational_signals": [
+                        "Ablation studies explicitly disabling or removing episodic/reflection memory components",
+                        "Performance comparison between full hybrid agent and episodic-component-ablated variant",
+                        "Complex or compositional task environments"
+                    ],
+                    "strong_test_requirement": "A paper must report an ablation experiment that disables the episodic/reflection memory component of a hybrid agent and compares performance to the full hybrid system on the same task.",
+                    "what_does_support_look_like": "Removing episodic memory leads to measurable performance degradation (lower success rate, score, or reward) compared to the full hybrid agent.",
+                    "what_does_contradiction_look_like": "Ablating episodic memory has no significant negative effect, or improves performance compared to the full hybrid system."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 3,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            },
+            {
+                "prediction_short_name": "hybrid_vs_unstructured_episodic_long_horizon",
+                "rubric_elem": {
+                    "prediction_short_name": "hybrid_vs_unstructured_episodic_long_horizon",
+                    "specific_prediction": "On long-horizon, compositional text game tasks (e.g., requiring navigation plus inventory management, or multi-stage goal completion), hybrid memory agents outperform agents using only unstructured episodic memory or reflection-only approaches.",
+                    "operational_signals": [
+                        "Comparison with reflection-only, unstructured episodic, or summarization-only memory baselines",
+                        "Tasks explicitly described as long-horizon, multi-step, or compositional",
+                        "Performance metrics such as success rate, completion rate, or final score on hard task variants"
+                    ],
+                    "strong_test_requirement": "A paper must evaluate hybrid memory agents against unstructured episodic or reflection-only baselines on tasks explicitly characterized as long-horizon or compositional, reporting task success or performance metrics.",
+                    "what_does_support_look_like": "Hybrid memory agents substantially outperform unstructured episodic or reflection-only baselines on long-horizon or compositional tasks.",
+                    "what_does_contradiction_look_like": "Unstructured episodic or reflection-only memory agents match or exceed hybrid memory agents' performance on long-horizon, compositional text game tasks."
+                },
+                "counts": {
+                    "support": 0,
+                    "contradict": 0,
+                    "no_evidence": 3,
+                    "other": 0
+                },
+                "proportions": {
+                    "support": 0,
+                    "contradict": 0
+                }
+            }
+        ]
+    ]
+}

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-6 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-6</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-6</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-a32688780cc763b1d0b2d59f9677521779ee6612</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/a32688780cc763b1d0b2d59f9677521779ee6612" target="_blank">Monte Carlo Planning with Large Language Model for Text-Based Game Agents</a></p>
+                <p><strong>Paper Venue:</strong> International Conference on Learning Representations</p>
+                <p><strong>Paper TL;DR:</strong> The Monte Carlo planning with Dynamic Memory-guided Large language model (MC-DML) algorithm leverages the language understanding and reasoning capabilities of Large Language Models (LLMs) alongside the exploratory advantages of tree search algorithms.</p>
+                <p><strong>Paper Abstract:</strong> Text-based games provide valuable environments for language-based autonomous agents. However, planning-then-learning paradigms, such as those combining Monte Carlo Tree Search (MCTS) and reinforcement learning (RL), are notably time-consuming due to extensive iterations. Additionally, these algorithms perform uncertainty-driven exploration but lack language understanding and reasoning abilities. In this paper, we introduce the Monte Carlo planning with Dynamic Memory-guided Large language model (MC-DML) algorithm. MC-DML leverages the language understanding and reasoning capabilities of Large Language Models (LLMs) alongside the exploratory advantages of tree search algorithms. Specifically, we enhance LLMs with in-trial and cross-trial memory mechanisms, enabling them to learn from past experiences and dynamically adjust action evaluations during planning. We conduct experiments on a series of text-based games from the Jericho benchmark. Our results demonstrate that the MC-DML algorithm significantly enhances performance across various games at the initial planning phase, outperforming strong contemporary methods that require multiple iterations. This demonstrates the effectiveness of our algorithm, paving the way for more efficient language-grounded planning in complex environments.</p>
+                <p><strong>Cost:</strong> 0.017</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e6.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e6.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>MC-DML</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Monte Carlo planning with Dynamic Memory-guided Large language model</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An MCTS-based planning algorithm that uses an LLM as a prior policy and augments it with two memory mechanisms—in-trial (short-term trajectory context) and cross-trial (episodic reflections)—to dynamically adjust action priors during search.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>MC-DML</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An MCTS agent which replaces the usual learned policy prior with an LLM policy conditioned on in-trial memory (recent trajectory window) and cross-trial memory (stored reflections from past failed trajectories). The LLM returns a probability distribution over valid actions which is used as the prior term in a PUCT-style action selection.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-3.5-turbo-0125</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>in-trial short-term trajectory context and cross-trial episodic (reflection) memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Both memory types are concatenated into the LLM prompt (context window). The LLM produces action token probabilities conditioned on in-trial memory Mi and cross-trial memory Mc; Mc stores up to k=3 reflections per root and is appended to prompts for subsequent simulations to alter action priors used inside PUCT (see Eq. 3).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (9 text-based games: Zork1, Deephome, Ludicorp, Pentari, Detective, Library, Balances, Temple, Ztuu)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Per-game scores with full MC-DML (average over 3 runs where reported): Zork1: 48.66 ± 1.89; Deephome: 67 ± 1.41; Ludicorp: 19.67 ± 1.7; Pentari: 70.0; Detective: 346.67 ± 9.43; Library: 21.0; Balances: 10.0; Temple: 8.0; Ztuu: 23.67 ± 1.9.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Ablation (without cross-trial memory w.o. Mc) reported on subset: Zork1: 38.33 ± 2.89; Deephome: 62.66 ± 0.94; Detective: 326.67 ± 4.71; Ztuu: 20.66 ± 0.47. Further ablations removing both Mc and Mi show larger drops (e.g., Zork1 down to 31.67 ± 4.7).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Augmenting an LLM prior with both in-trial (recent trajectory) and cross-trial (reflections from failures) memory substantially improves initial planning performance in text-based games; MC-DML outperforms pure LLM agents, reflection-only baselines, and matches or exceeds MCTS+RL baselines at their early planning iteration (notably strong on Deephome and Zork1). Ablations show both memory types are important, with cross-trial reflection giving large gains in avoiding bottlenecks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>In-trial memory is implemented as a short trajectory window and may miss clues encountered far earlier (‘needle in a haystack’ issue); input window constraints require truncation/compression. Cross-trial memory is limited (k=3 reflections) in experiments. The approach requires many LLM calls (cost/latency) and relies on accurate token log-probabilities from the LLM backend.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Monte Carlo Planning with Large Language Model for Text-Based Game Agents', 'publication_date_yy_mm': '2025-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e6.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e6.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflection agent (paper baseline)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Reflection-based LLM agent (as implemented in this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A baseline agent that lets an LLM generate reflections after completed rounds (failed trajectories) and re-uses those reflections as cross-trial memory to guide the LLM in subsequent rounds.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Reflection agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An LLM-based gameplay agent that collects short textual reflections at the end of episodes and supplies them as persistent memory for future episodes; in this paper the reflection mechanism follows Shinn et al. (2024) and is used as a baseline to compare with MC-DML.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-3.5-turbo-0125</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>cross-trial episodic reflection memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Reflections are generated after failed gameplay trajectories and concatenated into the LLM prompt for subsequent episodes (cross-trial prompt augmentation); in experiments reflections were limited to up to 3.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (used as baseline across same 9 games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Reflection baseline per Table 2: Zork1: 5; Deephome: 1; Ludicorp: 4; Pentari: 5; Detective: 30; Library: 6; Balances: 10; Temple: 8; Ztuu: 5.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>LLM-only baseline (no reflection) per Table 2: Zork1: 0; Deephome: 1; Ludicorp: 4; Pentari: 5; Detective: 30; Library: 6; Balances: 10; Temple: 8; Ztuu: 0.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Simple reflection (cross-trial textual feedback) yields small improvements over an LLM-only direct agent in some settings but is far less effective than MC-DML's combined in-trial + cross-trial integration inside MCTS; reflection alone does not solve exploration/exploitation balance and often results in limited overall gains.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Limited number of reflections (experiments capped at 3) and modest improvements; reflection-only agents still suffer from looped behavior and poor exploration; improvements depend on how reflections are incorporated and on the environment complexity.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Monte Carlo Planning with Large Language Model for Text-Based Game Agents', 'publication_date_yy_mm': '2025-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e6.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e6.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflexion (Shinn et al. 2024)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Prior work that introduced an LLM agent which generates textual reflections from failed trajectories and reuses them as a form of episodic memory to improve future decisions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A language-agent paradigm where the LLM produces short reflective summaries of failed episodes (verbal reinforcement) that are then used as memory/heuristics for future rounds, enabling iterative improvement without explicit retraining.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>episodic reflection memory (cross-trial)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Reflections (natural-language suggestions) are stored and included in later prompts to guide the LLM's action generation; treated as interpretable episodic memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as inspiration for cross-trial memory; demonstrates that verbal reflections can be used as persistent episodic memory to guide LLM agents across trials.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Paper is referenced for the reflection idea; specifics of performance and limitations depend on the original study (not fully reproduced here).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Monte Carlo Planning with Large Language Model for Text-Based Game Agents', 'publication_date_yy_mm': '2025-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e6.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e6.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>LLM-MCTS (Zhao et al. 2024)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>LLM as fixed prior policy in MCTS (as described by Zhao et al.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A previously proposed method that uses a large language model as a fixed prior policy inside MCTS to provide commonsense priors for action selection, but without mechanisms to learn from past failures.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Large language models as commonsense knowledge for large-scale task planning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>LLM-MCTS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>MCTS algorithm that uses an LLM to provide a prior action distribution for PUCT but treats the LLM as a fixed, non-updating prior (no cross-trial reflection or memory-driven updating).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>none (no memory augmentation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>LLM output is used as a static prior in PUCT-like selection (prompted on the current state), but the LLM is not updated with reflections or cross-trial experience.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as related work: an LLM prior can help commonsense planning tasks, but because it cannot update from failures, it may be less effective in uncertain, sparse-reward environments like complex text games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>No mechanism to improve policy based on past experience; less suited to environments requiring learning from failures or long-term trial-and-error.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Monte Carlo Planning with Large Language Model for Text-Based Game Agents', 'publication_date_yy_mm': '2025-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Reflexion: Language agents with verbal reinforcement learning <em>(Rating: 2)</em></li>
+                <li>Large language models as commonsense knowledge for large-scale task planning <em>(Rating: 2)</em></li>
+                <li>Tree of thoughts: Deliberate problem solving with large language models <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

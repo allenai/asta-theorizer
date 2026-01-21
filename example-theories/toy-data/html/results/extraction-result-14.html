@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-14 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-14</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-14</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-d625c0c24246df86885b09e960147c384d0a4e9e</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/d625c0c24246df86885b09e960147c384d0a4e9e" target="_blank">Evaluating and Enhancing LLMs Agent Based on Theory of Mind in Guandan: A Multi-Player Cooperative Game Under Imperfect Information</a></p>
+                <p><strong>Paper Venue:</strong> 2024 IEEE/WIC International Conference on Web Intelligence and Intelligent Agent Technology (WI-IAT)</p>
+                <p><strong>Paper TL;DR:</strong> This work proposes a Theory of Mind (ToM) planning technique that allows LLM agents to adapt their strategy against various adversaries using only game rules, current state, and historical context as input, and shows that LLMs demonstrate ToM capabilities in this game setting.</p>
+                <p><strong>Paper Abstract:</strong> Large language models (LLMs) have shown success in handling simple games with imperfect information and enabling multi-agent coordination, but their ability to facilitate practical collaboration against other agents in complex, imperfect information environments, especially in a non-English environment, still needs to be explored. This study investigates the applicability of knowledge acquired by open-source and API-based LLMs to sophisticated text-based games requiring agent collaboration under imperfect information, comparing their performance to established baselines using other types of agents. We propose a Theory of Mind (ToM) planning technique that allows LLM agents to adapt their strategy against various adversaries using only game rules, current state, and historical context as input. An external tool was incorporated to mitigate the challenge of dynamic and extensive action spaces in this card game. Our results show that although a performance gap exists between current LLMs and state-of-the-art reinforcement learning (RL) models, LLMs demonstrate ToM capabilities in this game setting. It consistently improves their performance against opposing agents, suggesting their ability to understand the actions of allies and adversaries and establish collaboration with allies. To encourage further research and understanding, we have made our codebase openly accessible.</p>
+                <p><strong>Cost:</strong> 0.014</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e14.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e14.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>LLMs+memory/belief/tools</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Large Language Models augmented with memory, belief, and tools</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A general class of methods in which LLMs are augmented with auxiliary memory or belief modules and external tools to support multi-step reasoning, multi-agent interaction, and embodied tasks; mentioned in Related Work as having excelled in some open-domain and simple imperfect-information games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>LLMs+memory/belief/tools</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Generic description (not a single implemented agent in this paper): LLMs augmented with extra modules (memory, belief trackers, or tool interfaces) to store/retrieve past events or inferred states and to call external functionality for improved decision-making.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>described generically as memory and belief (no specific taxonomy given in this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>described at a high level only (memory/belief/tools augment LLMs; specific integration details not provided in this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>The paper cites prior work claiming that LLMs augmented with memory, belief, and tools have excelled in multi-step reasoning and in some open-domain survival games and simple two-player imperfect information games, motivating the present study's use of belief (ToM) and an external tool.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>No implementation details or quantitative comparisons are given in this paper for this generic class; the mention is in related work only.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Evaluating and Enhancing LLMs Agent Based on Theory of Mind in Guandan: A Multi-Player Cooperative Game Under Imperfect Information', 'publication_date_yy_mm': '2024-08'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e14.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e14.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Generative Agents (Park et al.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Generative Agents: Interactive simulacra of human behavior</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A referenced work (Park et al., 2023) that demonstrated LLM-based agents augmented with memory to simulate human-like behavior in interactive environments; cited here as an example of memory-augmented LLMs performing well on multi-step embodied tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Generative agents: Interactive simulacra of human behavior.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Generative Agents (Park et al., 2023)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Referenced external agent system (not implemented in this paper) that augments LLMs with memory architectures to store events and retrieve them to guide future behavior in long-running simulations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>not specified in this paper (referenced as an example of memory-augmented LLMs)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>not specified in this paper (only cited as prior work demonstrating memory/tool augmentation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as evidence that memory-augmented LLM agents can excel on multi-step reasoning and embodied interactive tasks, motivating the paper's approach to include history and belief in prompts.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>This paper does not report Park et al.'s experimental details; only a citation is provided.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Evaluating and Enhancing LLMs Agent Based on Theory of Mind in Guandan: A Multi-Player Cooperative Game Under Imperfect Information', 'publication_date_yy_mm': '2024-08'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e14.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e14.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>LLM-Agent (this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>LLM-based embodied agent with Theory-of-Mind planning (this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A modular LLM agent that uses a State Interpreter, a ToM Planner (first- and second-order belief inference from game history), and a Plan Evaluator; it ingests game rules, converted human-readable observations and game history, and optionally invokes an external RL-based action recommender tool to narrow valid actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>LLM-Agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Modular language-model-based embodied agent for the Guandan card game: components include Current State Interpreter (converts low-level state/history to readable text), ToM Planner (infers beliefs of other agents from history at zero/first/second order), Planning/Evaluator (scores candidate plans/actions), and an external action-recommender RL tool to rank valid actions; used in zero-shot (no fine-tuning) experiments with multiple LLMs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Various (GPT-4-turbo, GPT-3.5-turbo, Baichuan2-7B/13B, chatglm3-6B-32k, Qwen1.5-7B/14B)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>short-term contextual memory: explicit game history (Obs_r and His_r) presented as readable text; additionally inferred belief state (ToM) is treated as an internal belief-memory representation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>History and converted observations are concatenated into the LLM prompt/context (context-window based); beliefs inferred by the ToM Planner are appended to prompt and provided as additional context to the Planner/Evaluator; no separate persistent external memory store is reported.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Guandan (Chinese multi-player cooperative imperfect-information card game)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Example: GPT-4-turbo with 2nd-order ToM (beliefs from history in context) achieved average score +2.17 vs the three baselines (Table 1). GPT-3.5-turbo 1st-ToM avg +0.98, 2nd-ToM avg +0.97 (Table 1). Using ToM improved results over vanilla planning across almost all tested models.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Vanilla (zero-order planning without ToM belief input) example: GPT-4-turbo (Vanilla) avg +1.26; GPT-3.5-turbo (Vanilla) avg +0.68 (Table 1). (These are the same experimental setups but without the ToM-inferred belief context.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Providing LLM agents with explicit belief information derived from game history (first- and second-order ToM planning) consistently improves performance over vanilla planning across nearly all tested models; incorporating an external RL-based action recommender tool to limit candidate actions also substantially improves agent performance by mitigating LLMs' difficulty with very long valid-action lists.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>No persistent/long-term memory module is implemented; the 'memory' is limited to game history provided in the prompt (context window) and inferred belief states. LLMs still trail state-of-the-art RL (Danzero+) except for GPT-4 which approaches but does not surpass Danzero+ (GPT-4 2nd-ToM scored -0.88 vs Danzero+ in Table 1). LLMs struggle when the valid-action list is very long (often focus on early items), motivating the external action-recommender tool.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Evaluating and Enhancing LLMs Agent Based on Theory of Mind in Guandan: A Multi-Player Cooperative Game Under Imperfect Information', 'publication_date_yy_mm': '2024-08'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Generative agents: Interactive simulacra of human behavior. <em>(Rating: 2)</em></li>
+                <li>Suspicion-agent: Playing imperfect information games with theory of mind aware GPT-4. <em>(Rating: 2)</em></li>
+                <li>Minding language models’ (lack of) theory of mind: A plug-and-play multi-character belief tracker. <em>(Rating: 1)</em></li>
+                <li>Language models as zero-shot planners: Extracting actionable knowledge for embodied agents. <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

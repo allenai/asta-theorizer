@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-18 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-18</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-18</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-e41150e2b0feeb02c3948b34a2dec9d290b9c979</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/e41150e2b0feeb02c3948b34a2dec9d290b9c979" target="_blank">diff History for Neural Language Agents</a></p>
+                <p><strong>Paper Venue:</strong> International Conference on Machine Learning</p>
+                <p><strong>Paper TL;DR:</strong> On NetHack, an unsolved video game that requires long-horizon reasoning for decision-making, LMs tuned with diff history match state-of-the-art performance for neural agents while needing 1800x fewer training examples compared to prior work.</p>
+                <p><strong>Paper Abstract:</strong> Neural Language Models (LMs) offer an exciting solution for general-purpose embodied control. However, a key technical issue arises when using an LM-based controller: environment observations must be converted to text, which coupled with history, results in long and verbose textual prompts. As a result, prior work in LM agents is limited to restricted domains with small observation size as well as minimal needs for interaction history or instruction tuning. In this paper, we introduce diff history, a simple and highly effective solution to these issues. By applying the Unix diff command on consecutive text observations in the interaction histories used to prompt LM policies, we can both abstract away redundant information and focus the content of textual inputs on the salient changes in the environment. On NetHack, an unsolved video game that requires long-horizon reasoning for decision-making, LMs tuned with diff history match state-of-the-art performance for neural agents while needing 1800x fewer training examples compared to prior work. Even on the simpler BabyAI-Text environment with concise text observations, we find that although diff history increases the length of prompts, the representation it provides offers a 25% improvement in the efficiency of low-sample instruction tuning. Further, we show that diff history scales favorably across different tuning dataset sizes. We open-source our code and data to https://diffhistory.github.io.</p>
+                <p><strong>Cost:</strong> 0.013</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e18.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e18.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Diff History</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>diff history (Unix diff-based text delta memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A task-agnostic memory representation that replaces most full-text observations in an LM interaction history with Unix diff-produced line-by-line textual deltas, then supplies these deltas in-context as the agent's memory for action generation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Diff-history language agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A decoder-only LM policy (GPT-2 variants in the paper) finetuned to predict natural language actions conditioned on an instruction and an interaction history where, after an initial anchor full-text observation, subsequent observations are represented as Unix diff deltas (textual changes) instead of raw full-text observations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-2 (127M) (also experiments with reinitialized weights / from-scratch and larger training data sizes)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>compressed contextual memory: relational textual deltas (Unix diff)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>concatenated into the model context window as tokens (context-window memory augmentation replacing full-text observations with diff tokens, using special <|action|> and <|observation|> markers)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>NetHack (via NetHack Language Wrapper / LangHack dataset) and BabyAI-Text</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>NetHack (pretrained, 32M expert actions): mean score 1885 ± 213 (best history horizon 15); NetHack (from-scratch, 32M): mean score 1203 ± 214; NetHack (pretrained, 64M expert actions / LangHack-2x): mean score 2766 ± 481; BabyAI-Text: reaches peak performance with ≥25% fewer FLOPs than full-text baseline (in 1k and 5k demonstration settings).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Full-text history baseline (pretrained, 32M): mean score 31 ± 5 (best history horizon 8) on NetHack; full-text + auxiliary world-model (pretrained): mean score 344 ± 52 (best horizon 8).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Representing history as Unix-style diffs yields major benefits: (1) in NetHack, diff-history LM agents achieve state-of-the-art neural-agent performance while being finetuned on orders-of-magnitude fewer labeled actions (e.g., matching/approaching SOTA with 1,800× fewer labels reported elsewhere), (2) diff acts as token-level compression in high-dimensional text (NetHack: ~460% reduction in tokens per observation), extending effective memory horizon at fixed context length, (3) in BabyAI-Text diff agents require ≥25% fewer optimizer steps / FLOPs to reach equivalent performance in low-data settings, and (4) ablating diff observations drastically reduces performance (a reported ~98% drop in NetHack mean score for the full-text ablation).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Diff history benefits rely on structured, line-oriented textual observations; in low-dimensional environments (BabyAI-Text) diff increased average tokens per observation (about 210% increase) though still improved sample-efficiency; method assumes observations can be expressed in text and may not help for narrative/unstructured text unless preprocessed into structured form; combining diff-history with auxiliary world-model objective can sometimes reduce diff-agent performance (diff + world-model decreased mean NetHack score versus diff alone in some settings).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'diff History for Neural Language Agents', 'publication_date_yy_mm': '2023-12'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e18.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e18.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Full-text History</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>full-text interaction history (raw observations as memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Baseline memory representation in which all past environment text observations are provided in full (raw) form in the LM context window as the agent's memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Full-text history language agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A decoder-only LM (GPT-2 in experiments) finetuned to predict actions conditioned on instructions and interaction histories composed of raw full-text observations and actions (no diff compression).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-2 (127M)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>raw contextual memory: full-text observations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>concatenated into the model context window as tokens (context-window memory consisting of raw observations and previous actions)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>NetHack (LangHack) and BabyAI-Text</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>NetHack (pretrained, 32M expert actions): mean score 31 ± 5 (best history horizon 8) when trained only on action prediction; in NetHack adding an auxiliary world-model objective improved this to mean score 344 ± 52.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Full-text history agents perform poorly in high-dimensional NetHack when trained only on action prediction (very low mean score), but an auxiliary causal world-model objective (predicting observations) substantially improves the full-text agent (from mean ≈31 to ≈344), narrowing but not closing the gap with diff-history agents; full-text contexts are token-heavy (NetHack mean tokens per observation ~573) limiting effective history length under fixed context sizes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Full-text observations are verbose and information-sparse in high-dimensional environments, causing context-length limitations and poor sample efficiency; even with auxiliary objectives, full-text agents underperform diff-history agents in NetHack; large token counts per observation force truncation or limit memory horizon.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'diff History for Neural Language Agents', 'publication_date_yy_mm': '2023-12'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e18.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e18.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Diff + World Model</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>diff history with auxiliary causal world-model objective</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A variant that augments diff-history finetuning with an additional causal world-model prediction objective (predicting diff observations), to probe whether auxiliary modeling of observations improves representation learning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Diff-history + world-model LM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Same LM architecture (GPT-2) finetuned jointly on action prediction and an auxiliary causal world-model loss where the model also predicts subsequent diff observation tokens; diff representations remain the memory format.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-2 (127M)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>compressed contextual memory: relational textual deltas (Unix diff), plus auxiliary predictive objective</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>diff tokens concatenated into context window; training includes additional loss terms to predict diff observation tokens (teacher-forcing world-model loss)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>NetHack (LangHack)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>NetHack (pretrained, 32M): mean score 1094 ± 160 (best history horizon 15) when trained with both action prediction and the auxiliary world-model objective.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Diff-only (pretrained, 32M): mean score 1885 ± 213 (action prediction only) — so adding the world-model objective reduced mean score for the diff agent in the reported experiments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Adding the auxiliary causal world-model objective greatly helps full-text agents (improving their NetHack mean score ~10×), but for diff-history agents the auxiliary objective reduced performance compared to action-prediction-only finetuning, suggesting diff-history alone provides a stronger signal for action modeling in NetHack; overall, auxiliary objectives can change representation learning dynamics and may narrow gaps between memory formats depending on environment and data.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>The auxiliary world-model objective does not universally improve diff-history agent performance and can even degrade it; choice of training objectives interacts nontrivially with memory representation and environment complexity.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'diff History for Neural Language Agents', 'publication_date_yy_mm': '2023-12'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Language modeling with latent situations <em>(Rating: 2)</em></li>
+                <li>Show your work: Scratchpads for intermediate computation with language models <em>(Rating: 2)</em></li>
+                <li>Chain-of-thought prompting elicits reasoning in large language models <em>(Rating: 1)</em></li>
+                <li>A nethack learning environment language wrapper for autonomous agents <em>(Rating: 2)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction Schema extraction-schema-1 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extraction Schema Details for extraction-schema-1</h1>
+
+        <div class="section">
+            <h2>Extraction Schema (General Information)</h2>
+            <div class="info-section">
+                <p><strong>Schema ID:</strong> extraction-schema-1</p>
+                <p><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extraction Schema (Details)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Field Name</th>
+                        <th style="width: 15%;">Type</th>
+                        <th style="width: 65%;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>agent_name</strong></td>
+                        <td>str</td>
+                        <td>The name of the language model agent evaluated in the paper (e.g. 'KG-A2C', 'LLM-Agent', etc.).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>agent_description</strong></td>
+                        <td>str</td>
+                        <td>A brief description of the agent, including its architecture and purpose.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>model_name</strong></td>
+                        <td>str</td>
+                        <td>The name of the underlying language model used by the agent (e.g. 'GPT-3', 'T5', etc.), if specified.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>memory_type</strong></td>
+                        <td>str</td>
+                        <td>The type of memory augmentation used (e.g. 'episodic memory', 'external memory', 'retrieval-augmented', 'context window extension', etc.).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>memory_integration</strong></td>
+                        <td>str</td>
+                        <td>How the memory is integrated into the agent (e.g. 'retrieval from external database', 'recurrent state', 'context window concatenation', etc.).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>benchmark_name</strong></td>
+                        <td>str</td>
+                        <td>The name of the text game or benchmark used to evaluate the agent (e.g. 'TextWorld', 'Jericho', etc.).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>performance_with_memory</strong></td>
+                        <td>str</td>
+                        <td>The performance of the agent on the benchmark when using memory augmentation (include metric and units, e.g. 'score: 85/100', or 'success rate: 70%').</td>
+                    </tr>
+                    <tr>
+                        <td><strong>performance_without_memory</strong></td>
+                        <td>str</td>
+                        <td>The performance of the agent on the benchmark without memory augmentation (include metric and units, or null if not reported).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>has_performance_comparison</strong></td>
+                        <td>bool</td>
+                        <td>Does the paper report a direct comparison of performance with and without memory augmentation? (true, false, or null if not specified)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>key_findings</strong></td>
+                        <td>str</td>
+                        <td>A concise summary of the key findings regarding memory augmentation for LLM agents in text games.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>challenges_or_limitations</strong></td>
+                        <td>str</td>
+                        <td>Any reported challenges, limitations, or negative results related to memory augmentation in this context.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

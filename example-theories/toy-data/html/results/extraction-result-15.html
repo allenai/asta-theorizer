@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-15 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-15</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-15</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-1eac02f299c171d17190fb257fc1f4c20f0d08ac</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/1eac02f299c171d17190fb257fc1f4c20f0d08ac" target="_blank">Large Language Models Are Neurosymbolic Reasoners</a></p>
+                <p><strong>Paper Venue:</strong> AAAI Conference on Artificial Intelligence</p>
+                <p><strong>Paper TL;DR:</strong> The method significantly enhances the capability of LLMs as automated agents for symbolic reasoning, and the LLM agent is effective in text-based games involving symbolic tasks, achieving an average performance of 88% across all tasks.</p>
+                <p><strong>Paper Abstract:</strong> A wide range of real-world applications is characterized by their symbolic nature, necessitating a strong capability for symbolic reasoning. This paper investigates the potential application of Large Language Models (LLMs) as symbolic reasoners. We focus on text-based games, significant benchmarks for agents with natural language capabilities, particularly in symbolic tasks like math, map reading, sorting, and applying common sense in text-based worlds. To facilitate these agents, we propose an LLM agent designed to tackle symbolic challenges and achieve in-game objectives. We begin by initializing the LLM agent and informing it of its role. The agent then receives observations and a set of valid actions from the text-based games, along with a specific symbolic module. With these inputs, the LLM agent chooses an action and interacts with the game environments. Our experimental results demonstrate that our method significantly enhances the capability of LLMs as automated agents for symbolic reasoning, and our LLM agent is effective in text-based games involving symbolic tasks, achieving an average performance of 88% across all tasks.</p>
+                <p><strong>Cost:</strong> 0.011</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e15.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e15.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>LLM agent (this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>LLM agent (language agent proposed in 'Large Language Models Are Neurosymbolic Reasoners')</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A prompt-driven language-agent that uses a large language model (GPT-3.5-turbo) in a zero-shot way to play text-based games by selecting actions from a provided valid-action set and invoking external symbolic modules (calculator, navigator, sorter, knowledge-base).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>LLM agent / language agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A role-initialized, prompt-driven agent that at each timestep receives the observation, inventory state, score, and a constrained valid-action set and must choose a single action; it can call external symbolic modules (Calculation, Navigation, Sorting, Knowledge Base) as actions. Implemented by prompting GPT-3.5-turbo (zero-shot, no extra training).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-3.5-turbo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>limited short-term / internal context (no explicit external memory augmentation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>State and inventory are provided each timestep via prompt concatenation (observation + inventory + valid action set + role initialization). No persistent external memory or retrieval mechanism was implemented; memory relies on the LLM's context window and the prompt-provided inventory/observation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorldExpress text-based games (Arithmetic, MapReader, Sorting, Text World Common Sense - TWC)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>average score: 0.88 (normalized) on Test set; average steps: 7 (GPT-3.5-turbo, constrained prompts, Table 5 / Table 7). Note: reported performance is for the prompt-driven agent using symbolic modules, not for any explicit memory augmentation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>The prompt-driven LLM agent achieves strong average performance (≈0.88 normalized) using symbolic modules in a zero-shot manner without additional training. The paper attributes some failure modes (especially in MapReader and Sorting) to the agent's limited memory capacity (forgetting routes from the navigation module and losing sorted order), and shows that constrained prompts improve performance and reduce steps.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>No explicit memory augmentation implemented; limited memory capacity in the agent causes forgetting of previously obtained symbolic-module outputs (e.g., route information) and difficulty retaining full sorted orders across steps, leading to extra queries and inefficient behavior. The paper notes need for more sophisticated/long-term memory to address these issues.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Large Language Models Are Neurosymbolic Reasoners', 'publication_date_yy_mm': '2024-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e15.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e15.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Reflexion: an autonomous agent with dynamic memory and self-reflection</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A technique/agent that augments an LLM with dynamic memory and an external feedback/self-reflection loop to detect ineffective actions and improve future decision-making.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Reflexion: an autonomous agent with dynamic memory and self-reflection</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Described in the related work as an approach that augments LLM-based agents with external feedback and dynamic memory enabling self-reflection to detect and correct ineffective actions in interactive tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>dynamic memory (experience + reflections)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>External feedback loop that writes experiences/reflections into a dynamic memory store which the agent consults for future decisions (as described by the cited work).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as a related method that uses dynamic memory and self-reflection to improve LLM agent behavior; suggested in the paper as relevant prior work for adding memory/self-reflection capabilities to LLM-based agents.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>This paper only cites Reflexion in related work and does not provide experimental details or performance comparisons from that method; no integration or results are reported here.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Large Language Models Are Neurosymbolic Reasoners', 'publication_date_yy_mm': '2024-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e15.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e15.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Self-Refine</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Self-refine: Iterative refinement with self-feedback</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A method where an LLM provides feedback on its own previous outputs and iteratively refines them, representing a form of self-feedback/self-reflection that can function as a short-term memory/iterative correction mechanism.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Self-refine: Iterative refinement with self-feedback</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Self-Refine (method)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Mentioned as related work: an approach that enables an LLM to generate feedback on its prior outputs and iteratively refine its generations, which can be used to improve decision-making via self-feedback loops.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>self-feedback / iterative short-term memory of prior outputs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Iterative refinement loop where previous outputs and the model's self-feedback are used as additional context for generation (as described in the cited work).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as an approach enabling LLMs to refine outputs using self-feedback; the paper lists it among techniques for incorporating self-critique and self-reflection but does not evaluate it.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Only mentioned in related work; no experimental integration or comparisons provided in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Large Language Models Are Neurosymbolic Reasoners', 'publication_date_yy_mm': '2024-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Reflexion: an autonomous agent with dynamic memory and self-reflection <em>(Rating: 2)</em></li>
+                <li>Self-refine: Iterative refinement with self-feedback <em>(Rating: 2)</em></li>
+                <li>Inner monologue: Embodied reasoning through planning with language models <em>(Rating: 1)</em></li>
+                <li>ReAct: Synergizing reasoning and acting in language models <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

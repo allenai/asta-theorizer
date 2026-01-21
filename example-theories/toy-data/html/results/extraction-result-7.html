@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-7 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-7</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-7</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-15b91292ba80adaa87361a0e8894e47899f02f1d</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/15b91292ba80adaa87361a0e8894e47899f02f1d" target="_blank">Learning Dynamic Belief Graphs to Generalize on Text-Based Games</a></p>
+                <p><strong>Paper Venue:</strong> Neural Information Processing Systems</p>
+                <p><strong>Paper TL;DR:</strong> This work proposes a novel graph-aided transformer agent (GATA) that infers and updates latent belief graphs during planning to enable effective action selection by capturing the underlying game dynamics.</p>
+                <p><strong>Paper Abstract:</strong> Playing text-based games requires skills in processing natural language and sequential decision making. Achieving human-level performance on text-based games remains an open challenge, and prior research has largely relied on hand-crafted structured representations and heuristics. In this work, we investigate how an agent can plan and generalize in text-based games using graph-structured representations learned end-to-end from raw text. We propose a novel graph-aided transformer agent (GATA) that infers and updates latent belief graphs during planning to enable effective action selection by capturing the underlying game dynamics. GATA is trained using a combination of reinforcement and self-supervised learning. Our work demonstrates that the learned graph-based representations help agents converge to better policies than their text-only counterparts and facilitate effective generalization across game configurations. Experiments on 500+ unique games from the TextWorld suite show that our best agent outperforms text-based baselines by an average of 24.2%.</p>
+                <p><strong>Cost:</strong> 0.019</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e7.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e7.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GATA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Graph-Aided Transformer Agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A transformer-based RL agent that learns and maintains a continuous, latent multi-relational belief graph as an explicit structured memory from raw text observations, and uses this graph (encoded by an R-GCN) together with text via bi-directional attention to select actions in text-based games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>GATA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Learns a continuous adjacency-tensor belief graph G_t (dimensions: relations x entities x entities) via a recurrent graph-updater (Δg_t -> RNN -> decode to G_t). Graph is encoded with an R-GCN (conditioned on relation label embeddings) and fused with transformer text encodings via a bi-attention aggregator; action scoring uses self-attention + MLP. Graph-updater is pre-trained with self-supervised Observation Generation (OG) and Contrastive Observation Classification (COC), then frozen while the action selector is trained with Double DQN variants.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Transformer-based (custom encoders/decoders); R-GCN for graph encoding</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Continuous latent belief graph (structured graph memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Recurrent hidden state (RNN) decodes to adjacency tensor G_t (graph memory); G_t is encoded with R-GCN and fused with text via bi-directional attention; used as input to the action scorer.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (500+ generated games across multiple difficulty levels)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Example (best reported GATA variant: COC pre-trained + observation input): normalized test scores for 100-training-game setting by difficulty levels 1–5: [62.5, 33.0, 46.7, 25.9, 33.4] (Table 2). Reported average relative improvement over the Tr-DQN text baseline: +24.2% (paper-average figure).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Text-only transformer baselines (Tr-DQN): normalized test scores for 100-training-game setting by difficulty levels 1–5: [62.5, 32.0, 38.3, 17.7, 34.6]. (These are the main text-only baselines used for comparison.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Learning an explicit, structured graph belief as memory helps planning and generalization: GATA (continuous learned belief graphs) outperforms text-only transformer baselines (Tr-DQN/Tr-DRQN variants) on unseen TextWorld games, delivering substantial average relative improvements (paper reports ≈+20–24% improvements depending on variant/setting). Including immediate text observations with the belief graph further improves performance via attention.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Belief graphs are dense/noisy (not sparse/fully interpretable) because learned unsupervised from text; accuracy gap remains relative to full-state (ground-truth) graphs. Learning the graph updater requires careful self-supervised pretraining; errors in inferred graphs can accumulate and affect downstream performance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Dynamic Belief Graphs to Generalize on Text-Based Games', 'publication_date_yy_mm': '2020-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e7.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e7.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GATA-GTF</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>GATA (Ground-Truth Full Graph input)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A GATA variant that uses the environment's ground-truth full graph (complete discrete game state) as the agent's memory input to the action selector (no graph-updater), representing an upper bound for graph-based memory performance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>GATA-GTF</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Action selector identical to GATA but instead of using an inferred belief graph it directly receives the ground-truth full graph G^{full} from TextWorld as input; no graph-updater module is used.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Transformer-based (custom encoders) + R-GCN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Ground-truth full graph (perfect explicit state memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Direct input of ground-truth KG to graph encoder (R-GCN) and aggregation with text; no updater/recurrent inference needed.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized test scores for 100-training-game setting by difficulty levels 1–5: [95.0, 95.0, 70.0, 37.3, 52.8] (Table 2). Reported average relative improvement over Tr-DQN baseline: +81.6% (serves as an empirical upper bound).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Feeding a perfect, fully-observable ground-truth graph yields substantially higher performance than inferred belief graphs or text-only baselines, confirming that structured memory that contains complete state information greatly helps policy learning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>This setting relaxes partial observability and is not available in realistic scenarios; it mainly functions as an upper bound to evaluate potential of structured graph memories.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Dynamic Belief Graphs to Generalize on Text-Based Games', 'publication_date_yy_mm': '2020-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e7.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e7.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GATA-GTP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>GATA (Ground-Truth Pretrained Discrete Graph Updater)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A variant of GATA whose graph-updater is pre-trained on ground-truth discrete KGs (from FTWP) and which maintains a discrete belief graph using add/delete update commands produced by a seq2seq generator.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>GATA-GTP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Uses a transformer seq2seq 'command generation' discrete graph updater that emits add(node1,node2,relation) and delete(...) operations to update a discrete belief graph; the resulting discrete graph is encoded by the same R-GCN-based action selector as GATA.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Transformer-based (custom seq2seq for updater) + R-GCN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Discrete belief graph (explicit symbolic graph memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Seq2Seq-generated discrete update operations (add/delete) are applied to the discrete belief graph; the graph is encoded by R-GCN and used by the scorer.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Example (reported): normalized test scores for 100-training-game setting (one reported variant) by difficulty levels 1–5: [62.5, 32.0, 51.7, 21.8, 23.5] (Table 2). Paper reports mixed results: GATA-GTP can outperform text baselines in some settings (especially when combined with text observations) but overall performs worse than continuous GATA variants.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Pre-training the discrete updater on ground-truth graphs yields a discrete symbolic memory that can help, but the discrete updater is vulnerable to accumulated errors and discretization effects; overall, continuous learned belief graphs (GATA) often outperform this discrete-updater variant.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Discrete update operations and discrete graph representations tend to accumulate errors over time and suffer from brittleness/round-off issues; discrete generation can be harder to recover from mistakes compared to continuous belief-graph updates.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Dynamic Belief Graphs to Generalize on Text-Based Games', 'publication_date_yy_mm': '2020-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e7.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e7.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Tr-DRQN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Transformer-based Deep Recurrent Q-Network (baseline)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A transformer-based variant of DRQN (recurrent DQN) implemented as a text-only baseline in this work; it provides an implicit recurrent memory via an RNN component in the policy.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Tr-DRQN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Transformer text encoder combined with a recurrent policy (DRQN-style) to provide an implicit memory via recurrent hidden states; trained with RL (Double DQN, prioritized replay, etc.) as a text-only baseline.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Transformer encoder + recurrent policy (DRQN)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Implicit recurrent memory (RNN hidden state)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Recurrent hidden state maintained across timesteps (DRQN) provides memory for partially observable state; used directly by action scoring.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized test scores for 100-training-game setting by difficulty levels 1–5: [58.8, 31.0, 36.7, 21.4, 27.4] (Table 2). Reported relative improvement over Tr-DQN baseline (text-only non-recurrent): modest (paper reports Tr-DRQN outperforms Tr-DQN by a small margin, ~+3.9% average in one summary).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Tr-DQN (transformer text-only, no recurrent memory): [62.5, 32.0, 38.3, 17.7, 34.6] for 100-training-games (Table 2).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>An implicit RNN memory (DRQN) can improve performance relative to a non-recurrent text-only agent in some settings, indicating that a learned recurrent memory helps with partial observability; however, GATA's explicit structured memory yields larger gains in generalization and reward optimization.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>DRQN baselines struggle to scale on larger/more diverse training sets compared to GATA; implicit recurrent memory is less structured and provides weaker inductive bias than explicit graph memories.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Dynamic Belief Graphs to Generalize on Text-Based Games', 'publication_date_yy_mm': '2020-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e7.4">
+                <h3 class="extraction-instance">Extracted Data Instance 4 (e7.4)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Tr-DRQN+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Transformer-based DRQN with Episodic Counting Bonus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A transformer + recurrent baseline augmented with a count-based exploration bonus (episodic counting) to encourage exploration and act as a form of memory-informed exploration.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Tr-DRQN+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Same as Tr-DRQN but augmented with an episodic counting bonus (as in prior work) to encourage exploration; implemented as a baseline for comparison to GATA.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Transformer encoder + recurrent policy (DRQN) with count-based exploration bonus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Implicit recurrent memory + episodic count-based exploration memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Recurrent hidden state for temporal memory; episodic counts computed to shape exploration reward.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized test scores for 100-training-game setting by difficulty levels 1–5: [58.8, 33.0, 33.3, 19.5, 30.6] (Table 2). Paper reports small/modest improvements over Tr-DQN in some regimes but overall inferior to GATA.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Tr-DQN (transformer text-only baseline without recurrent memory or counting): [62.5, 32.0, 38.3, 17.7, 34.6] for 100-training-games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Episodic counting as an auxiliary exploration/memory mechanism helps exploration but does not close the gap with structured graph memories; Tr-DRQN+ shows modest changes compared to Tr-DRQN/Tr-DQN and is outperformed by GATA.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Count-based exploration bonuses are an indirect form of memory/exploration shaping and may not provide the structured relational information that graph memories supply; they also do not eliminate partial-observability limitations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Dynamic Belief Graphs to Generalize on Text-Based Games', 'publication_date_yy_mm': '2020-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e7.5">
+                <h3 class="extraction-instance">Extracted Data Instance 5 (e7.5)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Count-based memory (Yuan et al.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Count-based memory for exploration in text-based games</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A prior approach that uses episodic counting bonuses as a memory/exploration mechanism to encourage coverage and generalization across text-game states; cited in this paper as a prior baseline for memory-augmented agents.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Counting to explore and generalize in text-based games</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Count-based memory (prior work)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Uses state/observation counting to compute exploration bonuses (episodic counts) to guide exploration and implicitly act as a short-term memory/novelty signal for RL agents in text games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Episodic count-based memory / exploration bonus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Counts computed from visited states/observations are used to augment reward during RL (exploration shaping), rather than as an explicit structured memory fed into the policy.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (used as prior baseline in cited works)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Mentioned as a promising exploration/memory mechanism that can improve generalization and exploration in text games, but is conceptually different from explicit structured graph memories; used as a baseline in the paper's comparisons.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Counting bonuses provide only a novelty signal and do not encode relational state structure; they may be insufficient for tasks that require remembering relations or attributes across long horizons.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Dynamic Belief Graphs to Generalize on Text-Based Games', 'publication_date_yy_mm': '2020-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e7.6">
+                <h3 class="extraction-instance">Extracted Data Instance 6 (e7.6)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Memory networks (Urbanek et al.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Memory networks / ranking systems for adventure-style dialog and acting</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Prior work using memory networks and ranking approaches to tackle interactive/adventure dialog tasks; cited in this paper as related memory-augmented language agents for text environments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Learning to speak and act in a fantasy text adventure game</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Memory networks (prior work)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Models that use explicit memory architectures (memory networks) and ranking mechanisms to combine past dialog/context with current inputs to select next dialog/action in interactive text tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>External memory (neural memory network)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Memory network modules that attend over stored context/memory entries and combine with current input representations for decision making.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Interactive fiction / text adventure tasks (as in referenced work)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Referenced as an example of prior memory-augmented language agents for interactive fiction; these systems show the value of explicit memory modules for language-based interaction tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Prior memory network approaches are not directly comparable in this paper's experimental setup; they may require different supervision or heuristics.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Dynamic Belief Graphs to Generalize on Text-Based Games', 'publication_date_yy_mm': '2020-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Playing text-adventure games with graph-based deep reinforcement learning <em>(Rating: 2)</em></li>
+                <li>Graph constrained reinforcement learning for natural language action spaces <em>(Rating: 2)</em></li>
+                <li>Counting to explore and generalize in text-based games <em>(Rating: 2)</em></li>
+                <li>Building dynamic knowledge graphs from text-based games <em>(Rating: 2)</em></li>
+                <li>Learning to speak and act in a fantasy text adventure game <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

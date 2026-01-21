@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-12 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-12</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-12</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-26960a59fafa8d7f015128c666bf22881f17a7a3</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/26960a59fafa8d7f015128c666bf22881f17a7a3" target="_blank">Reasoning, Memorization, and Fine-Tuning Language Models for Non-Cooperative Games</a></p>
+                <p><strong>Paper Venue:</strong> arXiv.org</p>
+                <p><strong>Paper TL;DR:</strong> A method that integrates the tree of thoughts and multi-agent framework to enhance the capability of pre-trained language models in solving complex, unfamiliar games is developed, demonstrating its efficiency and scalability.</p>
+                <p><strong>Paper Abstract:</strong> We develop a method that integrates the tree of thoughts and multi-agent framework to enhance the capability of pre-trained language models in solving complex, unfamiliar games. The method decomposes game-solving into four incremental tasks -- game summarization, area selection, action extraction, and action validation -- each assigned to a specific language-model agent. By constructing a tree of thoughts, the method simulates reasoning paths and allows agents to collaboratively distill game representations and tactics, mitigating the limitations of language models in reasoning and long-term memorization. Additionally, an automated fine-tuning process further optimizes the agents' performance by ranking query-response pairs based on game outcomes, e.g., winning or losing. We apply the method to a non-cooperative game and demonstrate a 65 percent winning rate against benchmark algorithms, with an additional 10 percent improvement after fine-tuning. In contrast to existing deep learning algorithms for game solving that require millions of training samples, the proposed method consumes approximately 1000 training samples, highlighting its efficiency and scalability.</p>
+                <p><strong>Cost:</strong> 0.012</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e12.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e12.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>ToT Multi-Agent (4)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Tree-of-Thoughts Multi-Agent (4 language-model agents)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A four-agent system that decomposes game-solving into summarization, area selection, action selection, and action validation; agents exchange structured representations (summaries and selected-area encodings) via prompts to limit memory growth and produce legal actions for a novel text-described board game (Goedendag).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Tree-of-Thoughts Multi-Agent (4 agents)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Four task-specialized language-model agents: M1 summarization (extracts a formalized game representation rep(G)), M2 area selection (selects a fixed-size subset/area and returns rep(G')), M3 action selection (chooses an action from rep(G')), and M4 action validation (checks rule compliance). Agents collaborate through a tree-of-thoughts planning procedure, passing representations in prompt context.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-40-mini</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>task-specific local state memory (summarized representation and fixed-size selected-area state subset)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Memory is held and communicated as structured text representations included in the prompt context passed between agents (context concatenation). Area selection constrains retained state to a fixed-size subset to enforce linear memory growth instead of remembering the exponential full-state tree.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Goedendag (novel Stratego-like board game described in text)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Win rate: ~65% overall against benchmark algorithms; pairwise win rates vs benchmarks reported in Table 1: Ours vs Direct query 0.647 ± 0.225, Ours vs CoT query 0.611 ± 0.201, Ours vs Random 0.662 ± 0.136. Error rate: 0.0575 (average across 200 games). Tokens per game (cost): 26211. Fine-tuning of agents produced an additional ~10% win-rate improvement.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Decomposing into task-specific agents and keeping only task-relevant representations (summaries and a fixed-size selected area) effectively mitigates long-term memorization burdens: the approach attains ~65% win rate vs several baselines while keeping error rate low. Independent fine-tuning of task agents yields larger gains than an end-to-end model (≈+10% after fine-tuning with ~1000 samples).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>High inference cost (large number of LM tokens per game) due to multi-agent back-and-forth; no explicit external memory store was implemented (only constrained in-prompt representations); experiments limited to a single newly designed game (Goedendag) and resource-limited fine-tuning (only area and action agents were fine-tuned). The paper notes constructing an explicit memory bank as future work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Reasoning, Memorization, and Fine-Tuning Language Models for Non-Cooperative Games', 'publication_date_yy_mm': '2024-10'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e12.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e12.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Area-Selection Memory (M2)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Selected-Area State Memory via Area Selection Agent (M2)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A memory strategy where the agent selects a fixed-size area (subset of game states) around a center tile and retains only that area representation (rep(G')) as the operative memory for decision tasks, preventing exponential growth of retained states.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Area selection agent (M2)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Language-model agent that, given the summarized representation rep(G), selects a center tile and returns a structured representation rep(G') encoding the local sub-area (states, visible pieces, allowable actions) which restricts subsequent reasoning and action choices to that subset.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-40-mini</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>localized, bounded-state memory (fixed-size selected area / substate)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Selected-area representation rep(G') is concatenated into prompts for the action-selection and validation agents; by fixing area size, memory retained grows linearly with decisions rather than exponentially with full-tree expansion.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Goedendag</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>When included in the pipeline (i.e., with area selection), overall method error rate = 0.0575 and win rates as reported for 'Ours' (see main entry).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Omission (Ours w/o area) yields error rate = 0.313 (Table 2) and a measurable decrease in win-rate (paper reports roughly a ~2% decrease in win rate when area selection is removed in ablation). Cost (tokens/game) reduced when removing area selection (23519 vs 26211) but at severe error-rate penalty.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Area selection dramatically reduces rule-violation errors by restricting the action-selection space to a manageable local subset (observed ~5x increase in error rate when area selection removed). It therefore acts as an implicit memory-reduction mechanism that improves reliability of LM-chosen actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Area selection trades off inference cost and completeness — it requires multiple agent interactions and does not preserve long-term global history beyond repeated summarization; it is not an explicit external memory bank and may miss relevant distant-state information.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Reasoning, Memorization, and Fine-Tuning Language Models for Non-Cooperative Games', 'publication_date_yy_mm': '2024-10'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e12.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e12.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Summarization Rep (M1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Structured Game Summarization Representation (rep(G)) from Summarization Agent (M1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A standardized, structured textual representation of the current game state (rep(G)) produced by a summarization agent that encodes pieces, positions, allowable actions, and objectives to reduce cognitive load on downstream agents.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Summarization agent (M1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Language-model agent tasked with converting the raw textual game-state description into a consistent, formalized game representation rep(G) that is then used by area-selection, action-selection, and validation agents.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-40-mini</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>structured summary retained in prompt context (short-term, formalized episodic-like representation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>rep(G) is concatenated into downstream task prompts (M2, M3, M4) to provide a consistent state encoding across agents; this centralized summary reduces the amount of raw state text that each agent must parse.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Goedendag</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Including summarization improves win rate: ablation removing summarization ('Ours w/o summary') reduces win rate by ≈5% relative to the full method; with summarization the method achieves the reported ~65% win rate. Error rates: interestingly, 'Ours w/o summary' shows error rate 0.0417 in Table 2 (slightly lower than full method's 0.0575) but overall win-rate suffers, indicating the summary primarily helps strategic decision quality.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Ours w/o summary: error rate = 0.0417, win-rate decreases by ≈5% (Table 1 rows for ablation), tokens per game: 17881 (lower cost).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>A dedicated summarization agent producing a consistent rep(G) helps downstream decision agents reason more effectively and increases win probability, even if raw rule-violation error behavior may vary; the task-specific summarized representation reduces per-agent cognitive load and contributes to overall performance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Summarization adds extra LM calls and token cost; the paper observes trade-offs between cost, error-rate, and strategic performance and notes that removing the summarization task reduces token costs but hurts win rate.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Reasoning, Memorization, and Fine-Tuning Language Models for Non-Cooperative Games', 'publication_date_yy_mm': '2024-10'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Tree of thoughts: Deliberate problem solving with large language models <em>(Rating: 2)</em></li>
+                <li>Smurfs: Leveraging Multiple Proficiency Agents with Context-Efficiency for Tool Planning <em>(Rating: 2)</em></li>
+                <li>A survey on large language model-based game agents <em>(Rating: 2)</em></li>
+                <li>Autoact: Automatic agent learning from scratch via self-planning <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

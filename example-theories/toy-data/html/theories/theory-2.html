@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Compression and History Representation are Key Limiting Factors in LLM Agent Memory Utility - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Theory Details for theory-2</h1>
+
+        <div class="section">
+            <h2>Theory (General Information)</h2>
+            <div class="info-section">
+                <p><strong>ID:</strong> theory-2</p>
+                <p><strong>Name:</strong> Information Compression and History Representation are Key Limiting Factors in LLM Agent Memory Utility</p>
+                <p><strong>Type:</strong> general</p>
+                <p><strong>Theory Query:</strong> Build a theory of how language model agents can best be augmented with memory to perform well at text games, based on the following results.</p>
+                <p><strong>Description:</strong> This theory asserts that in text-based game environments with large, high-dimensional or verbose observations, the utility of memory for LLM agents is fundamentally constrained by the information-theoretic compressibility (i.e., sufficient representation) of experience. Explicitly, compressive forms of context/history (e.g., graph-diff, Unix diff, structured summaries) vastly outperform equally-sized or even much larger uncompressed or full-history approaches, by ensuring that relevant signals outlast window constraints and guide agent policy effectively. Token budget, compression ratio, and choice of memory summarization directly determine effective planning horizon and strategic depth.</p>
+                <p><strong>Knowledge Cutoff Year:</strong> 2025</p>
+                <p><strong>Knowledge Cutoff Month:</strong> 5</p>
+                <p><strong>Base Model:</strong> openai/gpt-4.1-2025-04-14</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="section">
+            <h2>Theory (Statement/Laws)</h2>
+
+            <h3>Theory Statements/Laws</h3>
+            <hr/>
+            <h3>Statement 0: Memory Compression Ratio Determines Planning Depth and Performance</h3>
+            <p><strong>Statement:</strong> The effective planning and recall horizon of LLM-based agents in text games is quantitatively bounded by the compression ratio of the memory representation: Given a fixed token/context size, agents with higher compression modes (e.g., diff, graph-diff, structured area/summary) can represent deeper and more salient past experience in context, yielding higher sample efficiency, faster convergence, and better asymptotic performance than full-history or verbose episodic memory agents.</p>
+            <p><strong>Domain/Scope:</strong> Applies to any LLM-based agent in settings with high-dimensional, verbose, or rapidly growing history (e.g., NetHack, complex IF, games with combinatorial state), especially when context/prompt size is a bottleneck.</p>
+            <h4>Special Cases</h4>
+            <ol>
+                <li>In environments with inherently low-dimensional state (e.g., small grids), the benefits of compression are diminished.</li>
+                <li>If relevant information is single-step and always present, compression gives marginal value.</li>
+            </ol>
+            <h4>Supporting Evidence for this Law</h4>
+<ol>
+    <li>Diff history (Unix diff deltas) in NetHack reduces average tokens per observation by 460%, allowing for commensurately longer context window and leading to a ~60-fold performance improvement versus full-text history; full-text history agents collapse after <10 steps, while diff-history succeeds with up to 15-step horizon. <a href="../results/extraction-result-18.html#e18.0" class="evidence-link">[e18.0]</a> <a href="../results/extraction-result-18.html#e18.1" class="evidence-link">[e18.1]</a> </li>
+    <li>Worldformer’s graph-diff representation provides large gains in both action and graph prediction, outperforming token-long, full-graph or standard seq2seq baselines. <a href="../results/extraction-result-10.html#e10.0" class="evidence-link">[e10.0]</a> <a href="../results/extraction-result-10.html#e10.3" class="evidence-link">[e10.3]</a> <a href="../results/extraction-result-10.html#e10.2" class="evidence-link">[e10.2]</a> </li>
+    <li>Area-selection (fixed-size substate) and structured summarization in Goedendag enables bounded growth and low error: omitting area-selection (ablation) causes ~5x error increase. <a href="../results/extraction-result-12.html#e12.1" class="evidence-link">[e12.1]</a> <a href="../results/extraction-result-12.html#e12.2" class="evidence-link">[e12.2]</a> <a href="../results/extraction-result-12.html#e12.0" class="evidence-link">[e12.0]</a> </li>
+    <li>Full-history baseline in AriGraph uses up to 14,000 tokens in 150 steps, yet performs poorly (scores <0.5 normalized), compared to structured/summary/context-limited agents. <a href="../results/extraction-result-5.html#e5.2" class="evidence-link">[e5.2]</a> <a href="../results/extraction-result-5.html#e5.3" class="evidence-link">[e5.3]</a> <a href="../results/extraction-result-5.html#e5.0" class="evidence-link">[e5.0]</a> </li>
+    <li>BabyAI-Text: diff-history saves 25% compute to reach the same performance as full-history, despite lower dimension; combining compression with auxiliary prediction objectives sometimes further improves learning (Full-text+aux). <a href="../results/extraction-result-18.html#e18.0" class="evidence-link">[e18.0]</a> <a href="../results/extraction-result-18.html#e18.2" class="evidence-link">[e18.2]</a> </li>
+</ol>            <h4>Self-Evaluation of Law Novelty (produced by the generation model)</h4>
+            <p><strong>Likely Classification:</strong> <span style="color: orange; font-weight: bold;">somewhat-related-to-existing</span></p>
+        <p><strong>Explanation:</strong> Compression’s utility is empirically known for text processing, but this context-window-and-depth law as a governing principle for agent design is new here.</p>            <p><strong>What Already Exists:</strong> Compression and summarization have a long history in NLP and model memory, but are rarely formalized as fundamental bottlenecks limiting effective context and depth for agent planning.</p>            <p><strong>What is Novel:</strong> This law quantitatively links chosen memory compression ratio (not just format) to sample efficiency, planning depth, and performance ceiling, and synthesizes ablation and scaling evidence into a single predictive law.</p>
+        <p><strong>References:</strong> <ul>
+    <li>Papazian et al. (2023) diff History [applies diff, but does not generalize as law]</li>
+    <li>Zhou et al. (2021) Worldformer [advocates graph-diff for efficiency, not strict necessity]</li>
+    <li>Park et al. (2023) Generative Agents [summarization/planning, but not formal compression law]</li>
+</ul>
+            <h4>External Evaluations of this Law</h4>
+            <p><strong>Predictive Accuracy Evaluation:</strong> <span class="empty-note">Not available.</span></p>
+            <p><strong>Novelty Evaluation:</strong> <span class="empty-note">Not available (available only for a randomly selected subset of 100 laws, due to cost).</span></p>
+            <hr/>
+        </div>
+        <div class="section">
+            <h2>Theory (Additional Details)</h2>
+                        <h3>New Predictions (Likely outcome)</h3>
+            <ol>
+                <li>For any given prompt/context size, memory strategies yielding greater average compression (relative to original observations/action history) will enable successful task performance on longer-horizon instances than those using uncompressed/raw history.</li>
+                <li>In high-dimensional or verbose-text games (e.g., NetHack, Zork), agents with graph-diff, area-selection, or other compressive memory will scale to deeper horizons without drop-off, while full-history or verbose episodic agents will fail or saturate at shallow steps.</li>
+                <li>Adding an auxiliary prediction objective (e.g., world-model or diff-prediction) to compressed memory potentiates even faster convergence, but is less critical for already highly compressed histories.</li>
+            </ol>
+            <h3>New Predictions (Unknown outcome/high-entropy)</h3>
+            <ol>
+                <li>A hybrid strategy that adaptively selects among multiple compressive encodings (diff, graph-diff, summary) as a function of environment dynamics will further extend effective horizon or generalize to games with mixed text/state density.</li>
+                <li>In emergent narrative or creative IF domains, novel learned compression (beyond current heuristics) will enable cross-episode or even meta-memory composition for persistent recurring characters/goals.</li>
+                <li>Compression-based memory agents will, at sufficient scale, discover strategies invisible to full-history or reflection-only agents in games featuring deceptive observations or high-stakes planning.</li>
+            </ol>
+            <h3>Negative Experiments</h3>
+            <ol>
+                <li>If a non-compressive, verbose history agent achieves equal or better performance (sample efficiency and asymptotic score) at equal context/prompt size in a high-dimensional/complex text game, the theory would be falsified.</li>
+                <li>If compression degrades planning (e.g., induces information loss that cannot be remedied by additional tokens) across all environments, undermining the law's predictions.</li>
+                <li>If auxiliary world-model objectives only harm or never improve compressed-memory agents, it would refute the auxiliary benefit predicted.</li>
+            </ol>
+            <h3>Unaccounted for Evidence</h3>
+<ol>
+    <li>In babyAI-style environments, even though diff increases average token count, it still improves sample efficiency, suggesting additional factors like alignment with causal structure may also be in play. <a href="../results/extraction-result-18.html#e18.0" class="evidence-link">[e18.0]</a> </li>
+</ol>        </div>        <div style="height: 30px;"></div>
+    </div>
+</body>
+</html>

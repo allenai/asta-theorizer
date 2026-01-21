@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-2 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-2</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-2</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-0671fd553dd670a4e820553a974bc48040ba0819</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/0671fd553dd670a4e820553a974bc48040ba0819" target="_blank">Reflexion: language agents with verbal reinforcement learning</a></p>
+                <p><strong>Paper Venue:</strong> Neural Information Processing Systems</p>
+                <p><strong>Paper TL;DR:</strong> Reflexion is a novel framework to reinforce language agents not by updating weights, but instead through linguistic feedback, which obtains significant improvements over a baseline agent across diverse tasks (sequential decision-making, coding, language reasoning).</p>
+                <p><strong>Paper Abstract:</strong> Large language models (LLMs) have been increasingly used to interact with external environments (e.g., games, compilers, APIs) as goal-driven agents. However, it remains challenging for these language agents to quickly and efficiently learn from trial-and-error as traditional reinforcement learning methods require extensive training samples and expensive model fine-tuning. We propose Reflexion, a novel framework to reinforce language agents not by updating weights, but instead through linguistic feedback. Concretely, Reflexion agents verbally reflect on task feedback signals, then maintain their own reflective text in an episodic memory buffer to induce better decision-making in subsequent trials. Reflexion is flexible enough to incorporate various types (scalar values or free-form language) and sources (external or internally simulated) of feedback signals, and obtains significant improvements over a baseline agent across diverse tasks (sequential decision-making, coding, language reasoning). For example, Reflexion achieves a 91% pass@1 accuracy on the HumanEval coding benchmark, surpassing the previous state-of-the-art GPT-4 that achieves 80%. We also conduct ablation and analysis studies using different feedback signals, feedback incorporation methods, and agent types, and provide insights into how they affect performance.</p>
+                <p><strong>Cost:</strong> 0.01</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e2.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e2.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflexion (AlfWorld)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Reflexion agent (ReAct actor with verbal episodic memory) on ALFWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A language-agent framework that augments an LLM-based Actor (here using ReAct-style prompting) with a long-term episodic memory of verbal self-reflections (natural-language summaries of past failed trajectories) which are appended to the Actor's context to guide future trials; evaluated on the text-based ALFWorld environments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>ReAct + Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Actor: LLM prompted with ReAct (explicit intermediate thoughts) to generate actions; Evaluator: heuristic or LLM-based binary success signal; Self-Reflection: LLM producing natural-language experience summaries stored as episodic memories (mem) used to condition future action generation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-3 (LLM used as Actor / ReAct prompting; unspecified GPT-3 variant in AlfWorld experiments)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>long-term episodic memory of verbal self-reflections (plus short-term trajectory history as immediate context)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>memory entries (self-reflection text) are appended into the Actor's context window (prompt concatenation); short-term trajectory history used as immediate context; mem is a bounded sliding window (Ω typically 1–3) and truncated to last 3 experiences for AlfWorld.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFWorld (text-based interactive household tasks)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>completed 130/134 tasks (≈97.0% tasks solved) using heuristic self-evaluation and Reflexion; reported absolute improvement of 22 percentage points over the strong baseline across 12 iterative trials.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>ReAct-only baseline (no long-term verbal mem): substantially lower success (paper reports an absolute −22% gap vs Reflexion); baseline converges early (performance increases halt between trials 6 and 7) and exhibits a hallucination rate ≈22%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Persisting natural-language self-reflections stored as long-term episodic memory and concatenated into the LLM prompt enable the agent to (1) identify early mistakes in long trajectories, (2) provide actionable 'self-hints' that improve planning/search in subsequent trials, and (3) substantially boost multi-step text-game performance (∼+22% absolute on ALFWorld) relative to the same LLM acting without the memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Memory is constrained by LLM context size (mem window truncated to last Ω entries, typically 1–3); benefits depend on quality of self-evaluation (heuristic or LLM); can get stuck in local minima requiring creative exploration; requires careful bounding to avoid prompt overflow; exact baseline counts not always enumerated for each trial step.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Reflexion: language agents with verbal reinforcement learning', 'publication_date_yy_mm': '2023-03'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e2.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e2.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflexion (WebShop)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>ReAct + Reflexion agent evaluated on WebShop</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Same Reflexion framework (LLM Actor with appended verbal self-reflection memory) evaluated on WebShop e-commerce navigation/search tasks; reported failure to improve over baseline in this domain.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>ReAct + Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Actor: LLM using ReAct prompting to interact with a web-based shopping environment; Self-Reflection: LLM-generated verbal summaries of failed trials appended to memory and reused in retries.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>ReAct-style LLM agent (two-shot ReAct + Reflexion; specific LLM not explicitly named for WebShop runs)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>long-term episodic verbal memory (self-reflections)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>self-reflections appended to prompt/context for subsequent trials (same context-concatenation integration as other Reflexion experiments)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>WebShop (web-based e-commerce navigation/search benchmark)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>No meaningful improvement reported; ReAct + Reflexion did not significantly outperform ReAct across 100 WebShop customer shopping requests; runs terminated after 4 trials due to no signs of improvement.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>ReAct-only baseline (no long-term verbal mem): similar performance to Reflexion on WebShop (no significant difference reported).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Reflexion's verbal episodic memory approach can fail on tasks requiring broad, diverse exploration or highly creative search strategies (e.g., ambiguous e-commerce search); in WebShop experiments the agent did not generate helpful self-reflections and showed no learning improvement within few trials.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Reflexion struggles when task success requires diverse exploration or highly creative/novel strategies not easily recovered by reusing past verbal summaries; self-reflection quality degraded (did not produce helpful guidance), and the approach can get stuck in local minima early (terminated after few trials).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Reflexion: language agents with verbal reinforcement learning', 'publication_date_yy_mm': '2023-03'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>ALFWorld: Aligning Text and Embodied Environments for Interactive Learning <em>(Rating: 2)</em></li>
+                <li>ReAct: Synergizing Reasoning and Acting in Language Models <em>(Rating: 2)</em></li>
+                <li>TextWorld: A Learning Environment for Text-based Games <em>(Rating: 2)</em></li>
+                <li>WebShop: Towards Scalable Real-World Web Interaction with Grounded Language Agents <em>(Rating: 2)</em></li>
+                <li>In-context Policy Iteration <em>(Rating: 1)</em></li>
+                <li>Generative Agents: Interactive Simulacra of Human Behavior <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

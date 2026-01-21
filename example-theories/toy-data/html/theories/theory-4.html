@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structured Semantic Memory (Knowledge Graphs and Attribute-augmented Episodic Stores) is Essential for Long-horizon Planning and Generalization in LLM Text Game Agents - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Theory Details for theory-4</h1>
+
+        <div class="section">
+            <h2>Theory (General Information)</h2>
+            <div class="info-section">
+                <p><strong>ID:</strong> theory-4</p>
+                <p><strong>Name:</strong> Structured Semantic Memory (Knowledge Graphs and Attribute-augmented Episodic Stores) is Essential for Long-horizon Planning and Generalization in LLM Text Game Agents</p>
+                <p><strong>Type:</strong> general</p>
+                <p><strong>Theory Query:</strong> Build a theory of how language model agents can best be augmented with memory to perform well at text games, based on the following results.</p>
+                <p><strong>Description:</strong> LLM agents provided with structured, semantic memory formats—such as knowledge graphs (explicitly or via belief graphs), hybrid semantic-episodic graphs, or attribute-annotated episodic memory—enable richer, multi-hop reasoning about state, navigation, and plans than either unstructured episodic or pure summary memory. The graph or attribute structure not only supports efficient navigation and state tracking in partially observable games, but also enables multi-step reasoning, ensures consistency across steps, and enhances the generalization of agent policies to novel environments and tasks.</p>
+                <p><strong>Knowledge Cutoff Year:</strong> 2025</p>
+                <p><strong>Knowledge Cutoff Month:</strong> 5</p>
+                <p><strong>Base Model:</strong> openai/gpt-4.1-2025-04-14</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="section">
+            <h2>Theory (Statement/Laws)</h2>
+
+            <h3>Theory Statements/Laws</h3>
+            <hr/>
+            <h3>Statement 0: Structured Graph or Attribute-based Memories Outperform Unstructured or Plain Episodic Memory in Multi-step Reasoning and Generalization</h3>
+            <p><strong>Statement:</strong> Agents that employ explicit, structured semantic memory (such as knowledge graphs, hybrid semantic-episodic graphs, or attribute-augmented stores) achieve higher scores, faster convergence, and more robust generalization across unseen or complex tasks compared to agents using raw full-history, simple episodic note storage, or iterative summary memory.</p>
+            <p><strong>Domain/Scope:</strong> Text-based sequential environments with partial observability, complex navigation, multi-step objectives, or sparse feedback—e.g., TextWorld, NetHack, ALFWorld, and multi-agent simulation domains.</p>
+            <h4>Special Cases</h4>
+            <ol>
+                <li>If task structure is trivial, entirely observable, or not relationally complex, structure may provide only marginal gain or even introduce unnecessary overhead.</li>
+                <li>If graph extraction is low quality or introduces consistent errors, structured memory may not outperform simpler baselines.</li>
+            </ol>
+            <h4>Supporting Evidence for this Law</h4>
+<ol>
+    <li>AriGraph's hybrid semantic + episodic graph memory enables Ariadne agents to outperform full-history, summarization, RAG, Simulacra, and Reflexion baselines on TextWorld and matches the performance of full-level-observation or NetPlay-memory-oracle agents in NetHack. <a href="../results/extraction-result-5.html#e5.0" class="evidence-link">[e5.0]</a> <a href="../results/extraction-result-5.html#e5.1" class="evidence-link">[e5.1]</a> <a href="../results/extraction-result-5.html#e5.2" class="evidence-link">[e5.2]</a> <a href="../results/extraction-result-5.html#e5.3" class="evidence-link">[e5.3]</a> <a href="../results/extraction-result-5.html#e5.4" class="evidence-link">[e5.4]</a> <a href="../results/extraction-result-5.html#e5.5" class="evidence-link">[e5.5]</a> <a href="../results/extraction-result-5.html#e5.6" class="evidence-link">[e5.6]</a> <a href="../results/extraction-result-5.html#e5.7" class="evidence-link">[e5.7]</a> <a href="../results/extraction-result-5.html#e5.8" class="evidence-link">[e5.8]</a> </li>
+    <li>GATA's continuous belief graph outperforms text-only or RNN/hybrid memory baselines (Tr-DQN, Tr-DRQN, episodic count) and achieves large relative improvement (+20–24%) in generalization to unseen games. <a href="../results/extraction-result-7.html#e7.0" class="evidence-link">[e7.0]</a> <a href="../results/extraction-result-7.html#e7.2" class="evidence-link">[e7.2]</a> <a href="../results/extraction-result-7.html#e7.3" class="evidence-link">[e7.3]</a> <a href="../results/extraction-result-7.html#e7.4" class="evidence-link">[e7.4]</a> <a href="../results/extraction-result-7.html#e7.5" class="evidence-link">[e7.5]</a> <a href="../results/extraction-result-7.html#e7.6" class="evidence-link">[e7.6]</a> </li>
+    <li>KG-A2C (and derivatives) using knowledge graphs as structured memory deliver substantially faster convergence and higher scores compared to RL baselines lacking graph memory, especially on hard, partially observable IF games. <a href="../results/extraction-result-11.html#e11.0" class="evidence-link">[e11.0]</a> <a href="../results/extraction-result-11.html#e11.2" class="evidence-link">[e11.2]</a> <a href="../results/extraction-result-11.html#e11.3" class="evidence-link">[e11.3]</a> <a href="../results/extraction-result-11.html#e11.4" class="evidence-link">[e11.4]</a> <a href="../results/extraction-result-11.html#e11.5" class="evidence-link">[e11.5]</a> <a href="../results/extraction-result-11.html#e11.6" class="evidence-link">[e11.6]</a> <a href="../results/extraction-result-21.html#e21.2" class="evidence-link">[e21.2]</a> <a href="../results/extraction-result-19.html#e19.0" class="evidence-link">[e19.0]</a> <a href="../results/extraction-result-13.html#e13.0" class="evidence-link">[e13.0]</a> <a href="../results/extraction-result-13.html#e13.1" class="evidence-link">[e13.1]</a> </li>
+    <li>Attribute-based or graph-diff memory (MemInsight, Worldformer) produce large improvements over RAG-type baselines or unstructured episodic storage on QA and event summarization tasks. <a href="../results/extraction-result-23.html#e23.0" class="evidence-link">[e23.0]</a> <a href="../results/extraction-result-10.html#e10.0" class="evidence-link">[e10.0]</a> <a href="../results/extraction-result-10.html#e10.2" class="evidence-link">[e10.2]</a> </li>
+    <li>Simulacra/generative agent style unstructured episodic memory achieves only partial gains—AriGraph outperforms it, especially for tasks requiring planning/navigation via explicit semantic structure. <a href="../results/extraction-result-5.html#e5.6" class="evidence-link">[e5.6]</a> <a href="../results/extraction-result-5.html#e5.8" class="evidence-link">[e5.8]</a> </li>
+</ol>            <h4>Self-Evaluation of Law Novelty (produced by the generation model)</h4>
+            <p><strong>Likely Classification:</strong> <span style="color: orange; font-weight: bold;">somewhat-related-to-existing</span></p>
+        <p><strong>Explanation:</strong> Though structured memory is implemented in individual works, the generality of this as a law for scalable text-game planning/generalization is not formalized in the LLM agent field.</p>            <p><strong>What Already Exists:</strong> Knowledge graphs and structured memory are used individually in agent architectures and RL literature, but are often discussed as implementation details, not as a general property required for long-horizon generalization.</p>            <p><strong>What is Novel:</strong> This theory asserts that structure in memory (graph, attribute, semantic linkages) is the critical common factor for robust generalization and multi-step reasoning, above and beyond the effect of agent architecture alone.</p>
+        <p><strong>References:</strong> <ul>
+    <li>Adhikari et al. (2020) Learning Dynamic Belief Graphs [Belief graphs for RL]</li>
+    <li>Papazian et al. (2024) AriGraph [Semantic-episodic graphs in LLM agents]</li>
+    <li>Meng et al. (2025) MemInsight [Attribute-based structure in memory augmentation]</li>
+</ul>
+            <h4>External Evaluations of this Law</h4>
+            <p><strong>Predictive Accuracy Evaluation:</strong> <span class="empty-note">Not available.</span></p>
+            <p><strong>Novelty Evaluation:</strong> <span class="empty-note">Not available (available only for a randomly selected subset of 100 laws, due to cost).</span></p>
+            <hr/>
+            <h3>Statement 1: Hybrid Semantic-Episodic or Attribute-augmented Memories Enable State Tracking and Multi-hop Retrieval under Partial Observability</h3>
+            <p><strong>Statement:</strong> Hybrid semantic-episodic memory, or storage of attributes and fact-linked episodes, enables LLM agents to maintain state and plan even with limited local observations or restricted context windows, outperforming both fully unstructured episodic memory and naive summarization in navigation, multi-step planning, and partially observed games.</p>
+            <p><strong>Domain/Scope:</strong> Text environments with partial observability, dynamic state (where state is not re-observable after leaving), or high multi-hop inference demands—such as NetHack, TextWorld, Light, and open-ended game benchmarks.</p>
+            <h4>Special Cases</h4>
+            <ol>
+                <li>If the episodic memory alone suffices due to strict task locality or agent is repeatedly reset to an initial state, hybrid/attribute augmentation gains are marginal.</li>
+                <li>If attribute/semantic extraction is faulty or inconsistent, hybrid methods can underperform or be misleading.</li>
+            </ol>
+            <h4>Supporting Evidence for this Law</h4>
+<ol>
+    <li>Ariadne's episodic-augmented AriGraph achieves parity with memory-oracle NetPlay baselines despite only receiving localized observations; ablation removing episodic vertices in AriGraph leads to severe performance drops on instruction-heavy tasks (Cooking, Treasure Hunt Hard). <a href="../results/extraction-result-5.html#e5.0" class="evidence-link">[e5.0]</a> <a href="../results/extraction-result-5.html#e5.1" class="evidence-link">[e5.1]</a> <a href="../results/extraction-result-5.html#e5.7" class="evidence-link">[e5.7]</a> </li>
+    <li>MemInsight's attribute-based retrieval and embedding yields much higher recall, F1, and QA accuracy than non-structured RAG or summary memory; attribute-level augmentation improves context efficiency and retrieval quality. <a href="../results/extraction-result-23.html#e23.0" class="evidence-link">[e23.0]</a> </li>
+    <li>Simulacra/kindred unstructured episodic memory aids recency/importance, but fails at complex multi-hop tasks like Cleaning or planning navigation, where AriGraph's semantic links allow better performance. <a href="../results/extraction-result-5.html#e5.6" class="evidence-link">[e5.6]</a> <a href="../results/extraction-result-5.html#e5.8" class="evidence-link">[e5.8]</a> </li>
+    <li>Summary and RAG baselines in AriGraph paper perform better than full-history but are always inferior to AriGraph on partially observable or multi-step relational reasoning tasks. <a href="../results/extraction-result-5.html#e5.3" class="evidence-link">[e5.3]</a> <a href="../results/extraction-result-5.html#e5.4" class="evidence-link">[e5.4]</a> </li>
+</ol>            <h4>Self-Evaluation of Law Novelty (produced by the generation model)</h4>
+            <p><strong>Likely Classification:</strong> <span style="color: orange; font-weight: bold;">somewhat-related-to-existing</span></p>
+        <p><strong>Explanation:</strong> Somewhat related to prior KGs and hybrid memory models, but newly formalized as a high-level law for the specific task of LLM agent effectiveness and generalization.</p>            <p><strong>What Already Exists:</strong> Hybrid semantic-episodic memory is available in some recent cognitive architectures and graph/RAG systems, but its superiority in planning, navigation, and partial observability is typically shown in isolated results, not formulated as a central prerequisite for robust agent memory.</p>            <p><strong>What is Novel:</strong> Generalizes episodic/semantic augmentation as a universal requirement for partial observability and non-myopic planning, connecting to working memory theories from cognitive science and symbolic AI.</p>
+        <p><strong>References:</strong> <ul>
+    <li>Papazian et al. (2024) AriGraph [Hybrid graph memory]</li>
+    <li>Meng et al. (2025) MemInsight [Attribute-based episodic-semantic retrieval]</li>
+</ul>
+            <h4>External Evaluations of this Law</h4>
+            <p><strong>Predictive Accuracy Evaluation:</strong> <span class="empty-note">Not available.</span></p>
+            <p><strong>Novelty Evaluation:</strong> <span class="empty-note">Not available (available only for a randomly selected subset of 100 laws, due to cost).</span></p>
+            <hr/>
+        </div>
+        <div class="section">
+            <h2>Theory (Additional Details)</h2>
+                        <h3>New Predictions (Likely outcome)</h3>
+            <ol>
+                <li>In any novel multi-stage or procedurally generated text-based game that introduces new entities, relations, or unobservable state, LLM agents equipped with graph or attribute-augmented memory will generalize significantly better to unseen levels than those with pure flat episodic or summary memory.</li>
+                <li>Ablating the graph/attribute structure (reducing to episodic memory or summaries) leads to larger sample-inefficiency and more frequent failures in navigation or planning tasks, especially when re-visiting or re-planning is required.</li>
+                <li>Augmenting episodic agents with semantic/attribute links or referential indexes will increase performance particularly on tasks with multi-hop dependencies or those where intermediate goals must be remembered after distraction.</li>
+            </ol>
+            <h3>New Predictions (Unknown outcome/high-entropy)</h3>
+            <ol>
+                <li>Emergent agent behaviors—such as abduction of hidden state or abstract planning—could arise from more interpretable graph or attribute-augmented memory at sufficient complexity, enabling robust zero-shot transfer to new games.</li>
+                <li>Integration of learned, dynamically updatable graph schemas (or meta-attributes) could further close the gap to ground-truth or oracle performance in POMDPs without access to full observable state.</li>
+                <li>If embed-and-index methods can approach or surpass hand-engineered knowledge graphs as external memory for planning, purely neural-structured LLM memory could compete with (or replace) symbolic graph approaches.</li>
+            </ol>
+            <h3>Negative Experiments</h3>
+            <ol>
+                <li>If unstructured episodic or full-history agents match or outperform structured memory systems on POMDP or multi-hop planning games, the necessity of graph/attribute structure would be undermined.</li>
+                <li>If constructing or querying the structured memory is so noisy or lossy that performance drops below episodic or raw-summary agents across environments, the law is challenged.</li>
+                <li>If summary or RAG memory with purely neural retrieval achieves same generalization and sample efficiency as explicit semantic/attribute graphs, structure may not be as critical as predicted.</li>
+            </ol>
+            <h3>Unaccounted for Evidence</h3>
+<ol>
+    <li>Some text-game environments (e.g., heavily social, dialogue-driven, or trivially observable) may not expose the benefits of structure as sharply—generative/episodic agents can do well enough given sufficient recency/importance heuristics. <a href="../results/extraction-result-16.html#e16.0" class="evidence-link">[e16.0]</a> <a href="../results/extraction-result-5.html#e5.6" class="evidence-link">[e5.6]</a> <a href="../results/extraction-result-22.html#e22.4" class="evidence-link">[e22.4]</a> </li>
+    <li>Dependence on the accuracy of LLM-powered extraction/parsing can introduce noise—graph/semantic memory can become a bottleneck instead of a help. <a href="../results/extraction-result-5.html#e5.0" class="evidence-link">[e5.0]</a> <a href="../results/extraction-result-5.html#e5.1" class="evidence-link">[e5.1]</a> </li>
+</ol>        </div>        <div style="height: 30px;"></div>
+    </div>
+</body>
+</html>

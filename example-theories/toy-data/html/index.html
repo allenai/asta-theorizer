@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theory List - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>List of Theories</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Theory ID</th>
+                    <th style="width: 70%;">Theory Description</th>
+                    <th style="width: 15%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" style="background-color: #f0f8ff;"><strong>Theory Query:</strong> Build a theory of how language model agents can best be augmented with memory to perform well at text games, based on the following results.</td>
+                </tr>
+                <tr>
+                    <td>theory-8</td>
+                    <td><b>Name:</b> Reflective and Retrieval-Augmented Planning Substantially Improves LLM Agent Adaptability and Sample Efficiency<br><b>Description:</b> LLM-based game agents that are augmented with memory mechanisms supporting reflection (self-critique and synthesis of experience) and retrieval of relevant past trajectories (episodic or plan-based) show large and transferable improvements in solving diverse, complex, multi-step text games, especially ones with sparse rewards or creative bottlenecks. Integrating reflection/retrieval-based memory with action planning enables agents to avoid repeated failures, inject analogical knowledge from previous successful attempts, and bootstrap future behavior, in ways that pure model-based or direct RL-based agents cannot.<br><b>Self-classification:</b> <span style='color: orange; font-weight: bold;'>somewhat-related-to-existing</span><br><b>Version:</b> theorizer-literature-supported-accuracy-focused-12102025<br><b>Model:</b> openai/gpt-4.1-2025-04-14</td>
+                    <td><a href="theories/theory-8.html" class="btn">Details</a></td>
+                </tr>
+                <tr>
+                    <td>theory-7</td>
+                    <td><b>Name:</b> Hybrid Structured and Episodic Memory Enables Robust, Generalizable LLM Agent Performance in Text Games<br><b>Description:</b> Language model agents for text-based games achieve superior robustness, sample efficiency, and generalization when augmented with hybrid memory systems that combine explicit structured (e.g., knowledge-graph or belief-graph) state representations and episodic (trajectory or reflection-based) memory. Structured memory provides compact, relational representations that support multi-hop reasoning, navigation, and action-space pruning, while episodic memory enables recall of detailed instructions, procedures, and successful/failed experiences. The synergistic integration and principled retrieval of both kinds of memories enables agents to overcome both partial observability and long-horizon credit assignment bottlenecks, outperforming agents with either memory alone, with unstructured memory (e.g., full text history), or with naive retrieval/summarization.<br><b>Self-classification:</b> <span style='color: orange; font-weight: bold;'>somewhat-related-to-existing</span><br><b>Version:</b> theorizer-literature-supported-accuracy-focused-12102025<br><b>Model:</b> openai/gpt-4.1-2025-04-14</td>
+                    <td><a href="theories/theory-7.html" class="btn">Details</a></td>
+                </tr>
+                <tr>
+                    <td>theory-6</td>
+                    <td><b>Name:</b> Compression and Selection Mechanisms Are Essential to Overcome Scaling Limits for In-Context Memory in LLM Text-Game Agents<br><b>Description:</b> This theory posits that as text-game environments scale in observation length, object count, and task horizon, LLM and RL-based agents must rely on memory compression (e.g., diff-history, summarization, area selection) and relevance-based selection (e.g., retrieval, recency/importance scoring) rather than full retention of episode histories in prompt context. Without these, agents hit hard resource and sample efficiency ceilings due to context-window length, token costs, and cognitive overload. Compression must not discard critical state changes; selection must ensure salient, task-relevant cues are retained.<br><b>Self-classification:</b> <span style='color: orange; font-weight: bold;'>somewhat-related-to-existing</span><br><b>Version:</b> theorizer-literature-supported-accuracy-focused-12102025<br><b>Model:</b> openai/gpt-4.1-2025-04-14</td>
+                    <td><a href="theories/theory-6.html" class="btn">Details</a></td>
+                </tr>
+                <tr>
+                    <td>theory-5</td>
+                    <td><b>Name:</b> Structured, Task-Specific and Polymodal Memory Architectures Supercharge LLM Agents in Text Games<br><b>Description:</b> This theory asserts that language model agents in text-based games achieve superior generalization, planning, and long-horizon performance when their memory systems are structured and tailored to the needs of the game: (1) explicit knowledge graphs (semantic and episodic, e.g., AriGraph, GATA) for tracking entities and relations under partial observability; (2) retrieval-augmented episodic memory (e.g., RAP, MC-DML, ThinkThrice, Generative Agents) for analogical in-context learning, especially in open domains and non-repeatable tasks; and (3) compressed or summarized representations (e.g., diff-history, area selection, iterative summarization, Simulacra) for scaling under token or compute constraints. Structuring memory to both the game environment and agent’s cognitive demands—such as planning, exploration, and multi-agent social reasoning—enables (a) resource-efficient action selection, (b) robust recovery from stochastic exploration, (c) generalization to unseen games or roles, and (d) multi-agent coherence.<br><b>Self-classification:</b> <span style='color: orange; font-weight: bold;'>somewhat-related-to-existing</span><br><b>Version:</b> theorizer-literature-supported-accuracy-focused-12102025<br><b>Model:</b> openai/gpt-4.1-2025-04-14</td>
+                    <td><a href="theories/theory-5.html" class="btn">Details</a></td>
+                </tr>
+                <tr>
+                    <td>theory-4</td>
+                    <td><b>Name:</b> Structured Semantic Memory (Knowledge Graphs and Attribute-augmented Episodic Stores) is Essential for Long-horizon Planning and Generalization in LLM Text Game Agents<br><b>Description:</b> LLM agents provided with structured, semantic memory formats—such as knowledge graphs (explicitly or via belief graphs), hybrid semantic-episodic graphs, or attribute-annotated episodic memory—enable richer, multi-hop reasoning about state, navigation, and plans than either unstructured episodic or pure summary memory. The graph or attribute structure not only supports efficient navigation and state tracking in partially observable games, but also enables multi-step reasoning, ensures consistency across steps, and enhances the generalization of agent policies to novel environments and tasks.<br><b>Self-classification:</b> <span style='color: orange; font-weight: bold;'>somewhat-related-to-existing</span><br><b>Version:</b> theorizer-literature-supported-accuracy-focused-12102025<br><b>Model:</b> openai/gpt-4.1-2025-04-14</td>
+                    <td><a href="theories/theory-4.html" class="btn">Details</a></td>
+                </tr>
+                <tr>
+                    <td>theory-3</td>
+                    <td><b>Name:</b> Experience-Driven Memory Compression and Selective Retention as Core Drivers of Scalability and Efficiency in LLM Text Game Agents<br><b>Description:</b> LLM-based agents in text games achieve scalable, efficient, and generalizable behavior not by brute-force expansion of memory or parameters, but through two foundational strategies: (1) compressing and abstracting episodic information—via methods such as diffs, structured summaries, or attribute-value augmentation—thereby maximizing the functional memory horizon given context or compute limits, and (2) selecting and retaining only the most valuable episodes (e.g., successful, instructive, or high-signal experiences), which focuses agent updates and retrieval on what is most relevant for improvement. These principles, when systematically implemented, enable agents to surpass the limitations of naive context concatenation or indiscriminate storage, yielding significant gains in sample efficiency, planning horizon, and generalization to novel tasks.<br><b>Self-classification:</b> <span style='color: orange; font-weight: bold;'>somewhat-related-to-existing</span><br><b>Version:</b> theorizer-literature-supported-accuracy-focused-12102025<br><b>Model:</b> openai/gpt-4.1-2025-04-14</td>
+                    <td><a href="theories/theory-3.html" class="btn">Details</a></td>
+                </tr>
+                <tr>
+                    <td>theory-2</td>
+                    <td><b>Name:</b> Information Compression and History Representation are Key Limiting Factors in LLM Agent Memory Utility<br><b>Description:</b> This theory asserts that in text-based game environments with large, high-dimensional or verbose observations, the utility of memory for LLM agents is fundamentally constrained by the information-theoretic compressibility (i.e., sufficient representation) of experience. Explicitly, compressive forms of context/history (e.g., graph-diff, Unix diff, structured summaries) vastly outperform equally-sized or even much larger uncompressed or full-history approaches, by ensuring that relevant signals outlast window constraints and guide agent policy effectively. Token budget, compression ratio, and choice of memory summarization directly determine effective planning horizon and strategic depth.<br><b>Self-classification:</b> <span style='color: orange; font-weight: bold;'>somewhat-related-to-existing</span><br><b>Version:</b> theorizer-literature-supported-accuracy-focused-12102025<br><b>Model:</b> openai/gpt-4.1-2025-04-14</td>
+                    <td><a href="theories/theory-2.html" class="btn">Details</a></td>
+                </tr>
+                <tr>
+                    <td>theory-1</td>
+                    <td><b>Name:</b> Hybrid Structured-Episodic Memory as a Fundamental Requirement for Robust Performance in LLM-Based Text Game Agents<br><b>Description:</b> This theory posits that robust performance, generalization, and strategic flexibility in language model (LLM) agents across complex, partially observable text games require not just large memory but a principled integration of structured (e.g., knowledge/belief graph) and episodic/reflection-based memory. The synergy emerges because structured memory offers compact relational representations for navigation and reasoning, while episodic/reflection memory provides dynamic adaptation, procedural recall, and learning from both failure and success. Neither naive retention of all history nor pure reliance on unstructured episodic memory alone is sufficient for scaling or generalizing to new, difficult, or long-horizon tasks; selective retrieval and composition of these modalities is necessary to balance information compression, retrieval relevance, and depth of reasoning.<br><b>Self-classification:</b> <span style='color: orange; font-weight: bold;'>somewhat-related-to-existing</span><br><b>Version:</b> theorizer-literature-supported-accuracy-focused-12102025<br><b>Model:</b> openai/gpt-4.1-2025-04-14</td>
+                    <td><a href="theories/theory-1.html" class="btn">Details</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

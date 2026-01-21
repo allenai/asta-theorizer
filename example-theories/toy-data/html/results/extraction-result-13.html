@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-13 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-13</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-13</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-851bd5d845ecdb153927c67c2914438d335836c6</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/851bd5d845ecdb153927c67c2914438d335836c6" target="_blank">Thespian: Multi-Character Text Role-Playing Game Agents</a></p>
+                <p><strong>Paper Venue:</strong> EXAG@AIIDE</p>
+                <p><strong>Paper TL;DR:</strong> A thespian agent is presented that can learn to emulate multiple characters along with a soft prompt that can be used to direct it as to which character to play at any time along with an attention mechanism that allows the agent to learn new characters that are based on previously learned characters in a few-shot fashion.</p>
+                <p><strong>Paper Abstract:</strong> Text-adventure games and text role-playing games are grand challenges for reinforcement learning game playing agents. Text role-playing games are open-ended environments where an agent must faithfully play a particular character. We consider the distinction between characters and actors, where an actor agent has the ability to play multiple characters. We present a framework we call a thespian agent that can learn to emulate multiple characters along with a soft prompt that can be used to direct it as to which character to play at any time. We further describe an attention mechanism that allows the agent to learn new characters that are based on previously learned characters in a few-shot fashion. We show that our agent outperforms the state of the art agent framework in multi-character learning and few-shot learning.</p>
+                <p><strong>Cost:</strong> 0.012</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e13.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e13.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Knowledge-Graph augmented Advantage Actor-Critic (KG-A2C)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An actor-critic RL agent that augments its observation embedding with an explicit knowledge graph of observed world facts, embedding the graph via graph-attention and combining it with a recurrent observation encoder to produce action logits and a value estimate.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Graph constrained reinforcement learning for natural language action spaces</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Advantage-Actor Critic architecture augmented with an external knowledge graph that is updated from observations (rooms, objects, inventory, relations) and embedded via a graph-attention network; observations are also embedded via a GRU and concatenated with the KG embedding to inform actor and critic heads.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>structured external knowledge graph (observed-world facts)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>The agent updates a knowledge graph from textual observations; the KG is embedded with a graph-attention mechanism and combined with a recurrent GRU embedding of concatenated observation components to produce policy and value outputs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>LIGHT (custom map)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Thief-Only: thief score 93.2% (std 9.3), adv 3.8%, avg game steps 24.7; Adv-Only: thief 3.8%, adv 99.3% (std 4.8), avg steps 33.4; Both trained (single KG-A2C trained on both rewards): thief 88.2% (std 10.3), adv 68.6% (std 7.8), avg steps 33.1.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>KG-A2C provides an effective external memory for text-roleplaying tasks: when trained on a single character it achieves high character-specific scores; however, a single KG-A2C trained naively on multiple (conflicting) reward functions degrades performance (both-trained case).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>When trained on multiple character reward signals without disentangling (no prompts), the single KG-A2C tends to attempt to maximize all rewards and fails to differentiate characters; the paper does not report KG-A2C variants with different memory modalities beyond KG.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Thespian: Multi-Character Text Role-Playing Game Agents', 'publication_date_yy_mm': '2023-08'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e13.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e13.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Thespian</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Thespian agent (this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A single actor model built on the KG-A2C family that learns per-character soft prompts (learned embedding vectors) and produces a stack of character-specific action logits and value estimates so it can emulate multiple characters and be directed by a prompt.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Thespian agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Extends KG-A2C by (1) learning soft character prompts (trainable embedding vectors) concatenated with observation embeddings to produce character-conditioned internal states, and (2) producing a stack of action logits and value predictions (one per character) so the single model can output per-character policies; trained by rotating character-specific reward functions and updating only the selected logits/value for each episode.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>1) external knowledge graph (inherited from KG-A2C); 2) soft character prompts (learned embedding vectors stored as parameters)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Knowledge graph integration as in KG-A2C; soft character prompts are stored embedding vectors p_i concatenated with the current observation embedding o (cat(o, p_i)) and passed through trainable weights to produce a character-specific internal state; actor and critic heads produce per-character logits/values.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>LIGHT (custom map)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Thespian agent (single model trained on both characters) when prompted: Thief Prompt: thief score 92.9% (std 17.4), adv 3.8%, avg steps 22.1; Adventurer Prompt: thief 4.3%, adv 99.1% (std 11.1), avg steps 32.2; Random Prompt: thief 10.7% (std 12.8), adv 72.7% (std 37.5), avg steps 26.5.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Base KG-A2C trained on both characters (no prompting): thief 88.2% (std 10.3), adv 68.6% (std 7.8), avg steps 33.1.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>The thespian agent, using soft prompts plus KG memory, matches the performance of single-character KG-A2C models while being a single model that can switch characters via prompts; it avoids the degradation observed when a KG-A2C is trained on both reward functions without disentangling.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Performance depends on correct prompt input (random prompts lead to poor behavior); requires learning and storing per-character prompts; variance can be higher (noted std.dev for thief prompt). The approach relies on the underlying KG-A2C memory; no alternate memory modalities were compared in experiments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Thespian: Multi-Character Text Role-Playing Game Agents', 'publication_date_yy_mm': '2023-08'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e13.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e13.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Thespian-Attn</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Thespian Attention (few-shot blending module)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A lightweight attention module that, given a frozen pre-trained thespian agent, learns to blend the frozen per-character raw action logits (and uses observation-conditioned attention) to produce a new character policy in few-shot fashion without altering core model weights.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Thespian attention (module on frozen thespian)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>With the core thespian agent frozen, the module projects stacked observation embeddings and stacked per-character action logits into a joint space, computes observation-to-character attention scores, and forms a weighted average of raw logits (separately for verb and object) to produce final action distributions; also learns a new soft prompt for the new character.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>frozen stored per-character logits and soft prompts (parameterized memory of previously learned policies)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Operates on frozen outputs of the thespian (stacked per-character logits and trained prompt embeddings); projects observations and logits through FFNs, computes attention S = softmax((h_O * h_A) / m), and combines S^T * A (with observation scaling alpha_obs) to get final logits; does not alter frozen core weights.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>LIGHT (Thief/Adventurer -> new Rogue character; three map variants)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Few-shot learning of new 'Rogue' character: thespian attention converged by ~1,500 steps in adventurer-first and alternating maps; overall few-shot training limited to 3,000 steps; claimed to be ~10x faster than training the unfrozen agent (which converges after ~15,000 steps).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Unfrozen thespian agent trained from same starting point (no attention) required ~15,000 steps to converge to similar performance and suffered catastrophic forgetting of pre-trained characters; an approach rotating games for all three characters took >40,000 steps to converge.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Using frozen pre-trained character policies as a form of memory and learning an observation-conditioned blending via attention yields fast (few-shot) learning of a new character (~10x faster) while preserving previous character behaviors; operating on raw logits (not softmaxed probabilities) is important for successful blending.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Performance can be biased by pre-training regimen (overfitting to the last-trained character can skew attention weights); requires careful hyperparameter tuning (learning rate, value-loss coefficient); some alternative attention formulations (over prompts or over probabilities) failed or were inferior.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Thespian: Multi-Character Text Role-Playing Game Agents', 'publication_date_yy_mm': '2023-08'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e13.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e13.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Q*BERT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Q*BERT (KG-A2C + BERT extension)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An extension of the KG-A2C family that incorporates a BERT language model into the agent architecture to improve language understanding and action selection in text games (mentioned as prior work).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Q*BERT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Reported prior work that extended KG-A2C by integrating BERT into the model architecture to leverage pre-trained language model capabilities alongside knowledge-graph-based state representations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>BERT (as reported in cited prior work)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>knowledge graph (as inherited from KG-A2C) plus BERT contextual representations (not explicitly described as memory in the present paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Mentioned as integrating BERT into the KG-A2C family architecture; specifics not detailed in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Mentioned in context of text-adventure RL benchmarks (general, e.g., Text-based games / LIGHT); not evaluated in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Mentioned as prior art showing integration of pre-trained LMs with KG-A2C-style architectures; no experimental details or comparisons provided in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Not evaluated or detailed in this paper; specifics left to the cited prior work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Thespian: Multi-Character Text Role-Playing Game Agents', 'publication_date_yy_mm': '2023-08'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e13.4">
+                <h3 class="extraction-instance">Extracted Data Instance 4 (e13.4)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GATA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>GATA (Graph-based Agent for Text Adventures)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A transformer-based agent that builds a knowledge-graph representation of the world and trains via a combination of RL and self-supervised learning (mentioned in related work).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>GATA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Prior work that constructs a knowledge-graph based representation on top of a transformer agent and uses RL plus self-supervised objectives; mentioned as an alternate KG-based approach for text games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>knowledge graph (external structured memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Builds and uses a knowledge-graph representation of the world to inform a transformer-based agent; specifics not detailed in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as related work demonstrating KG-based representations combined with transformer models for text-game play; no direct comparisons provided here.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Not evaluated in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Thespian: Multi-Character Text Role-Playing Game Agents', 'publication_date_yy_mm': '2023-08'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Graph constrained reinforcement learning for natural language action spaces <em>(Rating: 2)</em></li>
+                <li>How to avoid being eaten by a grue: Structured exploration strategies for textual worlds <em>(Rating: 2)</em></li>
+                <li>Learning to speak and act in a fantasy text adventure game <em>(Rating: 1)</em></li>
+                <li>Model ensemble instead of prompt fusion: a sample-specific knowledge transfer method for few-shot prompt tuning <em>(Rating: 1)</em></li>
+                <li>Learning dynamic knowledge graphs to generalize on text-based games <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

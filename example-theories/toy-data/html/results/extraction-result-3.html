@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-3 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-3</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-3</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-c36b4aec0c26f1ff5b3cf7e86c0b90f51575ebea</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/c36b4aec0c26f1ff5b3cf7e86c0b90f51575ebea" target="_blank">Deciphering Digital Detectives: Understanding LLM Behaviors and Capabilities in Multi-Agent Mystery Games</a></p>
+                <p><strong>Paper Venue:</strong> Annual Meeting of the Association for Computational Linguistics</p>
+                <p><strong>Paper TL;DR:</strong> This work introduces the first dataset specifically for Jubensha, including character scripts and game rules, to foster AI agent development in this complex narrative environment, and develops novel methods measuring their mastery of case information and reasoning skills.</p>
+                <p><strong>Paper Abstract:</strong> In this study, we explore the application of Large Language Models (LLMs) in \textit{Jubensha}, a Chinese detective role-playing game and a novel area in Artificial Intelligence (AI) driven gaming. We introduce the first dataset specifically for Jubensha, including character scripts and game rules, to foster AI agent development in this complex narrative environment. Our work also presents a unique multi-agent interaction framework using LLMs, allowing AI agents to autonomously engage in this game. To evaluate the gaming performance of these AI agents, we developed novel methods measuring their mastery of case information and reasoning skills. Furthermore, we incorporated the latest advancements in in-context learning to improve the agents' performance in information gathering, murderer identification, and logical reasoning. The experimental results validate the effectiveness of our proposed methods. This work aims to offer a novel perspective on understanding LLM capabilities and establish a new benchmark for evaluating large language model-based agents.</p>
+                <p><strong>Cost:</strong> 0.01</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e3.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e3.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>ThinkThrice</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>ThinkThrice (三思) Multi-Agent Framework for Jubensha</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A multi-agent interaction framework for playing Jubensha (Chinese multi-player detective text games) using LLM-based player agents augmented with a retrieval memory, plus in-context modules for self-refinement and self-verification to improve information gathering and reduce hallucination.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>ThinkThrice LLM-based agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An LLM-driven player agent instantiated within the ThinkThrice framework that (1) maintains an external per-agent memory of observations, (2) retrieves recent relevant memories when producing actions, and (3) uses Self-Refinement (SR) to augment initial answers with script facts and Self-Verification (SV) to check facts against the agent's script before outputting answers. Agents operate synchronously in multi-round dialogue under a scripted host.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-3.5 (gpt-3.5-turbo-16k-0613) for gameplay; GPT-4 (gpt-4-1106-preview) evaluated for some reasoning tasks (both used elsewhere in experiments as noted).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Retrieval-augmented external vector memory (per-agent episodic/interaction memory stored as embeddings).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Observations are embedded and stored in an external vector database exclusive to each agent (OpenAI embedding models used). At decision time the agent uses Faiss to retrieve the top-5 most similar historical records and includes those retrieved memory fragments in the prompt (context window) for the LLM.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jubensha (the authors' new Chinese multi-player scripted murder-mystery text-game dataset / environment)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Factual QA (Other's questions average accuracy): MR only = 0.402; MR+SR = 0.471; MR+SR+SV (N=3 attempts) = 0.498. Similarity (chat history vs all scripts) OpenAI-embedding cosine: MR = 0.798; MR+SR = 0.820; MR+SR+SV (N=3) = 0.831. MR+SR+SV (N=3) achieved the highest average civilian win rate and murderer identification accuracy among tested architectures (exact win-rate numbers not enumerated in table text). In inferential reasoning tasks, MR+SR+SV (N=3) ranked second to Full Script Access; model choice (GPT-4 vs GPT-3.5) further amplified performance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>No MR (memoryless baseline) — Factual QA: Own-script Q accuracy ≈ 0.770; Other's questions average accuracy = 0.305. Similarity (chat vs scripts) OpenAI-embedding cosine: 0.062. (Reported as the 'No MR' rows in Table 5 and Table 6.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>1) Retrieval-augmented per-agent memory (MR) substantially increases agents' ability to answer factual questions about other players (Other's Q accuracy improves from ~0.305 to ~0.402). 2) Self-Refinement (SR) increases the detail/completeness of responses and further boosts factual accuracy (Other's Q avg up to ~0.471). 3) Self-Verification (SV), allowing multiple regeneration attempts and scoring for authenticity, yields additional gains (MR+SR+SV(N=3) Other's Q avg ≈ 0.498) and produces chat histories more similar to full scripts (OpenAI cosine similarity up to 0.831). 4) Agents with MR+SR+SV achieve the best downstream outcomes (higher civilian win rate and murderer identification accuracy), and more available information (e.g., Full Script Access) yields still stronger inferential performance; model capability (GPT-4 > GPT-3.5) also strongly affects reasoning performance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Reported issues and limitations include: (a) LLM hallucinations necessitate a verification module (SV) and the SV design still requires attempts and scoring heuristics; (b) limited context windows motivate external memory but introduce design choices (embedding model, chunking, number of retrieved items — authors used top-5); (c) variability and stochasticity of LLM outputs cause experimental variance (authors ran multiple seeds/runs but note variability remains); (d) costs and replication challenges due to proprietary model versions and compute; (e) evaluation primarily in Chinese on the Jubensha dataset, so generalization across languages/games was not established.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>supporting_tables_or_figures</strong></td>
+                            <td>Table 5 (factual QA results: No MR vs MR vs MR+SR vs MR+SR+SV), Table 6 (chat/script similarity scores), Figure 3 (win rate and murderer identification accuracy across architectures), Figure 4 and Table 7 (inferential QA and qualitative reasoning comparisons).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Deciphering Digital Detectives: Understanding LLM Behaviors and Capabilities in Multi-Agent Mystery Games', 'publication_date_yy_mm': '2023-12'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Generative agents: Interactive simulacra of human behavior <em>(Rating: 2)</em></li>
+                <li>Exploring large language models for communication games: An empirical study on werewolf <em>(Rating: 2)</em></li>
+                <li>Can large language models play text games well? current state-of-the-art and open questions <em>(Rating: 1)</em></li>
+                <li>Reflexion: Language agents with verbal reinforcement learning <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-11 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-11</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-11</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-028c1a07ac62bbdb681d11cacf4c7485f9aa3ef7</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/028c1a07ac62bbdb681d11cacf4c7485f9aa3ef7" target="_blank">Graph Constrained Reinforcement Learning for Natural Language Action Spaces</a></p>
+                <p><strong>Paper Venue:</strong> International Conference on Learning Representations</p>
+                <p><strong>Paper TL;DR:</strong> KG-A2C, an agent that builds a dynamic knowledge graph while exploring and generates actions using a template-based action space is presented, arguing that the dual uses of the knowledge graph to reason about game state and to constrain natural language generation are the keys to scalable exploration of combinatorially large natural language actions.</p>
+                <p><strong>Paper Abstract:</strong> Interactive Fiction games are text-based simulations in which an agent interacts with the world purely through natural language. They are ideal environments for studying how to extend reinforcement learning agents to meet the challenges of natural language understanding, partial observability, and action generation in combinatorially-large text-based action spaces. We present KG-A2C, an agent that builds a dynamic knowledge graph while exploring and generates actions using a template-based action space. We contend that the dual uses of the knowledge graph to reason about game state and to constrain natural language generation are the keys to scalable exploration of combinatorially large natural language actions. Results across a wide variety of IF games show that KG-A2C outperforms current IF agents despite the exponential increase in action space size.</p>
+                <p><strong>Cost:</strong> 0.019</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e11.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e11.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Knowledge Graph Advantage Actor Critic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An on-policy RL agent that builds a dynamic knowledge graph from text observations and uses it both as a state representation (via GAT embeddings) and to constrain template-based natural language action decoding (graph mask). Demonstrated across 28 Jericho games, outperforming a strong template-based baseline on most games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Actor–critic RL agent that encodes observations (GRUs + subword tokens) and a dynamic knowledge graph (embedded with Graph Attention Networks) into a joint state vector s_t; decodes actions by first predicting a template then predicting object tokens conditioned on previous decoded tokens, using a graph-derived mask to limit object choices.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>dynamic knowledge graph (structured, graph-formed external memory of <subject,relation,object> triples)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph is updated each step from observations (OpenIE + heuristic rules), embedded via Graph Attention Network into vector g_t which is concatenated with encoded observation and score; additionally used to create a graph mask that restricts object choices during template action decoding.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (suite of human-made Interactive Fiction games, e.g. Zork1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Across 28 Jericho games KG-A2C matches or outperforms the Template-DQN baseline on 23/28 games; example: Zork1 score = 34 (KG-A2C) vs 9.9 (TDQN). See Table 1 for per-game raw scores.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Template-DQN baseline (no KG): e.g., Zork1 score = 9.9; also ablations without masking/with limited GAT show reduced sample efficiency or lower per-game scores (see ablations).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>A dynamic knowledge graph used as state and to constrain language generation (graph mask) enables scaling RL agents to very large template-based natural language action spaces; KG-A2C outperforms a strong template-based baseline (TDQN) on most tested games and converges faster when graph attention or graph masking is available. The graph serves dual roles: improved state disambiguation (partial observability, commonsense grounding) and strong pruning of action space during decoding.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Relies on external tools/handicaps: Jericho's valid-action detection and load/save 'handicap' were used in experiments; knowledge extraction depends on OpenIE plus heuristics which may be imperfect for IF narrative text; random addition of unseen objects to the mask (probability p_m) is needed to avoid over-pruning; supervised valid-action auxiliary losses remain necessary—memory alone did not remove the need for that supervision.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Graph Constrained Reinforcement Learning for Natural Language Action Spaces', 'publication_date_yy_mm': '2020-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e11.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e11.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-DQN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Knowledge Graph DQN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Prior approach that builds a knowledge graph during exploration and uses it as a state representation for deep Q-learning in text-adventure games, showing that graph-based state representations can help with partial observability and commonsense reasoning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Playing text-adventure games with graph-based deep reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-DQN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A deep Q-learning agent that constructs a knowledge graph from observations and uses the graph as the agent's state representation for value estimation; introduced in prior work by the same authors and cited as motivating the current KG-A2C design.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>knowledge graph (structured external memory of extracted triples)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph built from observations and used as the agent's state representation for Q-value estimation (no template-based decoding integration in that work as described here).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Previously evaluated on text-adventure game(s) in earlier work (single domain experiments cited); in this paper it is cited but not re-evaluated on the Jericho suite.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Prior work established that knowledge-graph state representations assist with partial observability and commonsense reasoning in text games; motivated the use of graphs here but did not address large template-based generation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Earlier KG-DQN was evaluated in a single domain and did not incorporate the graph to constrain natural language generation (template decoding), limiting applicability to combinatorially large language action spaces.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Graph Constrained Reinforcement Learning for Natural Language Action Spaces', 'publication_date_yy_mm': '2020-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e11.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e11.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>A2C (no KG)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Advantage Actor Critic without Knowledge Graph (ablation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An ablation variant that removes the knowledge graph entirely so the state embedding is just the encoded observation + score and no graph mask is used for decoding actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>A2C (no KG)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Standard A2C agent variant in the paper's ablations: observation encoder and critic remain, but no knowledge-graph construction, no GAT embedding, and no graph mask during action decoding.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>none (no external or structured memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Zork1 (ablation experiments); evaluated as part of the ablation suite</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>On Zork1 the ablated A2C (no KG) achieved approximately the same asymptotic score (~34 points) as KG-A2C in the reported runs but converged slightly slower—i.e., knowledge-graph components improved learning speed though asymptotic performance on Zork1 was similar.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Removing the knowledge graph did not necessarily reduce final asymptotic score on Zork1 in these runs, but agents with access to either graph attention or the graph mask converged faster (better sample efficiency).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Although asymptotic performance on Zork1 was similar in this experiment, the knowledge graph provided benefits in convergence speed and broader generalization across many games; results may be game-dependent and some games show larger gaps.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Graph Constrained Reinforcement Learning for Natural Language Action Spaces', 'publication_date_yy_mm': '2020-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e11.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e11.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C-no-mask</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>KG-A2C without Graph Mask (ablation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Ablation that builds the knowledge graph and uses GAT embeddings in the state but does not apply the graph-derived mask to constrain object decoding during template-based action generation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C-no-mask</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Same as KG-A2C but the graph mask (which restricts object predictions to entities present in the graph mask) is ablated; the knowledge graph still contributes to the state via the GAT embedding.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>dynamic knowledge graph (used for state only, mask removed)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph is built and embedded into state (GAT) but is not used to constrain object decoding (no mask).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Zork1 and the full Jericho suite (ablation reported on Zork1 and a larger study across games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>On Zork1 (Table 2) KG-A2C-no-mask scored 27 (vs KG-A2C-full 34 on Zork1); in the larger study KG-A2C-full outperformed no-mask on 10 games and was outperformed on 6.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>KG-A2C-full (with mask + GAT) Zork1 score = 34 (examples); TDQN baseline Zork1 = 9.9</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Removing the graph mask reduces performance on some games (e.g., Zork1: 27 vs 34) and indicates that using the graph to constrain action generation is a key mechanism for effective exploration in large template action spaces.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Without the mask the decoder must consider many more candidate objects, hurting sample efficiency and sometimes final performance; however, mask usefulness is game-dependent (no-mask outperformed full on some games).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Graph Constrained Reinforcement Learning for Natural Language Action Spaces', 'publication_date_yy_mm': '2020-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e11.4">
+                <h3 class="extraction-instance">Extracted Data Instance 4 (e11.4)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C-no-gat</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>KG-A2C without Graph Attention (ablation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Ablation that constructs the knowledge graph and uses the graph mask but removes the Graph Attention Network (GAT) embedding; the graph is still used to constrain decoding but not embedded via attention.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C-no-gat</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Knowledge graph is constructed and the graph mask is applied during decoding, but GAT-based embedding of the graph is removed; the agent uses the same state embedding as the A2C ablation (no GAT component).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>dynamic knowledge graph (used for masking but not GAT-based embedding)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph is built and used for action masking; GAT embedding component is removed (graph not embedded via self-attention into g_t).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Zork1 (ablation studied) and general Jericho evaluation (component ablations discussed)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Retaining either graph attention or graph masking helps convergence; removing GAT while keeping mask still provides benefits over having no graph at all (improves sample efficiency), but the paper does not report a single aggregated numeric score for the no-gat variant in the main table.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Specific numeric comparisons for the no-gat variant are not provided in the paper's main result tables; effect seen primarily as modest changes in learning speed/sample efficiency.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Graph Constrained Reinforcement Learning for Natural Language Action Spaces', 'publication_date_yy_mm': '2020-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e11.5">
+                <h3 class="extraction-instance">Extracted Data Instance 5 (e11.5)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C-unsupervised</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>KG-A2C without supervised valid-action loss (ablation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Variant that retains the knowledge graph and masking but disables the supervised auxiliary valid-action losses for template and object prediction, forcing the agent to explore the template space without valid-action supervision.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C-unsupervised</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>KG-A2C variant where the valid-action cross-entropy losses L_T and L_O are disabled and entropy is calculated over the full action set, so the agent must learn without access to Jericho's valid-action supervision.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>dynamic knowledge graph (retained)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph used for state and mask as in KG-A2C, but no supervised valid-action training signal provided.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho suite (experiments reported)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Fails to achieve any score when trained for the same number of steps as other agents (reported as 'fails to achieve any score').</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Access to supervised valid-action signals (the auxiliary cross-entropy losses using valid actions from Jericho) is important; a knowledge graph by itself was insufficient to enable exploration of the huge template action space without that auxiliary supervision.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Indicates that memory (knowledge graph) alone does not solve exploration/pruning; external supervision (valid-action detection) or comparable signal is required to learn effectively in the large template action space.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Graph Constrained Reinforcement Learning for Natural Language Action Spaces', 'publication_date_yy_mm': '2020-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e11.6">
+                <h3 class="extraction-instance">Extracted Data Instance 6 (e11.6)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C-seq</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>KG-A2C with Sequence (word-by-word) Decoding</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Variant that discards the template action space and decodes actions word-by-word up to four words, with teacher-forcing and a supervised valid-action loss, to test whether template structure is necessary.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C-seq</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Same KG-A2C architecture but action decoder generates sequences token-by-token from the full vocabulary (max 4 tokens), uses teacher-forcing with probability p_valid and a supervised valid-action loss computed by sampling a valid action as a training target.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>dynamic knowledge graph (retained)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph used for state embedding and mask (where applicable), but action space is full-token sequence rather than template+object filling.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Zork1 and other games (ablation experiments)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Reached low asymptotic performance (~8 points on Zork1), significantly worse than template-based agents despite teacher forcing and longer training.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Using the full token-level action space (sequence decoding) performs poorly even with KG and teacher-forcing; the template action space is necessary for effective exploration in extremely large natural language action spaces.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Sequence decoding expands the action space by orders of magnitude compared to template-based actions, making exploration infeasible in practice even with memory and supervised signals.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Graph Constrained Reinforcement Learning for Natural Language Action Spaces', 'publication_date_yy_mm': '2020-01'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Playing text-adventure games with graph-based deep reinforcement learning <em>(Rating: 2)</em></li>
+                <li>Transfer in deep reinforcement learning using knowledge graphs <em>(Rating: 2)</em></li>
+                <li>Interactive fiction games: A colossal adventure <em>(Rating: 2)</em></li>
+                <li>Learn what not to learn: Action elimination with deep reinforcement learning <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structured, Task-Specific and Polymodal Memory Architectures Supercharge LLM Agents in Text Games - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Theory Details for theory-5</h1>
+
+        <div class="section">
+            <h2>Theory (General Information)</h2>
+            <div class="info-section">
+                <p><strong>ID:</strong> theory-5</p>
+                <p><strong>Name:</strong> Structured, Task-Specific and Polymodal Memory Architectures Supercharge LLM Agents in Text Games</p>
+                <p><strong>Type:</strong> general</p>
+                <p><strong>Theory Query:</strong> Build a theory of how language model agents can best be augmented with memory to perform well at text games, based on the following results.</p>
+                <p><strong>Description:</strong> This theory asserts that language model agents in text-based games achieve superior generalization, planning, and long-horizon performance when their memory systems are structured and tailored to the needs of the game: (1) explicit knowledge graphs (semantic and episodic, e.g., AriGraph, GATA) for tracking entities and relations under partial observability; (2) retrieval-augmented episodic memory (e.g., RAP, MC-DML, ThinkThrice, Generative Agents) for analogical in-context learning, especially in open domains and non-repeatable tasks; and (3) compressed or summarized representations (e.g., diff-history, area selection, iterative summarization, Simulacra) for scaling under token or compute constraints. Structuring memory to both the game environment and agent’s cognitive demands—such as planning, exploration, and multi-agent social reasoning—enables (a) resource-efficient action selection, (b) robust recovery from stochastic exploration, (c) generalization to unseen games or roles, and (d) multi-agent coherence.</p>
+                <p><strong>Knowledge Cutoff Year:</strong> 2025</p>
+                <p><strong>Knowledge Cutoff Month:</strong> 5</p>
+                <p><strong>Base Model:</strong> openai/gpt-4.1-2025-04-14</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="section">
+            <h2>Theory (Statement/Laws)</h2>
+
+            <h3>Theory Statements/Laws</h3>
+            <hr/>
+            <h3>Statement 0: Structured (Graph- or Summary-Based) Memory Law</h3>
+            <p><strong>Statement:</strong> LLM/text-game agents provided with semantically-structured external memory (e.g., dynamic knowledge graphs, summarized representations, area-scoped state) achieve higher generalization, sample efficiency, task success, and error reduction than agents with only unstructured, truncated, full-history, or short-window memory, especially in partially observable, multi-step, and/or large action/state space text games.</p>
+            <p><strong>Domain/Scope:</strong> Applies to LLM-based or RL+LM agents in partially observable, multi-step, multi-object text-based games and environments where context-window or computational constraints limit effective memory; includes benchmarks like TextWorld, Jericho, NetHack, Goedendag, ScienceWorld, and open-ended role-playing.</p>
+            <h4>Special Cases</h4>
+            <ol>
+                <li>Games with trivial state/action spaces show less benefit.</li>
+                <li>When a perfect state oracle (e.g., ground-truth full graph) is available, further structuring may reach an empirical upper bound.</li>
+            </ol>
+            <h4>Supporting Evidence for this Law</h4>
+<ol>
+    <li>AriGraph's semantic+episodic memory substantially outperforms full-history, iterative summarization, RAG, Simulacra, Reflexion, and RL baselines across TextWorld tasks; knowledge-graph memory (KG-A2C, GATA) consistently beats text-only, n-gram, or recurrence-only baselines on Jericho and TextWorld. <a href="../results/extraction-result-5.html#e5.0" class="evidence-link">[e5.0]</a> <a href="../results/extraction-result-5.html#e5.2" class="evidence-link">[e5.2]</a> <a href="../results/extraction-result-5.html#e5.3" class="evidence-link">[e5.3]</a> <a href="../results/extraction-result-5.html#e5.4" class="evidence-link">[e5.4]</a> <a href="../results/extraction-result-5.html#e5.5" class="evidence-link">[e5.5]</a> <a href="../results/extraction-result-5.html#e5.6" class="evidence-link">[e5.6]</a> <a href="../results/extraction-result-5.html#e5.7" class="evidence-link">[e5.7]</a> <a href="../results/extraction-result-7.html#e7.0" class="evidence-link">[e7.0]</a> <a href="../results/extraction-result-7.html#e7.1" class="evidence-link">[e7.1]</a> <a href="../results/extraction-result-7.html#e7.2" class="evidence-link">[e7.2]</a> <a href="../results/extraction-result-7.html#e7.3" class="evidence-link">[e7.3]</a> <a href="../results/extraction-result-7.html#e7.4" class="evidence-link">[e7.4]</a> <a href="../results/extraction-result-7.html#e7.5" class="evidence-link">[e7.5]</a> <a href="../results/extraction-result-7.html#e7.6" class="evidence-link">[e7.6]</a> <a href="../results/extraction-result-9.html#e9.0" class="evidence-link">[e9.0]</a> <a href="../results/extraction-result-9.html#e9.1" class="evidence-link">[e9.1]</a> <a href="../results/extraction-result-10.html#e10.0" class="evidence-link">[e10.0]</a> <a href="../results/extraction-result-10.html#e10.1" class="evidence-link">[e10.1]</a> <a href="../results/extraction-result-10.html#e10.2" class="evidence-link">[e10.2]</a> <a href="../results/extraction-result-10.html#e10.3" class="evidence-link">[e10.3]</a> <a href="../results/extraction-result-10.html#e10.4" class="evidence-link">[e10.4]</a> <a href="../results/extraction-result-10.html#e10.5" class="evidence-link">[e10.5]</a> <a href="../results/extraction-result-11.html#e11.0" class="evidence-link">[e11.0]</a> <a href="../results/extraction-result-11.html#e11.2" class="evidence-link">[e11.2]</a> <a href="../results/extraction-result-11.html#e11.3" class="evidence-link">[e11.3]</a> <a href="../results/extraction-result-11.html#e11.4" class="evidence-link">[e11.4]</a> <a href="../results/extraction-result-11.html#e11.5" class="evidence-link">[e11.5]</a> <a href="../results/extraction-result-11.html#e11.6" class="evidence-link">[e11.6]</a> <a href="../results/extraction-result-12.html#e12.0" class="evidence-link">[e12.0]</a> <a href="../results/extraction-result-12.html#e12.1" class="evidence-link">[e12.1]</a> <a href="../results/extraction-result-12.html#e12.2" class="evidence-link">[e12.2]</a> <a href="../results/extraction-result-13.html#e13.0" class="evidence-link">[e13.0]</a> <a href="../results/extraction-result-13.html#e13.1" class="evidence-link">[e13.1]</a> <a href="../results/extraction-result-13.html#e13.2" class="evidence-link">[e13.2]</a> <a href="../results/extraction-result-13.html#e13.3" class="evidence-link">[e13.3]</a> <a href="../results/extraction-result-13.html#e13.4" class="evidence-link">[e13.4]</a> <a href="../results/extraction-result-14.html#e14.2" class="evidence-link">[e14.2]</a> <a href="../results/extraction-result-14.html#e14.0" class="evidence-link">[e14.0]</a> <a href="../results/extraction-result-15.html#e15.0" class="evidence-link">[e15.0]</a> <a href="../results/extraction-result-15.html#e15.1" class="evidence-link">[e15.1]</a> <a href="../results/extraction-result-15.html#e15.2" class="evidence-link">[e15.2]</a> <a href="../results/extraction-result-16.html#e16.0" class="evidence-link">[e16.0]</a> <a href="../results/extraction-result-16.html#e16.1" class="evidence-link">[e16.1]</a> <a href="../results/extraction-result-16.html#e16.2" class="evidence-link">[e16.2]</a> <a href="../results/extraction-result-17.html#e17.0" class="evidence-link">[e17.0]</a> <a href="../results/extraction-result-17.html#e17.1" class="evidence-link">[e17.1]</a> <a href="../results/extraction-result-17.html#e17.2" class="evidence-link">[e17.2]</a> <a href="../results/extraction-result-17.html#e17.3" class="evidence-link">[e17.3]</a> <a href="../results/extraction-result-18.html#e18.0" class="evidence-link">[e18.0]</a> <a href="../results/extraction-result-18.html#e18.1" class="evidence-link">[e18.1]</a> <a href="../results/extraction-result-18.html#e18.2" class="evidence-link">[e18.2]</a> <a href="../results/extraction-result-19.html#e19.0" class="evidence-link">[e19.0]</a> <a href="../results/extraction-result-19.html#e19.1" class="evidence-link">[e19.1]</a> <a href="../results/extraction-result-19.html#e19.2" class="evidence-link">[e19.2]</a> <a href="../results/extraction-result-19.html#e19.3" class="evidence-link">[e19.3]</a> <a href="../results/extraction-result-20.html#e20.0" class="evidence-link">[e20.0]</a> <a href="../results/extraction-result-20.html#e20.1" class="evidence-link">[e20.1]</a> <a href="../results/extraction-result-21.html#e21.0" class="evidence-link">[e21.0]</a> <a href="../results/extraction-result-21.html#e21.1" class="evidence-link">[e21.1]</a> <a href="../results/extraction-result-21.html#e21.2" class="evidence-link">[e21.2]</a> <a href="../results/extraction-result-22.html#e22.0" class="evidence-link">[e22.0]</a> <a href="../results/extraction-result-22.html#e22.1" class="evidence-link">[e22.1]</a> <a href="../results/extraction-result-22.html#e22.2" class="evidence-link">[e22.2]</a> <a href="../results/extraction-result-22.html#e22.3" class="evidence-link">[e22.3]</a> <a href="../results/extraction-result-22.html#e22.4" class="evidence-link">[e22.4]</a> <a href="../results/extraction-result-22.html#e22.5" class="evidence-link">[e22.5]</a> <a href="../results/extraction-result-23.html#e23.0" class="evidence-link">[e23.0]</a> <a href="../results/extraction-result-23.html#e23.1" class="evidence-link">[e23.1]</a> <a href="../results/extraction-result-23.html#e23.2" class="evidence-link">[e23.2]</a> <a href="../results/extraction-result-23.html#e23.3" class="evidence-link">[e23.3]</a> </li>
+</ol>            <h4>Self-Evaluation of Law Novelty (produced by the generation model)</h4>
+            <p><strong>Likely Classification:</strong> <span style="color: orange; font-weight: bold;">somewhat-related-to-existing</span></p>
+        <p><strong>Explanation:</strong> No prior work exhaustively formalizes this structuring-law across memory modalities and empirical agents in such breadth; existing works test isolated components.</p>            <p><strong>What Already Exists:</strong> Prior work advocates both structured (KGs) and unstructured (full-history, RAG, chain-of-thought) memory. Some combinations (e.g., AriGraph's episodic+semantic blend, MC-DML's planning memory) are new.</p>            <p><strong>What is Novel:</strong> This law unifies and generalizes from diverse, empirically head-to-head comparisons across agents and memory types, establishing a hierarchy and design rationale for structured, task-aligned memory.</p>
+        <p><strong>References:</strong> <ul>
+    <li>Madotto et al. (2021) Learning Knowledge Graph-based World Models [KG-A2C, Worldformer]</li>
+    <li>Papazian et al. (2024) AriGraph [Hybrid memory, multi-setting comparison]</li>
+</ul>
+            <h4>External Evaluations of this Law</h4>
+            <p><strong>Predictive Accuracy Evaluation:</strong> <span class="empty-note">Not available.</span></p>
+            <p><strong>Novelty Evaluation:</strong> <a href="../qualifiednovelty/qn-00001-theory-5.html" class="evidence-link">[qualified novelty evaluation qn-00001-theory-5]</a></p>
+            <hr/>
+            <h3>Statement 1: Analogical and Experience-Retrieval Memory Law</h3>
+            <p><strong>Statement:</strong> LLM-based text-game agents using retrieval-augmented episodic memory (e.g., successful trajectory windows, experience or reflection banks) achieve large, often superlinear, gains over vanilla ReAct, reflection-only, or prompt-context agents in environments with variable or one-shot tasks, creative/explorative requirements, or multi-agent hypothesis formation.</p>
+            <p><strong>Domain/Scope:</strong> Applies to LLM-based and planning agents operating in multi-task/multi-domain text games (ALFWorld, WebShop, ScienceWorld, Jubensha, social simulation, e-commerce, open-ended role-play) where memory must generalize across instance/task boundaries and supports in-context analogical reasoning.</p>
+            <h4>Special Cases</h4>
+            <ol>
+                <li>Tasks with no transfer or analogy potential (fully deterministic, fixed tasks) may gain less.</li>
+                <li>Effectiveness depends on retrieval quality (e.g., embedding, weighting, plan/window selection).</li>
+            </ol>
+            <h4>Supporting Evidence for this Law</h4>
+<ol>
+    <li>RAP’s retrieval of contextually similar successful episodes enables GPT-3.5/GPT-4/Llama2-13b to outperform ReAct and Reflexion on ALFWorld/WebShop; MC-DML’s dual memory greatly boosts MCTS performance on Jericho games; ThinkThrice’s memory-retrieved, self-refined, and self-verified multi-agent LLMs in Jubensha far surpass no-memory baselines in factual recall and collective reasoning; Generative Agents' memory/plan/reflection pipeline yields highly believable, coherent social behavior. <a href="../results/extraction-result-8.html#e8.0" class="evidence-link">[e8.0]</a> <a href="../results/extraction-result-8.html#e8.1" class="evidence-link">[e8.1]</a> <a href="../results/extraction-result-8.html#e8.2" class="evidence-link">[e8.2]</a> <a href="../results/extraction-result-6.html#e6.0" class="evidence-link">[e6.0]</a> <a href="../results/extraction-result-3.html#e3.0" class="evidence-link">[e3.0]</a> <a href="../results/extraction-result-16.html#e16.0" class="evidence-link">[e16.0]</a> <a href="../results/extraction-result-16.html#e16.1" class="evidence-link">[e16.1]</a> <a href="../results/extraction-result-22.html#e22.4" class="evidence-link">[e22.4]</a> <a href="../results/extraction-result-22.html#e22.5" class="evidence-link">[e22.5]</a> <a href="../results/extraction-result-23.html#e23.0" class="evidence-link">[e23.0]</a> </li>
+</ol>            <h4>Self-Evaluation of Law Novelty (produced by the generation model)</h4>
+            <p><strong>Likely Classification:</strong> <span style="color: orange; font-weight: bold;">somewhat-related-to-existing</span></p>
+        <p><strong>Explanation:</strong> Synthesis and explicit law are new, though individual components are present in recent works.</p>            <p><strong>What Already Exists:</strong> Experience-replay and episodic reflection (e.g., Reflexion) are known. RAP’s cross-task memory, ThinkThrice's embedding-based, and MC-DML’s MCTS with memory-augmented priors are recent and not fully synthesized previously.</p>            <p><strong>What is Novel:</strong> This law generalizes comparative findings that selective, retrieval-augmented episodic memory (beyond reflection) enables analogical reasoning, curriculum transfer, and creative hypothesis formation that vanilla LLM prompting or first-order memory cannot.</p>
+        <p><strong>References:</strong> <ul>
+    <li>Shinn et al. (2023) Reflexion [Failure-centric episodic memory]</li>
+    <li>Papazian et al. (2024) RAP [Retrieval-Augmented Planning, cross-task memory]</li>
+    <li>Zhao et al. (2024) MC-DML [Dual-memory for MCTS]</li>
+    <li>Liu et al. (2023) ThinkThrice [Retrieval + self-refinement/verification]</li>
+</ul>
+            <h4>External Evaluations of this Law</h4>
+            <p><strong>Predictive Accuracy Evaluation:</strong> <span class="empty-note">Not available.</span></p>
+            <p><strong>Novelty Evaluation:</strong> <a href="../qualifiednovelty/qn-00004-theory-5.html" class="evidence-link">[qualified novelty evaluation qn-00004-theory-5]</a></p>
+            <hr/>
+        </div>
+        <div class="section">
+            <h2>Theory (Additional Details)</h2>
+                        <h3>New Predictions (Likely outcome)</h3>
+            <ol>
+                <li>Augmenting an RL or LLM text-game agent with structured (graph-based or summary-based) memory tuned to the domain’s state/action complexity will outperform either full-history or pure context-window approaches, especially as number of tasks and steps increase.</li>
+                <li>Transitioning retrieval memory from uniform sampling to contextually-weighted sampling (as in RAP or MC-DML) will further increase analogical generalization on new tasks/goals.</li>
+                <li>Adding area-selection or graph-diff memory representation in new board or adventure games will linearize memory growth/cost while minimally impacting win-rate or success, compared to exponential growth or full-history storage.</li>
+            </ol>
+            <h3>New Predictions (Unknown outcome/high-entropy)</h3>
+            <ol>
+                <li>Introducing real-time multimodal episodic retrieval (combining image, symbolic, and text memory) to LLM agents will generalize the gains of RAP and ThinkThrice in multimodal open-ended tasks.</li>
+                <li>Hierarchically blending knowledge-graph, reflection, and analogical episode-retrieval memories will produce superadditive gains, enabling emergent zero-shot planning in never-seen games.</li>
+                <li>Embedding-based or attribute-augmented memory (e.g., MemInsight-style) may outperform vanilla RAG in text-game QA and event summarization; the impact will scale with task complexity.</li>
+            </ol>
+            <h3>Negative Experiments</h3>
+            <ol>
+                <li>If a structured memory agent (e.g., AriGraph/GATA) is outperformed by a full-history agent (of matched capacity) on a highly partially observable, multi-object, multi-step new game, the universality of the structuring law is challenged.</li>
+                <li>If retrieval-augmented agents like RAP or MC-DML show no gain or perform worse than vanilla ReAct/chain-of-thought on a new open-domain text environment.</li>
+                <li>If analogical retrieval and attribute-augmented memory (e.g., MemInsight) do not significantly boost multi-agent reasoning or factual recall in social or multi-agent games.</li>
+            </ol>
+            <h3>Unaccounted for Evidence</h3>
+<ol>
+    <li>Some domains (e.g., highly deterministic, small, or trivially observable games) may not benefit from memory structuring or retrieval. Additionally, compute/token constraints can constrain maximal benefit. <a href="../results/extraction-result-11.html#e11.2" class="evidence-link">[e11.2]</a> <a href="../results/extraction-result-14.html#e14.2" class="evidence-link">[e14.2]</a> <a href="../results/extraction-result-20.html#e20.0" class="evidence-link">[e20.0]</a> </li>
+</ol>        </div>        <div style="height: 30px;"></div>
+    </div>
+</body>
+</html>

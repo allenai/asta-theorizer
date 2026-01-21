@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-17 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-17</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-17</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-64eb13e3a7b6329893e9328f8b3321834deeae65</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/64eb13e3a7b6329893e9328f8b3321834deeae65" target="_blank">A Mixture-of-Experts Approach to Few-Shot Task Transfer in Open-Ended Text Worlds</a></p>
+                <p><strong>Paper Venue:</strong> arXiv.org</p>
+                <p><strong>Paper TL;DR:</strong> This work works in an open-ended text-based environment in which the agent is tasked with behaving like different types of character roles and must rapidly learn behaviors associated with new character role types and shows that the agent both obtains more rewards in the zero-shot setting and discovers these rewards with greater sample efficiency in the few-shot learning settings.</p>
+                <p><strong>Paper Abstract:</strong> Open-ended worlds are those in which there are no pre-specified goals or environmental reward signal. As a consequence, an agent must know how to perform a multitude of tasks. However, when a new task is presented to an agent, we expect it to be able to reuse some of what it knows from previous tasks to rapidly learn that new task. We introduce a novel technique whereby policies for different a priori known tasks are combined into a Mixture-of-Experts model with an attention mechanism across a mix of frozen and unfrozen experts. The model learns when to attend to frozen task-specific experts when appropriate and learns new experts to handle novel situations. We work in an open-ended text-based environment in which the agent is tasked with behaving like different types of character roles and must rapidly learn behaviors associated with new character role types. We show that our agent both obtains more rewards in the zero-shot setting, and discovers these rewards with greater sample efficiency in the few-shot learning settings.</p>
+                <p><strong>Cost:</strong> 0.013</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e17.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e17.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>MoE (this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Mixture-of-Experts (MoE) KG-A2C Agent with a Hot Expert</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A Mixture-of-Experts agent that ensembles multiple frozen, role-aligned KG-A2C experts plus one trainable 'hot' expert; an attention module (with value seeding) mixes experts' action distributions to enable rapid few-shot transfer to new role-playing tasks in open-ended text worlds.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>MoE agent (Mixture-of-Experts KG-A2C)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An MoE built on KG-A2C experts: multiple frozen, pre-trained role-aligned KG-A2C policies produce action logits and critic value estimates; an attention module projects observations and expert logits, multiplies expert action distributions by each expert's critic-predicted expected return (value seeding), computes attention weights, linearly mixes the scaled distributions and the trainable 'hot' expert's logits, and samples actions. The attention modules and the hot expert are trained (few-shot) on the new role while the frozen experts remain fixed.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>knowledge graph (external persistent memory constructed from observations)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Each KG-A2C expert maintains/updates a world knowledge graph from observations; the KG is embedded via a graph-attention mechanism and combined with a GRU-based observation encoder to form the expert's state representation that feeds actor and critic; these KG-augmented expert outputs are used by the MoE attention module.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>LIGHT-based custom open-ended text role-playing environment (built on the LIGHT environment)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>MoE achieves higher zero-shot test-time score and greater few-shot sample efficiency than baselines (New KG-A2C trained from scratch and fine-tuned individual KG-A2C experts); best MoE runs reach maximum scores in most seeds (e.g., reported average best-agent scores 47.0 in Appendix Table for target roles) and discover deeper rewards that New KG-A2C fails to reach within the same training budget.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Combining multiple frozen KG-augmented experts via an attention module plus a trainable 'hot' expert yields superior zero-shot and few-shot adaptation to new role tasks compared to training a KG-A2C from scratch or fine-tuning single experts; value seeding (multiplying expert action distributions by their critic values) helps leverage expert knowledge; MoE is robust to many irrelevant (distractor) experts but fails when no relevant experts exist.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Premature convergence and expert starvation (attention overweighting an expert whose early reward is high) were observed and required interventions (epsilon-greedy sampling and an added cross-entropy loss term to flatten logits). The MoE can be degraded by adversarially removing relevant experts (i.e., when no expert contains useful knowledge for the target role it effectively reduces to training from scratch and experts can hamper exploration). Additional training time is incurred because multiple expert forward passes are computed each step.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Mixture-of-Experts Approach to Few-Shot Task Transfer in Open-Ended Text Worlds', 'publication_date_yy_mm': '2024-05'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e17.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e17.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Knowledge-Graph augmented Advantage Actor-Critic (KG-A2C)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An actor-critic RL agent for text games that constructs a persistent knowledge graph of observed world facts and embeds it (via graph attention) to augment observation encoding for action selection and value prediction.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A reinforcement learning agent that encodes textual observations with a GRU and simultaneously updates a persistent world knowledge graph (triples of observed facts); the KG is embedded using a graph-attention mechanism and combined with the GRU embedding to produce state representations for the actor and critic heads.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>knowledge graph (external persistent memory of world state)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>The agent updates a knowledge graph from observations at each timestep; the graph is embedded via graph attention and concatenated/combined with recurrent observation embeddings to form the agent's state input to actor and critic.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Used as the base agent across experiments on the LIGHT-based open-ended text role-playing environment and referenced for text-adventure game benchmarks (e.g., Jericho family in related work).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>KG-A2C (when trained from scratch on a new role) discovers some early rewards but is less sample-efficient and often fails to find deeper role-specific rewards within the same training budget compared to the MoE agent that leverages multiple frozen KG-A2C experts.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>KG-A2C's KG memory provides effective state representation for role-aligned behaviors and serves as the memory substrate enabling the MoE approach; however, a single KG-A2C trained from scratch is less sample-efficient and attains lower overall reward discovery in few-shot transfer compared to the MoE ensemble of KG-A2C experts.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Single KG-A2C agents can struggle to discover rewards deep in the environment within limited training steps; subject to typical RL exploration challenges (sparse rewards) that are partially mitigated via story-shaping during pretraining.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Mixture-of-Experts Approach to Few-Shot Task Transfer in Open-Ended Text Worlds', 'publication_date_yy_mm': '2024-05'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e17.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e17.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Q*BERT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Q*BERT (KG-A2C + BERT extension)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An extension of the KG-A2C family that incorporates BERT into the model architecture to improve text representation for action selection in text games (mentioned as prior work).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Q*BERT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Described in related work as an agent extending KG-A2C by integrating BERT for improved textual encoding while maintaining knowledge graph-based state representations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>BERT (as integrated into Q*BERT, per related work)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>knowledge graph (external persistent memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Q*BERT is reported to incorporate the BERT language model into the KG-A2C architecture; the knowledge graph remains the external persistent memory used for state representation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Mentioned in context of text-adventure game benchmarks (prior state-of-the-art on KG-A2C family evaluations).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Mentioned as prior work that extended KG-A2C with a strong pretrained language model (BERT) to improve performance on text-based game tasks; cited as part of the KG-A2C family that motivated building on KG-A2C for this paper's experiments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>No performance numbers or limitations for Q*BERT are provided in this paper; it is only cited in related work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Mixture-of-Experts Approach to Few-Shot Task Transfer in Open-Ended Text Worlds', 'publication_date_yy_mm': '2024-05'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e17.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e17.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GATA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>GATA (Knowledge-graph based transformer agent)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A transformer-based agent that builds a knowledge-graph-based representation of the world and trains via a mixture of RL and self-supervised learning (mentioned in related work).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>GATA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Related-work agent that augments a transformer-based policy with a knowledge-graph representation of the environment and trains using RL combined with self-supervision.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Transformer-based agent (exact model not specified in this paper's text)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>knowledge graph (external memory representation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Builds a knowledge-graph-based representation on top of the transformer agent; the KG is used as a state representation component during training.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Mentioned in the context of text-based game agents and improvements in world representation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as another approach that uses knowledge-graph-based persistent memory combined with transformer architectures and mixed training objectives; included as part of the landscape of KG-augmented agents.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>No specific performance or limitations reported in this paper (only mentioned in related work).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Mixture-of-Experts Approach to Few-Shot Task Transfer in Open-Ended Text Worlds', 'publication_date_yy_mm': '2024-05'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Learning dynamic belief graphs to generalize on text-based games <em>(Rating: 2)</em></li>
+                <li>Learning to speak and act in a fantasy text adventure game <em>(Rating: 2)</em></li>
+                <li>Playing text-adventure games with graph-based deep reinforcement learning <em>(Rating: 2)</em></li>
+                <li>How to motivate your dragon: Teaching goal-driven agents to speak and act in fantasy worlds <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

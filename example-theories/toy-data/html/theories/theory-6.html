@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compression and Selection Mechanisms Are Essential to Overcome Scaling Limits for In-Context Memory in LLM Text-Game Agents - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Theory Details for theory-6</h1>
+
+        <div class="section">
+            <h2>Theory (General Information)</h2>
+            <div class="info-section">
+                <p><strong>ID:</strong> theory-6</p>
+                <p><strong>Name:</strong> Compression and Selection Mechanisms Are Essential to Overcome Scaling Limits for In-Context Memory in LLM Text-Game Agents</p>
+                <p><strong>Type:</strong> general</p>
+                <p><strong>Theory Query:</strong> Build a theory of how language model agents can best be augmented with memory to perform well at text games, based on the following results.</p>
+                <p><strong>Description:</strong> This theory posits that as text-game environments scale in observation length, object count, and task horizon, LLM and RL-based agents must rely on memory compression (e.g., diff-history, summarization, area selection) and relevance-based selection (e.g., retrieval, recency/importance scoring) rather than full retention of episode histories in prompt context. Without these, agents hit hard resource and sample efficiency ceilings due to context-window length, token costs, and cognitive overload. Compression must not discard critical state changes; selection must ensure salient, task-relevant cues are retained.</p>
+                <p><strong>Knowledge Cutoff Year:</strong> 2025</p>
+                <p><strong>Knowledge Cutoff Month:</strong> 5</p>
+                <p><strong>Base Model:</strong> openai/gpt-4.1-2025-04-14</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="section">
+            <h2>Theory (Statement/Laws)</h2>
+
+            <h3>Theory Statements/Laws</h3>
+            <hr/>
+            <h3>Statement 0: Compression and Relevance Law for Scalable LLM Memory</h3>
+            <p><strong>Statement:</strong> When environment text or underlying state grows faster than available LLM/RL context capacity, agents employing memory compression (e.g., diff-history, summarization, area-pruning) and relevance-based selection (e.g., scoring by recency, importance, embedding similarity) maintain or improve performance compared to full-history or fixed-window approaches, and do so with lower compute, lower error rate, and greater sample efficiency.</p>
+            <p><strong>Domain/Scope:</strong> Applies to LLM-based and RL+LM agents in high-dimensional, long-horizon, or multi-step domains where prompt token or recurrence-hidden-state memory is limiting, including NetHack (LangHack), TextWorld, Goedendag, and real-world multi-step/embodied text settings.</p>
+            <h4>Special Cases</h4>
+            <ol>
+                <li>Low-dimensional or toy games may not require compression.</li>
+                <li>Compression methods must preserve critical information; lossy/over-aggressive compression can degrade reasoning.</li>
+            </ol>
+            <h4>Supporting Evidence for this Law</h4>
+<ol>
+    <li>Diff-history agents greatly outperform full-history on NetHack (e18.0, e18.1, e18.2); area-selection and summarization improve Goedendag win-rate and error reduction (e12.0, e12.1, e12.2). Full-history and in-context-only agents perform poorly on long/hard TextWorld variants and rapidly hit prompt limits (e5.2). Score-based selection (Simulacra, MemInsight), attribute-based filtering and embedding retrieval (e23.0), and pruning of action/state space (KG-A2C masking, e11.3) consistently reduce errors and improve efficiency. <a href="../results/extraction-result-18.html#e18.0" class="evidence-link">[e18.0]</a> <a href="../results/extraction-result-18.html#e18.1" class="evidence-link">[e18.1]</a> <a href="../results/extraction-result-18.html#e18.2" class="evidence-link">[e18.2]</a> <a href="../results/extraction-result-12.html#e12.0" class="evidence-link">[e12.0]</a> <a href="../results/extraction-result-12.html#e12.1" class="evidence-link">[e12.1]</a> <a href="../results/extraction-result-12.html#e12.2" class="evidence-link">[e12.2]</a> <a href="../results/extraction-result-5.html#e5.2" class="evidence-link">[e5.2]</a> <a href="../results/extraction-result-5.html#e5.6" class="evidence-link">[e5.6]</a> <a href="../results/extraction-result-23.html#e23.0" class="evidence-link">[e23.0]</a> <a href="../results/extraction-result-11.html#e11.3" class="evidence-link">[e11.3]</a> <a href="../results/extraction-result-13.html#e13.2" class="evidence-link">[e13.2]</a> <a href="../results/extraction-result-16.html#e16.0" class="evidence-link">[e16.0]</a> <a href="../results/extraction-result-16.html#e16.2" class="evidence-link">[e16.2]</a> </li>
+</ol>            <h4>Self-Evaluation of Law Novelty (produced by the generation model)</h4>
+            <p><strong>Likely Classification:</strong> <span style="color: orange; font-weight: bold;">somewhat-related-to-existing</span></p>
+        <p><strong>Explanation:</strong> While summarization has precedent, the comparative empirical law and explicit performance/capacity bounds are new.</p>            <p><strong>What Already Exists:</strong> Summarization and retrieval have been used in static QA; incremental compression (diff-history, area selection) and their necessity across game scaling are more recent.</p>            <p><strong>What is Novel:</strong> This law quantifies and generalizes the performance/efficiency gains (≥ 4x–10x, e.g., NetHack, Goedendag) and their centrality for scaling to large/hard environments, showing catastrophic failure of non-compressed approaches.</p>
+        <p><strong>References:</strong> <ul>
+    <li>Papazian et al. (2023) diff History for Neural Language Agents [diff-history compression]</li>
+    <li>He et al. (2024) MemInsight [attribute-based/embedding retrieval]</li>
+    <li>Lin et al. (2023) Generative Agents [score-based selection]</li>
+    <li>Zhao et al. (2024) MC-DML [dual memory, capacity constraints]</li>
+    <li>Papazian et al. (2024) Goedendag [area selection, summarization]</li>
+</ul>
+            <h4>External Evaluations of this Law</h4>
+            <p><strong>Predictive Accuracy Evaluation:</strong> <span class="empty-note">Not available.</span></p>
+            <p><strong>Novelty Evaluation:</strong> <span class="empty-note">Not available (available only for a randomly selected subset of 100 laws, due to cost).</span></p>
+            <hr/>
+        </div>
+        <div class="section">
+            <h2>Theory (Additional Details)</h2>
+                        <h3>New Predictions (Likely outcome)</h3>
+            <ol>
+                <li>Any agent using full-history or sliding-window memory on a new, deep text-based game (e.g., complex NetHack, long-horizon RPG) will rapidly saturate context and falter, while diff/area/summarization-based agents maintain high task completion rates.</li>
+                <li>Combining relevance scoring (e.g., recency+importance retrieval) with compressed memory will further accelerate learning and reduce errors in knowledge-intensive tasks and generation-centric games.</li>
+                <li>Structured selection (embedding or attribute-based) will outperform random or uniform sampling in multi-agent memory fusion tasks.</li>
+            </ol>
+            <h3>New Predictions (Unknown outcome/high-entropy)</h3>
+            <ol>
+                <li>Advanced lossy compression (e.g., learned/discrete representations or language-model-based summarization) may achieve a favorable compute/performance tradeoff up to hundreds of thousands of steps—potentially enabling LLM agents to span whole-game or cross-episode contexts.</li>
+                <li>Introducing multimodal (image, table, audio) summarization together with token-level compression in complex simulation games will outperform text-only compressions.</li>
+                <li>Combining compression and retrieval in a hierarchical memory pipeline will enable emergent meta-cognitive behaviors like temporal abstraction or automatic subgoal discovery.</li>
+            </ol>
+            <h3>Negative Experiments</h3>
+            <ol>
+                <li>If a full-context or naive summarization agent outperforms compressed (diff-based/area-based) or relevance-selected memory in large, high-branching, partially observable text games.</li>
+                <li>If over-compression or poorly selected memories decrease agent performance below a memoryless baseline.</li>
+                <li>If relevance/score/embedding-based retrieval fails to improve QA, search, or planning tasks compared to uniform sampling or local windowing across diverse text games.</li>
+            </ol>
+            <h3>Unaccounted for Evidence</h3>
+<ol>
+    <li>Games and tasks where all required information is present in the immediate observation or where lossless retrieval/pruning is unnecessary. <a href="../results/extraction-result-10.html#e10.4" class="evidence-link">[e10.4]</a> <a href="../results/extraction-result-14.html#e14.2" class="evidence-link">[e14.2]</a> <a href="../results/extraction-result-11.html#e11.2" class="evidence-link">[e11.2]</a> </li>
+</ol>        </div>        <div style="height: 30px;"></div>
+    </div>
+</body>
+</html>

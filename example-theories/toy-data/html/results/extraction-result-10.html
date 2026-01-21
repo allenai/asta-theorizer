@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-10 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-10</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-10</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-c8fc50bc2cd673fa4e5c5ac581f6fe3fcdaf6b8d</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/c8fc50bc2cd673fa4e5c5ac581f6fe3fcdaf6b8d" target="_blank">Learning Knowledge Graph-based World Models of Textual Environments</a></p>
+                <p><strong>Paper Venue:</strong> Neural Information Processing Systems</p>
+                <p><strong>Paper TL;DR:</strong> This work focuses on the task of building world models of text-based game environments and frames this task as a Set of Sequences generation problem by exploiting the inherent structure of knowledge graphs and actions and introduces both a transformer-based multi-task architecture and a loss function to train it.</p>
+                <p><strong>Paper Abstract:</strong> World models improve a learning agent's ability to efficiently operate in interactive and situated environments. This work focuses on the task of building world models of text-based game environments. Text-based games, or interactive narratives, are reinforcement learning environments in which agents perceive and interact with the world using textual natural language. These environments contain long, multi-step puzzles or quests woven through a world that is filled with hundreds of characters, locations, and objects. Our world model learns to simultaneously: (1) predict changes in the world caused by an agent's actions when representing the world as a knowledge graph; and (2) generate the set of contextually relevant natural language actions required to operate in the world. We frame this task as a Set of Sequences generation problem by exploiting the inherent structure of knowledge graphs and actions and introduce both a transformer-based multi-task architecture and a loss function to train it. A zero-shot ablation study on never-before-seen textual worlds shows that our methodology significantly outperforms existing textual world modeling techniques as well as the importance of each of our contributions.</p>
+                <p><strong>Cost:</strong> 0.018</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e10.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e10.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Worldformer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Worldformer (this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A multi-task transformer-based world model that uses an explicit knowledge-graph memory to predict graph differences between steps and generate contextually valid natural-language actions; it encodes observations and graphs with BERT-like encoders and decodes with GPT-2-like autoregressive decoders trained with a Set-of-Sequences loss.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Worldformer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Multi-task architecture: BERT-like text encoder (pretrained, fine-tuned), BERT-like graph encoder (pretrained on triples), an aggregator, and two GPT-2-like autoregressive decoders (one for graph-diff generation, one for valid-action generation). Trains jointly to predict G_{t+1}-G_t and V_{t+1} using a Set-of-Sequences (SOS) loss and predicts graph diffs rather than full graphs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>BERT-like encoders (text + graph), GPT-2-like decoders (autoregressive)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Structured knowledge graph (explicit symbolic triples); memory represented as G_t and updated via predicted graph differences (G_{t+1}-G_t).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph G_t is encoded by a graph encoder (BERT-style, phrase-level masking pretraining) into a vector representation G_t; combined with observation encoding O_t in an aggregator to form S_t; decoders condition on S_t and use cross-attention to G_t or O_t as appropriate. The model explicitly predicts graph-diffs to update the memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>JerichoWorld (27 training games, 9 test games drawn from Jericho text games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Knowledge-graph prediction (overall size-weighted): graph-level EM 39.15 (significantly best), graph-level F1 41.06; token-level EM 51.32, token-level F1 52.45. Valid-action prediction (overall): EM 23.22, F1 25.54.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Ablation equivalent to Seq2Seq (no graph-diff, no multi-task, no SOS): knowledge-graph prediction overall graph EM 14.29, F1 15.54 (token EM 18.80, F1 19.96); valid-action EM 18.10, F1 19.44.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Structured knowledge-graph memory plus (1) predicting graph differences, (2) multi-task learning (predicting next graph-diff and valid actions jointly), and (3) an SOS loss that enforces set-permutation invariance together yield substantial improvements on both graph and action prediction; graph-diff simplification is particularly important.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Partial observability and huge action vocab remain challenging; valid-action prediction is harder (larger vocab, more tokens) and metrics are lower than graph prediction. Ablations show model requires all three components; training and decoding are compute-intensive (≈380M params, beam search).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Knowledge Graph-based World Models of Textual Environments', 'publication_date_yy_mm': '2021-06'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e10.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e10.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Q*BERT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Q*BERT (QA-based graph construction baseline)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A QA-based approach that uses an ALBERT QA model to answer questions about the observation and populate a knowledge graph via post-processing rules; used as a strong baseline for graph construction in JerichoWorld.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>How to avoid being eaten by a grue: Structured exploration strategies for textual worlds</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Q*BERT (QA baseline)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Uses an ALBERT (BERT-family) QA model trained on SQuAD and Jericho-QA to answer template questions about the state; answers are converted to triples via hand-authored rules to build the knowledge graph.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>ALBERT (BERT-family) for question answering</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Structured knowledge graph (constructed via QA answers + heuristic rules).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Answers from the QA model are post-processed with hand-authored rules to create/update triples in the knowledge-graph memory; memory is essentially extractive from text rather than learned generative updates.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>JerichoWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Knowledge-graph prediction overall: graph-level EM 32.79, graph-level F1 35.48; token-level EM 53.58, token-level F1 55.74 (token-level scores comparable to Worldformer; graph-level scores lower).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>QA-based extractive graph construction yields high token-overlap (good for token metrics) but tends to over-extract and underperform on strict graph-level metrics; extraction fails when information is unobserved/hidden (e.g., contents of closed containers) where generative/predictive memory helps.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Prone to over-extraction (inflates token metrics), brittle when observations omit information (cannot perform look-ahead), depends on hand-authored rules for assembly of graphs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Knowledge Graph-based World Models of Textual Environments', 'publication_date_yy_mm': '2021-06'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e10.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e10.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GATA-W</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>GATA-World (adapted Graph-Aided Transformer Agent)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An adaptation of the Graph-Aided Transformer Agent that encodes graphs and observations with transformer encoders and decodes add/del graph tuples in a Seq2Seq fashion; used as a single-task baseline for graph update prediction.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Learning dynamic belief graphs to generalize on text-based games</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>GATA-World (GATA-W)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Encoder structure similar to Worldformer (text + graph encoders); single autoregressive decoder trained to predict both additions and deletions as tagged tuples (e.g., <add,...> or <del,...>) in a Seq2Seq manner.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>Transformer-based encoders/decoder (architecture adapted from Graph-Aided Transformer Agent)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Structured knowledge graph (belief graph), with explicit add/delete predictions for updates.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph G_t is input to a graph encoder; a single decoder autoregressively emits add/del triple tokens representing (G_{t+1}-G_t) ∪ (G_t-G_{t+1}). Integration is as standard Seq2Seq conditioning on encoded inputs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>JerichoWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Knowledge-graph prediction overall: graph-level EM 24.06, F1 25.19; token-level EM 35.31, token-level F1 37.10.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Using a graph encoder with an autoregressive decoder that predicts add/del operations improves over a plain Seq2Seq baseline (since it predicts fewer tokens on average) but underperforms the Worldformer which uses multi-tasking, graph-diff simplification, and SOS loss.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Single-task Seq2Seq decoding of add/del still predicts more tokens than the graph-diff-only formulation and lacks the multi-task benefits of jointly predicting valid actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Knowledge Graph-based World Models of Textual Environments', 'publication_date_yy_mm': '2021-06'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e10.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e10.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Seq2Seq baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Seq2Seq (JerichoWorld provided baseline)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A single-task sequence-to-sequence baseline that encodes observations and graphs with a bidirectional BERT-based encoder and decodes the next graph or actions with a GPT-2-like autoregressive decoder using standard cross-entropy loss.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Modeling worlds in text</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Seq2Seq baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>BERT-like encoder for inputs (observation + graph), GPT-2-like autoregressive decoder to predict next graph or valid actions; trained with standard Seq2Seq cross-entropy (left-to-right) loss.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>BERT-like encoder, GPT-2-like decoder</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Structured knowledge graph provided as input (treated as part of the sequence input), but no explicit graph-diff or SOS handling.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Graph and observation are concatenated/encoded together by the encoder to form a context; decoder autoregressively generates the full target (graph or actions) as a single ordered sequence.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>JerichoWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Knowledge-graph prediction overall: graph-level EM 14.29, F1 15.54; token-level EM 18.80, F1 19.96. Valid-action prediction overall: EM 18.10, F1 19.44.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Standard Seq2Seq without SOS loss, graph-diff simplification, or multi-tasking performs substantially worse than Worldformer; serves as ablation baseline showing impact of the three Worldformer contributions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Treats sets (triples/actions) as ordered sequences which is suboptimal (ignores permutation invariance), and must generate longer target sequences leading to poorer accuracy.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Knowledge Graph-based World Models of Textual Environments', 'publication_date_yy_mm': '2021-06'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e10.4">
+                <h3 class="extraction-instance">Extracted Data Instance 4 (e10.4)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>CALM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>CALM (GPT-2 tuned on ClubFloyd transcripts)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A GPT-2 based valid-action generation model fine-tuned on human-authored observation-action transcripts (ClubFloyd dataset) used as a baseline for action prediction transfer.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Keep CALM and explore: Language models for action generation in text-based games</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>CALM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>GPT-2 tuned on a complementary dataset of human play transcripts (ClubFloyd) to generate valid actions given (O_t, A, O_{t+1}) inputs and target V_{t+1}.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-2 (fine-tuned)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>No structured memory augmentation reported in this paper; uses direct language-model generation conditioned on recent observations/transitions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>JerichoWorld (transfer evaluation for valid-action prediction)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Valid-action prediction (overall): EM 13.79, F1 19.11 (note: CALM trained on a different dataset; shows high variance across games).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Language-model-based action generation trained on human transcripts can transfer to some games but shows high variance depending on domain similarity; generally outperformed by Worldformer for valid-action prediction when Worldformer's graph-informed multi-task learning is used.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Not memory-augmented; performance is sensitive to domain similarity between training transcripts and target games and exhibits higher variance across games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Knowledge Graph-based World Models of Textual Environments', 'publication_date_yy_mm': '2021-06'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e10.5">
+                <h3 class="extraction-instance">Extracted Data Instance 5 (e10.5)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Rules baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Rules (OpenIE + hand-authored rules extractor)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A rule-based information-extraction baseline that uses OpenIE and hand-authored rules to extract triples from observations to populate knowledge graphs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Graph Constrained Reinforcement Learning for Natural Language Action Spaces</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Rules (OpenIE + rules)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Non-learned information extraction pipeline that applies OpenIE and handcrafted rules to observations to produce triples for the knowledge graph.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Structured knowledge graph (constructed via rule-based extraction from text).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Extraction tools (OpenIE) and manual rules run over the observation text to create/update triples in the knowledge graph; this is a deterministic pipeline rather than a learned memory encoder.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>JerichoWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Knowledge-graph prediction overall: graph-level EM 4.70, F1 7.25; token-level EM 13.08, F1 17.50.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Rule-based extraction is simple but achieves low graph-level performance; helps with token overlap but performs poorly on strict triple matching and cannot infer unobserved information.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Sensitive to irregular text in games; cannot predict hidden/unrevealed facts; relies on brittle hand-authored rules and OpenIE failures.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Learning Knowledge Graph-based World Models of Textual Environments', 'publication_date_yy_mm': '2021-06'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Learning dynamic belief graphs to generalize on text-based games <em>(Rating: 2)</em></li>
+                <li>How to avoid being eaten by a grue: Structured exploration strategies for textual worlds <em>(Rating: 2)</em></li>
+                <li>Graph Constrained Reinforcement Learning for Natural Language Action Spaces <em>(Rating: 2)</em></li>
+                <li>Keep CALM and explore: Language models for action generation in text-based games <em>(Rating: 2)</em></li>
+                <li>Modeling worlds in text <em>(Rating: 2)</em></li>
+                <li>Playing text-adventure games with graph-based deep reinforcement learning <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

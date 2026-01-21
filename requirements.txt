@@ -1,0 +1,11 @@
+Flask==3.1.1
+func_timeout==4.3.5
+litellm==1.60.5
+Markdown==3.9
+mistralai==1.8.1
+numpy==2.2.6
+orjson==3.11.3
+pywebio==1.8.4
+requests==2.32.4
+tiktoken==0.8.0
+tqdm==4.67.1

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-5 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-5</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-5</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-e2687f80077e8466918e4aeb2ea52e591bfe7e81</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/e2687f80077e8466918e4aeb2ea52e591bfe7e81" target="_blank">AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents</a></p>
+                <p><strong>Paper Venue:</strong> International Joint Conference on Artificial Intelligence</p>
+                <p><strong>Paper TL;DR:</strong> This study introduces AriGraph, a novel method wherein the agent constructs and updates a memory graph that integrates semantic and episodic memories while exploring the environment, and demonstrates competitive performance compared to dedicated knowledge graph-based methods in static multi-hop question-answering.</p>
+                <p><strong>Paper Abstract:</strong> Advancements in the capabilities of Large Language Models (LLMs) have created a promising foundation for developing autonomous agents. With the right tools, these agents could learn to solve tasks in new environments by accumulating and updating their knowledge. Current LLM-based agents process past experiences using a full history of observations, summarization, retrieval augmentation. However, these unstructured memory representations do not facilitate the reasoning and planning essential for complex decision-making. In our study, we introduce AriGraph, a novel method wherein the agent constructs and updates a memory graph that integrates semantic and episodic memories while exploring the environment. We demonstrate that our Ariadne LLM agent, consisting of the proposed memory architecture augmented with planning and decision-making, effectively handles complex tasks within interactive text game environments difficult even for human players. Results show that our approach markedly outperforms other established memory methods and strong RL baselines in a range of problems of varying complexity. Additionally, AriGraph demonstrates competitive performance compared to dedicated knowledge graph-based methods in static multi-hop question-answering.</p>
+                <p><strong>Cost:</strong> 0.017</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e5.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e5.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Ariadne / AriGraph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Ariadne agent with AriGraph memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An LLM-based agent (Ariadne) that constructs and uses a hybrid memory graph (AriGraph) combining a semantic knowledge graph of extracted triplets and episodic vertices/edges linking observations to those triplets; the graph is incrementally updated from textual observations and retrieved via a two-stage semantic + episodic search for planning and action selection.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Ariadne (AriGraph)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Pipeline agent with working memory, planning module, and ReAct-based decision-making; long-term memory is the AriGraph world model (semantic vertices/edges + episodic vertices/edges). Observations are parsed by an LLM into triplets to update the semantic graph; episodic vertices store raw observations and episodic edges connect triplets extracted from the same observation. Retrieval uses Contriever embeddings for semantic search (depth d, width w) and an episodic ranking function to return top-k episodic memories; retrieved content is placed into working memory for planning and action selection.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-4-0125-preview (TextWorld experiments); GPT-4 / GPT-4o variants in some evaluations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Hybrid: semantic knowledge graph (structured) + episodic memory (raw observations linked to triplets)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>External structured graph (AriGraph) updated online from extracted triplets; retrieval pipeline (semantic search via Contriever + graph expansion, then episodic search returning relevant episodic vertices) injects results into the agent's working memory / prompt for planning and ReAct decision-making; also supplies graph-based navigation actions (e.g. 'go to location').</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (Treasure Hunt, Cleaning, Cooking) and NetHack (restricted observations)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>TextWorld normalized scores (average of top-3 runs): Treasure Hunt: 1.0 (complete), Treasure Hunt Hard: 1.0, Treasure Hunt Hardest: 1.0, Cooking: 1.0, Cooking Hard: 1.0, Cooking Hardest: 0.65, Cleaning: 0.79; NetHack (Room obs): score 593.00 ± 202.62, levels 6.33 ± 2.31.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Structured hybrid memory (AriGraph) substantially improves LLM agent performance in partially observable text games: Ariadne with AriGraph outperforms full-history, summarization, RAG, Simulacra, Reflexion baselines and strong RL baselines across tasks, scales to harder environments, and achieves near top-human performance in several tasks. Episodic memory is critical for tasks requiring recall of detailed instructions (e.g., Cooking), while semantic graph supports navigation and state tracking.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Relies on accurate triplet extraction by the LLM; graph construction quality depends on LLM backbone (growth rate decreases with higher-quality LLMs); token usage and prompt sizes are non-trivial (Ariadne prompt ~6,000 tokens per step); approach currently text-only, not multimodal; some task-specific weaknesses (e.g., Cleaning shows lower performance relative to best human players), and complexity of graph updates/consistency management.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e5.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e5.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Ariadne (no episodic)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Ariadne ablation without episodic memory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Ariadne agent variant using the semantic knowledge graph but with episodic vertices/edges disabled, to test the contribution of episodic memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Ariadne (AriGraph w/o episodic)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Same cognitive architecture and semantic graph updates, but episodic vertices/edges are omitted; retrieval relies only on semantic triplets.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-4-0125-preview</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Semantic knowledge graph only (no episodic memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Semantic graph retrieval injected into working memory; no episodic search or episodic raw-observation recall.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (same tasks)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized scores (from ablation table): Treasure Hunt: 1.0, Treasure Hunt Hard: 0.67, Cooking: 0.64, Cooking Hard: 0.45, Cleaning: 0.92 (note differing effects depending on task).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Removing episodic memory degrades performance on tasks that require recalling detailed past observations (notably Cooking and Treasure Hunt Hard), demonstrating episodic memory's importance for procedural and instruction-heavy tasks; interestingly, for Cleaning the semantic-only variant performed well, highlighting task-dependent roles of memory types.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Semantic-only graphs may omit fine-grained temporal or contextual details stored in episodic memories, causing failures on tasks that require precise recall of past observations or sequences of events.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e5.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e5.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Full History baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Full history memory baseline (complete record of observations/actions)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Baseline in which the agent retains the complete sequence of past observations and actions and includes them in the prompt/context for decision-making.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Full History memory agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Ariadne planning and decision-making modules are used, but the long-term memory is implemented by concatenating the full history of observations and actions into the prompt/context window.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-4-0125-preview</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Full context / full history</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Context window concatenation: entire episode history is appended to prompt/working memory each step.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (Treasure Hunt, Cleaning, Cooking)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized scores (Table 4): Treasure Hunt: 0.47, Cooking: 0.18, Cleaning: 0.05.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Retaining full history is inefficient and insufficient: Full-history agents perform poorly relative to AriGraph and often fail to scale to more complex/harder variants (heavy token costs and limited reasoning over unstructured long contexts).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>High token usage (Full history ~14,000 prompt tokens by step 150), inefficient retrieval, difficulty in extracting structured relations and planning from long unstructured context.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e5.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e5.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Summary baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Iterative summarization memory baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Baseline that compresses history into summaries iteratively, reducing context size while attempting to preserve salient information.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Summary memory agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Same agent pipeline but uses iterative summarization to compress past observations into shorter summaries stored in memory and included in prompts.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-4-0125-preview</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Summarized memory / compressed history</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Summaries stored externally and concatenated into working memory/prompt; iterative update of summaries as new observations arrive.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (Treasure Hunt, Cleaning, Cooking)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized scores (Table 4): Treasure Hunt: 0.33, Treasure Hunt Hard: 0.17, Cooking: 0.52, Cooking Hard: 0.21, Cleaning: 0.35.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Summarization reduces token usage but loses structure and fine-grained details; performs better than full-history in some tasks (e.g., Cooking medium) but is outperformed by AriGraph, especially on tasks needing structured relations and multi-step planning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Summaries may discard critical localized facts needed for planning; selection of what to summarize is nontrivial and can harm performance in partially observable tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e5.4">
+                <h3 class="extraction-instance">Extracted Data Instance 4 (e5.4)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>RAG baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Retrieval-Augmented Generation (RAG) memory baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Baseline using vector retrieval over an external memory index to augment model prompts with k most similar past memories to the current query/observation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>RAG memory agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Ariadne planning and decision-making are used; memory is an external vector store of past observations/triplets and retrieval returns top-k similar items to augment the prompt.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-4-0125-preview</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Retrieval-augmented memory (vector store)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Embedding-based retrieval (top-k) from external DB; retrieved items are appended to working memory/prompt.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (Treasure Hunt, Cleaning, Cooking)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized scores (Table 4): Treasure Hunt: 0.33, Treasure Hunt Hard: 0.17, Cooking: 0.36, Cooking Hard: 0.17, Cleaning: 0.39.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Standard RAG offers improvements over naive baselines in some cases but suffers from unstructured nature: related facts can be scattered and not linked, limiting multi-hop reasoning and planning compared to AriGraph's structured retrieval.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Unstructured retrieval can miss related facts scattered across memory; lack of explicit relations hampers planning/navigation in POMDPs.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e5.5">
+                <h3 class="extraction-instance">Extracted Data Instance 5 (e5.5)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflexion baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Baseline where the agent reflects on failed trials to generate 'reflections' that are stored and used across subsequent trials to improve future performance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Reflexion baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Agent stores trial-level reflections produced after failures and uses them as additional memory between trials; differs from other methods by explicitly generating reinforcement-learning style reflections across episodes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-4-0125-preview</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Inter-episode reflective memory / episodic reflections</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Reflections are appended to memory between trials and used in prompts for subsequent trials; operates across multiple trial runs (multi-trial memory).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (Treasure Hunt, Cooking, Cleaning)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized scores (Table 4): Treasure Hunt: 0.93, Cooking: 1.0, Cleaning: 0.27 (not all entries reported for hard variants).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Reflexion can provide large gains when multi-trial reflection is applicable (e.g., strong immediate gains on some tasks), but performance can degrade across subsequent tries for some tasks; still outperformed by AriGraph in single-episode interactive settings due to lack of structured knowledge and per-step retrieval.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Requires multiple trial runs to benefit (reflection across episodes), less suitable for single-episode or single-run tasks; lacks structural semantic memory for navigation and multi-hop retrieval.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e5.6">
+                <h3 class="extraction-instance">Extracted Data Instance 6 (e5.6)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Simulacra / Generative Agents baseline</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Simulacra (memory implementation of Generative Agents)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>Memory implementation inspired by Generative Agents (Park et al., 2023) that stores episodic notes and scores them by recency/importance/relevance and uses these during decision-making.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Generative agents: Interactive simulacra of human behavior</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Simulacra memory agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Uses a scoring mechanism combining recency, importance, relevance, and reflections to select and include memory snippets into the prompt; implemented as an alternative memory module for Ariadne.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>gpt-4-0125-preview</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Episodic memory with importance/recency scoring</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Score-based retrieval of episodic memory entries; retrieved entries are injected into the prompt/working memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>TextWorld (Treasure Hunt, Cooking, Cleaning)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Normalized scores (Table 4): Treasure Hunt: 0.40, Cooking: 0.30, Cleaning: 0.70.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Simulacra-style episodic memory helps in some tasks (e.g., Cleaning) due to emphasis on recency and importance, but lacks structured semantic relations; AriGraph's joint semantic+episodic graph offers more robust multi-step planning and navigation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Primarily stores unstructured snippets scored heuristically — can miss cross-observation multi-hop relations and spatial/topological information required for navigation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e5.7">
+                <h3 class="extraction-instance">Extracted Data Instance 7 (e5.7)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>NetPlay (Room vs Level obs)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>NetPlay agent (NetHack LLM agent with varied observation/memory access)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An LLM-based NetHack agent used as a baseline; 'Level obs' provides a memory oracle with full explored-level information, while 'Room obs' restricts observations to the current room, serving to test the AriGraph's ability to compensate via memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Playing nethack with llms: Potential and limitations as zero-shot agents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>NetPlay</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Zero-shot LLM NetHack agent that can receive either full-level observations (memory oracle) or restricted room-level observations; serves as a strong baseline for exploration and memory use in NetHack.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-4o (NetHack experiments used GPT-4o for agents)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Observation-level memory/oracle (Level obs) vs. no memory (Room obs) depending on configuration</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Level obs functions as a handcrafted memory oracle provided each step; Room obs provides only local observation and requires external memory to accumulate level knowledge.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>NetHack (NetPlay evaluation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>NetPlay (Level obs / memory oracle): score 675.33 ± 130.27, levels 7.33 ± 1.15.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>NetPlay (Room obs): score 341.67 ± 109.14, levels 3.67 ± 1.15.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Full-level observations (memory oracle) substantially improve NetPlay performance; Ariadne with AriGraph using only Room obs achieves comparable performance to NetPlay with Level obs, demonstrating AriGraph's ability to accumulate and use level-wide information from local observations.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>NetPlay's performance is highly sensitive to observation scope; constructing a memory that reliably accumulates and preserves level information from local observations is challenging and was a central focus of AriGraph's design.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e5.8">
+                <h3 class="extraction-instance">Extracted Data Instance 8 (e5.8)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Generative agents (related work)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Generative Agents: Interactive Simulacra of Human Behavior</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A related prior system that introduced advanced memory systems for LLM agents (episodic notes, summaries, plans); cited as a baseline inspiration (Simulacra) but lacks structured semantic graph representation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Generative agents: Interactive simulacra of human behavior</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Generative agents (Simulacra style memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Framework using memory streams of note-taking, retrieval, and narrative summaries to simulate persistent behavior in multi-agent interactive settings; inspired the Simulacra baseline.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Episodic notes, summaries, skill libraries (unstructured)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Memory entries scored and retrieved into prompts; no structured semantic graph integration.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Not evaluated here for TextWorld by the authors (cited as baseline/related work)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Generative agents provide rich episodic memory architectures for persistent behaviors, but according to this paper they lack explicit structured semantic knowledge which limits reasoning and planning in complex POMDP text games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Unstructured memory representation limits multi-hop retrieval and explicit navigation/state-tracking capabilities.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'AriGraph: Learning Knowledge Graph World Models with Episodic Memory for LLM Agents', 'publication_date_yy_mm': '2024-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Generative agents: Interactive simulacra of human behavior <em>(Rating: 2)</em></li>
+                <li>Reflexion: Language agents with verbal reinforcement learning <em>(Rating: 2)</em></li>
+                <li>Playing nethack with llms: Potential and limitations as zero-shot agents <em>(Rating: 2)</em></li>
+                <li>Learning dynamic belief graphs to generalize on text-based games <em>(Rating: 2)</em></li>
+                <li>Textworld: A learning environment for text-based games <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

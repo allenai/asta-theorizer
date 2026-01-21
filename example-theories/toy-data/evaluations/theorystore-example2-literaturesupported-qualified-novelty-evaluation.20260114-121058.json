@@ -1,0 +1,76 @@
+{
+    "filename_theorystore": "theorystore-example2-literaturesupported.json",
+    "filename_paperstore": "paperstore-example2-literaturesupported.json",
+    "model_str_extraction": "gpt-5-mini",
+    "model_str_decision": "claude-sonnet-4-5-20250929",
+    "path_out_literature_supported": "qualified-novelty-evaluations/literature-supported/",
+    "histogram_literature_supported": {
+        "path_in": "qualified-novelty-evaluations/literature-supported/",
+        "histogram_proportions": {
+            "phenomenon_effect": {
+                "not_novel": 1.0,
+                "novel": 0.0
+            },
+            "explanatory_mechanistic": {
+                "not_novel": 0.2,
+                "novel": 0.8
+            },
+            "unification": {
+                "not_novel": 0.4,
+                "novel": 0.6
+            },
+            "generalization_scope_expansion": {
+                "not_novel": 0.4,
+                "novel": 0.6
+            },
+            "constraint_limitation": {
+                "not_novel": 1.0,
+                "novel": 0.0
+            },
+            "conceptual_reframing_abstraction": {
+                "not_novel": 0.6,
+                "novel": 0.4
+            },
+            "empirical_synthesis_meta_regulariry": {
+                "not_novel": 0.6,
+                "novel": 0.4
+            }
+        },
+        "histogram_raw_counts": {
+            "phenomenon_effect": {
+                "not_novel": 4,
+                "novel": 0
+            },
+            "explanatory_mechanistic": {
+                "not_novel": 1,
+                "novel": 4
+            },
+            "unification": {
+                "not_novel": 2,
+                "novel": 3
+            },
+            "generalization_scope_expansion": {
+                "not_novel": 2,
+                "novel": 3
+            },
+            "constraint_limitation": {
+                "not_novel": 5,
+                "novel": 0
+            },
+            "conceptual_reframing_abstraction": {
+                "not_novel": 3,
+                "novel": 2
+            },
+            "empirical_synthesis_meta_regulariry": {
+                "not_novel": 3,
+                "novel": 2
+            }
+        },
+        "total_cost_all_evaluations": 5.84496665,
+        "num_evaluations": 5,
+        "average_cost_per_evaluation": 1.16899333,
+        "average_papers_per_evaluation": 23.0,
+        "stddev_papers_per_evaluation": 0.0,
+        "total_papers_evaluated": 115.0
+    }
+}

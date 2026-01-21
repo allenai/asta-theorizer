@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-22 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-22</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-22</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-c35b8dad08e11a77c249c0aed2b2f7f9ba853acd</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/c35b8dad08e11a77c249c0aed2b2f7f9ba853acd" target="_blank">A Survey on Large Language Model-Based Game Agents</a></p>
+                <p><strong>Paper Venue:</strong> arXiv.org</p>
+                <p><strong>Paper TL;DR:</strong> This survey offers an up-to-date review of LLM-based game agents (LLMGAs) through a unified reference architecture, and introduces a challenge-centered taxonomy linking six major game genres to their dominant agent requirements.</p>
+                <p><strong>Paper Abstract:</strong> Game environments provide rich, controllable settings that stimulate many aspects of real-world complexity. As such, game agents offer a valuable testbed for exploring capabilities relevant to Artificial General Intelligence. Recently, the emergence of Large Language Models (LLMs) provides new opportunities to endow these agents with generalizable reasoning, memory, and adaptability in complex game environments. This survey offers an up-to-date review of LLM-based game agents (LLMGAs) through a unified reference architecture. At the single-agent level, we synthesize existing studies around three core components: memory, reasoning, and perception-action interfaces, which jointly characterize how language enables agents to perceive, think, and act. At the multi-agent level, we outline how communication protocols and organizational models support coordination, role differentiation, and large-scale social behaviors. To contextualize these designs, we introduce a challenge-centered taxonomy linking six major game genres to their dominant agent requirements, from low-latency control in action games to open-ended goal formation in sandbox worlds. A curated list of related papers is available at https://github.com/git-disl/awesome-LLM-game-agent-papers</p>
+                <p><strong>Cost:</strong> 0.016</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e22.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e22.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An LLM-driven agent that performs episodic reflection: after interactions it analyzes its own chain-of-thought traces and produces reflective summaries that are stored for later retrieval to improve future planning and decision-making in text-adventure style environments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Central LLM agent that interleaves execution with reflective analysis of past trajectories; uses short-term in-episode context for immediate reasoning and writes reflective summaries of episodes to a long-term memory for later retrieval and re-planning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>episodic working memory + reflective long-term memory (external summaries)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Reflection summaries are written to an external memory store and retrieved into the LLM prompt for subsequent episodes; in-episode observations are kept in-context for immediate decisions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFWorld</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Reflection (writing and later retrieving summaries of past episodes) enables agents to iteratively improve planning and recover from past mistakes in interactive/text-adventure environments; reflection introduces a temporal learning loop that augments LLM reasoning across episodes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Survey notes limited discussion of quantitative comparisons; open questions include when to consolidate experiences, how to structure retrieved reflections to avoid misleading or stale guidance, and retrieval relevance selection.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Survey on Large Language Model-Based Game Agents', 'publication_date_yy_mm': '2024-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e22.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e22.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>ReAct</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>ReAct</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A prompting-style agent design that interleaves chain-of-thought reasoning with environment actions, enabling LLMs to plan and act step-by-step in text-based interactive tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>ReAct</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>LLM agent using instruction-guided chain-of-thought that alternates between reasoning traces and concrete actions; relies primarily on in-context working memory (the current prompt + recent observations) rather than an external long-term memory store.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>working memory (in-context / short-term)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Context window concatenation: recent observations and intermediate thoughts are kept in the prompt (working memory) to guide subsequent steps; no persistent external memory described in the survey summary.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFWorld and other text-based environments</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Interleaving CoT with actions helps planning in text-adventure tasks, but chain-of-thought increases stochasticity and can cause temporal inconsistency unless complemented by maintenance strategies; ReAct itself generally uses only in-episode context rather than persistent memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>CoT can amplify stochasticity and lead to inconsistent step-to-step behavior; lack of long-term consolidation limits progress on long-horizon or multi-episode tasks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Survey on Large Language Model-Based Game Agents', 'publication_date_yy_mm': '2024-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e22.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e22.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>E2WM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>E2WM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An agent that uses in-context dialogue as working memory and leverages exploration experience to fine-tune model parameters, effectively combining short-term in-prompt memory with parametric (fine-tuned) long-term memory.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>E2WM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Agent applied to VirtualHome that maintains immediate dialogue/state in the prompt (working memory) and consolidates exploration experiences into parametric memory by fine-tuning the model on those experiences (long-term memory).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>working memory (in-context) and parametric long-term memory via fine-tuning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Short-term state and dialogue are maintained by prompt/context concatenation; long-term knowledge is integrated by fine-tuning the model on collected exploration trajectories (parametric storage).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>VirtualHome</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Embedding exploration experience via fine-tuning can capture reusable behaviors and world knowledge beyond what fits in a single prompt, while in-context dialogue supports immediate conversational coherence and short-horizon decisions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Fine-tuning introduces costs (data, compute) and risks (catastrophic forgetting, reduced adaptability); survey does not report detailed numeric comparisons within this work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Survey on Large Language Model-Based Game Agents', 'publication_date_yy_mm': '2024-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e22.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e22.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>LLMPlanner</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>LLMPlanner</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A planner-style LLM agent for embodied instruction-following tasks that uses in-episode context and retrieves exemplar plans from a long-term store to assist planning and re-planning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>LLMPlanner</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An LLM-based planner for tasks like ALFRED that keeps recent observations in-context and augments planning by retrieving exemplar (previously successful) plans from an external memory to seed or guide current plan generation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>exemplar plan retrieval (external long-term memory)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Retrieval-augmented prompting: exemplar plans are retrieved from external storage (memory bank) and concatenated into the prompt to guide current planning and re-planning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFRED</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Retrieving exemplar plans helps planning and re-planning in instruction-conditioned embodied/textual tasks by providing concrete examples to the LLM, improving its ability to decompose and sequence actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Effective exemplar selection and prompt-budget trade-offs (context length) limit how many examples can be used; survey does not provide exact performance deltas.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Survey on Large Language Model-Based Game Agents', 'publication_date_yy_mm': '2024-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e22.4">
+                <h3 class="extraction-instance">Extracted Data Instance 4 (e22.4)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>GenerativeAgents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Generative Agents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A multi-agent simulation architecture where each agent maintains a streaming, hierarchical (tree) long-term memory with metadata and importance scoring; memories are consolidated via LLM-guided reflection and retrieved by relevance to drive long-horizon, socially coherent behavior.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>GenerativeAgents</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Agents pair a central LLM with an external hierarchical memory tree and metadata-driven consolidation: incoming observations are importance-scored, summarized by an LLM when thresholds are exceeded, and appended into a streaming long-term memory that is later retrieved by similarity and metadata weighting.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>streaming hierarchical long-term memory (tree of chunks) with metadata; working memory via context</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Signal-triggered consolidation (importance scoring) writes summaries into a memory tree; retrieval uses recency/importance-weighted ranking to select memories which are inserted into prompts for ongoing reasoning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Small Village / simulation (textual/social simulation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Hierarchical streaming memories with importance-based consolidation allow agents to maintain long-term continuity and produce coherent long-horizon narratives and social behaviors; metadata-weighted retrieval approximates human-like forgetting curves to prioritize salient memories.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Scalability of memory growth and retrieval, design of importance scoring thresholds, and ensuring retrieval precision (avoiding irrelevant/stale memories) remain open problems.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Survey on Large Language Model-Based Game Agents', 'publication_date_yy_mm': '2024-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e22.5">
+                <h3 class="extraction-instance">Extracted Data Instance 5 (e22.5)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Xu et al. (Werewolf)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Xu et al. (Werewolf agents)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>LLM agents applied to the text-based social deduction game Werewolf that use in-episode experience for immediate decisions and reflective experience for retrieval to support role fidelity and coordination across episodes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Xu et al. Werewolf Agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>LLM-based agents for Werewolf that maintain immediate in-episode observations/dialogue in context and also store reflective experiences from past games which are retrieved to inform beliefs, role-consistent behavior, and coordination.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>working memory (in-episode) + reflective long-term memory (external retrieval)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Reflective experiences are summarized and stored externally; retrieval is used to provide prior episode-derived beliefs and role-history into prompts during new games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Werewolf</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Using reflective retrieval improves role fidelity and helps agents maintain consistent personas and strategies across rounds in a text-based multi-agent social deduction setting.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Reconciling conflicting messages from other agents, partial observability, and ensuring retrieval relevance and timeliness in fast multi-round games are highlighted as challenges.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'A Survey on Large Language Model-Based Game Agents', 'publication_date_yy_mm': '2024-04'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Reflexion <em>(Rating: 2)</em></li>
+                <li>ReAct <em>(Rating: 2)</em></li>
+                <li>Generative Agents <em>(Rating: 2)</em></li>
+                <li>E2WM <em>(Rating: 2)</em></li>
+                <li>LLMPlanner <em>(Rating: 2)</em></li>
+                <li>Voyager <em>(Rating: 2)</em></li>
+                <li>MemoryBank <em>(Rating: 2)</em></li>
+                <li>ALFWorld <em>(Rating: 1)</em></li>
+                <li>TextWorld <em>(Rating: 1)</em></li>
+                <li>VirtualHome <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-19 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-19</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-19</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-faca792068386ee4d906e8b8ddd524c892ae42fd</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/faca792068386ee4d906e8b8ddd524c892ae42fd" target="_blank">Pre-trained Language Models as Prior Knowledge for Playing Text-based Games</a></p>
+                <p><strong>Paper Venue:</strong> Adaptive Agents and Multi-Agent Systems</p>
+                <p><strong>Paper TL;DR:</strong> This paper improves the semantic understanding of the agent by proposing a simple RL with LM framework where they use transformer-based language models with Deep RL models, which outperforms 4 games out of the 14 text-based games, while performing comparable to the state-of-the-art models on the remaining games.</p>
+                <p><strong>Paper Abstract:</strong> Recently, text world games have been proposed to enable artificial agents to understand and reason about real-world scenarios. These text-based games are challenging for artificial agents, as it requires an understanding of and interaction using natural language in a partially observable environment. Agents observe the environment via textual descriptions designed to be challenging enough for even human players. Past approaches have not paid enough attention to the language understanding capability of the proposed agents. Typically, these approaches train from scratch, an agent that learns both textual representations and the gameplay online during training using a temporal loss function. Given the sample-inefficiency of RL approaches, it is inefficient to learn rich enough textual representations to be able to understand and reason using the textual observation in such a complicated game environment setting. In this paper, we improve the semantic understanding of the agent by proposing a simple RL with LM framework where we use transformer-based language models with Deep RL models. We perform a detailed study of our framework to demonstrate how our model outperforms all existing agents on the popular game, Zork1, to achieve a score of 44.7, which is 1.6 higher than the state-of-the-art model. Overall, our proposed approach outperforms 4 games out of the 14 text-based games, while performing comparable to the state-of-the-art models on the remaining games.</p>
+                <p><strong>Cost:</strong> 0.019</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e19.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e19.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Graph Constrained Reinforcement Learning (KG-A2C)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An RL agent that maintains a dynamically updated knowledge graph (KG) representing objects and relations in the game world and uses that structured memory to constrain/guide action selection within an Advantage Actor-Critic (A2C) framework.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Graph Constrained Reinforcement Learning for Natural Language Action Spaces</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>KG-A2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An agent that incrementally constructs and updates a Knowledge Graph of the game state and uses the KG as an internal structured memory to compute state representations and guide policy learning using A2C.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>structured knowledge graph (dynamic KG)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>dynamically updated KG representing the current state/world; KG used to compute state representation for policy/value estimation (integrated with A2C training)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (human-written IF games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Mentioned as the first proposal to use a dynamically updated knowledge graph to represent the current game universe; cited as a prior approach that uses explicit structured memory to handle partial observability and large action spaces.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Described as a more complex architecture compared to the paper's proposed DBERT-based approach; the current paper emphasizes that similar or better performance can sometimes be achieved without an explicit KG by leveraging pre-trained language models, implying KG approaches add architectural complexity and may require additional supervision or components.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Pre-trained Language Models as Prior Knowledge for Playing Text-based Games', 'publication_date_yy_mm': '2021-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e19.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e19.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>SHA-KG</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Deep Reinforcement Learning with Stacked Hierarchical Attention (SHA-KG)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A KG-based agent that reasons over an explicit knowledge graph using hierarchical attention (low- and high-level) on graph subcomponents to produce a game-state representation, and decodes actions with a recurrent decoder.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Deep Reinforcement Learning with Stacked Hierarchical Attention for Text-based Games</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>SHA-KG</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An agent that maintains a knowledge graph and applies stacked hierarchical attention over subcomponents and the full graph to compute state representations; actions are selected by recurrent decoding (GRUs) conditioned on that representation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>structured knowledge graph (dynamic KG)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>KG is maintained and attended over with low- and high-level attention to compute a state representation; recurrent decoder (GRU) conditioned on KG-derived representation selects actions; trained with A2C and an auxiliary valid-action prediction task.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (selected games reported in paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>See Table 1 in this paper (SHA-KG column) — example: Zork1 raw score 34.5 (as reported in the comparison table in this paper).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>SHA-KG is cited as a state-of-the-art KG-based method that reasons explicitly on a graph and attains competitive scores; the present paper notes that a pre-trained LM + DRRN can outperform or match such KG-based methods without explicit KG construction.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>KG-based systems are relatively sophisticated and require graph construction/maintenance and additional reasoning modules; the paper suggests pre-trained LMs provide strong linguistic/world priors that can reduce the need for explicit KG machinery.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Pre-trained Language Models as Prior Knowledge for Playing Text-based Games', 'publication_date_yy_mm': '2021-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e19.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e19.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Q*BERT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Q*BERT (KG updated via Open-Domain QA + intrinsic motivation)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An approach that augments a knowledge graph via open-domain question-answering to add facts to the KG, combined with an intrinsic-motivation reward to encourage structured exploration in text games.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>How to Avoid Being Eaten by a Grue: Structured Exploration Strategies for Textual Worlds</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Q*BERT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>An agent that updates its KG using an open-domain QA method to extract additional information, and uses intrinsic motivation rewards to encourage structured exploration; the augmented KG informs policy learning/decision-making.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>structured knowledge graph augmented by open-domain QA</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>KG is updated using an open-domain QA mechanism to add additional facts; an intrinsic motivation reward is added to encourage exploration and to create dependencies in the KG for better planning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (text-based IF games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>See Table 1 in this paper (Q*BERT column) — example: Zork1 max score reported 41.6 (as reported in the comparison table in this paper).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Mentioned as a KG-updating approach that supplements graph memory with QA-extracted facts and intrinsic rewards; used as a baseline in the paper's comparisons, and DBERT-DRRN attains comparable or better scores on several games without explicit KG updates.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Requires an additional QA component and intrinsic reward shaping; paper emphasizes that comparable performance can sometimes be achieved by leveraging pre-trained language models without explicit graph construction, implying Q*BERT's complexity may not always be necessary.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Pre-trained Language Models as Prior Knowledge for Playing Text-based Games', 'publication_date_yy_mm': '2021-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e19.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e19.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>MPRC-DQN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Multi-Paragraph Reading Comprehension Deep Q-Network (MPRC-DQN)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An agent that addresses partial observability by retrieving relevant past observations (object-centric retrieval) and applying attention over retrieved context; candidate actions are generated by converting templates to QA-style queries and then scored by a DRRN-like component.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Interactive Fiction Game Playing as Multi-Paragraph Reading Comprehension with Reinforcement Learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>MPRC-DQN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A DQN-based approach that treats the game as a multi-paragraph reading comprehension task: it retrieves and attends to relevant past observations to mitigate partial observability and uses QA-formatted templates to generate and score candidate actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>retrieval-augmented episodic memory (object-centric retrieval of past observations)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Retrieves relevant past observations (object-centric) to address partial observability; an attention mechanism focuses on the most relevant retrieved context which is then used by the policy/value estimator (DQN/DRRN-style) for action scoring.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>Jericho (text-based IF games)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>See Table 1 in this paper (MPRC-DQN column) — example scores reported here include Zork1 raw score 38.3, Library 17.7, Ludicorp 19.7, Spellbrkr 25 (as reported in the comparison table).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as a method that explicitly handles partial observability using retrieval of past observations and attention; the authors note that DBERT-DRRN (their pre-trained LM + DRRN) outperforms or is comparable to MPRC-DQN on average, suggesting strong language priors can partially substitute for explicit retrieval-memory mechanisms.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>While retrieval helps partial observability, the paper points out overall sample inefficiency of RL and that better language understanding (via pre-trained LMs) can achieve competitive results without explicit episodic retrieval; MPRC-DQN still serves as an effective baseline for retrieval-based memory augmentation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Pre-trained Language Models as Prior Knowledge for Playing Text-based Games', 'publication_date_yy_mm': '2021-07'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Graph Constrained Reinforcement Learning for Natural Language Action Spaces <em>(Rating: 2)</em></li>
+                <li>Deep Reinforcement Learning with Stacked Hierarchical Attention for Text-based Games <em>(Rating: 2)</em></li>
+                <li>Interactive Fiction Game Playing as Multi-Paragraph Reading Comprehension with Reinforcement Learning <em>(Rating: 2)</em></li>
+                <li>How to Avoid Being Eaten by a Grue: Structured Exploration Strategies for Textual Worlds <em>(Rating: 2)</em></li>
+                <li>Keep CALM and Explore: Language Models for Action Generation in Text-based Games <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

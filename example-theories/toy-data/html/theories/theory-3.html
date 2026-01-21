@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience-Driven Memory Compression and Selective Retention as Core Drivers of Scalability and Efficiency in LLM Text Game Agents - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Theory Details for theory-3</h1>
+
+        <div class="section">
+            <h2>Theory (General Information)</h2>
+            <div class="info-section">
+                <p><strong>ID:</strong> theory-3</p>
+                <p><strong>Name:</strong> Experience-Driven Memory Compression and Selective Retention as Core Drivers of Scalability and Efficiency in LLM Text Game Agents</p>
+                <p><strong>Type:</strong> general</p>
+                <p><strong>Theory Query:</strong> Build a theory of how language model agents can best be augmented with memory to perform well at text games, based on the following results.</p>
+                <p><strong>Description:</strong> LLM-based agents in text games achieve scalable, efficient, and generalizable behavior not by brute-force expansion of memory or parameters, but through two foundational strategies: (1) compressing and abstracting episodic information—via methods such as diffs, structured summaries, or attribute-value augmentation—thereby maximizing the functional memory horizon given context or compute limits, and (2) selecting and retaining only the most valuable episodes (e.g., successful, instructive, or high-signal experiences), which focuses agent updates and retrieval on what is most relevant for improvement. These principles, when systematically implemented, enable agents to surpass the limitations of naive context concatenation or indiscriminate storage, yielding significant gains in sample efficiency, planning horizon, and generalization to novel tasks.</p>
+                <p><strong>Knowledge Cutoff Year:</strong> 2025</p>
+                <p><strong>Knowledge Cutoff Month:</strong> 5</p>
+                <p><strong>Base Model:</strong> openai/gpt-4.1-2025-04-14</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="section">
+            <h2>Theory (Statement/Laws)</h2>
+
+            <h3>Theory Statements/Laws</h3>
+            <hr/>
+            <h3>Statement 0: Information-theoretic Compression Enhances Memory Efficacy</h3>
+            <p><strong>Statement:</strong> Employing information-theoretic compression or abstraction mechanisms—including, but not limited to, diff encoding, structured summarization, graph-diff prediction, and attribute-value annotation—directly increases the effective memory horizon and sample efficiency of LLM agents in high-dimensional, sequential text environments, compared with raw history concatenation.</p>
+            <p><strong>Domain/Scope:</strong> LLM agents in environments where state/observation sequences are lengthy, high-dimensional, partially observable, or verbose (e.g., NetHack, multi-stage text games, dialogue-heavy simulations), and naive memory exceeds context or resource limitations.</p>
+            <h4>Special Cases</h4>
+            <ol>
+                <li>In environments with very low observation entropy or extremely short episodes, compression imparts minimal or negligible gains over naive memory.</li>
+                <li>If the compressed format omits critical task-relevant features (e.g., action affordances), excessive or naïve compression can degrade performance.</li>
+            </ol>
+            <h4>Supporting Evidence for this Law</h4>
+<ol>
+    <li>Diff history agents massively outperform raw full-text history agents on NetHack and achieve SOTA performance on low-data tasks; diff compresses token usage by up to 460% and enables extended memory windows. <a href="../results/extraction-result-18.html#e18.0" class="evidence-link">[e18.0]</a> <a href="../results/extraction-result-18.html#e18.1" class="evidence-link">[e18.1]</a> <a href="../results/extraction-result-18.html#e18.2" class="evidence-link">[e18.2]</a> </li>
+    <li>MemInsight's structured attribute-value memory and attribute-based/embedding-based retrieval lead to much higher F1/Recall in QA and recommendation tasks over raw memory bank, RAG, or MemoryBank baselines. <a href="../results/extraction-result-23.html#e23.0" class="evidence-link">[e23.0]</a> <a href="../results/extraction-result-23.html#e23.1" class="evidence-link">[e23.1]</a> <a href="../results/extraction-result-23.html#e23.2" class="evidence-link">[e23.2]</a> </li>
+    <li>Worldformer achieves state-of-the-art KG prediction by predicting graph diffs and avoiding redundant storage versus full-graph Seq2Seq or QA-based KG methods. <a href="../results/extraction-result-10.html#e10.0" class="evidence-link">[e10.0]</a> <a href="../results/extraction-result-10.html#e10.1" class="evidence-link">[e10.1]</a> <a href="../results/extraction-result-10.html#e10.3" class="evidence-link">[e10.3]</a> </li>
+    <li>Summarization agents (Structured game rep(G)) and area selection (in ToT/Goedendag) effectively constrain and compress state for reasoning, vastly lowering error rates and memory growth. <a href="../results/extraction-result-12.html#e12.0" class="evidence-link">[e12.0]</a> <a href="../results/extraction-result-12.html#e12.1" class="evidence-link">[e12.1]</a> <a href="../results/extraction-result-12.html#e12.2" class="evidence-link">[e12.2]</a> </li>
+    <li>Summary memory (iterative summarization) provides better context efficiency than full history in partial observability but can underperform structured graph-based memory and is sensitive to the summarization method. <a href="../results/extraction-result-5.html#e5.3" class="evidence-link">[e5.3]</a> <a href="../results/extraction-result-5.html#e5.4" class="evidence-link">[e5.4]</a> </li>
+</ol>            <h4>Self-Evaluation of Law Novelty (produced by the generation model)</h4>
+            <p><strong>Likely Classification:</strong> <span style="color: orange; font-weight: bold;">somewhat-related-to-existing</span></p>
+        <p><strong>Explanation:</strong> Compression strategies appear separately in recent LLM-for-games literature, but not as a general, unifying law explaining when/why scalability emerges.</p>            <p><strong>What Already Exists:</strong> Diffs, attribute-based memory, graph diffs, and various summarization methods have been deployed in isolated systems, but typically as optimizations rather than formalized memory principles.</p>            <p><strong>What is Novel:</strong> This statement abstracts and unifies compression and structured abstraction across diverse methods as a necessary and foundational tenet for memory scaling in text-game agents.</p>
+        <p><strong>References:</strong> <ul>
+    <li>Papazian et al. (2023) diff History for Neural Language Agents [diff-based compression]</li>
+    <li>Meng et al. (2025) MemInsight [attribute-value compression, efficient retrieval]</li>
+    <li>Wang et al. (2021) Learning Knowledge Graph-based World Models [graph diff and summarization]</li>
+</ul>
+            <h4>External Evaluations of this Law</h4>
+            <p><strong>Predictive Accuracy Evaluation:</strong> <span class="empty-note">Not available.</span></p>
+            <p><strong>Novelty Evaluation:</strong> <a href="../qualifiednovelty/qn-00002-theory-3.html" class="evidence-link">[qualified novelty evaluation qn-00002-theory-3]</a></p>
+            <hr/>
+            <h3>Statement 1: Selective Experience Retention Dominates Uniform or Unfiltered Memory Strategies</h3>
+            <p><strong>Statement:</strong> Preferentially storing and retrieving only those episodes with high learning value—such as successful task trajectories, positive/negative subgoal reflections, or important/prioritized attribute memories—confers significantly faster and more robust agent learning, generalization, and planning than retaining all (uninformatively) or using volume-based storage; in many cases, this can outweigh the effect of simply increasing model size or raw memory.</p>
+            <p><strong>Domain/Scope:</strong> LLM-based agents (and RL+LM hybrids) in multi-step, sparse-reward, or strategy-intensive text environments, including settings with large experience imbalance or long exploration horizons.</p>
+            <h4>Special Cases</h4>
+            <ol>
+                <li>If most experiences are equally informative (e.g., random, single-step games), selection gives little to no advantage.</li>
+                <li>When informative signals cannot be determined or are not reflected in observed rewards or outcomes, selection is limited in benefit.</li>
+            </ol>
+            <h4>Supporting Evidence for this Law</h4>
+<ol>
+    <li>RAP agent retrieves only successful prior trajectory windows, yielding much higher success rates on ALFWorld and WebShop than agents using reflection-only, ReAct, or uniform retrieval. <a href="../results/extraction-result-8.html#e8.0" class="evidence-link">[e8.0]</a> <a href="../results/extraction-result-8.html#e8.2" class="evidence-link">[e8.2]</a> <a href="../results/extraction-result-8.html#e8.3" class="evidence-link">[e8.3]</a> <a href="../results/extraction-result-8.html#e8.4" class="evidence-link">[e8.4]</a> </li>
+    <li>Sweet&Sour achieves large performance gains over failure-only or unfiltered reflective memory methods by explicitly storing and sampling both positive and negative experiences; ablating positive reflections greatly reduces agent performance. <a href="../results/extraction-result-4.html#e4.0" class="evidence-link">[e4.0]</a> <a href="../results/extraction-result-4.html#e4.1" class="evidence-link">[e4.1]</a> <a href="../results/extraction-result-4.html#e4.2" class="evidence-link">[e4.2]</a> </li>
+    <li>Iterated Action Modeling (successful-demo replay) boosts few-shot ALFWorld GPT2-agent performance, shrinking demo-scarcity gap. <a href="../results/extraction-result-20.html#e20.0" class="evidence-link">[e20.0]</a> </li>
+    <li>Reflection-only methods (Reflexion) that fail to encode positive feedback or do not select for informative failures perform much worse, can tilt or get stuck in local minima, and underperform RAP and Sweet&Sour. <a href="../results/extraction-result-6.html#e6.0" class="evidence-link">[e6.0]</a> <a href="../results/extraction-result-6.html#e6.1" class="evidence-link">[e6.1]</a> <a href="../results/extraction-result-2.html#e2.1" class="evidence-link">[e2.1]</a> <a href="../results/extraction-result-5.html#e5.5" class="evidence-link">[e5.5]</a> </li>
+    <li>Attribute-based filtering (MemInsight) further increases retrieval effectiveness over bulk/sequence-oriented memory (high recall and F1). <a href="../results/extraction-result-23.html#e23.0" class="evidence-link">[e23.0]</a> </li>
+</ol>            <h4>Self-Evaluation of Law Novelty (produced by the generation model)</h4>
+            <p><strong>Likely Classification:</strong> <span style="color: orange; font-weight: bold;">somewhat-related-to-existing</span></p>
+        <p><strong>Explanation:</strong> Adopts concepts from RL and memory-augmented LLMs, uniting them as a general principle, not just an implementation detail.</p>            <p><strong>What Already Exists:</strong> Experience replay and prioritized replay (by TD/error, etc.) have been standard in RL, but not widely formalized for reflection, positive/negative selection, or structured retrieval in LLM memory.</p>            <p><strong>What is Novel:</strong> This law recasts prioritization as a universal learning-efficiency principle across LLM, reflectional, and hybrid agent memory systems; generalizes beyond classic TD-based selection to qualitative, structural, or reward-agnostic selectors.</p>
+        <p><strong>References:</strong> <ul>
+    <li>Shinn et al. (2023) Reflexion [Failure reflection, limited positive/structured selection]</li>
+    <li>Papazian et al. (2024) Sweet&Sour [Managed memory and positive/negative selection, large delta]</li>
+    <li>Papazian et al. (2024) RAP [Successful trajectory filtering for planning]</li>
+</ul>
+            <h4>External Evaluations of this Law</h4>
+            <p><strong>Predictive Accuracy Evaluation:</strong> <span class="empty-note">Not available.</span></p>
+            <p><strong>Novelty Evaluation:</strong> <span class="empty-note">Not available (available only for a randomly selected subset of 100 laws, due to cost).</span></p>
+            <hr/>
+        </div>
+        <div class="section">
+            <h2>Theory (Additional Details)</h2>
+                        <h3>New Predictions (Likely outcome)</h3>
+            <ol>
+                <li>Any memory-augmented LLM agent that replaces raw observation storage with diff compression or attribute-value summarization, while keeping input budget fixed, will be able to reason with longer memory windows and produce higher performance on tasks with verbose or high-dimensional state.</li>
+                <li>Agents that retrieve only successful (or subgoal-annotated) episodes rather than a random sample or all past episodes will converge faster and surpass agents using uniform storage in multi-step sparse-reward games.</li>
+                <li>Introducing attribute-based filtering or graph-diff summarization in environments with hidden or distractor state will reduce irrelevant memory retrievals and improve downstream decision accuracy over uncompressed or unordered memory.</li>
+            </ol>
+            <h3>New Predictions (Unknown outcome/high-entropy)</h3>
+            <ol>
+                <li>Adaptive memory systems that automatically trade off compression depth with perceived episode entropy or task complexity could cross critical thresholds for agent strategy emergence, leading to phase transitions in behavioral sophistication.</li>
+                <li>Meta-learned selection systems that optimize which modalities/features or episode types to compress/retain—even dynamically across environments—could outperform all fixed-memory approaches especially in open-ended, procedurally generated games.</li>
+                <li>Optimal memory compression and selection, possibly inspired by information bottleneck theory, could reduce the bits/tokens needed for near-optimal play below any current agent/apporach for several classes of text games.</li>
+            </ol>
+            <h3>Negative Experiments</h3>
+            <ol>
+                <li>If ablation of compression or selection (e.g., reverting to raw full-context history without filtering) fails to reduce agent performance in complex, long-horizon text games, this theory would be weakened or falsified.</li>
+                <li>If naive full-history or uncompressed memory outperforms all forms of compressed or selective memory across episodic horizons as games increase in complexity or verbosity, the theory would be invalid.</li>
+                <li>Evidence that diff, attribute, or graph-diff representations introduce such severe information loss that learning and performance universally degrade, even with large models, would challenge or falsify the theory.</li>
+            </ol>
+            <h3>Unaccounted for Evidence</h3>
+<ol>
+    <li>Certain settings (e.g., social dialogue, extremely short/obvious games, multi-agent simulations with limited mutability) may tolerate or even benefit from uncompressed, full-history memory given sufficiently large context or model. <a href="../results/extraction-result-16.html#e16.0" class="evidence-link">[e16.0]</a> <a href="../results/extraction-result-22.html#e22.4" class="evidence-link">[e22.4]</a> <a href="../results/extraction-result-22.html#e22.5" class="evidence-link">[e22.5]</a> </li>
+    <li>Some single-step or trivially observable environments present negligible difference between compressed and uncompressed memories. </li>
+</ol>        </div>        <div style="height: 30px;"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-8 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-8</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-8</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-494cf86c8a4b8d9464f3888dcd69ec1371aaf43d</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/494cf86c8a4b8d9464f3888dcd69ec1371aaf43d" target="_blank">RAP: Retrieval-Augmented Planning with Contextual Memory for Multimodal LLM Agents</a></p>
+                <p><strong>Paper Venue:</strong> arXiv.org</p>
+                <p><strong>Paper TL;DR:</strong> Empirical evaluations demonstrate RAP's effectiveness, where it achieves SOTA performance in textual scenarios and notably enhances multimodal LLM agents' performance for embodied tasks, highlighting RAP's potential in advancing the functionality and applicability of LLM agents in complex, real-world applications.</p>
+                <p><strong>Paper Abstract:</strong> Owing to recent advancements, Large Language Models (LLMs) can now be deployed as agents for increasingly complex decision-making applications in areas including robotics, gaming, and API integration. However, reflecting past experiences in current decision-making processes, an innate human behavior, continues to pose significant challenges. Addressing this, we propose Retrieval-Augmented Planning (RAP) framework, designed to dynamically leverage past experiences corresponding to the current situation and context, thereby enhancing agents' planning capabilities. RAP distinguishes itself by being versatile: it excels in both text-only and multimodal environments, making it suitable for a wide range of tasks. Empirical evaluations demonstrate RAP's effectiveness, where it achieves SOTA performance in textual scenarios and notably enhances multimodal LLM agents' performance for embodied tasks. These results highlight RAP's potential in advancing the functionality and applicability of LLM agents in complex, real-world applications.</p>
+                <p><strong>Cost:</strong> 0.016</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e8.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e8.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>RAP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Retrieval-Augmented Planning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A framework that augments LLM agents with an external episodic memory of past successful task executions (plans, actions, observations) and retrieves contextually-relevant trajectory windows to provide in-context examples for action generation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>RAP agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Modular LLM agent composed of Reasoner (generates overall plan, action plans, and retrieval keys), Retriever (computes weighted similarity to memory logs and returns trajectory windows), and Executor (uses retrieved trajectory windows as in-context examples to generate next actions). Designed for text-only and multimodal environments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-3.5, GPT-4, Llama2-13b (evaluated variants)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Retrieval-augmented episodic memory (external logs of successful task executions: task info, overall plans, action-observation trajectories; multimodal observations supported)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>External memory database → Retriever computes weighted similarity (task / overall plan / retrieval-key congruence) using embeddings (sentence-transformers for text, CLIP-based ViT for images) → returns a windowed trajectory around most-similar action → Executor inserts retrieved trajectory windows into prompt as in-context examples for LLM action generation.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFWorld (text game), WebShop (web-interaction text environment)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>ALFWorld (GPT-3.5, RAP): success rate 85.8% (All); RAP_train (memory built from training set): 91.0%; RAP (GPT-4): 94.8% overall success; RAP (Llama2-13b): 53.0% overall success. WebShop (GPT-3.5, RAP): success rate 48.0%, overall score 76.1%; WebShop (Llama2-13b, RAP): success rate 36.0%, score 71.1%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>ALFWorld ReAct (GPT-3.5 baseline): 52.2% success; ReAct (GPT-4): 85.8%; ReAct (Llama2-13b): 36.6%. WebShop ReAct (GPT-3.5): success 35.0%, score 61.8%; ReAct (Llama2-13b): success 31.0%, score 64.6%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Retrieval-augmented episodic memory (RAP) substantially improves text-game performance versus baseline agents that do not retrieve prior successful trajectories: large gains reported on ALFWorld and WebShop across multiple LLMs. Memory constructed by one model (GPT-3.5) transfers to another model (Llama2-13b). Retrieval can be switched between action-based and observation-based keys, and using image-based retrieval via CLIP can yield slight improvements over text-only retrieval.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Requires careful retrieval-design (weighted similarity across task/plan/key, environment-specific weight calibration); full trajectories can introduce noise so RAP uses windowed trajectory excerpts; performance depends on quality of embeddings (sentence-transformers / CLIP) and the set of stored successful episodes (only successful episodes are stored); paper does not report limits on memory scale or retrieval latency in deployment.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'RAP: Retrieval-Augmented Planning with Contextual Memory for Multimodal LLM Agents', 'publication_date_yy_mm': '2024-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e8.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e8.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>ReAct</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>ReAct (Reasoning and Acting)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An agent paradigm that interleaves chain-of-thought style reasoning and environment actions, used as a baseline for sequential decision-making in text environments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>ReAct: Synergizing reasoning and acting in language models</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>ReAct agent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>LLM-based agent that alternates explicit reasoning (thoughts) and actions to interact with environments; does not augment with external episodic memory for retrieval of past task trajectories in the experiments reported here.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-3.5, GPT-4, Llama2-13b (evaluated as baselines in this paper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>none (baseline; uses current context and LLM in-context reasoning only)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>N/A (no external retrieval-augmented memory integrated in baseline runs)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFWorld, WebShop</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>ALFWorld: ReAct (GPT-3.5) overall success 52.2%; ReAct (GPT-4) 85.8%; ReAct (Llama2-13b) 36.6%. WebShop: ReAct (GPT-3.5) success 35.0%, score 61.8%; ReAct (Llama2-13b) success 31.0%, score 64.6%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Used as the principal baseline: RAP shows substantial improvements over ReAct on ALFWorld and WebShop when RAP supplies retrieved prior successful trajectories as in-context examples.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Without external episodic memory, ReAct can fail to leverage analogies from prior successful episodes and shows lower success rates on multi-step text tasks in this paper's benchmarks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'RAP: Retrieval-Augmented Planning with Contextual Memory for Multimodal LLM Agents', 'publication_date_yy_mm': '2024-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e8.2">
+                <h3 class="extraction-instance">Extracted Data Instance 2 (e8.2)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>Reflexion</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A method that has agents self-reflect on failures to iteratively improve performance by analyzing unsuccessful episodes and generating textual reflections to guide future attempts.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Reflexion: Language agents with verbal reinforcement learning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Reflexion (as reported)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Approach that requires LLMs to self-reflect on unsuccessful tasks (verbal reflections) to improve solving future instances; discussed as prior work and included in comparative tables (reported numbers taken from the Reflexion paper).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-3.5 (reported results used in tables)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Textual self-reflection / experience logging (verbal reflections of past failures)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Textual reflections generated by LLMs on failed attempts are used for subsequent improvement (paper describes reflection loop rather than retrieval of episodic trajectory windows).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFWorld, WebShop (reported comparisons in paper tables)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>ALFWorld (reported, GPT-3.5): overall success 74.6%. WebShop (reported, GPT-3.5): success 35.0%, score 61.8%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as a prior-memory-like method; Reflexion's self-reflection approach yields improvements over simple baselines in prior work and is used as a comparative reference point in tables; RAP outperforms Reflexion on ALFWorld in the paper's reported comparisons.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Paper notes Reflexion focuses on reflecting on trajectories within the same task and may be restricted in generalizing experiences across diverse tasks; authors contrast RAP's ability to implicitly draw from a broader set of past experiences without an explicit extra reflection step.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'RAP: Retrieval-Augmented Planning with Contextual Memory for Multimodal LLM Agents', 'publication_date_yy_mm': '2024-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e8.3">
+                <h3 class="extraction-instance">Extracted Data Instance 3 (e8.3)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>ADaPT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>ADaPT: As-needed decomposition and planning with language models</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>An approach that decomposes tasks into sub-tasks and re-executes where necessary to improve performance; referenced and compared by reported metrics in the paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>Adapt: As-needed decomposition and planning with language models</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>ADaPT (as reported)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Method that dynamically decomposes tasks and re-plans subcomponents to improve execution; included in comparative tables via reported performance from the ADaPT paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>GPT-3.5 (reported results)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Task decomposition and re-execution (not a retrieval-augmented episodic memory in the RAP sense)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Decomposition and re-execution procedure (reported results taken from prior work; no external memory retrieval integrated as RAP does).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>ALFWorld, WebShop (reported comparisons)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>ALFWorld (reported, GPT-3.5): overall success 71.6%. WebShop (reported, GPT-3.5): success 43.0%, score 64.0%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>ADaPT is a prior planning/decomposition approach; RAP outperforms ADaPT on ALFWorld and WebShop in the comparisons reported in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Paper positions ADaPT as limited to task-specific re-execution patterns, whereas RAP emphasizes retrieving diverse successful trajectories across tasks for analogical in-context learning.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'RAP: Retrieval-Augmented Planning with Contextual Memory for Multimodal LLM Agents', 'publication_date_yy_mm': '2024-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e8.4">
+                <h3 class="extraction-instance">Extracted Data Instance 4 (e8.4)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>ExpeL</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>ExpeL: LLM Agents Are Experiential Learners</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A prior method that extracts insights from experiences by passing generated experiences into the LLM to reflect in a text-based manner, aiming to enhance learning of language agents.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>ExpeL: LLM Agents Are Experiential Learners</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>mention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>ExpeL (as described)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Approach that collects and feeds generated experiences into the LLM to produce textual reflections/insights for improving future behavior; discussed in related work and contrasted with RAP's implicit retrieval approach.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>Textual experience storage and reflection (experience database with textual processing)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Feeds all generated experiences into the LLM to reflect in text (explicit reflection step), rather than implicitly retrieving relevant past trajectories as in RAP.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td><span class="empty-note">null</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>False</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Cited as related work that uses explicit textual reflection on stored experiences; RAP differs by retrieving many varied successful episodes and presenting them as in-context examples without requiring an explicit re-tasking/reflection step.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Paper notes ExpeL's approach passes all experiences into the LLM for reflection, which may be less selective than RAP's similarity-weighted retrieval and windowing; no direct numeric comparisons in this paper.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'RAP: Retrieval-Augmented Planning with Contextual Memory for Multimodal LLM Agents', 'publication_date_yy_mm': '2024-02'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Reflexion: Language agents with verbal reinforcement learning <em>(Rating: 2)</em></li>
+                <li>ExpeL: LLM Agents Are Experiential Learners <em>(Rating: 2)</em></li>
+                <li>Adapt: As-needed decomposition and planning with language models <em>(Rating: 2)</em></li>
+                <li>ReAct: Synergizing reasoning and acting in language models <em>(Rating: 2)</em></li>
+                <li>Retrieval-augmented generation for knowledge-intensive nlp tasks <em>(Rating: 2)</em></li>
+                <li>ALFWorld: Aligning text and embodied environments for interactive learning <em>(Rating: 2)</em></li>
+                <li>Webshop: Towards scalable real-world web interaction with grounded language agents <em>(Rating: 2)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

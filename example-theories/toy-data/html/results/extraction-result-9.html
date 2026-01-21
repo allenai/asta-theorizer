@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction extraction-result-9 - Theorizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="header">
+        <a href="../index.html"><i class="fas fa-flask"></i> Theorizer</a>
+    </div>
+
+    <div class="content">
+        <h1>Extracted Data Details for extraction-result-9</h1>
+
+        <div class="section">
+            <h2>Extracted Data (Header)</h2>
+            <div class="info-section">
+                <p><strong>Extraction ID:</strong> extraction-result-9</p>
+                <p><strong>Extraction Schema Used (ID):</strong> <a href="../schemas/extraction-schema-1.html">extraction-schema-1</a></p>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <p><strong>Paper ID:</strong> paper-c84bb36ab145cf903c1ad404008e0250f688c162</p>
+                <p><strong>Paper Title:</strong> <a href="https://www.semanticscholar.org/paper/c84bb36ab145cf903c1ad404008e0250f688c162" target="_blank">Behavior Cloned Transformers are Neurosymbolic Reasoners</a></p>
+                <p><strong>Paper Venue:</strong> Conference of the European Chapter of the Association for Computational Linguistics</p>
+                <p><strong>Paper TL;DR:</strong> This experimental study indicates that injecting the actions from these symbolic modules into the action space of a behavior cloned transformer agent increases performance on four text game benchmarks that test arithmetic, navigation, sorting, and common sense reasoning by an average of 22%, allowing an agent to reach the highest possible performance on unseen games.</p>
+                <p><strong>Paper Abstract:</strong> In this work, we explore techniques for augmenting interactive agents with information from symbolic modules, much like humans use tools like calculators and GPS systems to assist with arithmetic and navigation. We test our agent’s abilities in text games – challenging benchmarks for evaluating the multi-step reasoning abilities of game agents in grounded, language-based environments. Our experimental study indicates that injecting the actions from these symbolic modules into the action space of a behavior cloned transformer agent increases performance on four text game benchmarks that test arithmetic, navigation, sorting, and common sense reasoning by an average of 22%, allowing an agent to reach the highest possible performance on unseen games. This action injection technique is easily extended to new agents, environments, and symbolic modules.</p>
+                <p><strong>Cost:</strong> 0.01</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Data (Details)</h2>
+            <div class="extraction-instance-container" id="e9.0">
+                <h3 class="extraction-instance">Extracted Data Instance 0 (e9.0)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>BCT+NeuroSymbolic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Behavior Cloned Transformer augmented with Neurosymbolic Symbolic Modules</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A T5-base behavior-cloned transformer agent fine-tuned on oracle (gold) trajectories and augmented at inference time with external symbolic modules (calculator, navigation/map reader, sorting, and a knowledge-base) whose actions are injected into the environment's valid action space.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td>here</td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>Neurosymbolic Behavior Cloned Transformer (BCT+NeuroSymbolic)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>A behavior-cloned sequence-to-sequence agent based on T5-base that takes task description, current observation, previous action and previous observation as input and generates the next action; during both training and evaluation the agent receives the environment's valid action list and, when augmented, the valid actions produced by symbolic modules are concatenated into that action list so the model can choose module actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>T5-base</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>external symbolic modules / structured external memory (knowledge base, navigation map, calculator, sorted lists)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Module actions are injected into the environment's valid-action set (A_t <- A_t^e ∪ A_t^m). Modules monitor observations and enumerate module-specific actions; if the agent selects a module action, that module produces the next observation/result (i.e., modules act as external tool-like memory/KB accessed via action selection).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>MapReader, Arithmetic, Sorting, Text World Common Sense (TWC)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>MapReader: score 1.00 (steps 10); Arithmetic: score 1.00 (steps 5); Sorting: score 0.98 (steps 8); TWC: score 0.97 (steps 3); Average: score 0.99 (avg steps 7). (Scores normalized 0–1.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>MapReader: score 0.71 (steps 27); Arithmetic: score 0.56 (steps 5); Sorting: score 0.72 (steps 7); TWC: score 0.90 (steps 6); Average: score 0.72 (avg steps 11).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Injecting symbolic module actions into the action space enables the behavior-cloned T5 agent to nearly solve all four evaluated pick-and-place text-game benchmarks, improving average normalized score from 0.72 to 0.99 and reducing average steps from 11 to 7; modules provide accurate external reasoning (arithmetic, map shortest-path, sorting, KB lookups) that the transformer learns to exploit when trained with gold trajectories.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>Requires privileged aids: (1) gold trajectories demonstrating module usage for training the BCT (behavior cloning); (2) an exhaustive valid-action list (valid action aid) provided at each step; symbolic modules can greatly expand the action space (e.g. ~530 KB actions for TWC), increasing combinatorial complexity; results rely on the ability of the model to match generated text to valid actions (beam search + string-overlap/cosine heuristics).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Behavior Cloned Transformers are Neurosymbolic Reasoners', 'publication_date_yy_mm': '2022-10'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="extraction-instance-container" id="e9.1">
+                <h3 class="extraction-instance">Extracted Data Instance 1 (e9.1)</h3>
+                <div class="extraction-query"><strong>Extraction Query:</strong> Extract any mentions of language model agents augmented with memory for playing text games, including details of memory type, integration, and performance comparisons.</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Field</th>
+                            <th style="width: 70%;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>name_short</strong></td>
+                            <td>DRRN+NeuroSymbolic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>name_full</strong></td>
+                            <td>Deep Reinforcement Relevance Network with injected Symbolic Module actions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>brief_description</strong></td>
+                            <td>A DRRN reinforcement-learning agent (GRU encoders + Q-network) evaluated with symbolic-module actions added to the environment's valid-action set; despite access to the same module actions, the DRRN does not benefit and performance can decrease.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>citation_title</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><strong>mention_or_use</strong></td>
+                            <td>use</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_name</strong></td>
+                            <td>DRRN (with and without symbolic modules)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>agent_description</strong></td>
+                            <td>Deep Reinforcement Relevance Network that separately encodes observations and candidate actions with GRUs and predicts Q-values for (observation, candidate action) pairs; used as a baseline RL agent in the same text-game benchmarks, trained for 100k steps across parallel environments.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>model_name</strong></td>
+                            <td>DRRN (GRU-based Q-network) — model described in He et al. (2016)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_type</strong></td>
+                            <td>external symbolic modules / structured external memory (same modules as for BCT injected into action space)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>memory_integration</strong></td>
+                            <td>Module actions are enumerated and concatenated into the environment's valid-action list; the DRRN treats these as candidate actions and ranks them by Q-value (no separate retrieval mechanism beyond treating module actions as ordinary candidate actions).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>benchmark_name</strong></td>
+                            <td>MapReader, Arithmetic, Sorting, Text World Common Sense (TWC)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_with_memory</strong></td>
+                            <td>Average (with modules): score 0.14 (avg steps 27). Per-benchmark (with modules): MapReader 0.02 (steps 50), Arithmetic 0.14 (steps 7), Sorting 0.03 (steps 18), TWC 0.37 (steps 34).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>performance_without_memory</strong></td>
+                            <td>Average (no modules): score 0.20 (avg steps 27). Per-benchmark (no modules): MapReader 0.02 (steps 50), Arithmetic 0.17 (steps 10), Sorting 0.03 (steps 21), TWC 0.57 (steps 27).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>has_performance_comparison</strong></td>
+                            <td>True</td>
+                        </tr>
+                        <tr>
+                            <td><strong>key_findings</strong></td>
+                            <td>Adding symbolic-module actions into the action space did not improve DRRN performance on these tasks; on average performance decreased (0.20 -> 0.14) and efficiency did not improve. The authors hypothesize the DRRN struggles because it favors actions yielding immediate reward without executing prerequisite steps (e.g., reading the math problem), and because the enlarged action spaces make RL exploration and credit assignment harder.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>challenges_or_limitations</strong></td>
+                            <td>DRRN's training signal is ungeneralizable when agents select reward-yielding actions prematurely; large and expanded action spaces (modules add many candidate actions) create exploration and combinatorial trajectory challenges; no specialized mechanism (e.g., training-time demonstrations) was provided to teach the DRRN to exploit module actions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>source_info</strong></td>
+                            <td>{'paper_title': 'Behavior Cloned Transformers are Neurosymbolic Reasoners', 'publication_date_yy_mm': '2022-10'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Potentially Relevant New Papers (mentioned by this paper)</h2>
+            <ol>
+                <li>Asking for knowledge: Training rl agents to query external knowledge using language <em>(Rating: 2)</em></li>
+                <li>Neuro-symbolic reinforcement learning with first-order logic <em>(Rating: 2)</em></li>
+                <li>A hybrid neuro-symbolic approach for text-based games using inductive logic programming <em>(Rating: 2)</em></li>
+                <li>PIGLeT: Language grounding through neuro-symbolic interaction in a 3D world <em>(Rating: 2)</em></li>
+                <li>Text-based RL Agents with Commonsense Knowledge: New Challenges, Environments and Baselines <em>(Rating: 2)</em></li>
+                <li>Case-based reasoning for better generalization in textual reinforcement learning <em>(Rating: 1)</em></li>
+            </ol>
+        </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
