@@ -62,7 +62,7 @@ This is the repository for Theorizer, from the paper Generating Literature-Drive
 
 ## 1. Paper 
 
-*Theorizer* is described in the following paper: [Generating Literature-Driven Scientific Theories at Scale [PDF]](https://arxiv.org).
+*Theorizer* is described in the following paper: [Generating Literature-Driven Scientific Theories at Scale [Arxiv/PDF]]([https://arxiv.org](https://arxiv.org/abs/2601.16282)).
 
 <div align="center">
 <table> <tr> <td>
@@ -545,7 +545,15 @@ The core prompts used in this work can be found at the following locations in th
 ## 8. Citation
 If you use this work, please reference the following citation:
 ```
-TODO
+@misc{jansen2026generatingliteraturedrivenscientifictheories,
+      title={Generating Literature-Driven Scientific Theories at Scale}, 
+      author={Peter Jansen and Peter Clark and Doug Downey and Daniel S. Weld},
+      year={2026},
+      eprint={2601.16282},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2601.16282}, 
+}
 ```
 
 <span id="9-license"/>
