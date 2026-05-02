@@ -4,7 +4,7 @@
 
 # Generating Literature-Driven Scientific Discoveries at Scale
 
-This is the repository for Theorizer, from the paper Generating Literature-Driven Scientific Discoveries at Scale.
+This is the repository for Theorizer, from the paper [Generating Literature-Driven Scientific Theories at Scale (ACL 2026)](https://arxiv.org/abs/2601.16282).
 
 *Abstract:* Contemporary automated scientific discovery has focused on agents for generating scientific experiments, while systems that perform higher-level scientific activities such as theory building remain underexplored. In this work, we formulate the problem of synthesizing theories consisting of qualitative and quantitative laws from large corpora of scientific literature. We study theory generation at scale, using 13.7k source papers to synthesize 2.9k theories, examining how generation using literature-grounding versus parametric knowledge, and accuracy-focused versus novelty-focused generation objectives change theory properties. Our experiments show that, compared to using parametric LLM memory for generation, our literature-supported method creates theories that are significantly better at both matching existing evidence and at predicting future results from 4.6k subsequently-written papers.
 
@@ -62,7 +62,7 @@ This is the repository for Theorizer, from the paper Generating Literature-Drive
 
 ## 1. Paper 
 
-*Theorizer* is described in the following paper: [Generating Literature-Driven Scientific Theories at Scale [Arxiv/PDF]]([https://arxiv.org](https://arxiv.org/abs/2601.16282)).
+*Theorizer* is described in the following paper: [Generating Literature-Driven Scientific Theories at Scale (ACL 2026)](https://arxiv.org/abs/2601.16282).
 
 <div align="center">
 <table> <tr> <td>
