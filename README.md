@@ -584,3 +584,29 @@ For any questions, please contact Peter Jansen (`peterj@allenai.org`).  For issu
 
 
 
+
+## A2A server and tests
+
+The A2A server supports theory generation, extraction, novelty evaluation,
+and artifact output. The original web interface and evaluation scripts remain
+available.
+
+Copy `.env.example` to `.env` and set your own credentials and service URLs.
+`DATABASE_URL` is optional: without it, persistence uses local files.
+Optional retrieval requires `USE_NORA_RETRIEVAL_FULLTEXT=true`,
+`NORA_RETRIEVAL_ENV`, `NORA_RETRIEVAL_BASE_URL_TEMPLATE`, and
+`NORA_RETRIEVAL_BEARER_TOKEN`. Configure `PAPER_FINDER_BASE_URL` for your
+authorized Paper Finder service. Never commit credentials.
+
+Build and run the standalone server:
+
+```bash
+docker build -t asta-theorizer .
+docker run --rm --env-file .env -p 9000:9000 asta-theorizer
+```
+
+The server listens on port 9000 by default, or `PORT` when set.
+Run offline unit tests with `python -m pytest` after installing the requirements
+and pytest (`pip install --find-links vendor -r requirements.txt pytest`).
+`tests/harness/run_ci.sh` also runs Docker smoke tests and a
+fake-LLM end-to-end matrix without provider credentials.

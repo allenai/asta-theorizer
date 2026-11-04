@@ -17,7 +17,7 @@ class TheoryStore():
     #
     #   Constructor
     #
-    def __init__(self, paperstore:PaperStore=None, filename_in:str=None):
+    def __init__(self, paperstore:PaperStore=None, filename_in:str=None, base_id_level:int=0):
         self.theories = {}
         #self.papers = {}
         self.paperstore = paperstore if paperstore is not None else PaperStore()
@@ -25,13 +25,22 @@ class TheoryStore():
         self.extraction_results = {}
         self.theory_evaluations = {}
 
+        self.uuid_index: dict[str, tuple[str, str]] = {}
+        self.on_theory_added = None
+        self.on_extraction_schema_added = None
+        self.on_extraction_result_added = None
+
         # For generating UUIDs
         self.all_ids = set()  # To keep track of all unique IDs
-        self.next_ids = {"theory": 0, "extraction-schema": 0, "extraction-result": 0, "theory-evaluation": 0}
+        self.next_ids = {"theory": base_id_level, "extraction-schema": base_id_level, "extraction-result": base_id_level, "theory-evaluation": base_id_level}
 
         # Load the store from a file (if provided)
         if (filename_in is not None):
             self.load(filename_in)
+
+    def _notify(self, callback, item_id):
+        if callback:
+            callback(self, item_id)
 
 
 
@@ -54,11 +63,13 @@ class TheoryStore():
             else:
                 # Add the theory to the store
                 self.theories[existing_id] = theory
+                self._notify(self.on_theory_added, existing_id)
                 return existing_id
         else:
             # No ID -- generate a new one
             theory.id = self.generate_id("theory")
             self.theories[theory.id] = theory           # Can safely assume the generated ID is unique (since it's guaranteed by the function)
+            self._notify(self.on_theory_added, theory.id)
             return theory.id
 
 
@@ -87,11 +98,13 @@ class TheoryStore():
             else:
                 # Add the schema to the store
                 self.extraction_schemas[existing_id] = schema
+                self._notify(self.on_extraction_schema_added, existing_id)
                 return existing_id
         else:
             # No ID -- generate a new one
             schema.id = self.generate_id("extraction-schema")
             self.extraction_schemas[schema.id] = schema           # Can safely assume the generated ID is unique (since it's guaranteed by the function)
+            self._notify(self.on_extraction_schema_added, schema.id)
             return schema.id
 
     def get_extraction_schema(self, id:str):
@@ -119,6 +132,8 @@ class TheoryStore():
             else:
                 # Add the result to the store
                 self.extraction_results[existing_id] = result
+                self._index_extraction_result(result)
+                self._notify(self.on_extraction_result_added, existing_id)
                 return existing_id
         else:
             # No ID -- generate a new one
@@ -126,8 +141,16 @@ class TheoryStore():
             new_id = self.generate_id("extraction-result")
             result.set_id(new_id)  # Set the ID in the result object.  Must use this method to correctly set the ID and add UUIDs to the extracted data.
             self.extraction_results[result.id] = result           # Can safely assume the generated ID is unique (since it's guaranteed by the function)
+            self._index_extraction_result(result)
+            self._notify(self.on_extraction_result_added, result.id)
             return result.id
 
+
+    def _index_extraction_result(self, result):
+        """Map each extracted datum UUID to its source paper and extraction result."""
+        for item in result.extracted_data or []:
+            if isinstance(item, dict) and item.get("uuid"):
+                self.uuid_index[item["uuid"]] = (result.paper_id, result.id)
 
     def get_extraction_result(self, id:str):
         if (id not in self.extraction_results):
@@ -202,21 +225,14 @@ class TheoryStore():
             json.dump(store_dict, f, indent=4)
 
 
-    def load(self, filename:str):
-        print("TheoryStore.load(): Loading store from file: " + filename)
-        if (not os.path.exists(filename)):
-            raise FileNotFoundError(f"TheoryStore.load(): ERROR: File '{filename}' does not exist.")
-
-        # Read from the JSON file
-        with open(filename, 'r') as f:
-            store_dict = json.load(f)
-
+    def load_from_dict(self, store_dict:dict):
         # Clear the current store
         self.theories.clear()
         #self.papers.clear()
         self.extraction_schemas.clear()
         self.extraction_results.clear()
         self.theory_evaluations.clear()
+        self.uuid_index.clear()
 
         # Load theories
         for k, v in store_dict['theories'].items():
@@ -230,11 +246,12 @@ class TheoryStore():
             schema.id = k
             self.extraction_schemas[k] = schema
 
-        # Load extraction results
+        # Load extraction results, rebuilding the datum-uuid index so evidence lookups work for loaded/injected stores too.
         for k, v in store_dict['extraction_results'].items():
             result = ExtractionQueryResult.from_dict(v)
             result.id = k
             self.extraction_results[k] = result
+            self._index_extraction_result(result)
 
         # Load theory evaluations
         if ("theory_evaluations" in store_dict):
@@ -253,6 +270,17 @@ class TheoryStore():
                 # If the key is not in the next_ids, set it to 0
                 self.next_ids[key] = 0
 
+    def load(self, filename:str):
+        print("TheoryStore.load(): Loading store from file: " + filename)
+        if (not os.path.exists(filename)):
+            raise FileNotFoundError(f"TheoryStore.load(): ERROR: File '{filename}' does not exist.")
+
+        # Read from the JSON file
+        with open(filename, 'r') as f:
+            store_dict = json.load(f)
+
+        self.load_from_dict(store_dict)
+
         # Print some summary statistics
         print("TheoryStore.load(): Loaded store with " + str(len(self.theories)) + " theories, " + str(len(self.extraction_schemas)) + " extraction schemas, and " + str(len(self.extraction_results)) + " extraction results.")
 
@@ -261,8 +289,11 @@ class TheoryStore():
     #   Generating UUIDs
     #
     def generate_id(self, entity_type:str):
+        #  Get the base ID level
+        base_id_level = self.base_id_level if (hasattr(self, 'base_id_level')) else 1
+
         next_id_str = None
-        MAX_ITER = 100000
+        MAX_ITER = 10000000
 
         # Check that the entity_type is valid
         if (entity_type not in self.next_ids):
@@ -282,7 +313,6 @@ class TheoryStore():
 
         # If we reach here, we failed to generate a unique ID
         raise Exception(f"Failed to generate a unique ID for {entity_type} after {MAX_ITER} iterations.")
-
 
 
 

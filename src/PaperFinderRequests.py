@@ -39,16 +39,19 @@ class PaperFinderRequests():
 
 
     # Submit a request to the PaperFinder API, which will add it to the request queue.
-    def submit_request(self, query:str):
+    def submit_request(self, query:str, cost_trace_id:str=None):
         with self.THREAD_LOCK_PAPERFINDER_REQUESTS:
             # Generate an ID for the request
             request_id = "paperfinder-request-" + str(self.next_request_id)
             self.next_request_id += 1
 
-            # Add the request to the queue
+            # Add the request to the queue.
+            # `cost_trace_id` is the workflow's generation_id, carried through so Paper Finder can
+            # attribute cost to the run that caused it.
             self.queue.append({
                 'id': request_id,
-                'query': query
+                'query': query,
+                'cost_trace_id': cost_trace_id
             })
 
             return request_id
@@ -117,14 +120,11 @@ class PaperFinderRequests():
 
 
     # Perform the paperfinder request
-    def perform_work(self, query:str):
-        # TODO: Call Paperfinder
+    def perform_work(self, query:str, cost_trace_id:str=None):
         print("PaperFinderRequests.perform_work(): Performing work for query: " + query)
 
-        # Simulate performing work
-        result = get_paperfinder_results(query)
+        result = get_paperfinder_results(query, cost_trace_id=cost_trace_id)
 
-        # Create a faux result
         work_result = {
             "result": result
         }
@@ -182,7 +182,7 @@ class PaperFinderRequests():
                 self.actively_processing_work = True
 
             try:
-                work_result = self.perform_work(request['query'])
+                work_result = self.perform_work(request['query'], cost_trace_id=request.get('cost_trace_id'))
                 # Step 2C: Store the work result
                 self._set_work(request['id'], work_result)
             except Exception as e:

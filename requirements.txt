@@ -2,10 +2,16 @@ Flask==3.1.1
 func_timeout==4.3.5
 litellm==1.60.5
 Markdown==3.9
-mistralai==1.8.1
+mistralai==1.9.11
 numpy==2.2.6
 orjson==3.11.3
 pywebio==1.8.4
 requests==2.32.4
 tiktoken==0.8.0
 tqdm==4.67.1
+psycopg2-binary==2.9.10
+asta-types==1.0.0
+asta-artifact==1.0.8
+asta-agent[postgresql]==1.0.20
+asta-credits==1.2.0
+asta-papers[mistral]==0.0.1

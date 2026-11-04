@@ -6,9 +6,7 @@ from __future__ import annotations
 import os
 import json
 import time
-
-# Timeout
-from func_timeout import func_timeout, FunctionTimedOut
+import traceback
 
 # Threading
 import concurrent.futures
@@ -54,7 +52,7 @@ class SchemaExtractionQueue():
 
         # Keep track of the number of active threads
         self.active_threads = set()
-        self.MAX_THREADS = 10           # The maximum number of concurrent extraction threads (each contains an LLM call)
+        self.MAX_THREADS = 25           # The maximum number of concurrent extraction threads (each contains an LLM call)
 
     #
     #   Threading/Queue/Work Processing
@@ -222,18 +220,11 @@ class SchemaExtractionQueue():
     #   Performing Work: Extracting content from papers
     #
     def extract_from_paper(self, extraction_schema_id:str, paper_id:str, model_str:str):
-        # Wrapper for below, with a timeout
-        MAX_EXTRACTION_TIME = 60*5  # Maximum time to wait for extraction to complete (in seconds)
         try:
-            # Call the extraction function with a timeout
-            result = func_timeout(MAX_EXTRACTION_TIME, self._extract_from_paper, args=(extraction_schema_id, paper_id, model_str))
+            result = self._extract_from_paper(extraction_schema_id, paper_id, model_str)
             return result
-        except FunctionTimedOut:
-            print(f"ERROR: SchemaExtractionQueue.extract_from_paper(): Extraction for paper ID '{paper_id}' timed out after {MAX_EXTRACTION_TIME} seconds.")
-            return ""   # Return blank, so signifies that this result was tried, but not extracted successfully
-        # Catch all other exceptions
         except Exception as e:
-            print(f"ERROR: SchemaExtractionQueue.extract_from_paper(): An error occurred while extracting from paper ID '{paper_id}': {str(e)}")
+            print(f"ERROR: SchemaExtractionQueue.extract_from_paper(): An error occurred while extracting from paper ID '{paper_id}': {str(e)}\n{traceback.format_exc()}")
             return ""   # Return blank, so signifies that this result was tried, but not extracted successfully
 
 
@@ -251,6 +242,8 @@ class SchemaExtractionQueue():
         if (paper_text is None):
             print("ERROR: SchemaExtractionQueue.extract_from_paper(): Full-text for paper with ID '" + paper_id + "' not found.")
             return None
+
+        paper_text = truncate_to_model_context(paper_text, model_str)
 
         # Step 3: Perform the extraction
         max_tokens = 32000
