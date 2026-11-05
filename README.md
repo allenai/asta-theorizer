@@ -593,10 +593,9 @@ available.
 
 Copy `.env.example` to `.env` and set your own credentials and service URLs.
 `DATABASE_URL` is optional: without it, persistence uses local files.
-Optional retrieval requires `USE_NORA_RETRIEVAL_FULLTEXT=true`,
-`NORA_RETRIEVAL_ENV`, `NORA_RETRIEVAL_BASE_URL_TEMPLATE`, and
-`NORA_RETRIEVAL_BEARER_TOKEN`. Configure `PAPER_FINDER_BASE_URL` for your
-authorized Paper Finder service. Never commit credentials.
+Configure `PAPER_FINDER_BASE_URL` for your authorized Paper Finder service.
+Pass pre-collected paper stores as inline JSON objects; paper-store URI inputs
+are rejected. Never commit credentials.
 
 Build and run the standalone server:
 

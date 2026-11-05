@@ -190,7 +190,7 @@ Query = Annotated[str, Field(
 Mission = Annotated[str, Field(description="Optional focus or constraints to scope theory generation.")]
 PaperStoreInput = Annotated[Optional[PaperStore], Field(
     description=(
-        "Pre-collected paper store to use as input. Entries with `paper_markdown` "
+        "Inline paper store object; URI inputs are not supported. Entries with `paper_markdown` "
         "are used directly. Entries without `paper_markdown` but with at least one "
         "of `corpus_id`, `s2_id`, or `title` are hydrated server-side via the same "
         "S2 + MistralOCR pipeline used for PaperFinder discoveries (~30-60s per "
@@ -203,7 +203,7 @@ PaperStoreInput = Annotated[Optional[PaperStore], Field(
 )]
 RequiredPaperStore = Annotated[PaperStore, Field(
     description=(
-        "Additional papers to merge into the prior run's paper store. Pass "
+        "Inline papers to merge into the prior run's paper store; URI inputs are not supported. Pass "
         "entries with `paper_markdown` populated; identifier-only entries are "
         "not hydrated by this task (use a fresh Literature Theory Generation "
         "run if you need server-side hydration)."

@@ -13,8 +13,8 @@ Two harnesses live here:
 ## E2E matrix (`run_e2e_matrix.sh`)
 
 Self-contained: builds `asta-theorizer:e2e`, boots it with `FilePersistence`
-(so `run_id` resume works in-container), mounts a seed paperstore for the
-`file://` URI case, and runs `e2e_matrix.py`. Secrets come from the repo `.env`.
+(so `run_id` resume works in-container), runs `e2e_matrix.py`, and checks that URI
+paper stores are rejected. Secrets come from the repo `.env`.
 
 ```bash
 tests/harness/run_e2e_matrix.sh                 # all tiers
@@ -29,7 +29,7 @@ Cases run in dependency order and reuse each other's `run_id` / folded
 `theory_store`, so paper-finding and extraction are paid for once.
 
 Coverage: BYO full-text dict paper_store · metadata-only hydration · paper_store
-as a `file://` URI · BYO extraction_schema · BYO extraction_results · BYO
+URI rejection · BYO extraction_schema · BYO extraction_results · BYO
 theory_store · step-by-step via `run_id` · resume-extraction · full pipeline ·
 fail-fast validation (list-shaped paper_store / mutually-exclusive args).
 

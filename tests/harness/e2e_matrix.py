@@ -572,28 +572,18 @@ def case_find_extract_byo_schema(ctx: Ctx) -> tuple[bool, str]:
 
 
 def case_find_extract_uri(ctx: Ctx) -> tuple[bool, str]:
-    """paper_store passed as a file:// (or https://) URI string."""
-    if not ctx.paperstore_uri:
-        return True, "skipped: no --paperstore-uri provided (URI must be reachable from the server)"
+    """URI paper stores must fail without being read by the server."""
     task = ctx.run("find-and-extract", {
         "theory_query": THEORY_QUERY,
-        "paper_store": ctx.paperstore_uri,
+        "paper_store": ctx.paperstore_uri or "file:///seed/seed_paperstore.json",
         "search_additional_papers": False,
-        "max_papers_to_retrieve": len(SEED_PAPERS),
     })
-    ok, msg = _check_completed(task, "find-and-extract(uri)")
-    if not ok:
-        return ok, msg
-    counts = artifact_type_counts(task)
-    print(f"    artifact counts: {counts}")
-    fails = _assert_counts(counts, {
-        "extraction-schema": ("==", 1),
-        "extraction": (">=", 1),
-        "theory": ("=0", 0),
-        "novelty": ("=0", 0),
-        "theory_store": ("==", 1),
-    })
-    return (not fails), "; ".join(fails) or "OK"
+    state = (task.get("status") or {}).get("state")
+    if state != "failed":
+        return False, f"URI input should fail, got {state}"
+    if task.get("artifacts"):
+        return False, "URI input should fail before producing artifacts"
+    return True, "URI input rejected"
 
 
 def case_form_theory_byo_results(ctx: Ctx) -> tuple[bool, str]:
@@ -927,8 +917,7 @@ def main() -> int:
     p.add_argument("--include", nargs="+", default=None,
                    help="Explicit subset of case names (overrides --tier).")
     p.add_argument("--paperstore-uri", default=os.environ.get("PAPERSTORE_URI") or None,
-                   help="file://, https://, or s3:// URI to a wrapped paperstore JSON, "
-                        "reachable from the SERVER, for the URI case.")
+                   help="URI used to check that paper-store URI inputs are rejected.")
     p.add_argument("--queries-csv", default=None,
                    help="Run one case per UNIQUE query from this CSV's theory_query column "
                         "(replaces the fixed CASES). Duplicate queries are skipped.")

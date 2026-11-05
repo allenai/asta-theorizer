@@ -1368,15 +1368,13 @@ def add_qualified_novelty_result_to_theorystore_dict(theorystore_data:dict, theo
     # Step 3: Find the specific theory and statement, and add the aggregated novelty evaluation results
     theories_dict = theorystore_data.get("theories", {})
     if (theory_id not in theories_dict):
-        print(f"ERROR: theory_id {theory_id} not found in TheoryStore.")
-        return False
+        raise ValueError(f"theory_id {theory_id} not found in TheoryStore.")
 
     theory = theories_dict[theory_id]
     components = theory.get("components", {})
     statements = components.get("theory_statements", [])
     if (statement_index < 0) or (statement_index >= len(statements)):
-        print(f"ERROR: statement_index {statement_index} is out of range for theory_id {theory_id}.")
-        return False
+        raise ValueError(f"statement_index {statement_index} is out of range for theory_id {theory_id}.")
 
     # Add the novelty evaluation results to the specific statement
     statement = statements[statement_index]

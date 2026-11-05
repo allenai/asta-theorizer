@@ -13,36 +13,6 @@ from .schemas import (
 )
 
 
-def _load_paper_store_from_uri(uri: str) -> PaperStore:
-    """Fetch a paper-store JSON from a file://, s3://, or https:// URI and
-    validate it into a PaperStore.
-
-    Implements the schemas-extension contract ("a model-typed input also
-    accepts a string URI") for paper_store, which this asta-agent build does
-    not resolve server-side. Lets callers hardcode a paper store in S3 (the
-    Titanic/DataVoyager pattern) instead of inlining a large payload.
-    """
-    import json
-
-    if uri.startswith("file://"):
-        with open(uri[len("file://"):]) as f:
-            data = json.load(f)
-    elif uri.startswith("s3://"):
-        import boto3
-        bucket, key = uri[len("s3://"):].split("/", 1)
-        body = boto3.client("s3").get_object(Bucket=bucket, Key=key)["Body"].read()
-        data = json.loads(body)
-    elif uri.startswith(("http://", "https://")):
-        import urllib.request
-        with urllib.request.urlopen(uri, timeout=60) as r:
-            data = json.loads(r.read())
-    else:
-        raise ValueError(
-            f"paper_store string must be a file://, s3://, or https:// URI — got {uri[:60]!r}"
-        )
-    return PaperStore.model_validate(data)
-
-
 def _hydrate_paper_requests(workflow, request_ids) -> None:
     """Poll injected paper requests to completion (full text) before downstream
     steps run, mirroring make_paperfinder_request_executor's fetch+poll. Used
@@ -73,9 +43,8 @@ def inject_papers(workflow, paper_store: PaperStore, will_find_papers: bool = Fa
     that step's poll/cancel loop picks up the request_ids. Otherwise no step
     would, so we poll them to completion here — leaving them un-polled would
     orphan the OCR work and feed metadata-only papers to extraction/novelty."""
-    # String URIs aren't resolved server-side in this build; resolve here.
     if isinstance(paper_store, str):
-        paper_store = _load_paper_store_from_uri(paper_store)
+        raise ValueError("paper_store must be an inline PaperStore object; URI inputs are not supported.")
     # asta-agent 1.0.15 only coerces dict inputs into Pydantic models, so a JSON-array paper_store arrives as a plain list; reject upfront with the expected shape instead of an AttributeError mid-task.
     if not isinstance(paper_store, PaperStore):
         raise ValueError(

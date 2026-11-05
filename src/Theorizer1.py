@@ -6,6 +6,7 @@ import json
 import time
 import traceback
 import logging
+from functools import wraps
 
 import threading
 from collections import deque
@@ -631,6 +632,7 @@ class StepProcessor:
         with getattr(workflow, "lock", _NullLock()):
             if hasattr(workflow, "step_errors") and isinstance(workflow.step_errors, dict):
                 workflow.step_errors[self.step_name] = repr(exc)
+            workflow.set_error_state(f"ERROR in `{self.step_name}`: {exc!r}")
         print(f"[{self.step_name}] ERROR for {workflow}: {exc!r}")
 
     # ---- internal ----
@@ -695,6 +697,17 @@ class _NullLock:
     """Fallback context manager if workflow.lock doesn't exist."""
     def __enter__(self): return self
     def __exit__(self, exc_type, exc, tb): return False
+
+
+def _fail_workflow_on_exception(executor):
+    @wraps(executor)
+    def run(workflow):
+        try:
+            return executor(workflow)
+        except Exception as exc:
+            logger.exception("Workflow executor %s failed", executor.__name__)
+            workflow.set_error_state(f"ERROR in `{executor.__name__}`: {exc!r}")
+    return run
 
 
 #
@@ -1008,6 +1021,7 @@ class StepProcessorMakePaperFinderRequest(StepProcessor):
 #   Step Processor: Extract from Papers
 #
 
+@_fail_workflow_on_exception
 def extract_from_papers_executor(workflow: TheoryGenerationWorkflowStructure) -> None:
     # Make a fresh instance of the paper extraction queue.
     paper_store = workflow.paper_store
@@ -1245,9 +1259,12 @@ def extract_from_papers_executor(workflow: TheoryGenerationWorkflowStructure) ->
         while ((time.time() - start_time) < PAPER_CONVERSION_TIMEOUT_SECONDS):
             # Check to see if the newly added papers have been added to the paper store by checking for the presence of their request IDs in the paper store.
             num_papers_added_and_converted = 0
+            num_papers_processed = 0
             for request_id in workflow.theory_workflow_structure.get("follow_on_paper_request_ids", []):
                 paper_key = workflow.theory_store.paperstore.is_paper_request_complete(request_id)
                 if (paper_key is not None):
+                    num_papers_processed += 1
+                if isinstance(paper_key, str):
                     num_papers_added_and_converted += 1
                     follow_on_papers_converted.add(paper_key)
 
@@ -1259,8 +1276,8 @@ def extract_from_papers_executor(workflow: TheoryGenerationWorkflowStructure) ->
             else:
                 workflow.add_note(f"No follow-on papers have been added and converted yet. Still waiting... ({round((time.time() - start_time), 1)} seconds elapsed)")
 
-            if (num_papers_added_and_converted == len(workflow.theory_workflow_structure.get("follow_on_paper_request_ids", []))):
-                workflow.add_note(f"All follow-on papers have been processed by the full-text extraction pipeline! ({num_papers_added_and_converted} papers, {round((time.time() - start_time), 1)} seconds elapsed)")
+            if (num_papers_processed == len(workflow.theory_workflow_structure.get("follow_on_paper_request_ids", []))):
+                workflow.add_note(f"All follow-on requests finished with {num_papers_added_and_converted} papers converted ({round((time.time() - start_time), 1)} seconds elapsed).")
                 break
 
             time.sleep(poll_interval_seconds)
@@ -1277,7 +1294,7 @@ def extract_from_papers_executor(workflow: TheoryGenerationWorkflowStructure) ->
         num_papers_added_and_converted = 0
         for request_id in workflow.theory_workflow_structure.get("follow_on_paper_request_ids", []):
             paper_key = workflow.theory_store.paperstore.is_paper_request_complete(request_id)
-            if (paper_key is not None):
+            if isinstance(paper_key, str):
                 num_papers_added_and_converted += 1
         workflow.add_note(f"{num_papers_added_and_converted} out of {len(workflow.theory_workflow_structure.get('follow_on_paper_ids', []))} follow-on papers were successfully added and converted within the timeout period.")
 
@@ -1339,7 +1356,10 @@ def extract_from_papers_executor(workflow: TheoryGenerationWorkflowStructure) ->
         workflow.add_note(f"{num_follow_on_extraction_results_completed} out of {len(workflow.theory_workflow_structure.get('follow_on_extraction_request_ids', []))} follow-on extraction requests were completed within the timeout period.")
 
         # Now, join both the lists together, so the next steps can use the combined list of completed extraction results (from both the original papers and the follow-on papers).
-        workflow.theory_workflow_structure["completed_extraction_result_ids"] = workflow.theory_workflow_structure.get("completed_extraction_result_ids", []) + workflow.theory_workflow_structure.get("follow_on_extraction_request_ids", [])
+        workflow.theory_workflow_structure["completed_extraction_result_ids"] = list(dict.fromkeys(
+            workflow.theory_workflow_structure.get("completed_extraction_result_ids", [])
+            + completed_follow_on_extraction_result_ids
+        ))
         # Get the actual extracted data for the follow-on extraction results, and add it to the list of completed extraction results in the workflow structure for the next steps to use.
         for extraction_result_id in completed_follow_on_extraction_result_ids:
             try:
@@ -1361,19 +1381,19 @@ def extract_from_papers_executor(workflow: TheoryGenerationWorkflowStructure) ->
 
     # Try to measure the cost
     extraction_total_cost = 0.0
-    for extraction_request_id in workflow.theory_workflow_structure.get("extraction_request_ids", []):
+    for extraction_result_id in workflow.theory_workflow_structure.get("completed_extraction_result_ids", []):
         try:
-            extraction_result = theory_store.get_extraction_result(id=extraction_request_id)
+            extraction_result = theory_store.get_extraction_result(id=extraction_result_id)
             if (extraction_result is not None):
                 extraction_total_cost += extraction_result.cost
         except Exception as e:
             import traceback
-            print(f"Error while accessing cost from extraction result with ID {extraction_request_id}: {e!r}\n{traceback.format_exc()}")
+            print(f"Error while accessing cost from extraction result with ID {extraction_result_id}: {e!r}\n{traceback.format_exc()}")
             continue
 
-    # Set the cost in the workflow
+    # Recompute the cumulative cost so resumed runs don't charge prior results twice.
     if (isinstance(extraction_total_cost, (int, float))):
-        workflow.add_cost_to_key("paper_extraction", extraction_total_cost)
+        workflow.theory_workflow_structure["costs"]["paper_extraction"] = extraction_total_cost
 
     # Set completed
     workflow.set_current_step_completed()
@@ -1394,6 +1414,7 @@ class StepProcessorExtractFromPapers(StepProcessor):
 #   Step Processor: Make theory from extraction results
 #
 
+@_fail_workflow_on_exception
 def make_theory_from_literature_executor(workflow: TheoryGenerationWorkflowStructure) -> None:
     start_time = time.time()
 
@@ -1435,6 +1456,9 @@ def make_theory_from_literature_executor(workflow: TheoryGenerationWorkflowStruc
 
     print("Getting subsampling info...")
     subsampling_rate = consolidated_subsampled_results.get("subsampling_rate", None)
+    if not isinstance(subsampling_rate, (int, float)):
+        workflow.set_error_state("ERROR in `make-theory-from-literature`: Subsampling did not return a numeric rate.")
+        return
     if (subsampling_rate >= 1.0):
         workflow.add_note("The data was not subsampled.")
     else:
@@ -1528,6 +1552,10 @@ def make_theory_from_literature_executor(workflow: TheoryGenerationWorkflowStruc
 
 
     workflow.add_note("After theory generation...")
+
+    if not isinstance(theory_result, dict):
+        workflow.set_error_state("ERROR in `make-theory-from-literature`: Theory formation failed. No theory result returned.")
+        return
 
     # Add the time and cost information
     workflow.add_cost_to_key("theory_formation", theory_result.get("total_cost", 0.0))

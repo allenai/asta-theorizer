@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # Self-contained E2E matrix for the Theorizer A2A server.
 #
-# Builds the image (pinned asta-agent==1.0.15, the published SDK), runs the
-# container exactly as it is deployed, mounts a seed paperstore so the file://
-# URI case is reachable from inside the container, and runs the full
-# API-surface matrix (tests/harness/e2e_matrix.py) against it.
+# Builds the image with the pinned published SDK and runs the API-surface matrix
+# (tests/harness/e2e_matrix.py), including rejection of URI paper-store inputs.
 #
 # Secrets come from the repo .env (OPENAI/ANTHROPIC/MISTRAL/S2 keys + API_KEY).
 # DATABASE_URL is intentionally unset so the container uses FilePersistence —
@@ -46,16 +44,6 @@ else
   echo "    using existing $IMAGE (pass --rebuild to force)"
 fi
 
-# Seed paperstore for the file:// URI case, mounted read-only into the container.
-SEED_DIR="$(mktemp -d)"
-"$PY" - "$SEED_DIR/seed_paperstore.json" <<'PYEOF'
-import json, sys
-from tests.harness.e2e_matrix import fulltext_paperstore
-with open(sys.argv[1], "w") as f:
-    json.dump(fulltext_paperstore(), f)
-PYEOF
-SERVER_URI="file:///seed/seed_paperstore.json"
-
 # FAKE=1 runs the container with a canned LLM ($0 tokens) — for validating plumbing /
 # the query-list pass end-to-end without paying. QUERIES_CSV drives the matrix from a
 # CSV of real queries (deduped) instead of the fixed CASES.
@@ -66,12 +54,11 @@ if [ "$FAKE" = 1 ]; then
   echo "    THEORIZER_FAKE_LLM=1 (canned LLM, \$0 tokens)"
 fi
 
-echo "==> [2/4] run container on :$PORT (FilePersistence; seed mounted at /seed)"
+echo "==> [2/4] run container on :$PORT (FilePersistence)"
 docker rm -f "$NAME" >/dev/null 2>&1 || true
 docker run -d --name "$NAME" -p "$PORT:9000" \
   --env-file "$REPO/.env" -e DATABASE_URL= \
   ${FAKE_ENV[@]+"${FAKE_ENV[@]}"} \
-  -v "$SEED_DIR:/seed:ro" \
   "$IMAGE" >/dev/null
 for _ in $(seq 1 30); do
   [ "$(curl -s -o /dev/null -w '%{http_code}' --max-time 4 http://localhost:$PORT/healthz || true)" = "200" ] && break
@@ -90,12 +77,10 @@ if [ -n "${QUERIES_CSV:-}" ]; then
 fi
 PYTHONPATH="$REPO/src" "$PY" "$REPO/tests/harness/e2e_matrix.py" \
   --url "http://localhost:$PORT" --api-key "$API_KEY" \
-  --paperstore-uri "$SERVER_URI" \
   ${QUERY_ARGS[@]+"${QUERY_ARGS[@]}"} \
   ${TIER_ARGS:+--tier "${TIER_ARGS[@]}"} || rc=$?
 
 echo "==> [4/4] teardown"
-rm -rf "$SEED_DIR"
 if [ "$KEEP" = 1 ]; then
   echo "    leaving container '$NAME' up (--keep); logs: docker logs $NAME"
 else
