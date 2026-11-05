@@ -39,7 +39,8 @@ class PaperStore():
     #
     #   Constructor
     #
-    def __init__(self, filename_in:str=None):
+    def __init__(self, filename_in:str=None, deserialize_from_dict:dict=None, generation_id:str=None):
+        self.generation_id = generation_id
         # Initialize the Mistral OCR store
         self.ocr_store = MistralOCRStore(api_key=None)      # Will automatically load the API key
 
@@ -79,6 +80,9 @@ class PaperStore():
             if (not success):
                 print("PaperStore.__init__(): WARNING: Failed to load paperstore from file: " + filename_in)
                 exit(1)
+
+        if filename_in is None and deserialize_from_dict is not None:
+            self.deserialize(deserialize_from_dict)
 
         # Start a background thread to process the queue
         self.worker_thread = None
@@ -284,7 +288,7 @@ class PaperStore():
     def _set_paper_as_processed(self, request_id:str, reference_key:str):
         with self.THREAD_LOCK_PAPERSTORE:
             # Set the finished work
-            self.finished_work[request_id] = reference_key
+            self.finished_work.setdefault(request_id, reference_key)
 
     # Stop the worker thread
     def stop_thread(self):
@@ -344,14 +348,8 @@ class PaperStore():
                 # Show queue size periodically
                 #print("PaperStore.process_work_monitor(): Checking for requests in the queue... (queue size: " + str(len(self.queue)) + ")")
 
-                # Check if there are any requests in the queue
-                if (len(self.queue)) == 0:
-                    # No requests in the queue, so wait a bit before checking again
-                    time.sleep(MIN_WAIT_TIME)
-                    continue
-
-                # Get the next request
-                request = self.queue.pop(0)
+                if self.queue:
+                    request = self.queue.pop(0)
 
 
             # Step 2A: If the request is not valid, then sleep and check again in the next iteration
@@ -427,6 +425,53 @@ class PaperStore():
         print("PaperStore.load(): Loaded " + str(len(self.paperstore)) + " papers from the file.")
         return True
 
+
+
+    def serialize(self):
+        print("PaperStore.serialize(): Serializing paperstore to dict.")
+        # Pack the paperstore and paperstore LUT
+        packed = {
+            "paperstore_lut": self.paperstore_lut,
+            "paperstore": self.paperstore,
+        }
+        return packed
+
+
+    def deserialize(self, deserialize_from_dict:dict):
+        print("PaperStore.deserialize(): Deserializing paperstore from dict.")
+        # Unpack the paperstore and paperstore LUT
+        self.paperstore_lut = deserialize_from_dict.get("paperstore_lut", {})
+        self.paperstore = deserialize_from_dict.get("paperstore", {})
+
+        print("PaperStore.deserialize(): Deserialized " + str(len(self.paperstore)) + " papers from the dict.")
+        return True
+
+
+    def merge_from_dict(self, data:dict):
+        """Merge papers with full text from a wrapped paperstore dict; skip ones without paper_markdown."""
+        for key, paper in data.get("paperstore", {}).items():
+            if paper.get("paper_markdown"):
+                self.paperstore[key] = paper
+                self.paperstore_lut[key] = key
+                # Register the corpus_id alias so a later PaperFinder discovery of the same
+                # paper dedupes against this seed (it looks papers up by _mk_key_corpus_id)
+                # instead of re-OCRing and storing a duplicate full-text copy.
+                corpus_id = paper.get("corpus_id")
+                if corpus_id is not None:
+                    self.paperstore_lut.setdefault(self._mk_key_corpus_id(str(corpus_id)), key)
+        self.paperstore_lut.update(data.get("paperstore_lut", {}))
+
+
+    def cancel_incomplete(self, request_ids):
+        with self.THREAD_LOCK_PAPERSTORE:
+            stale = {rid for rid in request_ids if rid not in self.finished_work}
+            if not stale:
+                return
+            # Only remove matching IDs; other workflows may have requests in the same queue.
+            self.queue = [r for r in self.queue if r['id'] not in stale]
+            for rid in stale:
+                self.finished_work[rid] = None
+        print(f"PaperStore.cancel_incomplete(): Cancelled {len(stale)} incomplete requests")
 
 
     #

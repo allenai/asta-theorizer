@@ -144,11 +144,13 @@ def convert_theory_request_to_query_and_schema(theory_request:str, model_str:str
             prompt += "\n"
 
         prompt += "# Output Format\n"
-        prompt += "You must return your results in JSON format, between a single set of codeblocks (```).  While you can write any text to think and plan before writing your JSON response, your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).\n"
+        prompt += "You must return your results in JSON format, between a single set of codeblocks (```).  While you can write any text to think and plan before writing your JSON response, your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).  Do not include comments (e.g. // or /* */) or trailing commas in your JSON output, as these are not valid JSON and will cause a parsing error.\n"
         prompt += "\n"
         prompt += "Your JSON response must be a dictionary, that contains exactly 6 keys: `theory_request_original`, `theory_request_normalized`, `short_name`, `paper_search_query`, `extraction_query`, and `extraction_schema`.  The values for these keys are as follows:\n"
         prompt += "- `theory_request_original`(str): The original theory request that was provided (e.g. 'make me a theory about X')\n"
-        prompt += "- `theory_request_normalized`(str): A normalized, clear version of the theory request, that always starts with `Build a theory of...` and ends with `based on the following results.`.\n"
+        #prompt += "- `theory_request_normalized`(str): A normalized, clear version of the theory request, that always starts with `Build a theory of...` and ends with `based on the following results.`.\n"
+        prompt += "- `theory_request_normalized`(str): The theory request should always start with `Build theories of/about...` and end with `based on the following results.`.  If the user-supplied theory query does not start with this, then please append these to the user-supplied theory query with minimal edits. This is a cosmetic change -- you should retain *all* the content of the user's theory query request, and just make minor changes to the surface form for the 'build theories about...' and 'based on the following results' modifications, without losing any information from the user theory query. If the users theory query is detailed, keep it detailed and retain all the content, just make these minor modifications/rephrasing.\n"
+        prompt += "- `short_name`(str): A short name for the theory request, that is a concise, and generally 4 words long, separated by '-'. This will be a prefix appended to filenames to save data for this request.\n"
         prompt += "- `short_name`(str): A short name for the theory request, that is a concise, and generally 4 words long, separated by '-'. This will be a prefix appended to filenames to save data for this request.\n"
         prompt += "- `paper_search_query`(str): The query that should be used to search for papers that are relevant to the theory request, using a paper search tool over Semantic Scholar.\n"
         prompt += "- `extraction_query`(str): A natural language request query, that's provided to an extraction prompt (along with the extraction schema below) to outline the overall purpose of the extraction process.  Should start with `Extract any mentions of...`.\n"
@@ -159,7 +161,7 @@ def convert_theory_request_to_query_and_schema(theory_request:str, model_str:str
         prompt += "\n"
 
         prompt += "## Special instructions\n"
-        prompt += "- You can (and are encouraged to) think and plan before writing your JSON response.  But, your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).\n"
+        prompt += "- You can (and are encouraged to) think and plan before writing your JSON response.  But, your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).  Do not include comments (e.g. // or /* */) or trailing commas in your JSON output.\n"
         prompt += "- Please follow the instructions carefully.\n"
         prompt += "- Do not hallucinate.\n"
 
@@ -222,15 +224,15 @@ def convert_theory_request_to_query_and_schema(theory_request:str, model_str:str
 # Build a set of theories from a list of results, with reflection.
 # Performs the reflection one theory at a time, to encourage it to fix any issues with the single theory, more fully populate the evidence, etc.
 # This one explicitly focuses on trying to abstract new qualitative and quantitative laws from the supporting evidence.
-def build_theory_from_results_single_theory_reflection3(query:str, results:list, model_str="gpt-4o-mini", max_tokens=12000, temperature=0.0, use_reflection:bool=False, include_query_in_generation:bool=True):
+def build_theory_from_results_single_theory_reflection3(query:str, results:list, mission_statement:str=None, model_str="gpt-4o-mini", max_tokens=12000, temperature=0.0, use_reflection:bool=False, include_query_in_generation:bool=True):
     version_str = "theorizer-literature-supported-accuracy-focused-12102025"
-    def mkPrompt(query:str, results:str, reflection:str=None, include_query_in_generation:bool=True):
+    def mkPrompt(query:str, results:str, reflection:str=None, include_query_in_generation:bool=True, mission_statement:str=None):
         prompt = ""
         prompt += "You are ScientistGPT, the most advanced AI scientist in the world.  You can answer any scientific question, and if you don't know the answer, you can use your enormous intellect to find it.  You answer every question accurately, faithfully, and with the highest level of scientific integrity.\n\n"
         prompt += "\n"
 
         prompt += "# Task\n"
-        prompt += "Your task is to construct a theory of now a scientific phenomenon works, based on a collection of evidence that you will be provided.\n"
+        prompt += "Your task is to construct a theory of how a scientific phenomenon works, based on a collection of evidence that you will be provided.\n"
         prompt += "## Subtask 1: General Theories\n"
         prompt += "In the first subtask, you will be asked to provide broad, high-level theories that explain the phenomenon, based on evidence provided.\n"
         prompt += "## Subtask 2: Specific Theories\n"
@@ -280,6 +282,7 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
         #prompt += '    "law_name": "...", # A short name for the law\n'
         prompt += '    "statement_name": "...", # A short name for the statement/law\n'
         prompt += '    "theory_statement": "...", # The full text of the law/statement, in a concise, clear, and information-dense manner.\n'
+        prompt += '    "theory_statement_plain_language": "...", # A 1-2 sentence plain language version of the law/statement, that is clear, concise, and easily readable.\n'
         prompt += '    "domain_scope": "...", # A precise, clear, and information-dense description of the domain/scope of the law/statement\n'
         prompt += '    "special_cases`(list): A list of any special cases, exceptions, or boundary conditions that apply to the law/statement, if any.\n'
         # prompt += '    "if": [\n'
@@ -323,6 +326,13 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
             prompt += query + "\n"
             prompt += "```\n"
             prompt += "\n"
+            if (mission_statement is not None):
+                prompt += "Here is a mission statement that provides more detail about the goals of the theories you should generate:\n"
+                prompt += "```\n"
+                prompt += str(mission_statement) + "\n"
+                prompt += "```\n"
+                prompt += "\n"
+
             prompt += "Here is a list of specific results that you should use to build your theories:\n"
         # If this isn't set, just give it the raw data and ask it to brainstorm in a data-driven way rather than in a query-driven way
         prompt += "```\n"
@@ -345,11 +355,13 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
             prompt += "```\n"
 
         prompt += "# Output Format\n"
-        prompt += "You must return your results in JSON format, between a single set of codeblocks (```).  While you can write any text to think and plan before writing your JSON response, your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).\n"
+        prompt += "You must return your results in JSON format, between a single set of codeblocks (```).  While you can write any text to think and plan before writing your JSON response, your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).  Do not include comments (e.g. // or /* */) or trailing commas in your JSON output, as these are not valid JSON and will cause a parsing error.\n"
         prompt += "\n"
         prompt += "Your JSON response must be a dictionary, that contains two keys: `theories_general`, and `theories_specific`.  Each is a list of dictionaries, with the following keys:\n"
         prompt += "- `theory_name`(str): A short name for the theory\n"
+        prompt += "- `theory_name_plain_language`(str): A short name for the theory expressed in plain language\n"
         prompt += "- `theory_description`(str): A full description of the theory\n"
+        prompt += "- `theory_description_plain_language`(str): A full description of the theory expressed in plain language\n"
         #prompt += "- `supporting_evidence`(list): A list of specific supporting evidence for the theory.\n"
         #prompt += "- `theory_statements`(list): A list of specific predictive statements (either qualitative, quantitative, or both) that describe the assertions of the theory.\n"
         prompt += "- `theory_statements`(list): A list of specific laws (either qualitative, quantitative, or both) that describe the assertions of the theory.\n"
@@ -386,6 +398,7 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
         prompt += '                {\n'
         prompt += '                  "statement_name": "Mutual Attraction of Massive Objects",\n'
         prompt += '                  "theory_statement": "Objects with mass exert a mutual attractive force on each other, proportional to their masses.",\n'
+        prompt += '                  "theory_statement_plain_language": "...",\n'
         prompt += '                  "domain_scope": "Applies to macroscopic objects with mass in a classical physics context, excluding relativistic and quantum effects.",\n'
         prompt += '                  "special_cases": [\n'
         prompt += '                      "Does not apply to massless particles like photons.",\n'
@@ -412,6 +425,7 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
         prompt += '                {\n'
         prompt += '                  "statement_name": "Inverse Square Law of Gravitational Force",\n'
         prompt += '                  "theory_statement": "The gravitational force between two masses is inversely proportional to the square of the distance between them.",\n'
+        prompt += '                  "theory_statement_plain_language": "...",\n'
         prompt += '                  "domain_scope": "Applies to point masses or spherically symmetric masses in a classical physics context, excluding relativistic and quantum effects.",\n'
         prompt += '                  "special_cases": [\n'
         prompt += '                      "Breaks down at very small scales where quantum effects dominate.",\n'
@@ -439,6 +453,7 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
         prompt += '                {\n'
         prompt += '                  "statement_name": "Gravitational Force Proportional to Product of Masses",\n'
         prompt += '                  "theory_statement": "The gravitational force between two objects is directly proportional to the product of their masses.",\n'
+        prompt += '                  "theory_statement_plain_language": "...",\n'
         prompt += '                  "domain_scope": "Applies to macroscopic objects with mass in a classical physics context, excluding relativistic and quantum effects.",\n'
         prompt += '                  "special_cases": [\n'
         prompt += '                      "Does not apply to massless particles like photons.",\n'
@@ -510,88 +525,114 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
         prompt += "}\n"
         prompt += "```\n"
         prompt += "\n"
+
+        # Added this style note to help produce more readable theories.
+        prompt += "# Style Notes\n"
+        prompt += "- Theories should be as technical as required, but not more technical than is required (and certainly not over-simplified, such that information is lost; or over-technical/jargony, such that the important elements are obscured).\n"
+        prompt += "- When possible, theories should use simpler language (e.g. that is accessible to a 1st year interdisciplinary masters student), but not at the expense of losing information or accuracy. If you need to use a highly technical term because it's important, use it. Novelty and impact are important. But readability is also important.\n"
+        prompt += "- When possible, please avoid generating new terminology or jargon unless it is necessary to accurately describe a new concept or phenomenon. If you already know the correct term for a concept in a field, use it, rather than inventing a new one.  If a new one is needed, then you can create a new term, but try not to make it too difficult to understand.\n"
+        prompt += "- A general comment has been that the theories are often very verbose, jargon-heavy, and sometimes hard to read by human experts who are most in a position to benefit from their knowledge, and make impactful discoveries/advances. Please keep this in mind, and aim for clarity, conciseness, and readability, while still being novel and impactful.\n"
+        prompt += "\n"
+
         prompt += "# Important Notes\n"
         prompt += "- You must return a JSON response, and it must be valid JSON, or it will not be parsed.\n"
-        prompt += "- You are encouraged to think and plan before writing your JSON response, but your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).\n"
+        prompt += "- You are encouraged to think and plan before writing your JSON response, but your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).  Do not include comments (e.g. // or /* */) or trailing commas in your JSON output.\n"
         prompt += "- Values that are 'none'/'null' in the JSON response should be represented as `null` in the JSON, not as an empty string, string saying \"null\", or any other value.\n"
         prompt += "- Where possible, you should prefer generating new, impactful theories.\n"
         prompt += "- All your information must be accurate. Do not hallucinate.\n"
 
         return prompt
 
+    try:
+        total_cost = 0.0
 
-    total_cost = 0.0
+        # Create the prompt
+        prompt = mkPrompt(query, results, include_query_in_generation=include_query_in_generation, mission_statement=mission_statement)
 
-    # Create the prompt
-    prompt = mkPrompt(query, results, include_query_in_generation=include_query_in_generation)
+        # Call the LLM
+        #responseJSON, responseText, cost = def getLLMResponseJSON(promptStr:str, model:str, temperature:float=0, maxTokens:int=DEFAULT_MAX_TOKENS, jsonOut:bool=True):
+        all_responses = []
+        MAX_GENERATION_TIME_SECS = 60 * 15    # 8 minutes
+        print("## Calling LLM to generate initial theories...", flush=True)
+        responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False, max_generation_time_seconds=MAX_GENERATION_TIME_SECS)
+        print("## Response Received", flush=True)
+        all_responses.append(responseJSON)
+        total_cost += cost
 
-    # Call the LLM
-    #responseJSON, responseText, cost = def getLLMResponseJSON(promptStr:str, model:str, temperature:float=0, maxTokens:int=DEFAULT_MAX_TOKENS, jsonOut:bool=True):
-    all_responses = []
-    MAX_GENERATION_TIME_SECS = 60 * 8    # 8 minutes
-    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False, max_generation_time_seconds=MAX_GENERATION_TIME_SECS)
-    all_responses.append(responseJSON)
-    total_cost += cost
+        print("## Initial response:")
+        print(responseText)
 
-    # New one-theory-at-a-time reflection approach
-    reflected_response = None
-    if (use_reflection):
-        # First, get the list of theories from the initial response
-        theories = []
-        if (responseJSON is not None) and ("theories_general" in responseJSON):
-            for theory in responseJSON["theories_general"]:
-                theory["theory_type_general_specific"] = "general"                      # Adding this tag helps the reflection keep track of which type of theory to categorize it as later
-                theories.append(theory)
+        # New one-theory-at-a-time reflection approach
+        reflected_response = None
+        if (use_reflection):
+            print("### Using reflection...")
+            # First, get the list of theories from the initial response
+            theories = []
+            if (responseJSON is not None) and ("theories_general" in responseJSON):
+                for theory in responseJSON["theories_general"]:
+                    theory["theory_type_general_specific"] = "general"                      # Adding this tag helps the reflection keep track of which type of theory to categorize it as later
+                    theories.append(theory)
 
-        if (responseJSON is not None) and ("theories_specific" in responseJSON):
-            for theory in responseJSON["theories_specific"]:
-                theory["theory_type_general_specific"] = "specific"
-                theories.append(theory)
+            if (responseJSON is not None) and ("theories_specific" in responseJSON):
+                for theory in responseJSON["theories_specific"]:
+                    theory["theory_type_general_specific"] = "specific"
+                    theories.append(theory)
 
-        reflected_theories_general = []
-        reflected_theories_specific = []
-        reflected_theories_other = []
+            reflected_theories_general = []
+            reflected_theories_specific = []
+            reflected_theories_other = []
 
-        # PARALLEL VERSION:
-        from concurrent.futures import ThreadPoolExecutor, as_completed
-        MAX_THEORY_GENERATION_WORKERS = 5
-        with ThreadPoolExecutor(max_workers=MAX_THEORY_GENERATION_WORKERS) as executor:
-            future_to_theory_idx = {}
-            for idx, theory in enumerate(theories):
-                # Create a reflection prompt for this theory
-                theory_str = json.dumps(theory, indent=4)
-                reflection_prompt = mkPrompt(query, results, reflection=theory_str, include_query_in_generation=include_query_in_generation)
+            # PARALLEL VERSION:
+            from concurrent.futures import ThreadPoolExecutor, as_completed
+            MAX_THEORY_GENERATION_WORKERS = 5
+            with ThreadPoolExecutor(max_workers=MAX_THEORY_GENERATION_WORKERS) as executor:
+                future_to_theory_idx = {}
+                for idx, theory in enumerate(theories):
+                    # Create a reflection prompt for this theory
+                    theory_str = json.dumps(theory, indent=4)
+                    reflection_prompt = mkPrompt(query, results, reflection=theory_str, include_query_in_generation=include_query_in_generation, mission_statement=mission_statement)
 
-                # Submit the LLM call to the executor
-                future = executor.submit(getLLMResponseJSON, reflection_prompt, model_str, temperature, max_tokens, False)
-                future_to_theory_idx[future] = (idx, theory)
+                    # Submit the LLM call to the executor
+                    future = executor.submit(getLLMResponseJSON, reflection_prompt, model_str, temperature, max_tokens, False)
+                    future_to_theory_idx[future] = (idx, theory)
 
-            # Process the completed futures
-            from tqdm import tqdm
-            for future in tqdm(as_completed(future_to_theory_idx), total=len(future_to_theory_idx), desc="Reflecting on theories"):
-                idx, theory = future_to_theory_idx[future]
-                try:
-                    responseJSON, responseText, cost = future.result()
-                    total_cost += cost
+                # Process the completed futures
+                from tqdm import tqdm
+                for future in tqdm(as_completed(future_to_theory_idx), total=len(future_to_theory_idx), desc="Reflecting on theories"):
+                    idx, theory = future_to_theory_idx[future]
+                    try:
+                        responseJSON, responseText, cost = future.result()
+                        total_cost += cost
 
-                    # If we got a valid response, extract the theory and add it to the list
-                    if (responseJSON is not None):
-                        # Try to extract the single theory from the response
-                        num_added = 0
-                        if ("theories_general" in responseJSON) and (len(responseJSON["theories_general"]) > 0):
-                            for theory_candidate in responseJSON["theories_general"]:
-                                # Add the idx of the original theory as a field to help with tracking/debugging
-                                theory_candidate["reflected_from_theory_index"] = idx
-                                reflected_theories_general.append(theory_candidate)
-                                num_added += 1
-                        elif ("theories_specific" in responseJSON) and (len(responseJSON["theories_specific"]) > 0):
-                            for theory_candidate in responseJSON["theories_specific"]:
-                                theory_candidate["reflected_from_theory_index"] = idx
-                                reflected_theories_specific.append(theory_candidate)
-                                num_added += 1
+                        # If we got a valid response, extract the theory and add it to the list
+                        if (responseJSON is not None):
+                            # Try to extract the single theory from the response
+                            num_added = 0
+                            if ("theories_general" in responseJSON) and (len(responseJSON["theories_general"]) > 0):
+                                for theory_candidate in responseJSON["theories_general"]:
+                                    # Add the idx of the original theory as a field to help with tracking/debugging
+                                    theory_candidate["reflected_from_theory_index"] = idx
+                                    reflected_theories_general.append(theory_candidate)
+                                    num_added += 1
+                            elif ("theories_specific" in responseJSON) and (len(responseJSON["theories_specific"]) > 0):
+                                for theory_candidate in responseJSON["theories_specific"]:
+                                    theory_candidate["reflected_from_theory_index"] = idx
+                                    reflected_theories_specific.append(theory_candidate)
+                                    num_added += 1
 
-                        # If we couldn't extract a theory, just use the original one
-                        if (num_added == 0):
+                            # If we couldn't extract a theory, just use the original one
+                            if (num_added == 0):
+                                if (theory["theory_type_general_specific"] == "general"):
+                                    theory_candidate["reflected_from_theory_index"] = idx
+                                    reflected_theories_general.append(theory)
+                                elif (theory["theory_type_general_specific"] == "specific"):
+                                    theory_candidate["reflected_from_theory_index"] = idx
+                                    reflected_theories_specific.append(theory)
+                                else:
+                                    theory_candidate["reflected_from_theory_index"] = idx
+                                    reflected_theories_other.append(theory)
+                        else:
+                            # If we didn't get a valid response, just use the original one
                             if (theory["theory_type_general_specific"] == "general"):
                                 theory_candidate["reflected_from_theory_index"] = idx
                                 reflected_theories_general.append(theory)
@@ -601,79 +642,82 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
                             else:
                                 theory_candidate["reflected_from_theory_index"] = idx
                                 reflected_theories_other.append(theory)
-                    else:
-                        # If we didn't get a valid response, just use the original one
+
+                    except Exception as e:
+                        print(f"build_theory_from_results_single_theory_reflection(): ERROR processing theory index {idx}: {e}")
+                        # If we hit an error, just use the original theory
                         if (theory["theory_type_general_specific"] == "general"):
-                            theory_candidate["reflected_from_theory_index"] = idx
                             reflected_theories_general.append(theory)
                         elif (theory["theory_type_general_specific"] == "specific"):
-                            theory_candidate["reflected_from_theory_index"] = idx
                             reflected_theories_specific.append(theory)
                         else:
-                            theory_candidate["reflected_from_theory_index"] = idx
                             reflected_theories_other.append(theory)
 
-                except Exception as e:
-                    print(f"build_theory_from_results_single_theory_reflection(): ERROR processing theory index {idx}: {e}")
-                    # If we hit an error, just use the original theory
-                    if (theory["theory_type_general_specific"] == "general"):
-                        reflected_theories_general.append(theory)
-                    elif (theory["theory_type_general_specific"] == "specific"):
-                        reflected_theories_specific.append(theory)
-                    else:
-                        reflected_theories_other.append(theory)
+            # So we don't break the pipeline that expects there to be only two bins (general and specific), we will just merge any "other" theories into the general bin.
+            for theory in reflected_theories_other:
+                reflected_theories_general.append(theory)
 
-        # So we don't break the pipeline that expects there to be only two bins (general and specific), we will just merge any "other" theories into the general bin.
-        for theory in reflected_theories_other:
-            reflected_theories_general.append(theory)
+            # Sort by `reflected_from_theory_index` to preserve original order as much as possible.  If the field is missing, put those at the end.
+            def get_reflection_index(theory):
+                if ("reflected_from_theory_index" in theory):
+                    return theory["reflected_from_theory_index"]
+                else:
+                    return 1e9    # Large number to push to end
+            reflected_theories_general = sorted(reflected_theories_general, key=get_reflection_index)
+            reflected_theories_specific = sorted(reflected_theories_specific, key=get_reflection_index)
 
-        # Sort by `reflected_from_theory_index` to preserve original order as much as possible.  If the field is missing, put those at the end.
-        def get_reflection_index(theory):
-            if ("reflected_from_theory_index" in theory):
-                return theory["reflected_from_theory_index"]
-            else:
-                return 1e9    # Large number to push to end
-        reflected_theories_general = sorted(reflected_theories_general, key=get_reflection_index)
-        reflected_theories_specific = sorted(reflected_theories_specific, key=get_reflection_index)
-
-        # Add 'version' field to each theory
-        for theory in reflected_theories_general:
-            theory["version"] = version_str
-        for theory in reflected_theories_specific:
-            theory["version"] = version_str
+            # Add 'version' field to each theory
+            for theory in reflected_theories_general:
+                theory["version"] = version_str
+            for theory in reflected_theories_specific:
+                theory["version"] = version_str
 
 
-        # Now, build the final reflected response
-        if (len(reflected_theories_general) + len(reflected_theories_specific) > 0):
-            reflected_response = {
-                "theories_general": reflected_theories_general,
-                "theories_specific": reflected_theories_specific
-            }
-            all_responses.append(reflected_response)
+            # Now, build the final reflected response
+            if (len(reflected_theories_general) + len(reflected_theories_specific) > 0):
+                reflected_response = {
+                    "theories_general": reflected_theories_general,
+                    "theories_specific": reflected_theories_specific
+                }
+                all_responses.append(reflected_response)
 
-    # Get the best response (the last one that's not None)
-    best_response = None
-    for response in reversed(all_responses):
-        if (response is not None):
-            best_response = response
-            break
+        # Get the best response (the last one that's not None)
+        best_response = None
+        for response in reversed(all_responses):
+            if (response is not None):
+                best_response = response
+                break
 
-    # Pack output
-    packed = {
-        "query": query,
-        "model": model_str,
-        "use_reflection": use_reflection,
-        "theory_response": best_response,
-        "results": results,
-        "raw_responses": all_responses,
-        "total_cost": total_cost,
-    }
+        print("## PACKING OUTPUT ")
 
-    return packed
+        # Pack output
+        packed = {
+            "query": query,
+            "model": model_str,
+            "use_reflection": use_reflection,
+            "mission_statement": mission_statement,
+            "theory_response": best_response,
+            "results": results,
+            "raw_responses": all_responses,
+            "total_cost": total_cost,
+        }
+
+        return packed
+
+    except Exception as e:
+        import traceback
+        print("ERROR in build_theory_from_results_single_theory_reflection(): " + str(e))
+        traceback.print_exc()
+        return None
+
+    except BaseException as e:
+        print("FATAL BaseException escaped:", repr(e), flush=True)
+        traceback.print_exc()
+        raise
 
 
 # Parametric-only version of the above function
-def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence(query:str, original_theory_id:str, original_theory_name:str, provide_matched_control_thery_name:bool=False, model_str="gpt-4o-mini", max_tokens=12000, temperature=0.0, use_reflection:bool=False, include_query_in_generation:bool=True):
+def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence(query:str, original_theory_id:str, original_theory_name:str, mission_statement:str=None, provide_matched_control_thery_name:bool=False, model_str="gpt-4o-mini", max_tokens=12000, temperature=0.0, use_reflection:bool=False, include_query_in_generation:bool=True):
     #version_str = "built-theory-from-results-single-theory-reflection3-dec10-2025-LLM-BASELINE-NO-EVIDENCE"
     version_str = "theorizer-parametric-only-accuracy-focused-12102025"
     matched_control_theory_name:str=None
@@ -685,13 +729,13 @@ def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence
         version_str += "-without-matched-control-theory-name"
 
 
-    def mkPrompt(query:str, reflection:str=None, include_query_in_generation:bool=True, matched_control_theory_name:str=None) -> str:
+    def mkPrompt(query:str, reflection:str=None, include_query_in_generation:bool=True, matched_control_theory_name:str=None, mission_statement:str=None) -> str:
         prompt = ""
         prompt += "You are ScientistGPT, the most advanced AI scientist in the world.  You can answer any scientific question, and if you don't know the answer, you can use your enormous intellect to find it.  You answer every question accurately, faithfully, and with the highest level of scientific integrity.\n\n"
         prompt += "\n"
 
         prompt += "# Task\n"
-        prompt += "Your task is to construct a theory of now a scientific phenomenon works.\n" #, based on a collection of evidence that you will be provided.\n"
+        prompt += "Your task is to construct a theory of how a scientific phenomenon works.\n" #, based on a collection of evidence that you will be provided.\n"
         prompt += "## Subtask 1: General Theories\n"
         prompt += "In the first subtask, you will be asked to provide broad, high-level theories that explain the phenomenon.\n" #, based on evidence provided.\n"
         prompt += "## Subtask 2: Specific Theories\n"
@@ -795,6 +839,14 @@ def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence
             prompt += query + "\n"
             prompt += "```\n"
             prompt += "\n"
+
+            if (mission_statement is not None):
+                prompt += "Here is the specific mission statement that your theories should be focused on addressing:\n"
+                prompt += "```\n"
+                prompt += mission_statement + "\n"
+                prompt += "```\n"
+                prompt += "\n"
+
         else:
             prompt += "No specific query is provided. You can build theories as you see fit, based on the supporting evidence.\n"
             prompt += "\n"
@@ -822,7 +874,7 @@ def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence
             prompt += "```\n"
 
         prompt += "# Output Format\n"
-        prompt += "You must return your results in JSON format, between a single set of codeblocks (```).  While you can write any text to think and plan before writing your JSON response, your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).\n"
+        prompt += "You must return your results in JSON format, between a single set of codeblocks (```).  While you can write any text to think and plan before writing your JSON response, your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).  Do not include comments (e.g. // or /* */) or trailing commas in your JSON output, as these are not valid JSON and will cause a parsing error.\n"
         prompt += "\n"
         prompt += "Your JSON response must be a dictionary, that contains two keys: `theories_general`, and `theories_specific`.  Each is a list of dictionaries, with the following keys:\n"
         prompt += "- `theory_name`(str): A short name for the theory\n"
@@ -989,7 +1041,7 @@ def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence
         prompt += "\n"
         prompt += "# Important Notes\n"
         prompt += "- You must return a JSON response, and it must be valid JSON, or it will not be parsed.\n"
-        prompt += "- You are encouraged to think and plan before writing your JSON response, but your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).\n"
+        prompt += "- You are encouraged to think and plan before writing your JSON response, but your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).  Do not include comments (e.g. // or /* */) or trailing commas in your JSON output.\n"
         prompt += "- Values that are 'none'/'null' in the JSON response should be represented as `null` in the JSON, not as an empty string, string saying \"null\", or any other value.\n"
         prompt += "- Where possible, you should prefer generating new, impactful theories.\n"
         prompt += "- All your information must be accurate. Do not hallucinate.\n"
@@ -1000,7 +1052,7 @@ def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence
     total_cost = 0.0
 
     # Create the prompt
-    prompt = mkPrompt(query, include_query_in_generation=include_query_in_generation, matched_control_theory_name=matched_control_theory_name)
+    prompt = mkPrompt(query, include_query_in_generation=include_query_in_generation, matched_control_theory_name=matched_control_theory_name, mission_statement=mission_statement)
 
     # Call the LLM
     #responseJSON, responseText, cost = def getLLMResponseJSON(promptStr:str, model:str, temperature:float=0, maxTokens:int=DEFAULT_MAX_TOKENS, jsonOut:bool=True):
@@ -1037,7 +1089,7 @@ def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence
             for idx, theory in enumerate(theories):
                 # Create a reflection prompt for this theory
                 theory_str = json.dumps(theory, indent=4)
-                reflection_prompt = mkPrompt(query, reflection=theory_str, include_query_in_generation=include_query_in_generation, matched_control_theory_name=matched_control_theory_name)
+                reflection_prompt = mkPrompt(query, reflection=theory_str, include_query_in_generation=include_query_in_generation, matched_control_theory_name=matched_control_theory_name, mission_statement=mission_statement)
 
                 # Submit the LLM call to the executor
                 future = executor.submit(getLLMResponseJSON, reflection_prompt, model_str, temperature, max_tokens, False)
@@ -1194,12 +1246,12 @@ def build_theory_from_results_single_theory_reflection3_llm_baseline_no_evidence
 #   Novelty-focused versions
 #
 
-def build_theory_from_results_single_theory_reflection4_nonsafebasin(query:str, results:list, model_str="gpt-4o-mini", max_tokens=12000, temperature=1.0, use_reflection:bool=False, include_query_in_generation:bool=True):
+def build_theory_from_results_single_theory_reflection4_nonsafebasin(query:str, results:list, mission_statement:str=None, model_str="gpt-4o-mini", max_tokens=12000, temperature=1.0, use_reflection:bool=False, include_query_in_generation:bool=True):
     #version_str = "built-theory-from-results-single-theory-reflection4-dec27-2025-NONSAFEBASIN"
     version_str = "theorizer-literature-supported-novelty-focused-12272025"
 
     # This prompt re-cooked from the accuracy-focused objective to generate less conservative theories that break out of the 'safe basin' of prior knowledge. (with GPT-5.2 help)
-    def mkPrompt(query: str, results:str, reflection:str=None, include_query_in_generation:bool=True, matched_control_theory_name:str=None):
+    def mkPrompt(query: str, results:str, reflection:str=None, include_query_in_generation:bool=True, matched_control_theory_name:str=None, mission_statement:str=None):
         prompt = ""
         prompt += "You are ScientistGPT, an AI scientist.\n"
         prompt += "You must prioritize falsifiable, high-information theories over safe or generic ones.\n"
@@ -1346,6 +1398,14 @@ def build_theory_from_results_single_theory_reflection4_nonsafebasin(query:str, 
             prompt += query + "\n"
             prompt += "```\n"
             prompt += "\n"
+
+            if (mission_statement is not None):
+                prompt += "Here is a mission statement that provides more detail about the goals of the theories you should generate:\n"
+                prompt += "```\n"
+                prompt += str(mission_statement) + "\n"
+                prompt += "```\n"
+                prompt += "\n"
+
         else:
             prompt += "No specific query is provided. You can build theories as you see fit, based on the supporting evidence.\n"
             prompt += "\n"
@@ -1426,7 +1486,7 @@ def build_theory_from_results_single_theory_reflection4_nonsafebasin(query:str, 
     total_cost = 0.0
 
     # Create the prompt
-    prompt = mkPrompt(query, results, include_query_in_generation=include_query_in_generation)
+    prompt = mkPrompt(query, results, include_query_in_generation=include_query_in_generation, mission_statement=mission_statement)
 
     # Call the LLM
     all_responses = []
@@ -1462,7 +1522,7 @@ def build_theory_from_results_single_theory_reflection4_nonsafebasin(query:str, 
             for idx, theory in enumerate(theories):
                 # Create a reflection prompt for this theory
                 theory_str = json.dumps(theory, indent=4)
-                reflection_prompt = mkPrompt(query, results, reflection=theory_str, include_query_in_generation=include_query_in_generation)
+                reflection_prompt = mkPrompt(query, results, reflection=theory_str, include_query_in_generation=include_query_in_generation, mission_statement=mission_statement)
 
                 # Submit the LLM call to the executor
                 future = executor.submit(getLLMResponseJSON, reflection_prompt, model_str, temperature, max_tokens, False)

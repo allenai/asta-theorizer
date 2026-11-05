@@ -131,13 +131,18 @@ dmypy.json
 prompts/
 
 # Large files that are preprocessed versions of conceptnet that shouldn't be committed
-conceptnet-assertions*.json
-conceptnet-assertions*.zip
 
 # Don't commit anything with `donotcommit` in its name
 *donotcommit*
-openai_key.txt
-*openai_key*
 
 # Don't commit the exclusion patterns that are automatically scanned for in commits (like API keys)
 EXCLUDE_PATTERNS.TXT
+
+# Runtime data, caches, and debug output
+data/
+ocr-cache/
+output/
+
+# OS files
+.DS_Store
+.claude/scheduled_tasks.lock

@@ -12,7 +12,6 @@ from litellm import embedding
 
 import tiktoken
 
-from func_timeout import func_timeout, FunctionTimedOut
 
 
 # Cost Estimates. Note that these are just estimates and may not be accurate -- you should ideally have other methods (like a hard limit on your account) to help limit unexpected costs.
@@ -36,6 +35,15 @@ def tokenize(inputStr:str):
     # Convert each token to it's respective string, keeping the output as a list
     tokens = [tiktokenEncoder.decode([token]) for token in tokens]
     return tokens
+
+
+def truncate_to_model_context(text:str, model_str:str, headroom:int=35000) -> str:
+    """Truncate text to fit model_str's input window, reserving headroom for prompt + completion."""
+    import litellm
+    max_tokens = (litellm.get_max_tokens(model_str) or 200000) - headroom
+    if countTokens(text) <= max_tokens:
+        return text
+    return tiktokenEncoder.decode(tiktokenEncoder.encode(text, disallowed_special=())[:max_tokens])
 
 
 #
@@ -87,108 +95,195 @@ def getTotalLLMCost():
 #
 
 
-# Get a response from an LLM model using litellm
-def getLLMResponseJSON(promptStr:str, model:str, temperature:float=0, maxTokens:int=DEFAULT_MAX_TOKENS, jsonOut:bool=True, max_generation_time_seconds:int=300):
+# # Get a response from an LLM model using litellm
+# def getLLMResponseJSON(promptStr:str, model:str, temperature:float=0, maxTokens:int=DEFAULT_MAX_TOKENS, jsonOut:bool=True, max_generation_time_seconds:int=300):
+#     MAX_RETRIES = 5
+#     MAX_GENERATION_TIME_SECONDS = 60 * 5        # Maximum of 5 minutes per generation (guard against long hangs)
+#     if (max_generation_time_seconds != None):
+#         MAX_GENERATION_TIME_SECONDS = max_generation_time_seconds
+
+#     count_too_long_errors = 0
+
+#     for retryIdx in range(MAX_RETRIES):
+#         try:
+#             # Use timeout
+#             responseJSON, responseText, cost = func_timeout(MAX_GENERATION_TIME_SECONDS, _getLLMResponseJSON, args=(promptStr, model, temperature, maxTokens, jsonOut))
+#             return responseJSON, responseText, cost
+
+#         # timeout
+#         except FunctionTimedOut:
+#             errorInfo = "Time: " + str(time.strftime("%Y%m%d-%H%M%S")) + "  count_too_long_errors: " + str(count_too_long_errors) + "  model: " + model + "  prompt length: " + str(len(promptStr))
+#             print("ERROR: LLM Generation timed out. " + str(errorInfo))
+#             count_too_long_errors += 1
+#             if (count_too_long_errors >= 3):
+#                 print("ERROR: LLM Generation time out: Too many timeouts. Exiting.")
+#                 #exit(1)
+#                 return None, "", 0
+
+#         # Keyboard exception
+#         except KeyboardInterrupt:
+#             print("Generation interrupted by user. Exiting.")
+#             exit(1)
+#         except Exception as e:
+#             print("ERROR: Could not get LLM response. Retrying... ")
+#             print("ERROR MESSAGE:")
+#             print(e)
+#             print(traceback.format_exc())
+
+#             # Check for some known kinds of errors
+#             errorStr = str(e)
+#             if ("prompt is too long" in errorStr):
+#                 print("ERROR: Prompt is too long. Exiting.")
+#                 return None, "", 0
+
+#         # Short delay before retrying
+#         print("Delaying for a few seconds before retrying...")
+#         print("Attempt " + str(retryIdx) + " of " + str(MAX_RETRIES))
+#         time.sleep(retryIdx * 15)
+
+#     # If we reach here, something terrible happened
+#     print("ERROR: Could not get LLM response. Exiting.")
+#     #exit(1)
+#     return None, "", 0
+
+import time
+import traceback
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
+
+
+# Shared retry/timeout logic for LLM calls.
+def _llm_call_with_retries(llm_fn, args, fail_return, max_generation_time_seconds=int(os.environ.get("MAX_GENERATION_TIME_SECONDS", 300))):
     MAX_RETRIES = 5
-    MAX_GENERATION_TIME_SECONDS = 60 * 5        # Maximum of 5 minutes per generation (guard against long hangs)
-    if (max_generation_time_seconds != None):
-        MAX_GENERATION_TIME_SECONDS = max_generation_time_seconds
+    MAX_GENERATION_TIME_SECONDS = max_generation_time_seconds
 
     count_too_long_errors = 0
 
+    model_slug = "unknown"
+
     for retryIdx in range(MAX_RETRIES):
         try:
-            # Use timeout
-            responseJSON, responseText, cost = func_timeout(MAX_GENERATION_TIME_SECONDS, _getLLMResponseJSON, args=(promptStr, model, temperature, maxTokens, jsonOut))
-            return responseJSON, responseText, cost
+            # e.g. llm_gpt-5-mini_0, llm_claude-3-7-sonnet-20250219_0
+            model_slug = str(args[1]).replace("/", "_") if len(args) > 1 else str(args[1])
 
-        # timeout
-        except FunctionTimedOut:
-            errorInfo = "Time: " + str(time.strftime("%Y%m%d-%H%M%S")) + "  count_too_long_errors: " + str(count_too_long_errors) + "  model: " + model + "  prompt length: " + str(len(promptStr))
+            # Uses ThreadPoolExecutor for thread-safe timeouts (not func_timeout which corrupts global state).
+            ex = ThreadPoolExecutor(max_workers=1, thread_name_prefix=f"llm_{model_slug}")
+
+            try:
+                fut = ex.submit(llm_fn, *args)
+                return fut.result(timeout=MAX_GENERATION_TIME_SECONDS)
+            finally:
+                # let the calling thread move on; worker thread still runs until HTTP returns
+                ex.shutdown(wait=False, cancel_futures=True)
+
+        except FuturesTimeoutError:
+            errorInfo = (
+                "Time: " + str(time.strftime("%Y%m%d-%H%M%S"))
+                + "  count_too_long_errors: " + str(count_too_long_errors)
+                + "  model: " + model_slug
+                + "  prompt length: " + str(len(args[0]))
+            )
             print("ERROR: LLM Generation timed out. " + str(errorInfo))
             count_too_long_errors += 1
-            if (count_too_long_errors >= 3):
-                print("ERROR: LLM Generation time out: Too many timeouts. Exiting.")
-                #exit(1)
-                return None, "", 0
 
-        # Keyboard exception
+            if count_too_long_errors >= 3:
+                print("ERROR: LLM Generation time out: Too many timeouts. Exiting.")
+                return fail_return
+
         except KeyboardInterrupt:
-            exit(1)
+            print("Generation interrupted by user. Exiting.")
+            raise
+
         except Exception as e:
             print("ERROR: Could not get LLM response. Retrying... ")
             print("ERROR MESSAGE:")
             print(e)
             print(traceback.format_exc())
 
-            # Check for some known kinds of errors
             errorStr = str(e)
-            if ("prompt is too long" in errorStr):
-                print("ERROR: Prompt is too long. Exiting.")
-                return None, "", 0
+            if "prompt is too long" in errorStr or "ContextWindowExceededError" in errorStr:
+                print("ERROR: Prompt is too long / context window exceeded. Exiting.")
+                return fail_return
 
-        # Short delay before retrying
+            if "interpreter shutdown" in errorStr:
+                print("ERROR: Interpreter shutdown detected. Cannot retry. Exiting.")
+                return fail_return
+
+        # Backoff before retry
         print("Delaying for a few seconds before retrying...")
         print("Attempt " + str(retryIdx) + " of " + str(MAX_RETRIES))
         time.sleep(retryIdx * 15)
 
-    # If we reach here, something terrible happened
     print("ERROR: Could not get LLM response. Exiting.")
-    #exit(1)
-    return None, "", 0
+    return fail_return
 
 
-# Get a response from an LLM model using litellm
-def getLLMResponseJSONWithMetadata(promptStr:str, model:str, temperature:float=0, maxTokens:int=DEFAULT_MAX_TOKENS, jsonOut:bool=True):
-    MAX_RETRIES = 5
-    MAX_GENERATION_TIME_SECONDS = 60 * 5        # Maximum of 5 minutes per generation (guard against long hangs)
-    count_too_long_errors = 0
+# --- Test-only fake LLM seam -------------------------------------------------
+# When THEORIZER_FAKE_LLM is set, every LLM call returns a canned, shape-valid
+# response for $0 instead of hitting a provider. This exists so the load/stability
+# harness can run the REAL server end-to-end — real A2A handling, queue, PaperStore
+# threads, retention, concurrency, and resident paper memory — at high concurrency
+# without spending tokens. The model's *content* doesn't affect whether N concurrent
+# requests fit in memory, so faking it preserves the only thing the scaling test
+# cares about. No effect at all when the env var is unset (the default).
+def _fake_llm_response(promptStr, with_metadata=False):
+    delay = float(os.environ.get("THEORIZER_FAKE_LLM_DELAY_S", "0") or 0)
+    if delay:
+        time.sleep(delay)  # simulate real per-call latency so concurrency is sustained, not a t=0 spike
+    # NOTE: every prompt opens with "You are ScientistGPT", so route on markers unique
+    # to each step, checked most-specific first.
+    p = promptStr or ""
+    if "# Paper Text" in p:
+        # Per-paper extraction: SchemaExtractionQueue reads response["results"] into extracted_data.
+        obj = {
+            "results": [{"key_finding": "fake finding (load test)",
+                         "mechanism": "fake mechanism (load test)"}],
+            "follow_on_papers": [],
+        }
+    elif "paper-search query and extraction schema" in p:
+        # Step-2 schema build: must yield string query/extraction_query + a list schema.
+        obj = {
+            "theory_request_normalized": "Build a theory based on the following results.",
+            "short_name": "fake-load-test",
+            "paper_search_query": "fake load-test query",
+            "extraction_query": "Extract the key finding and its mechanism.",
+            "extraction_schema": [
+                {"name": "key_finding", "type": "str", "description": "The key finding."},
+                {"name": "mechanism", "type": "str", "description": "The proposed mechanism."},
+            ],
+        }
+    else:
+        # Theory formation (and anything else): empty theory sets -> pipeline completes
+        # cleanly with "No theories generated" without needing a shape-perfect fixture.
+        obj = {"theories_general": [], "theories_specific": []}
+    text = json.dumps(obj)
+    return (obj, text, 0.0, {"fake": True}) if with_metadata else (obj, text, 0.0)
 
-    for retryIdx in range(MAX_RETRIES):
-        try:
-            if model != "deepseek_local":
-                # Use timeout
-                responseJSON, responseText, cost, metadata = func_timeout(MAX_GENERATION_TIME_SECONDS, _getLLMResponseJSONWithMetadata, args=(promptStr, model, temperature, maxTokens, jsonOut))
-            else:
-                # for local deepseek, remove the timeout for debugging
-                # promptStr = ' '.join(promptStr.split()[:800])
-                responseJSON, responseText, cost, metadata = _getLLMResponseJSONWithMetadata(promptStr, model, temperature, maxTokens, jsonOut)
-            return responseJSON, responseText, cost, metadata
 
-        # timeout
-        except FunctionTimedOut:
-            errorInfo = "Time: " + str(time.strftime("%Y%m%d-%H%M%S")) + "  count_too_long_errors: " + str(count_too_long_errors) + "  model: " + model + "  prompt length: " + str(len(promptStr))
-            print("ERROR: LLM Generation timed out. " + str(errorInfo))
-            count_too_long_errors += 1
-            if (count_too_long_errors >= 3):
-                print("ERROR: LLM Generation time out: Too many timeouts. Exiting.")
-                #exit(1)
-                return None, "", 0
+def _fake_llm_enabled():
+    return os.environ.get("THEORIZER_FAKE_LLM", "").strip().lower() in ("1", "true", "yes")
 
-        # Keyboard exception
-        except KeyboardInterrupt:
-            exit(1)
-        except Exception as e:
-            print("ERROR: Could not get LLM response. Retrying... ")
-            print("ERROR MESSAGE:")
-            print(e)
-            print(traceback.format_exc())
 
-            # Check for some known kinds of errors
-            errorStr = str(e)
-            if ("prompt is too long" in errorStr):
-                print("ERROR: Prompt is too long. Exiting.")
-                return None, "", 0
+def getLLMResponseJSON(promptStr, model, temperature=0, maxTokens=DEFAULT_MAX_TOKENS, jsonOut=True, max_generation_time_seconds=300):
+    if _fake_llm_enabled():
+        return _fake_llm_response(promptStr, with_metadata=False)
+    return _llm_call_with_retries(
+        _getLLMResponseJSON,
+        (promptStr, model, temperature, maxTokens, jsonOut),
+        fail_return=(None, "", 0),
+        max_generation_time_seconds=max_generation_time_seconds,
+    )
 
-        # Short delay before retrying
-        print("Delaying for a few seconds before retrying...")
-        print("Attempt " + str(retryIdx) + " of " + str(MAX_RETRIES))
-        time.sleep(retryIdx * 15)
 
-    # If we reach here, something terrible happened
-    print("ERROR: Could not get LLM response. Exiting.")
-    #exit(1)
-    return None, "", 0
+def getLLMResponseJSONWithMetadata(promptStr, model, temperature=0, maxTokens=DEFAULT_MAX_TOKENS, jsonOut=True, max_generation_time_seconds=300):
+    if _fake_llm_enabled():
+        return _fake_llm_response(promptStr, with_metadata=True)
+    return _llm_call_with_retries(
+        _getLLMResponseJSONWithMetadata,
+        (promptStr, model, temperature, maxTokens, jsonOut),
+        fail_return=(None, "", 0, {}),
+        max_generation_time_seconds=max_generation_time_seconds,
+    )
 
 
 
@@ -242,7 +337,7 @@ def _getLLMResponseJSON(promptStr:str, model:str, temperature:float=0, maxTokens
     if (model == "deepseek/deepseek-reasoner"):
         response = completion(model=model, messages=messages, temperature=temperature, max_tokens=maxTokens, response_format={"type": "json_object"}, extra_headers=extra_headers, **extra_params)
 
-    elif ("o3-mini" in model) or ("o4-mini" in model) or ("gpt-5" in model) or ("claude-4" in model) or ("claude" in model):
+    elif ("o3-mini" in model) or ("o4-mini" in model) or ("gpt-4.1" in model) or ("gpt-5" in model) or ("claude-4" in model) or ("claude" in model):
         #reasoning_effort = None
         #reasoning_effort = "low"
         #reasoning_effort = "medium"
@@ -258,10 +353,6 @@ def _getLLMResponseJSON(promptStr:str, model:str, temperature:float=0, maxTokens
                 response = completion(model=model, messages=messages, max_completion_tokens=maxTokens, extra_headers=extra_headers, **extra_params)
             else:
                 response = completion(model=model, messages=messages, max_completion_tokens=maxTokens, extra_headers=extra_headers, reasoning_effort=reasoning_effort, **extra_params)
-
-    elif ("claude" in model):
-        # Do not use special JSON model for claude
-        response = completion(model=model, messages=messages, temperature=temperature, max_tokens=maxTokens, extra_headers=extra_headers, **extra_params)
 
     else:
         if (jsonOut):
@@ -339,6 +430,10 @@ def _getLLMResponseJSON(promptStr:str, model:str, temperature:float=0, maxTokens
             "openai/gpt-5-nano": {
                 "prompt_tokens_per_million": 0.05,
                 "completion_tokens_per_million": 0.50
+            },
+            "gpt-4.1-2025-04-14": {
+                "prompt_tokens_per_million": 2.00,
+                "completion_tokens_per_million": 8.00
             }
         }
         if (model in costs_dict):

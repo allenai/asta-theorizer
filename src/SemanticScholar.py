@@ -441,6 +441,9 @@ class SemanticScholar():
         return all_papers
 
 
+PAPER_FINDER_SEARCH_TIMEOUT_SECONDS = 110
+
+
 # Get PaperFinder results using the local copy of PaperFinder (https://github.com/allenai/asta-paper-finder)
 def _get_paperfinder_results_local(query:str):
     print("PaperFinder: get_paperfinder_results_local(): Started... (query = '" + query + "')")
@@ -454,7 +457,7 @@ def _get_paperfinder_results_local(query:str):
     }
 
     # URL for local PaperFinder instance
-    url = "http://localhost:8000/api/2/rounds"
+    url = os.environ.get("PAPER_FINDER_BASE_URL", "http://localhost:8000").rstrip("/") + "/api/2/rounds"
 
     # Send the POST request
     response = requests.post(
@@ -476,7 +479,7 @@ def _get_paperfinder_results_local(query:str):
 
 
 # Get PaperFinder results based on a query.
-def get_paperfinder_results(query:str):
+def get_paperfinder_results(query:str, cost_trace_id:str=None):
     return _get_paperfinder_results_local(query=query)
 
 
@@ -489,6 +492,8 @@ def load_s2_api_key():
             s2_api_key = f.read().strip()
         return s2_api_key
     else:
+        if os.environ.get("SEMANTIC_SCHOLAR_API_KEY"):
+            return os.environ["SEMANTIC_SCHOLAR_API_KEY"]
         print(f"Error: Semantic Scholar API key file '{filename_s2_api_key}' not found.")
         return None
 

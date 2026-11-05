@@ -9,3 +9,8 @@ pywebio==1.8.4
 requests==2.32.4
 tiktoken==0.8.0
 tqdm==4.67.1
+psycopg2-binary==2.9.10
+asta-types==1.0.0
+asta-artifact==1.0.8
+asta-agent[postgresql]==1.0.20
+asta-credits==1.2.0

@@ -602,6 +602,7 @@ Examples:
         prompt += "- `what_introduced`: What, if anything, does the theory/statement introduce on this dimension?\n"
         prompt += "- `what_novel`: What, if anything, is novel on this dimension?\n"
         prompt += "- `degree_of_novelty`: Assign a degree of novelty, which is categorical, from one of the 4 categories: `explicit_established`, `explicit_peripheral`, `derivable_unstated`, `genuinely_new`.\n"
+        prompt += "- `references`: If any papers are explicitly mentioned above in any of the above (e.g. what is known, what is introduced, what is novel), then provide a list of references (paper_id) to those papers."
         prompt += "\n"
         prompt += "## Aggregation Instructions\n"
         prompt += "You are provided with aggregated results from previous steps that evaluted papers individually.\n"
@@ -642,6 +643,7 @@ Examples:
         prompt += "  - `what_introduced`: string (1-3 detailed, concise, information-dense sentences)\n"
         prompt += "  - `what_novel`: string (1-3 detailed, concise, information-dense sentences)\n"
         prompt += "  - `degree_of_novelty`: string, one of `explicit_established`, `explicit_peripheral`, `implicit_assumed`, `derivable_unstated`, `genuinely_new`\n"
+        prompt += "  - `references`: a dictionary of paper references, where keys are a plain-text name (e.g. 'ABC paper') that clearly aligns with the content of the `what_is_known`, `what_introduced`, or `what_novel` fields, and the value is the `paper_id` of the paper, from the raw data. Should have an entry for every explicitly mentioned paper (e.g. 'Model from Paper XYZ'), but does not require entries for papers mentioned on aggregate (e.g. '15 of 20 papers say...')\n"
         prompt += "\n"
         prompt += "The information should be written in such a way that it is detailed, concise, information-dense, and scientifically accurate.\n"
         prompt += "It must also be useful for aggregating the results across many papers, so the information it provides must clearly identify what this paper contributes to the overall novelty assessment.\n"
@@ -658,42 +660,49 @@ Examples:
         prompt += '      "what_introduced": "...\n",\n'
         prompt += '      "what_novel": "...\n",\n'
         prompt += '      "degree_of_novelty": "..."\n'
+        prompt += '      "references": {"ABC paper": "paper-5678", "XYZ paper": "paper-1234", etc.}\n'
         prompt += '    },\n'
         prompt += '    "explanatory_mechanistic": {\n'
         prompt += '      "what_is_known": "...\n",\n'
         prompt += '      "what_introduced": "...\n",\n'
         prompt += '      "what_novel": "...\n",\n'
         prompt += '      "degree_of_novelty": "..."\n'
+        prompt += '      "references": {"ABC paper": "paper-5678", "XYZ paper": "paper-1234", etc.}\n'
         prompt += '    },\n'
         prompt += '    "unification": {\n'
         prompt += '      "what_is_known": "...\n",\n'
         prompt += '      "what_introduced": "...\n",\n'
         prompt += '      "what_novel": "...\n",\n'
         prompt += '      "degree_of_novelty": "..."\n'
+        prompt += '      "references": {"ABC paper": "paper-5678", "XYZ paper": "paper-1234", etc.}\n'
         prompt += '    },\n'
         prompt += '    "generalization_scope_expansion": {\n'
         prompt += '      "what_is_known": "...\n",\n'
         prompt += '      "what_introduced": "...\n",\n'
         prompt += '      "what_novel": "...\n",\n'
         prompt += '      "degree_of_novelty": "..."\n'
+        prompt += '      "references": {"ABC paper": "paper-5678", "XYZ paper": "paper-1234", etc.}\n'
         prompt += '    },\n'
         prompt += '    "constraint_limitation": {\n'
         prompt += '      "what_is_known": "...\n",\n'
         prompt += '      "what_introduced": "...\n",\n'
         prompt += '      "what_novel": "...\n",\n'
         prompt += '      "degree_of_novelty": "..."\n'
+        prompt += '      "references": {"ABC paper": "paper-5678", "XYZ paper": "paper-1234", etc.}\n'
         prompt += '    },\n'
         prompt += '    "conceptual_reframing_abstraction": {\n'
         prompt += '      "what_is_known": "...\n",\n'
         prompt += '      "what_introduced": "...\n",\n'
         prompt += '      "what_novel": "...\n",\n'
         prompt += '      "degree_of_novelty": "..."\n'
+        prompt += '      "references": {"ABC paper": "paper-5678", "XYZ paper": "paper-1234", etc.}\n'
         prompt += '    },\n'
         prompt += '    "empirical_synthesis_meta_regulariry": {\n'
         prompt += '      "what_is_known": "...\n",\n'
         prompt += '      "what_introduced": "...\n",\n'
         prompt += '      "what_novel": "...\n",\n'
         prompt += '      "degree_of_novelty": "..."\n'
+        prompt += '      "references": {"ABC paper": "paper-5678", "XYZ paper": "paper-1234", etc.}\n'
         prompt += '    }\n'
         prompt += '  }\n'
         prompt += "}\n"
@@ -764,11 +773,13 @@ Examples:
 
 # Load theory statements from a TheoryStore
 def load_theory_statements_to_evaluate_from_theorystore(filename_in:str):
-    # Step 1: Load the TheoryStore
     theorystore_data = None
     with open(filename_in, "r") as f:
         theorystore_data = json.load(f)
+    return load_theory_statements_to_evaluate_from_theorystore_from_dict(theorystore_data)
 
+
+def load_theory_statements_to_evaluate_from_theorystore_from_dict(theorystore_data:dict):
     # Step 2: Extract the theories dict
     theories_dict = theorystore_data.get("theories", None)
     # Get the values as a list
@@ -784,8 +795,14 @@ def load_theory_statements_to_evaluate_from_theorystore(filename_in:str):
         if (statements is None):
             continue
 
-        for idx, statement in enumerate(statements):
-            # Get the novelty evaluation
+        for idx, statement_raw in enumerate(statements):
+            print("Processing theory statement with theory ID " + str(theory.get("id", None)) + " and statement idx " + str(idx))
+            if ("law" in statement_raw):
+                statement = statement_raw["law"]
+            else:
+                statement = statement_raw
+
+            #Get the novelty evaluation
             novelty_evaluation = statement.get("novelty_evaluation", None)
             if (novelty_evaluation is None):
                 continue
@@ -794,6 +811,21 @@ def load_theory_statements_to_evaluate_from_theorystore(filename_in:str):
                 print("Skipping theory statement with original (from the theory generation model) likely_novelty_classification = " + str(likely_novelty_classification))
                 continue
 
+            supporting_evidence = statement.get("supporting_evidence", [])
+            supporting_evidence_filtered = []
+            if (isinstance(supporting_evidence, list)):
+                for evidence in supporting_evidence:
+                    try:
+                        if (isinstance(evidence, dict)):
+                            evidence_text = evidence.get("text", None)
+                            if (isinstance(evidence_text, str)) and (len(evidence_text.strip()) > 0):
+                                supporting_evidence_filtered.append(evidence_text)
+                    except Exception as e:
+                        print("Error processing supporting evidence: " + str(e))
+                        continue
+
+            # Note: Not super clear if adding 'supportin_evidence' is useful for this task, or whether it would confuse the judge model (since it's already being given the full-text of the paper)
+
             packed_statement = {
                 "theory_name": components.get("theory_name", None),
                 "theory_description": components.get("theory_description", None),
@@ -801,6 +833,10 @@ def load_theory_statements_to_evaluate_from_theorystore(filename_in:str):
                 "theory_statement": statement.get("theory_statement", None),
                 "domain_scope": statement.get("domain_scope", None),
                 "special_cases": statement.get("special_cases", None),
+                # "supporting_evidence": {
+                #     "note": "This is a list of supporting evidence, generally gathered (and potentially summarized) from across research papers, that was used by the theory generation model to support the generation of this theory statement.  This evidence is likely incomplete, and it was not gathered with the intent for novelty detection -- it is provided for context only.",
+                #     "evidence": supporting_evidence_filtered,
+                # }
             }
 
             # Repack with the theory query
@@ -820,7 +856,7 @@ def load_theory_statements_to_evaluate_from_theorystore(filename_in:str):
 
 
 # This is the main control function to evaluate the novelty of a theory statement based on a set of input reference papers.
-def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_statement_dict:dict, theory_query_to_paper_ids:dict, paperstore:None, model_str_extraction:str="gpt-5-mini", model_str_decision:str="claude-sonnet-4-5-20250929"):
+def evaluate_novelty_theory_statement_original_papers(theory_statement_dict:dict, theory_query_to_paper_ids:dict, paperstore:None, model_str_extraction:str="gpt-5-mini", model_str_decision:str="claude-sonnet-4-5-20250929"):
     print("evaluate_novelty_theory_statement_original_papers: started...")
     print("evaluate_novelty_theory_statement_original_papers: input theory dictionary:")
     print(json.dumps(theory_statement_dict, indent=4))
@@ -838,10 +874,16 @@ def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_state
 
     # Now, get the theory ID, and the specific statement we're searching for.
     theory_id = theory_statement_dict.get("theory_id", None)
-    theory_statement = theory_statement_law.get("theory_statement", None)
+    theory_statement = theory_statement_dict.get("theory_statement_law", None)
+    #if (theory_statement is None):
+    #    theory_statement = theory_statement_law.get("theory_statement_law", None)
 
     if (theory_id is None) or (theory_statement is None):
         print("ERROR: theory_id or theory_statement is None.")
+        print("theory_id: " + str(theory_id))
+        print("theory_statement: " + str(theory_statement))
+        print("theory_statement_dict:")
+        print(json.dumps(theory_statement_dict, indent=4))
         return None
 
     # Find the index of the specific statement in the original theory
@@ -853,9 +895,9 @@ def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_state
         return None
 
     # Make a verbose filename for output, that includes the theory ID, statement IDX, and a timestamp (YYYYMMDD-HHMMSS)
-    timestamp_str = time.strftime("%Y%m%d-%H%M%S", time.gmtime())
-    filename_out = f"novelty-evaluation-theory-{theory_id}-statement-idx-{statement_index}-{timestamp_str}.json"
-    filepath_out = os.path.join(path_out, filename_out)
+    # timestamp_str = time.strftime("%Y%m%d-%H%M%S", time.gmtime())
+    # filename_out = f"novelty-evaluation-theory-{theory_id}-statement-idx-{statement_index}-{timestamp_str}.json"
+    # filepath_out = os.path.join(path_out, filename_out)
 
     # Use the theory_query_to_paper_id mapping to get paper IDs
     paper_ids = theory_query_to_paper_ids.get(theory_query, set())
@@ -865,10 +907,10 @@ def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_state
     if (len(paper_ids) == 0):
         print("No paper IDs found; skipping novelty evaluation.")
         # Put a blank output file
-        print("Writing: " + filepath_out)
-        with open(filepath_out, "w") as f_out:
-            #json.dumped({"error": "No paper IDs found for novelty evaluation."}, f_out, indent=4)
-            json.dumps({"error": "No paper IDs found for novelty evaluation."}, f_out, indent=4)
+        # print("Writing: " + filepath_out)
+        # with open(filepath_out, "w") as f_out:
+        #     #json.dumped({"error": "No paper IDs found for novelty evaluation."}, f_out, indent=4)
+        #     json.dumps({"error": "No paper IDs found for novelty evaluation."}, f_out, indent=4)
 
         return None
 
@@ -917,6 +959,15 @@ def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_state
             paper_id = future_to_paper_id[future]
             try:
                 novelty_evaluation = future.result()
+                # If possible, add the 'paper_id' into the novelty_evaluation for better traceability
+                if (isinstance(novelty_evaluation, dict)) and ("best_response" in novelty_evaluation) and (isinstance(novelty_evaluation["best_response"], dict)) and ("novelty_evaluation" in novelty_evaluation["best_response"]) and (isinstance(novelty_evaluation["best_response"]["novelty_evaluation"], dict)):
+                    new_dict = {"paper_id": paper_id}
+                    # Add all the keys from novelty_evaluation["best_response"]["novelty_evaluation"] into new_dict
+                    for key, value in novelty_evaluation["best_response"]["novelty_evaluation"].items():
+                        new_dict[key] = value
+                    # Replace
+                    novelty_evaluation["best_response"]["novelty_evaluation"] = new_dict
+
                 all_novelty_evaluations.append({
                     "paper_id": paper_id,
                     "novelty_evaluation": novelty_evaluation,
@@ -927,21 +978,21 @@ def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_state
                 print(f"ERROR: Paper ID {paper_id} generated an exception: {exc}")
 
             # Save intermediate results after each paper
-            print("Saving: " + filepath_out)
-            with open(filepath_out, "w") as f_out:
-                packed = {
-                    "model_str_extraction": model_str_extraction,
-                    "model_str_decision": model_str_decision,
-                    "theory_id": theory_id,
-                    "total_cost": total_cost,
-                    "num_papers_evaluated": len(all_novelty_evaluations),
-                    "statement_index": statement_index,
-                    "theory_query": theory_query,
-                    "theory_statement_law": theory_statement_law,
-                    "theory_statement_dict": theory_statement_dict,
-                    "all_novelty_evaluations": all_novelty_evaluations,
-                }
-                json.dump(packed, f_out, indent=4)
+            # print("Saving: " + filepath_out)
+            # with open(filepath_out, "w") as f_out:
+            packed = {
+                "model_str_extraction": model_str_extraction,
+                "model_str_decision": model_str_decision,
+                "theory_id": theory_id,
+                "total_cost": total_cost,
+                "num_papers_evaluated": len(all_novelty_evaluations),
+                "statement_index": statement_index,
+                "theory_query": theory_query,
+                "theory_statement_law": theory_statement_law,
+                "theory_statement_dict": theory_statement_dict,
+                "all_novelty_evaluations": all_novelty_evaluations,
+            }
+#                json.dump(packed, f_out, indent=4)
 
             print("Total Cost: " + str(round(total_cost, 4)))
 
@@ -962,11 +1013,13 @@ def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_state
         if (novelty_eval_dict is None):
             continue
         paper_title = novelty_eval_dict.get("paper_title", None)
+        paper_id = novelty_eval_record.get("paper_id", None)
         for dim_key in dimension_keys:
             try:
                 dim_eval = novelty_eval_dict.get(dim_key, None)
                 if (dim_eval is not None):
                     evidence_for_dimension[dim_key].append({
+                        "paper_id": paper_id,
                         "paper_title": paper_title,
                         "dimension_evaluation": dim_eval,
                     })
@@ -1005,9 +1058,9 @@ def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_state
         "evidence_for_dimension": evidence_for_dimension,
         "all_novelty_evaluations": all_novelty_evaluations,
     }
-    print("Writing: " + filepath_out)
-    with open(filepath_out, "w") as f_out:
-        json.dump(packed, f_out, indent=4)
+    # print("Writing: " + filepath_out)
+    # with open(filepath_out, "w") as f_out:
+    #     json.dump(packed, f_out, indent=4)
 
     # Now, perform the aggregation step for each dimension
     aggregated_novelty_evaluations = {}
@@ -1054,9 +1107,9 @@ def evaluate_novelty_theory_statement_original_papers(path_out:str, theory_state
 
     # Store the final aggregated novelty evaluation
     packed["final_aggregated_novelty_evaluation"] = final_aggregated_novelty_evaluation
-    print("Writing final aggregated novelty evaluation: " + filepath_out)
-    with open(filepath_out, "w") as f_out:
-        json.dump(packed, f_out, indent=4)
+    # print("Writing final aggregated novelty evaluation: " + filepath_out)
+    # with open(filepath_out, "w") as f_out:
+    #     json.dump(packed, f_out, indent=4)
 
     return packed
 
@@ -1285,11 +1338,74 @@ def make_novelty_evaluation_binary(path_in_baseline:str, path_in_theorizer:str, 
 #   Main qualified novelty evaluation
 #
 
+def add_qualified_novelty_result_to_theorystore(filename_theorystore:str, theory_id:str, statement_index:int, final_aggregated_novelty_evaluation:dict, evidence_for_dimension:dict):
+    # Step 1: Load the TheoryStore JSON file
+    theorystore_data = None
+    with open(filename_theorystore, "r") as f:
+        theorystore_data = json.load(f)
+
+    # Step 2: Update the TheoryStore dictionary with the qualified novelty evaluation results for the specific theory statement
+    theorystore_data = add_qualified_novelty_result_to_theorystore_dict(
+        theorystore_data=theorystore_data,
+        theory_id=theory_id,
+        statement_index=statement_index,
+        final_aggregated_novelty_evaluation=final_aggregated_novelty_evaluation,
+        evidence_for_dimension=evidence_for_dimension,
+    )
+
+    # Step 3: Save the updated TheoryStore back to the JSON file
+    print("Saving updated TheoryStore with qualified novelty evaluation results to: " + filename_theorystore)
+    with open(filename_theorystore, "w") as f:
+        json.dump(theorystore_data, f, indent=4)
+
+
+
+def add_qualified_novelty_result_to_theorystore_dict(theorystore_data:dict, theory_id:str, statement_index:int, final_aggregated_novelty_evaluation:dict, evidence_for_dimension:dict):
+    # Step 2: Add a key for 'qualified_novelty_evaluations' if it doesn't exist
+    if ("qualified_novelty_evaluations" not in theorystore_data):
+        theorystore_data["qualified_novelty_evaluations"] = {}
+
+    # Step 3: Find the specific theory and statement, and add the aggregated novelty evaluation results
+    theories_dict = theorystore_data.get("theories", {})
+    if (theory_id not in theories_dict):
+        raise ValueError(f"theory_id {theory_id} not found in TheoryStore.")
+
+    theory = theories_dict[theory_id]
+    components = theory.get("components", {})
+    statements = components.get("theory_statements", [])
+    if (statement_index < 0) or (statement_index >= len(statements)):
+        raise ValueError(f"statement_index {statement_index} is out of range for theory_id {theory_id}.")
+
+    # Add the novelty evaluation results to the specific statement
+    statement = statements[statement_index]
+    evidence_key = "qualified-novelty-" + str(theory_id) + "-statement-" + str(statement_index)
+    if ("law" in statement):
+        statement["law"]["qualified_novelty_evaluation"] = {
+            "final_aggregated_novelty_evaluation": final_aggregated_novelty_evaluation,
+            "key_for_evidence": evidence_key,
+        }
+    else:
+        statement["qualified_novelty_evaluation"] = {
+            "final_aggregated_novelty_evaluation": final_aggregated_novelty_evaluation,
+            "key_for_evidence": evidence_key,
+        }
+
+    # Step 4: Add the detailed evidence for each dimension, under the 'qualified_novelty_evaluations' key at the top level of the TheoryStore, using the evidence_key as a subkey.
+    theorystore_data["qualified_novelty_evaluations"][evidence_key] = {
+        "final_aggregated_novelty_evaluation": final_aggregated_novelty_evaluation,
+        "evidence_for_dimension": evidence_for_dimension,
+    }
+
+    return theorystore_data
+
+
+
+
 # This is a main high-level control function that takes a TheoryStore (and its associated PaperStore) as input, and performs qualified novelty evaluation on all theory statements in the TheoryStore.
-def do_qualified_novelty_evaluation(filename_theorystore:str, filename_paperstore:str, path_out:str, model_str_extraction:str, model_str_decision:str, num_workers:int=5, DEBUG_LIMIT:int=2):
+def do_qualified_novelty_evaluation(filename_theorystore:str, filename_paperstore:str, model_str_extraction:str, model_str_decision:str, num_workers:int=5, DEBUG_LIMIT:int=2):
     # Make the output directory if it doesn't exist
-    if (not os.path.exists(path_out)):
-        os.makedirs(path_out)
+    #if (not os.path.exists(path_out)):
+    #    os.makedirs(path_out)
 
     # Load the paperstore
     paperstore = PaperStore(filename_in=filename_paperstore)
@@ -1324,11 +1440,11 @@ def do_qualified_novelty_evaluation(filename_theorystore:str, filename_paperstor
 
     # Perform the qualified novelty evaluation, in parallel.
     print(f"Starting qualified novelty evaluations with {num_workers} workers...")
+    total_cost = 0.0
     with ThreadPoolExecutor(max_workers=num_workers) as executor:
         future_to_idx = {
             executor.submit(
                 evaluate_novelty_theory_statement_original_papers,
-                path_out=path_out,
                 theory_statement_dict=theory_statement_dict,
                 theory_query_to_paper_ids=theory_query_to_paper_ids,
                 paperstore=paperstore,
@@ -1344,17 +1460,151 @@ def do_qualified_novelty_evaluation(filename_theorystore:str, filename_paperstor
             try:
                 result = future.result()
                 print(f"Completed novelty evaluation for theory statement {idx+1}.")
+
+                cost_step = result.get("total_cost", 0.0)
+                if (isinstance(cost_step, (int, float))):
+                    total_cost += cost_step
+
+                # Store it back into the TheoryStore
+                final_aggregated_novelty_evaluation = result.get("final_aggregated_novelty_evaluation", None)
+                evidence_for_dimension = result.get("evidence_for_dimension", None)
+                theory_id = result.get("theory_id", None)
+                statement_index = result.get("statement_index", None)
+                if (final_aggregated_novelty_evaluation is not None) and (evidence_for_dimension is not None) and (theory_id is not None) and (statement_index is not None):
+                    add_qualified_novelty_result_to_theorystore(filename_theorystore=filename_theorystore, theory_id=theory_id, statement_index=statement_index, final_aggregated_novelty_evaluation=final_aggregated_novelty_evaluation, evidence_for_dimension=evidence_for_dimension)
+
             except Exception as exc:
                 print(f"ERROR: Theory statement {idx+1} generated an exception: {exc}")
 
     print("Completed all qualified novelty evaluations.")
+
+    return {
+        "total_cost": total_cost,
+    }
+
+# This is a main high-level control function that takes a TheoryStore (and its associated PaperStore) as input, and performs qualified novelty evaluation on all theory statements in the TheoryStore.
+def do_qualified_novelty_evaluation_persistence(theorystore_data:dict, paperstore:PaperStore, model_str_extraction:str, model_str_decision:str, num_workers:int=5, DEBUG_LIMIT:int=2, on_statement_evaluated=None):
+    # Make the output directory if it doesn't exist
+    #if (not os.path.exists(path_out)):
+    #    os.makedirs(path_out)
+
+    # Load the paperstore
+    #paperstore = PaperStore(filename_in=filename_paperstore)
+
+    # Load the TheoryStore
+    theories = None
+    extraction_schemas = None
+    extraction_results = None
+
+    theories = theorystore_data['theories']
+    extraction_schemas = theorystore_data['extraction_schemas']
+    extraction_results = theorystore_data['extraction_results']
+
+    print(f"Loaded {len(theories)} theories, {len(extraction_schemas)} extraction schemas, {len(extraction_results)} extraction results from TheoryStore.")
+
+    # Generate the look-up table mapping theory queries to paper IDs
+    theory_query_to_paper_ids = generate_lut_theory_query_to_paper_ids(theories=theories, extraction_results=extraction_results)
+    print(f"Generated look-up table mapping {len(theory_query_to_paper_ids)} theory queries to paper IDs.")
+
+    # Load the theories that we're evaluating.
+    #theory_statements_to_evaluate_theorizer = load_theory_statements_to_evaluate_from_theorystore(filename_in=filename_theorystore)
+    theory_statements_to_evaluate_theorizer = load_theory_statements_to_evaluate_from_theorystore_from_dict(theorystore_data=theorystore_data)
+
+    # Randomly shuffle the theory statements to evaluate, to better distribute the workload across workers.
+    import random
+    random.shuffle(theory_statements_to_evaluate_theorizer)
+    print(f"Loaded {len(theory_statements_to_evaluate_theorizer)} theory statements to evaluate for qualified novelty.")
+    # Debug limit
+    if (DEBUG_LIMIT != None) and (DEBUG_LIMIT > 0):
+        theory_statements_to_evaluate_theorizer = theory_statements_to_evaluate_theorizer[:DEBUG_LIMIT]
+        print(f"DEBUG: Limiting to first {DEBUG_LIMIT} theory statements to evaluate for qualified novelty.")
+
+    # Perform the qualified novelty evaluation, in parallel.
+    print(f"Starting qualified novelty evaluations with {num_workers} workers...")
+    total_cost = 0.0
+    with ThreadPoolExecutor(max_workers=num_workers) as executor:
+        future_to_idx = {
+            executor.submit(
+                evaluate_novelty_theory_statement_original_papers,
+                theory_statement_dict=theory_statement_dict,
+                theory_query_to_paper_ids=theory_query_to_paper_ids,
+                paperstore=paperstore,
+                model_str_extraction=model_str_extraction,
+                model_str_decision=model_str_decision,
+            ): idx
+            for idx, theory_statement_dict in enumerate(theory_statements_to_evaluate_theorizer)
+        }
+
+        from tqdm import tqdm
+        for future in tqdm(as_completed(future_to_idx), total=len(future_to_idx)):
+            idx = future_to_idx[future]
+            try:
+                result = future.result()
+                print(f"Completed novelty evaluation for theory statement {idx+1}.")
+
+                cost_step = result.get("total_cost", 0.0)
+                if (isinstance(cost_step, (int, float))):
+                    total_cost += cost_step
+
+                # Store it back into the TheoryStore
+                final_aggregated_novelty_evaluation = result.get("final_aggregated_novelty_evaluation", None)
+                evidence_for_dimension = result.get("evidence_for_dimension", None)
+                theory_id = result.get("theory_id", None)
+                statement_index = result.get("statement_index", None)
+                if (final_aggregated_novelty_evaluation is not None) and (evidence_for_dimension is not None) and (theory_id is not None) and (statement_index is not None):
+                    theorystore_data = add_qualified_novelty_result_to_theorystore_dict(theorystore_data=theorystore_data, theory_id=theory_id, statement_index=statement_index, final_aggregated_novelty_evaluation=final_aggregated_novelty_evaluation, evidence_for_dimension=evidence_for_dimension)
+
+                    if on_statement_evaluated:
+                        statement_name = result.get("theory_statement_law", {}).get("statement_name", None)
+                        total_statements = len(theory_statements_to_evaluate_theorizer)
+                        on_statement_evaluated(theory_id, statement_index, statement_name, final_aggregated_novelty_evaluation, total_statements)
+
+            except Exception as exc:
+                print(f"ERROR: Theory statement {idx+1} generated an exception: {exc}")
+
+    print("Completed all qualified novelty evaluations.")
+
+    return {
+        "total_cost": total_cost,
+        "theorystore_data": theorystore_data,
+    }
 
 
 #
 #   Main Entry Point for Qualified Novelty Evaluation
 #
 
+def temp_qualified_novelty_eval():
+    # Step 0: Load API Keys
+    loadAPIKeys()
+
+    # Step 1: Define the theories that we're evaluating (and the associated paperstore)
+    filename_theorystore = "data/theorystores/theorystore_id_bed530be-8939-403d-80d8-20e30bc5934d_20260227_112335.json"
+    filename_paperstore = "data/theorystores/paperstore_id_bed530be-8939-403d-80d8-20e30bc5934d_20260227_112335.json"
+
+    # Define the extraction models
+    model_str_extraction = "gpt-5-mini"
+    model_str_decision = "claude-sonnet-4-5-20250929"
+
+    # Step 2: Run the Qualified Novelty Evaluation
+    print("Starting Qualified Novelty Evaluation...")
+    do_qualified_novelty_evaluation(filename_theorystore=filename_theorystore,
+                                   filename_paperstore=filename_paperstore,
+                                   model_str_extraction=model_str_extraction,
+                                   model_str_decision=model_str_decision,
+                                   num_workers=5,                   # Number of parallel workers
+                                   DEBUG_LIMIT=2                    # Debug limit for testing
+                                   )
+
+
+
+
+
 if __name__ == "__main__":
+    temp_qualified_novelty_eval()
+    exit(1)
+
+
     # Step 0: Load API Keys
     loadAPIKeys()
 
