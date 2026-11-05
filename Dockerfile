@@ -2,12 +2,8 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# Vendor wheels for packages no longer available on public PyPI (mistralai was
-# quarantined; see https://pypi.org/simple/mistralai/). pip --find-links pulls
-# matching dists from ./vendor/ in preference to (failing) network lookups.
-COPY vendor/ ./vendor/
 COPY requirements.txt .
-RUN pip install --no-cache-dir --find-links ./vendor/ -r requirements.txt uvicorn
+RUN pip install --no-cache-dir -r requirements.txt uvicorn
 
 COPY src/ ./src/
 ENV PYTHONPATH=/app/src

@@ -607,6 +607,6 @@ docker run --rm --env-file .env -p 9000:9000 asta-theorizer
 
 The server listens on port 9000 by default, or `PORT` when set.
 Run offline unit tests with `python -m pytest` after installing the requirements
-and pytest (`pip install --find-links vendor -r requirements.txt pytest`).
+and pytest (`pip install -r requirements.txt pytest`).
 `tests/harness/run_ci.sh` also runs Docker smoke tests and a
 fake-LLM end-to-end matrix without provider credentials.
