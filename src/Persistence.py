@@ -5,7 +5,6 @@
 
 import os
 import json
-import base64
 from abc import ABC, abstractmethod
 
 
@@ -28,11 +27,7 @@ class PersistenceBackend(ABC):
     @abstractmethod
     def get_paperstore(self, generation_id: str): ...
 
-    @abstractmethod
-    def save_ocr_cache(self, url_key: str, ocr_json: dict, markdown: str) -> None: ...
 
-    @abstractmethod
-    def load_ocr_cache_markdown(self, url_key: str) -> str | None: ...
 
     @abstractmethod
     def get_kv(self, key: str) -> dict | None: ...
@@ -55,12 +50,10 @@ class FilePersistence(PersistenceBackend):
         self.path_workflows = os.path.join(base_path, "workflows")
         self.path_theorystores = os.path.join(base_path, "theorystores")
         self.path_paperstores = os.path.join(base_path, "paperstores")
-        self.path_ocr_cache = os.path.join(_PROJECT_ROOT, "ocr-cache")
         self.base_path = base_path
         os.makedirs(self.path_workflows, exist_ok=True)
         os.makedirs(self.path_theorystores, exist_ok=True)
         os.makedirs(self.path_paperstores, exist_ok=True)
-        os.makedirs(self.path_ocr_cache, exist_ok=True)
 
     def save_workflow(self, generation_id: str, data: dict) -> None:
         filename = os.path.join(self.path_workflows, f"workflow_id_{generation_id}.json")
@@ -111,39 +104,7 @@ class FilePersistence(PersistenceBackend):
                 print(f"Error loading paperstore from file {filename}: {e}")
                 return None
 
-    def save_ocr_cache(self, url_key: str, ocr_json: dict, markdown: str) -> None:
-        sanitized = self._sanitize_url(url_key)
-        cache_dir = os.path.join(self.path_ocr_cache, sanitized)
-        os.makedirs(cache_dir, exist_ok=True)
-        # Save JSON
-        json_path = os.path.join(cache_dir, "ocr_response.json")
-        with open(json_path, "w") as f:
-            json.dump(ocr_json, f)
-        # Save markdown
-        md_path = os.path.join(cache_dir, "ocr_response.md")
-        with open(md_path, "w") as f:
-            f.write(markdown)
-        # Save base64-encoded images from OCR response
-        for page in ocr_json.get("pages", []):
-            for img in page.get("images", []):
-                try:
-                    img_id = img["id"]
-                    data_uri = img["image_base64"]
-                    _, encoded = data_uri.split(",", 1)
-                    img_data = base64.b64decode(encoded)
-                    image_path = os.path.join(cache_dir, img_id)
-                    with open(image_path, "wb") as f:
-                        f.write(img_data)
-                except Exception as e:
-                    print(f"Error saving image {img.get('id', 'unknown')}: {e}")
 
-    def load_ocr_cache_markdown(self, url_key: str) -> str | None:
-        sanitized = self._sanitize_url(url_key)
-        md_path = os.path.join(self.path_ocr_cache, sanitized, "ocr_response.md")
-        if not os.path.exists(md_path):
-            return None
-        with open(md_path, "r") as f:
-            return f.read()
 
     def get_kv(self, key: str) -> dict | None:
         filename = os.path.join(self.base_path, f"{key}.json")
@@ -157,14 +118,6 @@ class FilePersistence(PersistenceBackend):
         with open(filename, "w") as f:
             json.dump(value, f)
 
-    @staticmethod
-    def _sanitize_url(url: str) -> str:
-        if url.startswith("http://"):
-            url = url[7:]
-        elif url.startswith("https://"):
-            url = url[8:]
-        sanitized = ''.join(c if c.isalnum() or c == '_' else '_' for c in url)
-        return sanitized.strip('_')
 
 
 # ---------------------------------------------------------------------------
@@ -202,14 +155,6 @@ class PostgresPersistence(PersistenceBackend):
                     CREATE TABLE IF NOT EXISTS paperstores (
                         generation_id TEXT PRIMARY KEY,
                         data JSONB NOT NULL,
-                        created_at TIMESTAMPTZ DEFAULT NOW()
-                    )
-                """)
-                cur.execute("""
-                    CREATE TABLE IF NOT EXISTS ocr_cache (
-                        url_key TEXT PRIMARY KEY,
-                        ocr_json JSONB NOT NULL,
-                        markdown TEXT NOT NULL,
                         created_at TIMESTAMPTZ DEFAULT NOW()
                     )
                 """)
@@ -317,34 +262,7 @@ class PostgresPersistence(PersistenceBackend):
         finally:
             conn.close()
 
-    def save_ocr_cache(self, url_key: str, ocr_json: dict, markdown: str) -> None:
-        conn = self._connect()
-        try:
-            with conn.cursor() as cur:
-                # Upsert: insert or update if url_key already exists
-                cur.execute(
-                    """INSERT INTO ocr_cache (url_key, ocr_json, markdown)
-                       VALUES (%s, %s, %s)
-                       ON CONFLICT (url_key) DO UPDATE
-                       SET ocr_json = EXCLUDED.ocr_json, markdown = EXCLUDED.markdown""",
-                    (url_key, json.dumps(ocr_json), markdown)
-                )
-            conn.commit()
-        finally:
-            conn.close()
 
-    def load_ocr_cache_markdown(self, url_key: str) -> str | None:
-        conn = self._connect()
-        try:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT markdown FROM ocr_cache WHERE url_key = %s",
-                    (url_key,)
-                )
-                row = cur.fetchone()
-                return row[0] if row else None
-        finally:
-            conn.close()
 
     def get_kv(self, key: str) -> dict | None:
         conn = self._connect()
