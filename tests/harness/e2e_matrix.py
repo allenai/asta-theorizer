@@ -74,12 +74,6 @@ RESUME_HYDRATION_CORPUS_ID = "52967399"
 # Metadata-only seeds (no markdown) for the server-side hydration path.
 HYDRATION_SEED_CORPUS_IDS = ["13756489", "52967399", "218971783"]
 
-# PMC-only seeds (no openAccessPdf/arXiv/ACL) the legacy path can't fetch; recovering them to full-text proves asta-papers ran (USE_ASTA_PAPERS=true). KRAS-G12C reviews, verified PMC-only 2026-06.
-ASTA_PAPERS_PMC_ONLY_SEEDS = ["282800036", "284717374"]
-ASTA_PAPERS_QUERY = (
-    "What mechanisms drive resistance to KRAS G12C inhibitors in non-small-cell lung cancer?"
-)
-
 TERMINAL_STATES = {"completed", "failed", "canceled", "rejected"}
 
 
@@ -811,51 +805,6 @@ def case_find_extract_hydration(ctx: Ctx) -> tuple[bool, str]:
     return (not fails), "; ".join(fails) or "OK"
 
 
-def case_asta_papers_fetch(ctx: Ctx) -> tuple[bool, str]:
-    """FETCH STEP focus: asta-papers recovers papers the legacy path cannot.
-
-    Seeds two metadata-only PMC-only papers (no openAccessPdf / arXiv / ACL, so the
-    legacy S2-URL + Mistral path yields zero URLs) and drives them through the live
-    server's paper-fetch step. Asserts the streamed paperstore shows each recovered
-    to full-text via an asta-papers channel, with the license/provenance fields
-    surfaced over the wire (fetch_channel set, llm_usable True).
-
-    REQUIRES the server to run with USE_ASTA_PAPERS=true (run_e2e_matrix.sh sets it).
-    Assertions are scoped to the fetch result only — extraction/theory are ignored."""
-    task = ctx.run("find-and-extract", {
-        "theory_query": ASTA_PAPERS_QUERY,
-        "paper_store": seed_paperstore(ASTA_PAPERS_PMC_ONLY_SEEDS),
-        "max_papers_to_retrieve": len(ASTA_PAPERS_PMC_ONLY_SEEDS),
-        # Search OFF: injected PMC seeds hydrate inline via asta-papers, testing the fetch path deterministically without the flaky external search.
-        "search_additional_papers": False,
-    })
-    ok, msg = _check_completed(task, "asta-papers-fetch")
-    if not ok:
-        return ok, msg
-
-    ps = folded_theory_store(task).get("paperstore") or {}
-    fails = []
-    for cid in ASTA_PAPERS_PMC_ONLY_SEEDS:
-        entry = next((e for e in ps.values() if str(e.get("corpus_id")) == cid), None)
-        if entry is None:
-            fails.append(f"corpus {cid}: absent from streamed paperstore")
-            continue
-        print(f"    corpus {cid}: status={entry.get('status')} channel={entry.get('fetch_channel')} "
-              f"license={entry.get('license_class')} llm_usable={entry.get('llm_usable')}")
-        if entry.get("status") != "full-text":
-            fails.append(f"corpus {cid}: status={entry.get('status')!r} — legacy can't fetch this; "
-                         f"asta-papers should recover it to full-text")
-        if not entry.get("fetch_channel"):
-            fails.append(f"corpus {cid}: no fetch_channel — asta-papers path didn't run "
-                         f"(the legacy/Mistral path leaves this None; is USE_ASTA_PAPERS=true?)")
-        if not entry.get("license_class"):
-            fails.append(f"corpus {cid}: no license_class — provenance not surfaced over the wire")
-        if entry.get("llm_usable") is not True:
-            fails.append(f"corpus {cid}: llm_usable={entry.get('llm_usable')!r} (expected True for "
-                         f"license-cleared full text)")
-    return (not fails), "; ".join(fails) or "OK"
-
-
 def case_literature_theory_generation(ctx: Ctx) -> tuple[bool, str]:
     """Full pipeline: PaperFinder + extraction + theory (+ novelty)."""
     task = ctx.run("literature-theory-generation", {
@@ -904,7 +853,6 @@ CASES: list[tuple[str, str, Callable[[Ctx], tuple[bool, str]]]] = [
     ("evaluate-novelty-byo-store",     "medium",    case_evaluate_novelty_byo_store),
     ("resume-extraction",              "medium",    case_resume_extraction),
     ("find-extract-hydration",         "expensive", case_find_extract_hydration),
-    ("asta-papers-fetch",              "expensive", case_asta_papers_fetch),
     ("literature-theory-generation",   "expensive", case_literature_theory_generation),
 ]
 

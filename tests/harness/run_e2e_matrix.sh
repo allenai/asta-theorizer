@@ -56,13 +56,6 @@ with open(sys.argv[1], "w") as f:
 PYEOF
 SERVER_URI="file:///seed/seed_paperstore.json"
 
-# asta-papers primary fetch path: default ON so the matrix exercises it (the
-# asta-papers-fetch case asserts the fetch step recovers PMC-only papers). Override
-# with `USE_ASTA_PAPERS=false tests/harness/run_e2e_matrix.sh`. NCBI key (optional)
-# lifts the NCBI rate limit; forwarded from the env if set.
-USE_ASTA_PAPERS="${USE_ASTA_PAPERS:-true}"
-echo "    asta-papers fetch path: USE_ASTA_PAPERS=$USE_ASTA_PAPERS"
-
 # FAKE=1 runs the container with a canned LLM ($0 tokens) — for validating plumbing /
 # the query-list pass end-to-end without paying. QUERIES_CSV drives the matrix from a
 # CSV of real queries (deduped) instead of the fixed CASES.
@@ -77,8 +70,6 @@ echo "==> [2/4] run container on :$PORT (FilePersistence; seed mounted at /seed)
 docker rm -f "$NAME" >/dev/null 2>&1 || true
 docker run -d --name "$NAME" -p "$PORT:9000" \
   --env-file "$REPO/.env" -e DATABASE_URL= \
-  -e USE_ASTA_PAPERS="$USE_ASTA_PAPERS" \
-  ${NCBI_API_KEY:+-e NCBI_API_KEY="$NCBI_API_KEY"} \
   ${FAKE_ENV[@]+"${FAKE_ENV[@]}"} \
   -v "$SEED_DIR:/seed:ro" \
   "$IMAGE" >/dev/null

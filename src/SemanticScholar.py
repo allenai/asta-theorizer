@@ -263,7 +263,7 @@ class SemanticScholar():
 
     # Find a paper by its title
     def find_paper_by_title(self, title:str):
-        time.sleep(1)
+        time.sleep(2)
 
         def find_paper(title:str):
             url = "https://api.semanticscholar.org/graph/v1/paper/search/match"
@@ -277,7 +277,7 @@ class SemanticScholar():
                 # Use the API key string, not the object
                 headers["x-api-key"] = self.api_key
             response = requests.get(url, params=params, headers=headers)
-            #print("Response Code: " + str(response.status_code))
+
             if response.status_code == 200:
                 # Success
                 data = response.json()
@@ -285,18 +285,13 @@ class SemanticScholar():
             elif response.status_code == 404:
                 # No results found
                 return {}
-            elif response.status_code == 500:
-                # Server error: In case the service is temporarily unavailable.
-                print("Warning: Semantic Scholar API returned 500 Internal Server Error -- Service is temporarily unavailable.")
-                return None
             else:
                 print("Error:", response.status_code)
                 print(response.text)
                 return None
 
-
         # Try to find the paper
-        MAX_RETRIES = 3
+        MAX_RETRIES = 5
         data = None
         for i in range(MAX_RETRIES):
             data = find_paper(title)
@@ -446,148 +441,46 @@ class SemanticScholar():
         return all_papers
 
 
-#
-#   Paper Finder
-#
-
-# Paper Finder settings. Most are plain constants; only three are read from the environment, each
-# for a reason that already exists rather than in case it is wanted later:
-#   - PAPER_FINDER_BASE_URL selects which Paper Finder deployment to talk to. Paper Finder runs
-#     several (prod-web, main-web, and a local instance on :8000); before this, switching meant
-#     editing the URL literal in this file and redeploying (see c79df5b).
-#   - PAPER_FINDER_WORKER_PROFILE so "deep" (this PR's change) can be A/B'd against "standard"
-#     without a rebuild.
-#   - PAPERFINDER_SEARCH_TIMEOUT_SECONDS so the new budget can be tuned if 600s proves wrong.
-# Module-level names are `_`-prefixed because PaperFinderRequests.py does
-# `from SemanticScholar import *` and would otherwise pick them up.
+PAPER_FINDER_SEARCH_TIMEOUT_SECONDS = 110
 
 
-def _env_or_default(name, default):
-    """Read a setting from the environment, treating an empty value as unset.
-
-    Not about deployment environments -- this is `os.environ` with one wrinkle: a name present
-    but blank (which is what `cp .env.example .env`, or an unfilled `.env` line, produces) reads
-    as "" rather than falling back. Sending that through would mean an empty worker_profile
-    (rejected 422) or a crash at import on int("").
-    """
-    value = os.environ.get(name)
-    return value if value else default
-
-
-_PAPER_FINDER_BASE_URL = _env_or_default("PAPER_FINDER_BASE_URL", "").rstrip("/")
-# A stable *service* identity, matching Paper Finder's own "nora-handler"/"debug-console" convention.
-# Deliberately not `user_id`, which is hardcoded to "api" for every request and carries no real identity.
-_PAPER_FINDER_CALLER_ACTOR_ID = "theorizer"
-# "infer" lets Paper Finder pick search effort per query; matches nora's configured value.
-_PAPER_FINDER_OPERATION_MODE = "infer"
-# "deep" is the captain-orchestrated flow nora's review path runs. The /api/3/tasks request model
-# defaults to "standard", so this must be sent explicitly or Theorizer silently gets the weaker profile.
-_PAPER_FINDER_WORKER_PROFILE = _env_or_default("PAPER_FINDER_WORKER_PROFILE", "deep")
-# How long one search may take. The previous implementation gave up after ~110s, far shorter than a
-# deep search needs -- it returned None, which surfaced downstream as "no papers found".
-# Deliberately public (no leading underscore): Theorizer1 imports it via `from SemanticScholar import *`
-# and derives its own, longer wait from it, so the two layers cannot drift apart.
-PAPER_FINDER_SEARCH_TIMEOUT_SECONDS = int(_env_or_default("PAPERFINDER_SEARCH_TIMEOUT_SECONDS", 600))
-# Per-request ceiling, not per-search: the search is polled, so this only bounds a single HTTP call.
-_PAPER_FINDER_HTTP_TIMEOUT_SECONDS = 30
-_PAPER_FINDER_POLL_INTERVAL_SECONDS = 5
-
-
-class PaperFinderError(Exception):
-    """A Paper Finder request failed for a reason we can name.
-
-    Raised instead of returning None so the failure reason survives up to the workflow:
-    PaperFinderRequests stores it as {"error": ...}, and the executor reports it verbatim
-    rather than collapsing every failure into a misleading "No candidate papers found".
-    """
-    pass
-
-
-# Get PaperFinder results for a query, via the /api/3/tasks REST API.
-#
-# `/api/2/rounds` is deprecated (it is now a thin shim over these same v3 handlers and returns a
-# Sunset header). /api/3/tasks is the REST successor: same POST -> 204 + Location -> poll flow, but it
-# also accepts caller_actor_id/cost_trace_id/worker_profile, and its `/enriched` response preserves
-# `doc_collection.documents[].publication_date`, which the knowledge-cutoff filter depends on.
-def _get_paperfinder_results_internal(query:str, cost_trace_id:str=None):
-    print("PaperFinder: get_paperfinder_results(): Started... (query = '" + query + "')")
+# Get PaperFinder results using the local copy of PaperFinder (https://github.com/allenai/asta-paper-finder)
+def _get_paperfinder_results_local(query:str):
+    print("PaperFinder: get_paperfinder_results_local(): Started... (query = '" + query + "')")
 
     # Step 1: Pack the request
     paperfinder_request = {
         "paper_description": query,
-        "caller_actor_id": _PAPER_FINDER_CALLER_ACTOR_ID,
-        "cost_trace_id": cost_trace_id,
-        "operation_mode": _PAPER_FINDER_OPERATION_MODE,
-        "worker_profile": _PAPER_FINDER_WORKER_PROFILE,
-        "generate_widget_state": False,
+        "operation_mode": "infer",
+        #"inserted_before": "2025-01-01",
+        "read_results_from_cache": False
     }
 
-    if not _PAPER_FINDER_BASE_URL:
-        raise PaperFinderError("Set PAPER_FINDER_BASE_URL to your authorized Paper Finder service")
-    url = f"{_PAPER_FINDER_BASE_URL}/api/3/tasks"
+    # URL for local PaperFinder instance
+    url = os.environ.get("PAPER_FINDER_BASE_URL", "http://localhost:8000").rstrip("/") + "/api/2/rounds"
 
     # Send the POST request
-    try:
-        response = requests.post(
-            url,
-            headers={"Content-Type": "application/json"},
-            data=json.dumps(paperfinder_request),
-            timeout=_PAPER_FINDER_HTTP_TIMEOUT_SECONDS,
-        )
-    except requests.RequestException as e:
-        raise PaperFinderError(f"Could not reach Paper Finder at {url}: {e!r}")
+    response = requests.post(
+        url,
+        headers={"Content-Type": "application/json"},
+        data=json.dumps(paperfinder_request),
+    )
 
-    # Step 2: Check the response. A 204 carries the result location in the `Location` header.
-    if (response.status_code != 204):
-        # Includes 503 when Paper Finder's task queue is full.
-        raise PaperFinderError(f"Paper Finder rejected the request: {response.status_code} - {response.text}")
+    # The expected response will be a 204, that will return a relative URL to the results
+    # Step 2: Check the response
+    if (response.status_code == 200):
+        print("Paperfinder local results received.")
+        return response.json()
 
-    relative_url = response.headers.get("location")
-    if not relative_url:
-        raise PaperFinderError("Paper Finder returned a 204 with no Location header.")
-
-    full_url_enriched = f"{_PAPER_FINDER_BASE_URL}{relative_url}/enriched"
-    print(f"Waiting for results to be available at: {full_url_enriched}")
-
-    # Step 3: Poll until the task reaches a terminal state, or we run out of budget.
-    #   404 -> still running     200 -> done     410 -> the task failed (detail in the body)
-    start_time = time.time()
-    while ((time.time() - start_time) < PAPER_FINDER_SEARCH_TIMEOUT_SECONDS):
-        try:
-            response = requests.get(full_url_enriched, timeout=_PAPER_FINDER_HTTP_TIMEOUT_SECONDS)
-        except requests.RequestException as e:
-            # A transient network blip shouldn't abort a search that may already be nearly done.
-            print(f"PaperFinder: transient error while polling for results (will retry): {e!r}")
-            time.sleep(_PAPER_FINDER_POLL_INTERVAL_SECONDS)
-            continue
-
-        if (response.status_code == 200):
-            print(f"Paperfinder results received. ({round(time.time() - start_time, 1)} seconds elapsed)")
-            return response.json()
-
-        if (response.status_code == 410):
-            raise PaperFinderError(f"Paper Finder task failed: {response.text}")
-
-        # Transient at the edge (load-balancer hiccup, rate limit). The task is still running
-        # server-side, so retry rather than throwing away a search that is already in flight --
-        # same reasoning as the RequestException branch above. Deliberately NOT extended to other
-        # 4xx: an auth or bad-URL error cannot succeed on retry, and would just burn the budget.
-        if (response.status_code == 429) or (response.status_code >= 500):
-            print(f"PaperFinder: transient {response.status_code} while polling for results (will retry)")
-            time.sleep(_PAPER_FINDER_POLL_INTERVAL_SECONDS)
-            continue
-
-        if (response.status_code != 404):
-            raise PaperFinderError(f"Unexpected response while polling Paper Finder: {response.status_code} - {response.text}")
-
-        time.sleep(_PAPER_FINDER_POLL_INTERVAL_SECONDS)
-
-    raise PaperFinderError(f"Paper Finder timed out after {PAPER_FINDER_SEARCH_TIMEOUT_SECONDS} seconds.")
+    else:
+        print("Response Status Code: " + str(response.status_code))
+        print(f"Error: {response.status_code} - {response.text}")
+        return None
 
 
 # Get PaperFinder results based on a query.
 def get_paperfinder_results(query:str, cost_trace_id:str=None):
-    return _get_paperfinder_results_internal(query=query, cost_trace_id=cost_trace_id)
+    return _get_paperfinder_results_local(query=query)
 
 
 
@@ -599,11 +492,9 @@ def load_s2_api_key():
             s2_api_key = f.read().strip()
         return s2_api_key
     else:
-        # Fall back to environment variable (e.g., on Modal)
-        env_key = os.environ.get("SEMANTIC_SCHOLAR_API_KEY", None)
-        if env_key:
-            return env_key
-        print(f"Warning: Semantic Scholar API key not found in file or environment.")
+        if os.environ.get("SEMANTIC_SCHOLAR_API_KEY"):
+            return os.environ["SEMANTIC_SCHOLAR_API_KEY"]
+        print(f"Error: Semantic Scholar API key file '{filename_s2_api_key}' not found.")
         return None
 
 
@@ -622,17 +513,7 @@ if __name__ == "__main__":
     results = s2_client.get_papers_by_author(author_id = 144949918)
     print(json.dumps(results, indent=4))
 
-    # Try out finding a paper by title
-    title = "ScienceWorld: Is your Agent Smarter"
-    paper_data = s2_client.find_paper_by_title(title)
-    print("Find paper by title: " + title)
-    print(json.dumps(paper_data, indent=4))
-
-    # Dump to file
-    with open("test_find_paper_by_title.json", 'w') as f:
-        json.dump(paper_data, f, indent=4)
-
-    # # PaperFinder test
-    # query = "Papers about virtual environments for scientific discovery."
-    # pf_results = get_paperfinder_results(query=query)
-    # print(json.dumps(pf_results, indent=4))
+    # PaperFinder test
+    query = "Papers about virtual environments for scientific discovery."
+    pf_results = get_paperfinder_results(query=query)
+    print(json.dumps(pf_results, indent=4))

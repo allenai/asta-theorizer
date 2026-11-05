@@ -33,13 +33,7 @@ class PaperEntry(BaseModel):
     s2_metadata: Optional[dict[str, Any]] = None
     paper_urls: list[str] = Field(default_factory=list)
     paper_markdown: Optional[str] = None
-    # asta-papers provenance (populated when USE_ASTA_PAPERS fetch succeeds; None otherwise)
-    fetch_channel: Optional[str] = None
-    license_class: Optional[str] = None
-    license_url: Optional[str] = None
-    source_type: Optional[str] = None
-    # True/False when asta-papers license-gated the text for LLM/TDM use; None on the legacy path
-    llm_usable: Optional[bool] = None
+
 
 
 class PaperStore(BaseModel):

@@ -40,7 +40,7 @@ with open(sys.argv[1], "w") as f:
 PYEOF
 docker rm -f "$NAME" >/dev/null 2>&1 || true
 docker run -d --name "$NAME" -p 9000:9000 \
-  -e API_KEY=localtest -e THEORIZER_FAKE_LLM=1 -e DATABASE_URL= -e USE_ASTA_PAPERS=false \
+  -e API_KEY=localtest -e THEORIZER_FAKE_LLM=1 -e DATABASE_URL= \
   -e MISTRAL_API_KEY=ci-dummy -e OPENAI_API_KEY=ci-dummy -e ANTHROPIC_API_KEY=ci-dummy \
   -v "$SEED_DIR:/seed:ro" "$IMAGE" >/dev/null
 for _ in $(seq 1 30); do
