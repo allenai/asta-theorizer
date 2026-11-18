@@ -4,7 +4,18 @@
 
 # Generating Literature-Driven Scientific Discoveries at Scale
 
-This is the repository for Theorizer, from the paper [Generating Literature-Driven Scientific Theories at Scale (ACL 2026)](https://arxiv.org/abs/2601.16282).
+This is the repository for Theorizer, from the paper [Generating Literature-Driven Scientific Theories at Scale (ACL 2026)](https://aclanthology.org/2026.acl-long.669/).
+
+## 📢 News
+
+- **[2026-11]** There are now three ways to use Theorizer:
+  - 🌐 **On the web.** Theorizer is now available by using the **Generate Theories** tab on Asta ([asta.allen.ai](https://asta.allen.ai)). Sign up for a free account.<br><a href="#2-1-i-want-to-try-out-theorizer-can-i-try-it-out-quickly-on-the-web"><img src="images/asta-theorizer-web-browser-highlight.png" width="240" alt="Asta at asta.allen.ai, with the Generate theories tab circled"></a>
+  - 🐍 **As a Python library** (new in Theorizer 0.2.0), to run Theorizer from your own code, or use Theorizer with your favorite coding agent like Claude Code. Point your agent to the agent guide available here: [AGENTS.md](AGENTS.md).
+  - 🗄️ **As the original stand-alone server** reported in the paper, [kept here for archival purposes](https://github.com/allenai/asta-theorizer/tree/c4802aa947128f1e49621d9a52891f612864716c).
+- **[2026-07]** Theorizer was presented at [ACL 2026](https://2026.aclweb.org/) in San Diego.
+- **[2026-04]** Our paper, [Generating Literature-Driven Scientific Theories at Scale](https://aclanthology.org/2026.acl-long.669/), was accepted to ACL 2026.
+
+---
 
 *Abstract:* Contemporary automated scientific discovery has focused on agents for generating scientific experiments, while systems that perform higher-level scientific activities such as theory building remain underexplored. In this work, we formulate the problem of synthesizing theories consisting of qualitative and quantitative laws from large corpora of scientific literature. We study theory generation at scale, using 13.7k source papers to synthesize 2.9k theories, examining how generation using literature-grounding versus parametric knowledge, and accuracy-focused versus novelty-focused generation objectives change theory properties. Our experiments show that, compared to using parametric LLM memory for generation, our literature-supported method creates theories that are significantly better at both matching existing evidence and at predicting future results from 4.6k subsequently-written papers.
 
@@ -20,41 +31,34 @@ This is the repository for Theorizer, from the paper [Generating Literature-Driv
 
 - [1. Paper](#1-paper)
 - [2. Quick Start](#2-quick-start)
-  - [2.1. Is Theorizer limited to making theories in Computer Science/AI?](#2-1-is-theorizer-limited-to-making-theories-in-computer-scienceai)
-  - [2.2. I want to read about Theorizer or generating theories from scientific literature](#2-2-i-want-to-read-about-theorizer-or-generating-theories-from-scientific-literature)
-  - [2.3. I want to examine the theories, evaluations, and other results created by Theorizer](#2-3-i-want-to-examine-the-theories-evaluations-and-other-results-created-by-theorizer)
-  - [2.4. I want to run Theorizer on my local machine](#2-4-i-want-to-run-theorizer-on-my-local-machine)
-  - [2.5. I would like to generate theories on my own theory queries](#2-5-i-would-like-to-generate-theories-on-my-own-theory-queries)
+  - [2.1. I want to try out Theorizer, can I try it out quickly on the web?](#2-1-i-want-to-try-out-theorizer-can-i-try-it-out-quickly-on-the-web)
+  - [2.2. Is Theorizer limited to making theories in Computer Science/AI?](#2-2-is-theorizer-limited-to-making-theories-in-computer-scienceai)
+  - [2.3. I want to read about Theorizer or generating theories from scientific literature](#2-3-i-want-to-read-about-theorizer-or-generating-theories-from-scientific-literature)
+  - [2.4. I want to examine the theories, evaluations, and other results created by Theorizer for the Theorizer paper](#2-4-i-want-to-examine-the-theories-evaluations-and-other-results-created-by-theorizer-for-the-theorizer-paper)
+  - [2.5. I want to run Theorizer on my local machine, on my own theory queries](#2-5-i-want-to-run-theorizer-on-my-local-machine-on-my-own-theory-queries)
   - [2.6. I have a question not answered here](#2-6-i-have-a-question-not-answered-here)
 - [3. Installation and Running](#3-installation-and-running)
-  - [3.1. Installation Instructions](#3-1-installation-instructions)
-    - [3.1.1. LLM API keys](#3-1-1-llm-api-keys)
-    - [3.1.2. Semantic Scholar API key](#3-1-2-semantic-scholar-api-key)
-    - [3.1.3. Asta Paper Finder](#3-1-3-asta-paper-finder)
-  - [3.2. Running (Web User Interface)](#3-2-running-web-user-interface)
-  - [3.3. Running (API)](#3-3-running-api)
-- [4. Using Theorizer for Theory Generation](#4-using-theorizer-for-theory-generation)
-  - [4.1. Main Menu](#4-1-main-menu)
-  - [4.2. Submitting a theory query](#4-2-submitting-a-theory-query)
-  - [4.3. Monitoring active theory generation requests](#4-3-monitoring-active-theory-generation-requests)
-  - [4.4. Saving / Exporting Theories](#4-4-savingexporting-theories)
-  - [4.5. List of Generated Theories](#4-5-list-of-generated-theories)
-  - [4.6. Examine Specific Theory](#4-6-examine-specific-theory)
-  - [4.7. Examine Specific Evidence used to Build a Theory](#4-7-examine-specific-evidence-used-to-build-a-theory)
-  - [4.8. Examine Specific Extraction Schema](#4-8-examine-specific-extraction-schema)
-- [5. Theory Evaluation](#5-theory-evaluation)
-  - [5.1. LLM-as-a-judge evaluation](#5-1-llm-as-a-judge-evaluation)
-  - [5.2. Predictive Accuracy Evaluation](#5-2-predictive-accuracy-evaluation)
-  - [5.3. Qualified Novelty Evaluation](#5-3-qualified-novelty-evaluation)
-  - [5.4. Self-assessed Belief / Bayesian Surprise](#5-4-self-assessed-belief--bayesian-surprise)
-- [6. Data, Example Output, and Theorizer Representation Formats](#6-data-example-output-and-theorizer-representation-formats)
-  - [6.1. Representation Formats](#6-1-representation-formats)
-  - [6.2. Small / Toy Theory Dataset](#6-2-smalltoy-theory-dataset)
-  - [6.3. Real Theory Dataset (from the Theorizer paper)](#6-3-real-theory-dataset-from-the-theorizer-paper)
-- [7. Prompts](#7-prompts)
-- [8. Citation](#8-citation)
-- [9. License](#9-license)
-- [10. Contact](#10-contact)
+  - [3.1. Two modes: Web-based, or Local (Python Library)](#3-1-two-modes-web-based-or-local-python-library)
+  - [3.2. Installation Instructions (Python Library or Claude Code)](#3-2-installation-instructions)
+    - [3.2.1. Costs](#3-2-1-costs)
+    - [3.2.2. Platforms](#3-2-2-platforms)
+    - [3.2.3. API Keys](#3-2-3-api-keys)
+    - [3.2.4. Installing the Library](#3-2-4-installing-the-library)
+    - [3.2.5. Paper Search](#3-2-5-paper-search)
+    - [3.2.6. Running Theorizer Code (with Agents)](#3-2-6-running-theorizer-code-with-agents)
+- [4. Theory Evaluation](#4-theory-evaluation)
+  - [4.1. LLM-as-a-judge evaluation](#4-1-llm-as-a-judge-evaluation)
+  - [4.2. Predictive Accuracy Evaluation](#4-2-predictive-accuracy-evaluation)
+  - [4.3. Qualified Novelty Evaluation](#4-3-qualified-novelty-evaluation)
+  - [4.4. Self-assessed Belief / Bayesian Surprise](#4-4-self-assessed-belief--bayesian-surprise)
+- [5. Data, Example Output, and Theorizer Representation Formats](#5-data-example-output-and-theorizer-representation-formats)
+  - [5.1. Representation Formats](#5-1-representation-formats)
+  - [5.2. Small / Toy Theory Dataset](#5-2-smalltoy-theory-dataset)
+  - [5.3. Real Theory Dataset (from the Theorizer paper)](#5-3-real-theory-dataset-from-the-theorizer-paper)
+- [6. Prompts](#6-prompts)
+- [7. Citation](#7-citation)
+- [8. License](#8-license)
+- [9. Contact](#9-contact)
 
 ---
 
@@ -62,7 +66,7 @@ This is the repository for Theorizer, from the paper [Generating Literature-Driv
 
 ## 1. Paper 
 
-*Theorizer* is described in the following paper: [Generating Literature-Driven Scientific Theories at Scale (ACL 2026)](https://arxiv.org/abs/2601.16282).
+*Theorizer* is described in the following paper: [Generating Literature-Driven Scientific Theories at Scale (ACL 2026)](https://aclanthology.org/2026.acl-long.669/).
 
 <div align="center">
 <table> <tr> <td>
@@ -70,243 +74,145 @@ This is the repository for Theorizer, from the paper [Generating Literature-Driv
 </td> </tr> </table>
 </div>
 
-<span id='1-quick-start'/>
+<span id="2-quick-start"/>
 
 
 ## 2. Quick Start
 
-<span id="2-1-is-theorizer-limited-to-making-theories-in-computer-scienceai"/>
+<span id="2-1-i-want-to-try-out-theorizer-can-i-try-it-out-quickly-on-the-web"/>
 
-### 2.1. Is Theorizer limited to making theories in Computer Science/AI?
-You can use Theorizer to make theories in any discipline indexed by Semantic Scholar, and we have used it internally to generate theories in other domains (e.g. biomedical).  The only limitation for a given field is whether the papers are likely to be downloadable by Theorizer as open-access.
+### 2.1. I want to try out Theorizer, can I try it out quickly on the web?
+Yes!  Theorizer is now available on the web at [asta.allen.ai](https://asta.allen.ai).  Simply type your theory query into the **Generate Theories** tab.  If you do not already have a free Asta account, you will be prompted to create one.
 
-<span id="2-2-i-want-to-read-about-theorizer-or-generating-theories-from-scientific-literature"/>
+<div align="center">
+<img src="images/asta-theorizer-web-browser-highlight.png" alt="Asta at asta.allen.ai, with the Generate theories tab circled">
+</div>
 
-### 2.2. I want to read about Theorizer or generating theories from scientific literature
+<span id="2-2-is-theorizer-limited-to-making-theories-in-computer-scienceai"/>
+
+### 2.2. Is Theorizer limited to making theories in Computer Science/AI?
+Theorizer can make theories in *any* domain, and has had success in generating theories in (for example) the biomedical domain.  The primary limitation is Theorizer's ability to get the full text of papers: the web-based version is limited to open-access papers, while the local/Python library version can also use paper PDFs that you personally have access to.
+
+<span id="2-3-i-want-to-read-about-theorizer-or-generating-theories-from-scientific-literature"/>
+
+### 2.3. I want to read about Theorizer or generating theories from scientific literature
 The Theorizer paper is available here: [Section 1. Paper](#1-paper)
 
-<span id="2-3-i-want-to-examine-the-theories-evaluations-and-other-results-created-by-theorizer"/>
+<span id="2-4-i-want-to-examine-the-theories-evaluations-and-other-results-created-by-theorizer-for-the-theorizer-paper"/>
 
-### 2.3. I want to examine the theories, evaluations, and other results created by Theorizer
-- Real data (theories, theory queries, and evaluations) from the paper are available here: [Section 6.3. Real Theory Dataset (from the Theorizer paper)](#6-3-real-theory-dataset-from-the-theorizer-paper)
-- Toy data (if you'd just like a small download, to examine the format) is available here: [Section 6.2. Small / Toy Theory Dataset](#6-2-smalltoy-theory-dataset)
+### 2.4. I want to examine the theories, evaluations, and other results created by Theorizer for the Theorizer paper
+- Real data (theories, theory queries, and evaluations) from the paper are available here: [Section 5.3. Real Theory Dataset (from the Theorizer paper)](#5-3-real-theory-dataset-from-the-theorizer-paper)
+- Toy data (if you'd just like a small download, to examine the format) is available here: [Section 5.2. Small / Toy Theory Dataset](#5-2-smalltoy-theory-dataset)
 
-<span id="2-4-i-want-to-run-theorizer-on-my-local-machine"/>
+<span id="2-5-i-want-to-run-theorizer-on-my-local-machine-on-my-own-theory-queries"/>
 
-### 2.4. I want to run Theorizer on my local machine
-Please see the installation instructions in: [Section 3. Installation and Running](#3-installation-and-running)
-
-<span id="2-5-i-would-like-to-generate-theories-on-my-own-theory-queries"/>
-
-### 2.5. I would like to generate theories on my own theory queries
-To use Theorizer on your own theory queries, simply install it on your local machine, and submit theory queries.  Note that each theory query may take approximately 30-60 minutes, depending on the rate limits of your API access, the number of papers selected, and the speed of the generating model. 
+### 2.5. I want to run Theorizer on my local machine, on my own theory queries
+Install the library (see [Section 3.2. Installation Instructions](#3-2-installation-instructions)), then follow [AGENTS.md](AGENTS.md): bring your papers, extract evidence, and generate theories.  A run over about 100 papers may take 30-60 minutes, depending on the rate limits of your API access and the speed of the models.  To try your theory queries without installing anything, use the web version: [Section 2.1](#2-1-i-want-to-try-out-theorizer-can-i-try-it-out-quickly-on-the-web).
 
 <span id="2-6-i-have-a-question-not-answered-here"/>
 
 ### 2.6. I have a question not answered here. 
-Please see the documentation below.  If you're question isn't answered, please add an issue, or send an e-mail: [Section 10. Contact](#10-contact)
+Please see the documentation below.  If you're question isn't answered, please add an issue, or send an e-mail: [Section 9. Contact](#9-contact)
 
 <span id="3-installation-and-running"/>
 
 ## 3. Installation and Running
 
-The installation has been tested working on Ubuntu Linux.  It will likely work with minimal modification on MacOS, and some modification under Windows.
+<span id="3-1-two-modes-web-based-or-local-python-library"/>
 
-<span id="3-1-installation-instructions"/>
+### 3.1. Two modes: Web-based, or Local (Python Library)
 
-### 3.1 Installation Instructions
+Theorizer can be used in two ways:
 
-Clone the repository:
+- **Web-based:** Theorizer is available on the web at [asta.allen.ai](https://asta.allen.ai).  Simply type your theory query into the **Generate Theories** tab.  If you do not already have a free Asta account, you will be prompted to create one.
+- **Local (Python library):** Theorizer can also run on your own machine as a Python library, from your own code, or with your favorite coding agent like Claude Code.  Installation and running instructions are below.
+
+<span id="3-2-installation-instructions"/>
+
+### 3.2. Installation Instructions (Python Library or Claude Code)
+
+<span id="3-2-1-costs"/>
+
+#### 3.2.1. Costs
+⚠️ Running Theorizer locally calls paid models using your own API keys.  Theory generation, evaluation and the per-paper stages (such as extraction) can incur significant costs.  Start small to gauge costs, and use API keys with hard limits to avoid unexpected overruns.
+
+<span id="3-2-2-platforms"/>
+
+#### 3.2.2. Platforms
+The installation has been tested on Ubuntu Linux.  It will likely work with minimal modification on MacOS, and with some modification under Windows.
+
+<span id="3-2-3-api-keys"/>
+
+#### 3.2.3. API Keys
+Theorizer reads its API keys from environment variables:
 ```
-git clone https://github.com/allenai/theorizer
-cd theorizer
-```
-
-Create a conda environment:
-```
-conda create --name theorizer python=3.12
-conda activate theorizer
-```
-
-Install the dependencies:
-
-```
-pip install -r requirements.txt
-```
-
-<span id="3-1-1-llm-api-keys"/>
-
-#### 3.1.1. LLM API keys
-Create a file called `api_keys.donotcommit.json` that contains the required API keys for LLM access:
-(the Mistral key is required for `PDF -> Markdown` conversion)
-```
-{
-    "openai": "sk-proj-...",
-    "anthropic": "sk-ant-...",
-    "mistral": "..."
-}
+export OPENAI_API_KEY="sk-proj-..."          # and/or ANTHROPIC_API_KEY="sk-ant-..."
+export SEMANTIC_SCHOLAR_API_KEY="..."
+export MISTRAL_API_KEY="..."                 # optional: PDF conversion
 ```
 
-<span id="3-1-2-semantic-scholar-api-key"/>
+- **Language models** (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`): the default models are OpenAI's; to use Anthropic's models instead, set them as described in [AGENTS.md](AGENTS.md#models).
+- **Semantic Scholar** (`SEMANTIC_SCHOLAR_API_KEY`): used to fetch papers by their Semantic Scholar corpus id, and to look up paper metadata.  Without a key, Semantic Scholar limits requests to about one per second.
+- **PDF conversion** (`MISTRAL_API_KEY`): if you would like to use a strong converter like Mistral OCR for converting PDFs to Markdown (particularly useful for papers that have equations, tables, or other details), add this as an API key.  Mistral OCR is also what `Pipeline.fetch_papers()` uses to convert the PDFs it downloads.  You can use any converter that you prefer, that matches your cost/performance requirements: convert your PDFs to Markdown with it, and import the Markdown files.
 
-#### 3.1.2. Semantic Scholar API key
-Create a file called `s2_key.donotcommit.txt` that contains a single line with your semantic scholar key:
+<span id="3-2-4-installing-the-library"/>
+
+#### 3.2.4. Installing the Library
+Install Theorizer from PyPI (requires Python 3.12 or later):
 ```
-<your key here>
-```
-
-<span id="3-1-3-asta-paper-finder"/>
-
-#### 3.1.3. Asta Paper Finder
-Generating literature-supported theories using Theorizer requires the use of the local copy of Asta PaperFinder.  The installation is quick, and its installation instructions can be found here:
-
-```
-https://github.com/allenai/asta-paper-finder
+pip install asta-theorizer
 ```
 
-<span id="3-2-running-web-user-interface"/>
+Symbolic law discovery ([AGENTS.md, Workflow 3](AGENTS.md#workflow-3--symbolic-laws)) needs the `symbolic` extra: `pip install "asta-theorizer[symbolic]"`, or `uv sync --extra symbolic` in a clone.
 
-### 3.2. Running (Web User Interface)
-
-There are two components that need to run simultaneously -- the back-end server, and the user-facing web server. In two terminals, run:
-
-Back-end server:
+If you want the latest development version, clone the repository and install its dependencies instead:
 ```
-python src/TheorizerServer.py
+git clone https://github.com/allenai/asta-theorizer
+cd asta-theorizer
+uv sync
 ```
 
-User-facing Server:
+The PyPI package contains the library itself.  The agent guide ([AGENTS.md](AGENTS.md)), the [examples](examples/README.md) and the [workflow script](workflows/theorize.py) are in this repository.
+
+<span id="3-2-5-paper-search"/>
+
+#### 3.2.5. Paper Search
+While the web-based version of Theorizer uses Asta PaperFinder [[Web UI](https://asta.allen.ai/discover?redirect_from=paper-finder)] [[Code](https://github.com/allenai/asta-paper-finder)] to autonomously search for papers relevant to your query, the local/Python version requires you to either:
+
+1. **Search for papers, then fetch them:** find papers using a tool such as [Semantic Scholar](https://www.semanticscholar.org) (or have your coding agent search the [Semantic Scholar API](https://www.semanticscholar.org/product/api) for you), then pass their corpus ids to `Pipeline.fetch_papers()` (as `[{"corpus_id": "..."}]`), which downloads the open-access PDFs and converts them to text with Mistral OCR.  Theorizer's planning stage suggests a search query (`paper_search_query`) to start from.
+2. **Bring your own papers:** import PDFs you have already downloaded, including ones you have access to through your institution, with `PaperImport.import_papers(path, ocr="mistral")`, which converts the PDFs with Mistral OCR.  Or convert them to Markdown first with a converter of your choice (see [API Keys](#3-2-3-api-keys)), and import the Markdown files with `PaperImport.import_papers(path)`.
+
+Both are described in [AGENTS.md](AGENTS.md).
+
+<span id="3-2-6-running-theorizer-code-with-agents"/>
+
+#### 3.2.6. Running Theorizer Code (with Agents)
+
+Theorizer can be run as a Python library, where the stages in the Theorizer pipeline (e.g. generating an extraction schema, extracting information from papers, synthesizing theories, and so forth) are all abstracted to different functions that can be orchestrated either in your own code, or by a coding agent.  For coding agents (like Claude Code), we supply a number of [example workflows](examples/README.md) that show how to string the pipeline together to go from a user's theory query all the way to a list of generated theories that have been exported in your preferred format.  One of the other benefits of running Theorizer with an agent is that you can tweak the workflow to your liking: manually inspect or modify the extraction schema, add more (or fewer) papers, generate large numbers of theories, cluster batches of theories to find those that particularly speak to your needs, and so forth -- all within your coding agent interface.
+
+**Getting started with a coding agent:** point your agent to the agent guide, [AGENTS.md](AGENTS.md), either in your clone of this repository, or here on GitHub.  The guide describes every stage, how the stages connect, and the rules a run must follow (such as saving everything in the run's own directory).  For example:
 ```
-python src/TheorizerWebInterface.py
+Read AGENTS.md.  Then generate theories about how VIP interneurons control gain in
+mouse primary visual cortex, from the papers in ~/papers/vip/, in a new run directory.
 ```
 
-If you point your web browser to `localhost:8080`, then you should see the Theorizer interface.
-
-<span id="3-3-running-api"/>
-
-### 3.3. Running (API)
-
-You can also submit theory requests to Theorizer programmatically, by starting the `TheorizerServer.py`, and sending appropriately formatted requests to `localhost:5002`.  The endpoint examples are in `TheorizerWebInterface.py`. 
-
-TODO: Make stand-alone API example.
+**Good places to start:**
+- [`workflows/theorize.py`](workflows/theorize.py): one complete run, from a theory query to a saved store of theories, as a single script.  Copy it into a fresh, empty directory, edit its `PARAMETERS` block (your question, and where your papers are), and run it there.
+- [`examples/`](examples/README.md): seven small, runnable scripts, each showing one part of the pipeline and what it costs.  For instance, `01_FirstRun.py` (the full pipeline), `02_BringYourOwnPapers.py` (your own papers), and `03_IteratingOnASchema.py` and `06_VariableDiscovery.py` (improving the extraction schema before running at scale).
+- [AGENTS.md, Workflow 5](AGENTS.md#workflow-5--write-the-records-and-theories-yourself-no-model-calls): if you would like your agent to read the papers and write the evidence and theories itself, without Theorizer calling a model.
 
 
-<span id="4-using-theorizer-for-theory-generation"/>
+<span id="4-theory-evaluation"/>
 
-## 4. Using Theorizer for Theory Generation
+## 4. Theory Evaluation
 
-⚠️**Costs**⚠️: Use of this code for theory generation, evaluation, or other purposes can incur significant costs.  It is strongly encouraged to start small scale to gauge approximate costs, and to use API keys with hard limits to avoid accidental/unexpected cost overruns. 
+The following sections pertain to running the evaluation code used in the paper, and are not necessarily required for using Theorizer as a user, either on the web, or when using the Python library, but are supplied here for replicability purposes.
 
-<span id="4-1-main-menu"/>
+<span id="4-1-llm-as-a-judge-evaluation"/>
 
-### 4.1 Main Menu
+### 4.1. LLM-as-a-judge evaluation (Table 1)
 
-Opening `http://localhost:8080/` in a web browser with both the Server and Web Interface running should show the main user interface menu of Theorizer: 
-
-<div align="center">
-<img src="images/screenshot-main-menu.png" style="border: 1px solid lightgray;">
-</div>
-
-<span id="4-2-submitting-a-theory-query"/>
-
-### 4.2. Submitting a theory query
-
-The main menu has two buttons for submitting theories.  The top button is for submitting a single query, and the second button is for submitting a batch of theory queries using the same configuration. 
-
-<div align="center">
-<img src="images/screenshot-create-new-theory.png" style="border: 1px solid lightgray;">
-</div>
-
-The parameters are: 
-
-1. **Theory Query:** The request for theories.  This can be as specific or general as you'd like, and for any topic that Semantic Scholar/PaperFinder reasonably will find a broadly available selection of open-access papers for.
-2. **Model for Theory Generation:** This is the model that will be used to view aggregated evidence from the literature, and infer/deduce/synthesize the set of theories.  It should be a powerful model.
-3. **Objective for Theory Generation:** This allow selecting between the `accuracy-focused` and `novelty-focused` prompts for theory generation.
-4. **Input-type for Theory Generation:** You can use either papers/literature to collect evidence for theory generation, or you can use the LLM's own parametric knowledge.
-
-The remaining parameters only apply if you selected generating `literature-supported` (not `parametric`) theories:
-
-5. **Model for Literature Extraction:** This is the model that will be used to extract knowledge from each paper.  This will be called a lot, so typically you'll want to use an inexpensive model. 
-6. **Number of Papers:** The maximum number of papers to find/download for generating literature-supported theories.
-7. **Knowledge Cutoff (Year/Month):** When downloading papers, only include papers that were authored before this Year/Month. 
-
-When you click `submit`, after a few moments you should see a message that says the server successfully accepted the theory request, and is processing it.
-
-<span id="4-3-monitoring-active-theory-generation-requests"/>
-
-### 4.3. Monitoring active theory generation requests
-
-<div align="center">
-<img src="images/screenshot-status.png" style="border: 1px solid lightgray;">
-</div>
-
-It can take approximately 30-60 minutes for a literature-supported theory request to finish in the queue.  You can monitor the status by examining the server status on the main menu.  When a given theory query workflow is completed, its theories will automatically show up in the list of theories. 
-
-<span id="4-4-savingexporting-theories"/>
-
-###  4.4. ⚠️ Saving/Exporting Theories ⚠️ 
-
-🚨 It's important to save theories after you've generated them, so that they are retained.  If you don't save your theories, they will disappear after you restart the interface. 🚨
-
-Use the `Export` button on the main menu to export your:
-
-1. **TheoryStore:** a JSON object that represents all the theories, extraction schemas, extraction results, and so forth.
-2. **PaperStore:** a JSON cache of all the papers used to build the theories.
-
-If you'd like to reload your theories into the web interface after exporting them, you'll need to manually enter the filename of your theory export at the bottom of `TheorizerServer.py`. 
-
-*Failsafe:* By default, the interface does attempt to automatically export a backup copy of the TheoryStore after processing each theory request (and these are saved as the `theorizer-state-autosave-*.json` files in the main execution path).  But, you should not rely on this to save the theories, and should manually export the theories using the `Export` functionality when you wish to save them.  Please note that the auto-save functionality does not export the PaperStore, but the `Export` button does.
-
-<span id="4-5-list-of-generated-theories"/>
-
-### 4.5. List of Generated Theories
-
-After theory query workflows have successfully completed, their theories will appear in the Theory List.  You can select a theory to see more details.
-
-<div align="center">
-<img src="images/screenshot-list-of-theories.png" style="border: 1px solid lightgray;">
-</div>
-
-<span id="4-6-examine-specific-theory"/>
-
-### 4.6. Examine Specific Theory
-
-Clicking on the `details` button of a specific theory will reveal the details of that theory, including its description, laws, generation parameters, etc.:
-
-<div align="center">
-<img src="images/screenshot-theory-details.png" style="border: 1px solid lightgray;">
-</div>
-
-<span id="4-7-examine-specific-evidence-used-to-build-a-theory"/>
-
-### 4.7. Examine Specific Evidence used to Build a Theory
-
-You can examine specific evidence extracted from a paper to build a theory by clicking on the evidence links (e.g. `[e123.1]`).  These pages include a header that shows the paper that the evidence was extracted from, as well as list of specific instances of evidence according to the extraction schema:
-
-<div align="center">
-<img src="images/screenshot-theory-evidence.png" style="border: 1px solid lightgray;">
-</div>
-
-<span id="4-8-examine-specific-extraction-schema"/>
-
-### 4.8. Examine Specific Extraction Schema 
-
-For a given piece of extracted evidnece, you can also click on its schema link to examine the extraction schema generated in response to the theory query, and applied to extract evidence from each apper: 
-
-<div align="center">
-<img src="images/screenshot-extraction-schema.png" style="border: 1px solid lightgray;">
-</div>
-
-
-<span id="5-theory-evaluation"/>
-
-## 5. Theory Evaluation
-
-<span id="5-1-llm-as-a-judge-evaluation"/>
-
-### 5.1. LLM-as-a-judge evaluation (Table 1)
-
-Code: The LLM-as-a-judge evaluation code is available here: [src/EvaluationLLMAsAJudge.py](src/EvaluationLLMAsAJudge.py)
+Code: The LLM-as-a-judge evaluation code is in the paper code: [src/EvaluationLLMAsAJudge.py](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationLLMAsAJudge.py)
 
 Example output: 
 ```
@@ -325,11 +231,11 @@ empirical_testing              2.69            45
 Results saved to: ...
 ```
 
-<span id="5-2-predictive-accuracy-evaluation"/>
+<span id="4-2-predictive-accuracy-evaluation"/>
 
-### 5.2. Predictive Accuracy Evaluation (Table 2)
+### 4.2. Predictive Accuracy Evaluation (Table 2)
 
-Code: The predictive accuracy evaluation code is available here: [src/EvaluationPredictiveAccuracy.py](src/EvaluationPredictiveAccuracy.py)
+Code: the predictive accuracy evaluation needs a paper-search service, so it is not part of the library; it is in [src/EvaluationPredictiveAccuracy.py](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationPredictiveAccuracy.py) in the paper code.
 
 Example output: 
 ```
@@ -365,11 +271,11 @@ Wrote summary to: theorystore-example-predictive-evaluation/predictive-accuracy-
 Predictive accuracy evaluation complete.
 ```
 
-<span id="5-3-qualified-novelty-evaluation"/>
+<span id="4-3-qualified-novelty-evaluation"/>
 
-### 5.3. Qualified Novelty Evaluation (Table 3)
+### 4.3. Qualified Novelty Evaluation (Table 3)
 
-Code: The qualified novelty evaluation code is available here: [src/EvaluationQualifiedNovelty.py](src/EvaluationQualifiedNovelty.py)
+Code: The qualified novelty evaluation code is in the paper code: [src/EvaluationQualifiedNovelty.py](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationQualifiedNovelty.py)
 
 Example output: 
 ```
@@ -454,11 +360,11 @@ Total papers evaluated across all evaluations: 115
 Writing overall qualified novelty evaluation summary to: theorystore-example2-literaturesupported-qualified-novelty-evaluation.20260114-121058.json
 ```
 
-<span id="5-4-self-assessed-belief--bayesian-surprise"/>
+<span id="4-4-self-assessed-belief--bayesian-surprise"/>
 
-### 5.4. Self-assessed Belief/Bayesian Surprise (Table 2)
+### 4.4. Self-assessed Belief/Bayesian Surprise (Table 2)
 
-Code: The self-assessed belif/Bayesian surprise evaluation code is available here: [src/EvaluationSurprisal.py](src/EvaluationSurprisal.py)
+Code: The self-assessed belief/Bayesian surprise evaluation code is in the paper code: [src/EvaluationSurprisal.py](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationSurprisal.py)
 
 Example output: 
 ```
@@ -474,13 +380,13 @@ Standard deviation of the average probabilities: 0.045
 Results saved to: theorystore-example-single-laws.surprise_evaluated.20260114-104415.json
 ```
 
-<span id="6-data-example-output-and-theorizer-representation-formats"/>
+<span id="5-data-example-output-and-theorizer-representation-formats"/>
 
-## 6. Data, Example Output, and Theorizer Representation Formats
+## 5. Data, Example Output, and Theorizer Representation Formats
 
-<span id="6-1-representation-formats"/>
+<span id="5-1-representation-formats"/>
 
-### 6.1. Representation Formats
+### 5.1. Representation Formats
 
 The primary data structure saved by Theorizer is the `TheoryStore`.  At a top-level, dictionary contains the following keys:
 
@@ -490,9 +396,9 @@ The primary data structure saved by Theorizer is the `TheoryStore`.  At a top-le
  
 Theorizer also generates a secondary data structure, the `PaperStore`, which is a cache of the papers Theorizer has downloaded and extracted the full text of using the OCR converter. 
 
-<span id="6-2-smalltoy-theory-dataset"/>
+<span id="5-2-smalltoy-theory-dataset"/>
 
-### 6.2. Small/Toy Theory Dataset
+### 5.2. Small/Toy Theory Dataset
 
 Two small sets of theories, one generated using literature support, and one using parametric knowledge, along with sample evaluations, are provided in: [example-theories/toy-data](example-theories/toy-data) 
 
@@ -500,65 +406,75 @@ While the JSON is provided, the easiest way to view the example theories is in H
 
 Please note that these toy theories are provided primarily as format examples, as small downloads.  The PaperStores are not included due to copyright, and any paper full-text is sanitized from the evaluation files. 
 
-<span id="6-3-real-theory-dataset-from-the-theorizer-paper"/>
+<span id="5-3-real-theory-dataset-from-the-theorizer-paper"/>
 
-### 6.3. Real Theory Dataset (from the Theorizer paper)
+### 5.3. Real Theory Dataset (from the Theorizer paper)
 
 The theories generated in the paper are available here: [example-theories/theorizer-paper-data](example-theories/theorizer-paper-data) 
 
-<span id="7-prompts"/>
+<span id="6-prompts"/>
 
-## 7. Prompts
+## 6. Prompts
 
 The core prompts used in this work can be found at the following locations in the source:
 
 *Schema Generation Prompts:*
-- Converting a theory query into a schema: [src/TheorizerProcessing.py#L18](src/TheorizerProcessing.py#L18)
+- Converting a theory query into a schema: [src/TheorizerProcessing.py#L18](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/TheorizerProcessing.py#L18)
 
 *Prompts for Extracting Evidence from Papers:*
-- Populating a schema with evidence from one paper: [src/SchemaExtractionQueue.py#L285](src/SchemaExtractionQueue.py#L285)
+- Populating a schema with evidence from one paper: [src/SchemaExtractionQueue.py#L285](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/SchemaExtractionQueue.py#L285)
 
 *Theory Generation Prompts:*
-- Theory Generation (accuracy-focused, with literature): [src/TheorizerProcessing.py#L227](src/TheorizerProcessing.py#L227)
-- Theory Generation (accuracy-focused, with parametric knowledge): [src/TheorizerProcessing.py#L688](src/TheorizerProcessing.py#L688)
-- Theory Generation (novelty-focused, with literature): [src/TheorizerProcessing.py#L1202](src/TheorizerProcessing.py#L1202)
-- Theory Generation (novelty-focused, with parametric knowledge): [src/TheorizerProcessing.py#L1590](src/TheorizerProcessing.py#L1590)
+- Theory Generation (accuracy-focused, with literature): [src/TheorizerProcessing.py#L227](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/TheorizerProcessing.py#L227)
+- Theory Generation (accuracy-focused, with parametric knowledge): [src/TheorizerProcessing.py#L688](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/TheorizerProcessing.py#L688)
+- Theory Generation (novelty-focused, with literature): [src/TheorizerProcessing.py#L1202](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/TheorizerProcessing.py#L1202)
+- Theory Generation (novelty-focused, with parametric knowledge): [src/TheorizerProcessing.py#L1590](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/TheorizerProcessing.py#L1590)
 
 *Evaluation: LLM-as-a-judge (Table 1):*
-- LLM-as-a-judge prompt: [src/EvaluationLLMAsAJudge.py#L26](src/EvaluationLLMAsAJudge.py#L26)
+- LLM-as-a-judge prompt: [src/EvaluationLLMAsAJudge.py#L26](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationLLMAsAJudge.py#L26)
 
 *Evaluation: Predictive Accuracy (Table 2):*
-- Find relevant evaluation papers using PaperFinder: [src/EvaluationPredictiveAccuracy.py#L26](src/EvaluationPredictiveAccuracy.py#L26)
-- Build the prediction rubric: [src/EvaluationPredictiveAccuracy.py#L421](src/EvaluationPredictiveAccuracy.py#L421)
-- Score one paper with the prediction rubric: [src/EvaluationPredictiveAccuracy.py#L623](src/EvaluationPredictiveAccuracy.py#L623)
+- In [src/EvaluationPredictiveAccuracy.py](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationPredictiveAccuracy.py) in the paper code (not part of the library): finding evaluation papers, building the prediction rubric, and scoring one paper with it.
 
 *Evaluation: Qualified Novelty (Table 3):*
-- Qualified Novelty assessment (one paper): [src/EvaluationQualifiedNovelty.py#L25](src/EvaluationQualifiedNovelty.py#L25)
-- Qualified Novelty assessment (aggregate results across papers): [src/EvaluationQualifiedNovelty.py#L393](src/EvaluationQualifiedNovelty.py#L393)
+- Qualified Novelty assessment (one paper): [src/EvaluationQualifiedNovelty.py#L25](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationQualifiedNovelty.py#L25)
+- Qualified Novelty assessment (aggregate results across papers): [src/EvaluationQualifiedNovelty.py#L393](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationQualifiedNovelty.py#L393)
 
 *Evaluation: Self-assessed Belief/Bayesian Surprise (Table 2):*
-- Self-assessed belief: [src/EvaluationSurprisal.py#L25](src/EvaluationSurprisal.py#L25)
+- Self-assessed belief: [src/EvaluationSurprisal.py#L25](https://github.com/allenai/asta-theorizer/blob/c4802aa947128f1e49621d9a52891f612864716c/src/EvaluationSurprisal.py#L25)
 
 
-<span id="8-citation"/>
+<span id="7-citation"/>
 
-## 8. Citation
+## 7. Citation
 If you use this work, please reference the following citation:
 ```
-@misc{jansen2026generatingliteraturedrivenscientifictheories,
-      title={Generating Literature-Driven Scientific Theories at Scale}, 
-      author={Peter Jansen and Peter Clark and Doug Downey and Daniel S. Weld},
-      year={2026},
-      eprint={2601.16282},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2601.16282}, 
+@inproceedings{jansen-etal-2026-generating,
+    title = "Generating Literature-Driven Scientific Theories at Scale",
+    author = "Jansen, Peter  and
+      Clark, Peter  and
+      Downey, Doug  and
+      Weld, Daniel S",
+    editor = "Liakata, Maria  and
+      Moreira, Viviane P.  and
+      Zhang, Jiajun  and
+      Jurgens, David",
+    booktitle = "Proceedings of the 64th Annual Meeting of the {A}ssociation for {C}omputational {L}inguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2026",
+    address = "San Diego, California, United States",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.acl-long.669/",
+    doi = "10.18653/v1/2026.acl-long.669",
+    pages = "14677--14698",
+    ISBN = "979-8-89176-390-6",
+    abstract = "Contemporary automated scientific discovery has focused on agents for generating scientific experiments, while systems that perform higher-level scientific activities such as theory building remain underexplored. In this work, we formulate the problem of synthesizing theories consisting of qualitative and quantitative laws from large corpora of scientific literature. We study theory generation at scale, using 13.7k source papers to synthesize 2.9k theories, examining how generation using literature-grounding versus parametric knowledge, and accuracy-focused versus novelty-focused generation objectives change theory properties. Our experiments show that, compared to using parametric LLM memory for generation, our literature-supported method creates theories that are significantly better at both matching existing evidence and at predicting future results from 4.6k subsequently-written papers."
 }
 ```
 
-<span id="9-license"/>
+<span id="8-license"/>
 
-## 9. License
+## 8. License
 
 Theorizer is released under an Apache 2.0 License.  The text of that license is included in this repository.
 
@@ -574,13 +490,9 @@ appropriateness of using or redistributing the Work and assume any
 risks associated with Your exercise of permissions under this License.
 ```
 
-<span id="10-contact"/>
+<span id="9-contact"/>
 
-## 10. Contact
+## 9. Contact
 
-For any questions, please contact Peter Jansen (`peterj@allenai.org`).  For issues, bugs, or feature requests, please submit a github issue: TODO
-
-
-
-
+For any questions, please contact Peter Jansen (`peterj@allenai.org`).  For issues, bugs, or feature requests, please submit a [github issue](https://github.com/allenai/asta-theorizer/issues).
 

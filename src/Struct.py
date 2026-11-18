@@ -17,7 +17,7 @@ class TheoryStore():
     #
     #   Constructor
     #
-    def __init__(self, paperstore:PaperStore=None, filename_in:str=None):
+    def __init__(self, paperstore:PaperStore=None, filename_in:str=None, base_id_level:int=0):
         self.theories = {}
         #self.papers = {}
         self.paperstore = paperstore if paperstore is not None else PaperStore()
@@ -27,7 +27,7 @@ class TheoryStore():
 
         # For generating UUIDs
         self.all_ids = set()  # To keep track of all unique IDs
-        self.next_ids = {"theory": 0, "extraction-schema": 0, "extraction-result": 0, "theory-evaluation": 0}
+        self.next_ids = {"theory": base_id_level, "extraction-schema": base_id_level, "extraction-result": base_id_level, "theory-evaluation": base_id_level}
 
         # Load the store from a file (if provided)
         if (filename_in is not None):
@@ -197,20 +197,14 @@ class TheoryStore():
             'all_ids': list(self.all_ids),
             'next_ids': self.next_ids
         }
-        # Write to a JSON file
-        with open(filename, 'w') as f:
+        # Write to a temporary file first, so a crash mid-write leaves the previous store intact
+        tmp_filename = filename + ".tmp"
+        with open(tmp_filename, 'w') as f:
             json.dump(store_dict, f, indent=4)
+        os.replace(tmp_filename, filename)
 
 
-    def load(self, filename:str):
-        print("TheoryStore.load(): Loading store from file: " + filename)
-        if (not os.path.exists(filename)):
-            raise FileNotFoundError(f"TheoryStore.load(): ERROR: File '{filename}' does not exist.")
-
-        # Read from the JSON file
-        with open(filename, 'r') as f:
-            store_dict = json.load(f)
-
+    def load_from_dict(self, store_dict:dict):
         # Clear the current store
         self.theories.clear()
         #self.papers.clear()
@@ -253,6 +247,17 @@ class TheoryStore():
                 # If the key is not in the next_ids, set it to 0
                 self.next_ids[key] = 0
 
+    def load(self, filename:str):
+        print("TheoryStore.load(): Loading store from file: " + filename)
+        if (not os.path.exists(filename)):
+            raise FileNotFoundError(f"TheoryStore.load(): ERROR: File '{filename}' does not exist.")
+
+        # Read from the JSON file
+        with open(filename, 'r') as f:
+            store_dict = json.load(f)
+
+        self.load_from_dict(store_dict)
+
         # Print some summary statistics
         print("TheoryStore.load(): Loaded store with " + str(len(self.theories)) + " theories, " + str(len(self.extraction_schemas)) + " extraction schemas, and " + str(len(self.extraction_results)) + " extraction results.")
 
@@ -261,8 +266,11 @@ class TheoryStore():
     #   Generating UUIDs
     #
     def generate_id(self, entity_type:str):
+        #  Get the base ID level
+        base_id_level = self.base_id_level if (hasattr(self, 'base_id_level')) else 1
+
         next_id_str = None
-        MAX_ITER = 100000
+        MAX_ITER = 10000000
 
         # Check that the entity_type is valid
         if (entity_type not in self.next_ids):
@@ -282,7 +290,6 @@ class TheoryStore():
 
         # If we reach here, we failed to generate a unique ID
         raise Exception(f"Failed to generate a unique ID for {entity_type} after {MAX_ITER} iterations.")
-
 
 
 
@@ -390,12 +397,14 @@ class Theory:
 #   Storage Class: ExtractionQuerySchema
 #
 class ExtractionQuerySchema:
-    def __init__(self, schema:list[dict], extraction_query:str, supporting_theory_ids:list[str], id:str=None, model_str:str=None):
+    def __init__(self, schema:list[dict], extraction_query:str, supporting_theory_ids:list[str], id:str=None, model_str:str=None, suggestions:list=None, based_on_schema_id:str=None):
         self.id = id
         self.schema = schema
         self.extraction_query = extraction_query
         self.supporting_theory_ids = supporting_theory_ids
         self.model_str = model_str  # Model used for schema generation
+        self.suggestions = suggestions if suggestions is not None else []  # A list of suggestions used to improve the schema, and provide hints on what might be extracted using it
+        self.based_on_schema_id = based_on_schema_id  # If this schema is based on a previous schema, this field will contain the ID of that schema.
 
     #
     #   Serialization/Deserialization methods
@@ -406,7 +415,9 @@ class ExtractionQuerySchema:
             'schema': self.schema,
             'extraction_query': self.extraction_query,
             'supporting_theory_ids': self.supporting_theory_ids,
-            'model_str': self.model_str
+            'model_str': self.model_str,
+            'suggestions': self.suggestions,
+            'based_on_schema_id': self.based_on_schema_id
         }
 
     @staticmethod
@@ -416,7 +427,9 @@ class ExtractionQuerySchema:
             extraction_query=data['extraction_query'],
             supporting_theory_ids=data['supporting_theory_ids'],
             id=data.get('id', None),
-            model_str=data.get('model_str', None)
+            model_str=data.get('model_str', None),
+            suggestions=data.get('suggestions', []),
+            based_on_schema_id=data.get('based_on_schema_id', None)
         )
 
 

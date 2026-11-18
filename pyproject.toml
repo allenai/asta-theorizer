@@ -1,0 +1,109 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "asta-theorizer"
+version = "0.2.0"
+description = "A Python library that generates literature-grounded scientific theories from a corpus of papers: import, extract, theorize, export"
+readme = "PYPI.md"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+authors = [{ name = "Allen Institute for AI" }]
+keywords = ["scientific-discovery", "theory-generation", "literature", "semantic-scholar", "llm"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    # Pinned to one minor line: litellm 1.82.7 and 1.82.8 on PyPI were malicious releases. 1.108.3 is
+    # the first that allows filelock 4, which fixes filelock 3.x's known vulnerabilities.
+    "litellm>=1.108.3,<1.109",
+    "requests>=2.31",
+    "orjson>=3.9",
+    "tiktoken>=0.8",
+    "tqdm>=4.66",
+    "numpy>=1.26",
+    "Markdown>=3.5",
+    "func_timeout>=4.3",
+    "json_repair>=0.30",
+    "mistralai>=1.5,<2",
+]
+
+[project.optional-dependencies]
+# The symbolic law-discovery suite beyond its pure-numpy core.
+symbolic = [
+    "scipy>=1.11",
+    "scikit-learn>=1.4",
+    "pandas>=2.1",
+]
+dev = ["pytest>=8", "ruff>=0.6", "responses>=0.25"]
+
+[project.urls]
+Homepage = "https://github.com/allenai/asta-theorizer"
+
+# The library in theorizer/ is a thin wrapper over the engine in src/ and the solver in
+# symbolic-solver/src/.  Those directories stay where they are in the repository (the engine
+# modules import each other by their bare names), and the build copies them into the wheel under
+# theorizer/_engine/, where Legacy.py looks first.  Nothing else from the repository ships.
+#
+# Only the engine modules the library imports ship (tests/TestNoPaperSearch.py checks the list
+# against the import graph).
+[tool.hatch.build.targets.wheel]
+packages = ["theorizer"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/EvaluationCommon.py" = "theorizer/_engine/src/EvaluationCommon.py"
+"src/EvaluationLLMAsAJudge.py" = "theorizer/_engine/src/EvaluationLLMAsAJudge.py"
+"src/EvaluationQualifiedNovelty.py" = "theorizer/_engine/src/EvaluationQualifiedNovelty.py"
+"src/EvaluationSurprisal.py" = "theorizer/_engine/src/EvaluationSurprisal.py"
+"src/ExportTheoryStoreAsHTML_NoPaperstore.py" = "theorizer/_engine/src/ExportTheoryStoreAsHTML_NoPaperstore.py"
+"src/ExportTheoryStoreAsHTML_NoPaperstore_attribution.py" = "theorizer/_engine/src/ExportTheoryStoreAsHTML_NoPaperstore_attribution.py"
+"src/ExtractionUtils.py" = "theorizer/_engine/src/ExtractionUtils.py"
+"src/MistralOCRStore.py" = "theorizer/_engine/src/MistralOCRStore.py"
+"src/PaperStore.py" = "theorizer/_engine/src/PaperStore.py"
+"src/Persistence.py" = "theorizer/_engine/src/Persistence.py"
+"src/SchemaExtractionQueue.py" = "theorizer/_engine/src/SchemaExtractionQueue.py"
+"src/SemanticScholar.py" = "theorizer/_engine/src/SemanticScholar.py"
+"src/Struct.py" = "theorizer/_engine/src/Struct.py"
+"src/TheorizerProcessing.py" = "theorizer/_engine/src/TheorizerProcessing.py"
+"src/Throttle.py" = "theorizer/_engine/src/Throttle.py"
+"src/VariableDiscoveryQueue.py" = "theorizer/_engine/src/VariableDiscoveryQueue.py"
+"symbolic-solver/src" = "theorizer/_engine/symbolic_solver"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "theorizer/**",
+    "src/**/*.py",
+    "symbolic-solver/src/**/*.py",
+    "tests/**/*.py",
+    "/AGENTS.md",
+    "/PYPI.md",
+    "/README.md",
+    "/LICENSE",
+]
+exclude = [
+    "src/**/*.donotcommit*",
+    "src/__pycache__",
+    "src/stderr.log",
+    "src/data/**",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["Test*.py", "test_*.py"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "B", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+"theorizer/__init__.py" = ["F401"]     # re-exports the modules

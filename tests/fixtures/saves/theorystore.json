@@ -1,0 +1,553 @@
+{
+ "theories": {
+  "theory-1": {
+   "id": "theory-1",
+   "name": "AAR-disequilibrium controls committed geometry change (corrected & Alaska-operationalized)",
+   "description": "This theory treats the accumulation-area ratio (AAR) as a glacier-scale diagnostic of climatic disequilibrium when paired with an equilibrium reference value (AAR0). Defining \u03b1 = AAR/AAR0, the theory posits that \u03b1 directly determines the magnitude of committed geometric adjustment (area and volume) required to re-attain balance under the present climate, via algebraic relations that use volume\u2013area scaling. Across a glacier population, \u03b1 is primarily controlled by climatic mass-balance anomalies (and thus can be approximated or constrained using SMB models or climate proxies), while exhibiting weak dependence on glacier size within broad area ranges. For Alaska, dense Sentinel-2 AAR/ELA inventories provide AAR directly, but translating AAR to \u03b1 (and thus to committed losses) additionally requires estimating AAR0 (from local MB data, SMB modeling, or transfer schemes), and results can be biased for tidewater/surge/debris-influenced glaciers.",
+   "type": "general",
+   "theory_query": "Build theories about cross-cutting relationships across the population of Alaskan mountain glaciers in the ak_diseq dataset, specifically theories about glacier geometry, mass balance, and equilibration/response time that the glaciological literature supports, and which of them hold in the data, based on the following results.",
+   "derived_from": [],
+   "theory_evaluation_ids": [],
+   "components": {
+    "theory_name": "AAR-disequilibrium controls committed geometry change (corrected & Alaska-operationalized)",
+    "theory_name_plain_language": "End-of-summer snowline fraction predicts how much glacier shrinkage is already committed",
+    "theory_description": "This theory treats the accumulation-area ratio (AAR) as a glacier-scale diagnostic of climatic disequilibrium when paired with an equilibrium reference value (AAR0). Defining \u03b1 = AAR/AAR0, the theory posits that \u03b1 directly determines the magnitude of committed geometric adjustment (area and volume) required to re-attain balance under the present climate, via algebraic relations that use volume\u2013area scaling. Across a glacier population, \u03b1 is primarily controlled by climatic mass-balance anomalies (and thus can be approximated or constrained using SMB models or climate proxies), while exhibiting weak dependence on glacier size within broad area ranges. For Alaska, dense Sentinel-2 AAR/ELA inventories provide AAR directly, but translating AAR to \u03b1 (and thus to committed losses) additionally requires estimating AAR0 (from local MB data, SMB modeling, or transfer schemes), and results can be biased for tidewater/surge/debris-influenced glaciers.",
+    "theory_description_plain_language": "If we know what fraction of a glacier is still accumulating snow at the end of summer (AAR), and what that fraction would be in equilibrium (AAR0), then \u03b1 = AAR/AAR0 tells us how much area and volume the glacier must lose even if climate stops changing. Across many glaciers, \u03b1 mainly tracks climate-driven mass balance rather than glacier size, but the method can fail for calving or otherwise dynamically unusual glaciers.",
+    "theory_statements": [
+     {
+      "law": {
+       "statement_name": "Committed area/volume change from AAR disequilibrium",
+       "theory_statement": "For a glacier with equilibrium accumulation-area ratio AAR0 and observed end-of-summer AAR, define the non-dimensional disequilibrium \u03b1 = AAR/AAR0. Under the assumptions that (i) AAR0 is approximately stationary over the diagnostic window and (ii) adjustment to the current climate proceeds primarily by SMB-driven thinning/retreat until \u03b1 \u2192 1, the committed fractional area change relative to the current area A0 is pA = (Aeq \u2212 A0)/A0 = \u03b1 \u2212 1, and the committed fractional volume change relative to current volume V0 is pV = (Veq \u2212 V0)/V0 = \u03b1^\u03b3 \u2212 1, where V \u221d A^\u03b3 (typical \u03b3 \u2248 1.375 for valley glaciers and \u03b3 \u2248 1.25 for ice caps; mixtures require an effective \u03b3\u0304). For \u03b1 < 1, pA and pV are negative (committed losses); their magnitudes are |pA| = 1 \u2212 \u03b1 and |pV| = 1 \u2212 \u03b1^\u03b3.",
+       "theory_statement_plain_language": "If AAR is smaller than its equilibrium value, the glacier is out of balance and must shrink. The required fractional shrinkage is about 1\u2212\u03b1 in area and 1\u2212\u03b1^\u03b3 in volume (with negative sign if you track changes as \u2018new minus current\u2019).",
+       "domain_scope": "Applies to mountain glaciers and ice caps for which end-of-summer snowline mapping yields interpretable AAR, and for which AAR0 can be estimated from multi-year AAR\u2013mass-balance regressions or defensible proxies. Best suited to land-terminating glaciers where surface mass balance dominates geometric adjustment; not expected to be quantitatively accurate for glaciers whose retreat/advance is dominated by tidewater calving instabilities, surge dynamics, or strong debris-cover effects that decouple AAR from net mass change.",
+       "special_cases": [
+        "Years with AAR \u2248 0 or AAR \u2248 1 are explicitly noted as nonlinear regimes; these years were excluded from the linear AAR\u2013mass-balance regressions used to estimate AAR0.",
+        "If AAR0 is time-varying (e.g., due to changing hypsometry, precipitation regime, or persistent dynamic change), fixed-AAR0 \u03b1 will bias pA and pV.",
+        "If the equilibrium line rises above the glacier top (persistent AAR \u2248 0), the glacier may not reach a new equilibrium state but instead disappear; algebraic committed-loss relations become less informative about transient evolution."
+       ],
+       "supporting_evidence": [
+        {
+         "text": "The AAR method defines \u03b1 = AAR/AAR0 and uses simple algebraic mappings to committed changes: pA = \u03b1 \u2212 1 and pV = \u03b1^\u03b3 \u2212 1, with \u03b3 coming from volume\u2013area scaling V = cA^\u03b3.",
+         "uuids": [
+          "e3.0",
+          "e3.4",
+          "e3.1"
+         ]
+        },
+        {
+         "text": "Global application (2001\u20132010) reports \u03b1 = 0.68 \u00b1 0.12, yielding pA \u2248 \u22120.32 (32 \u00b1 12% area loss) and pV \u2248 \u22120.38 (38 \u00b1 16% volume loss), illustrating the committed-loss interpretation of the mapping.",
+         "uuids": [
+          "e3.0",
+          "e3.4"
+         ]
+        },
+        {
+         "text": "Recommended \u03b3 values used in the committed-loss calculation are stated (\u22481.375 for glaciers, \u22481.25 for ice caps; effective mixed \u03b3\u0304 \u2248 1.31 \u00b1 0.05 for aggregation), and pV is explicitly identified as \u03b3-sensitive.",
+         "uuids": [
+          "e3.1",
+          "e3.0",
+          "e3.4"
+         ]
+        }
+       ],
+       "conflicting_evidence": [
+        {
+         "text": "Tidewater/calving glaciers are underrepresented in the AAR\u2013mass-balance calibration dataset and are noted as a likely source of bias; comparisons to satellite/geodetic estimates suggest potential ~100\u2013150 kg m\u22122 yr\u22121 differences that could shift inferred commitments (via the \u03b1\u2013mass-balance sensitivity).",
+         "uuids": [
+          "e3.0",
+          "e3.4"
+         ]
+        }
+       ],
+       "unaccounted_for": [
+        {
+         "text": "The Alaska Sentinel-2 inventory provides AAR/ELA at scale but does not provide AAR0 or direct SMB; without AAR0, \u03b1 (and thus pA/pV) cannot be computed directly and must be inferred using additional modeling/transfer assumptions.",
+         "uuids": [
+          "e2.0"
+         ]
+        },
+        {
+         "text": "Processes explicitly noted as not treated in the simple framework\u2014surging, debris cover, and calving-front physics\u2014can decouple AAR from true committed geometric adjustment and/or alter trajectories.",
+         "uuids": [
+          "e3.0",
+          "e3.4",
+          "e3.2",
+          "e1.0"
+         ]
+        }
+       ],
+       "qual_or_quant": "quantitative",
+       "novelty_evaluation": {
+        "what_already_exists": "The \u03b1-based committed-change mapping pA = \u03b1 \u2212 1 and pV = \u03b1^\u03b3 \u2212 1 built on V\u2013A scaling is the established AAR committed-loss framework.",
+        "what_is_novel": "The Alaska-specific operational emphasis: leveraging >3000-glacier Sentinel-2 AAR/ELA products as the population observable, with \u03b1 inferred via transferable/SMB-modeled AAR0, and using size-independence of \u03b1 to justify broad aggregation while stratifying by dynamic type (land vs tidewater/surge).",
+        "classification_explanation": "The core laws are existing; the novel contribution is an Alaska population-scale measurement strategy implied by the combination of AAR theory and modern Alaska-wide AAR/ELA inventories.",
+        "likely_classification": "closely-related-to-existing",
+        "references": [
+         "Bahr et al. (2009) Sea-level rise from glaciers and ice caps: A lower bound [AAR committed-loss framework; \u03b1, pA, pV]",
+         "Mernild et al. (2013) Global glacier changes: a revised assessment of committed mass losses and sampling uncertainties [empirical \u03b1 statistics; committed-loss upscaling]",
+         "Bahr et al. (1997) The physical basis of glacier volume-area scaling [V\u2013A scaling exponent \u03b3 underlying pV]"
+        ]
+       }
+      }
+     },
+     {
+      "law": {
+       "statement_name": "\u03b1 behaves primarily as a climatic mass-balance signal",
+       "theory_statement": "Across a diverse observed glacier sample where AAR0 is estimated by (approximately) linear AAR\u2013mass-balance regressions, \u03b1 is significantly correlated with specific mass balance, with an empirical sensitivity of approximately \u0394\u03b1 \u2248 0.06 per +100 kg m\u22122 yr\u22121 change in annual mass balance (sign such that more positive mass balance corresponds to larger \u03b1).",
+       "theory_statement_plain_language": "When mass balance gets less negative (or more positive), \u03b1 tends to increase; the effect size is about 0.06 in \u03b1 per 100 kg m\u22122 yr\u22121.",
+       "domain_scope": "Applies to glacier samples similar to those used for AAR\u2013mass-balance calibration (stake/field MB records paired with AAR), for years not in extreme AAR regimes (AAR \u2248 0 or 1) and for glaciers where SMB variations dominate AAR variability. This is a cross-glacier empirical relation and should be re-estimated for Alaska-specific subsets when possible.",
+       "special_cases": [
+        "Nonlinearity is expected when AAR approaches 0% or 100%, which is why such years are excluded from the linear AAR\u2013MB regressions used to estimate AAR0.",
+        "If precipitation anomalies drive AAR without a proportionate annual-balance response (or vice versa), the sensitivity can differ regionally."
+       ],
+       "supporting_evidence": [
+        {
+         "text": "A significant correlation between \u03b1 and annual mass balance is reported (p < 0.01), and an empirical sensitivity is given: a 100 kg m\u22122 yr\u22121 change in mass balance corresponds to ~0.06 change in \u03b1 (Fig. 8 as described).",
+         "uuids": [
+          "e3.0",
+          "e3.4"
+         ]
+        },
+        {
+         "text": "The same sensitivity is used to discuss potential bias from excluding calving glaciers (authors note that ~100 kg m\u22122 yr\u22121 bias would correspond to ~0.06 shift in pA and ~0.08 shift in pV via the \u03b1 relation).",
+         "uuids": [
+          "e3.4",
+          "e3.0"
+         ]
+        }
+       ],
+       "conflicting_evidence": [
+        {
+         "text": "In Alaska/northwest Canada, interannual ELA variability is only partially explained (R^2 = 0.47) by summer temperature and winter precipitation, implying substantial unexplained variability that could weaken simple climate-proxy \u2192 \u03b1 mappings in some settings.",
+         "uuids": [
+          "e2.0"
+         ]
+        }
+       ],
+       "unaccounted_for": [
+        {
+         "text": "No Alaska-specific \u03b1\u2013mass-balance calibration (slope, nonlinearity, and dynamic-type dependence) is provided in the evidence; transfer of the global sensitivity to Alaska remains a testable assumption.",
+         "uuids": []
+        }
+       ],
+       "qual_or_quant": "mixed",
+       "novelty_evaluation": {
+        "what_already_exists": "AAR and mass balance covary and are regressed to estimate AAR0; \u03b1\u2013mass-balance linkage is part of standard AAR methods.",
+        "what_is_novel": "The Alaska-specific hypothesis that the global \u0394\u03b1/\u0394b sensitivity is transferable across Alaska\u2019s strong maritime\u2013continental gradients (or can be parameterized by subregion/dynamic type), enabling \u03b1 estimation from modeled SMB at population scale.",
+        "classification_explanation": "The relationship exists in global compilations; novelty lies in its proposed stratified Alaska transfer and validation using modern Alaska-wide remote-sensing AAR/ELA products.",
+        "likely_classification": "somewhat-related-to-existing",
+        "references": [
+         "Mernild et al. (2013) Global glacier changes: a revised assessment of committed mass losses and sampling uncertainties [\u03b1\u2013mass balance sensitivity]",
+         "Bahr et al. (2009) Sea-level rise from glaciers and ice caps: A lower bound [AAR\u2013MB regression; \u03b1 definition]"
+        ]
+       }
+      }
+     },
+     {
+      "law": {
+       "statement_name": "Weak size dependence of \u03b1 over broad area ranges in observed samples",
+       "theory_statement": "Within the compiled observational sample spanning glacier areas of roughly 0.1\u20131000 km^2, \u03b1 shows little dependence on glacier area (reported r^2 \u2248 0.03 with p > 0.10 for \u03b1 versus log(area)), implying that \u03b1 is approximately size-unbiased for first-order population disequilibrium inference within similarly constructed samples.",
+       "theory_statement_plain_language": "In the available observations, small and large glaciers do not systematically have different \u03b1, so \u03b1 mostly reflects climate rather than glacier size.",
+       "domain_scope": "Applies to observational datasets similar to the AAR+mass-balance compilation used for \u03b1 estimation (glaciers/ice caps with comparable measurement protocols). This statement is about \u03b1 itself (disequilibrium magnitude), not about response rates, which can still depend strongly on size via thickness/response-time scaling.",
+       "special_cases": [
+        "If large glaciers in a region are disproportionately tidewater/calving (common in Alaska), \u03b1\u2013area independence may fail due to unmodeled dynamics and/or sampling bias in which glacier types have MB observations.",
+        "Inventory incompleteness at small sizes can distort apparent size-independence in some regional regressions (an issue noted in other inventory-based scaling contexts)."
+       ],
+       "supporting_evidence": [
+        {
+         "text": "\u03b1 versus log(area) is reported as having r^2 = 0.03 and being statistically insignificant (p > 0.10), interpreted as little size bias in \u03b1 over ~0.1\u20131000 km^2.",
+         "uuids": [
+          "e3.0",
+          "e3.4"
+         ]
+        }
+       ],
+       "conflicting_evidence": [
+        {
+         "text": "Even if \u03b1 is size-unbiased, response time \u03c4 can be size-dependent through thickness/hypsometry scaling; thus size independence of \u03b1 does not imply size independence of transient mass-loss rates.",
+         "uuids": [
+          "e1.0",
+          "e3.2",
+          "e3.1"
+         ]
+        }
+       ],
+       "unaccounted_for": [
+        {
+         "text": "The evidence set does not directly test \u03b1\u2013area dependence for the full Alaska glacier population (including many tidewater glaciers and complex dynamic classes), so Alaska-wide generalization requires stratified testing.",
+         "uuids": []
+        }
+       ],
+       "qual_or_quant": "mixed",
+       "novelty_evaluation": {
+        "what_already_exists": "Weak \u03b1\u2013area dependence is already reported as a diagnostic check on size bias in global AAR-commitment studies.",
+        "what_is_novel": "The Alaska-specific implication that Sentinel-2 AAR products might be aggregated without strong size reweighting for \u03b1 (conditional on estimating AAR0), while explicitly reweighting/stratifying by terminus type to avoid dynamic bias.",
+        "classification_explanation": "Existing empirical result; novelty lies in the Alaska operational consequence when combining the result with Alaska-wide remote sensing.",
+        "likely_classification": "closely-related-to-existing",
+        "references": [
+         "Mernild et al. (2013) Global glacier changes: a revised assessment of committed mass losses and sampling uncertainties [\u03b1\u2013area insignificance]"
+        ]
+       }
+      }
+     }
+    ],
+    "new_predictions_likely": [
+     "In ak_diseq, once AAR0 is estimated (from local MB where available or an SMB model), glaciers with lower \u03b1 will show more negative geodetic mass balance over the subsequent decade, even after controlling for area.",
+     "Among land-terminating Alaskan glaciers, \u03b1 inferred from Sentinel-2 AAR (via estimated AAR0) will correlate with modeled annual SMB anomalies with the same sign as the global relation (more positive SMB \u2194 higher \u03b1), and with a slope of order 0.06 \u03b1 per 100 kg m\u22122 yr\u22121 when averaged over multi-year windows.",
+     "When aggregating committed losses pV across Alaska, using different plausible \u03b3 partitions (glaciers vs ice caps) will change pV more than pA, consistent with pV\u2019s \u03b3 sensitivity."
+    ],
+    "new_predictions_unknown": [
+     "AAR0 may be partially transferable within Alaska by grouping glaciers by hypsometry/altitude-range class, allowing \u03b1 mapping for most of the >3000-glacier Sentinel-2 inventory without local stake data; success would enable Alaska-wide committed-loss maps.",
+     "For glaciers with persistent AAR \u2248 0 (\u201cno accumulation area\u201d), a calibrated nonlinear extension of the AAR\u2013MB relationship may be needed; if developed, it could systematically correct under/overestimation of commitment for the most vulnerable glaciers."
+    ],
+    "negative_experiments": [
+     "Compute \u03b1 across Alaska (after estimating AAR0) and test \u03b1\u2013area independence separately for land-terminating glaciers; a strong monotonic \u03b1\u2013area trend would contradict the size-unbiased statement in Alaska.",
+     "Test pV = \u03b1^\u03b3 \u2212 1 against observed multi-decadal geodetic volume changes during periods of approximately stationary climate forcing; consistent sign/magnitude failures across many glaciers would challenge the committed-loss mapping and/or assumed \u03b3/type mix."
+    ],
+    "special_cases": [
+     "Tidewater/calving glaciers (retreat may be dominated by calving dynamics not captured by SMB/AAR commitments).",
+     "Surge-type glaciers (transient geometry and flow changes can decouple AAR and net change).",
+     "Years with AAR near 0 or 1 (nonlinear AAR\u2013MB regime; AAR0 calibration unstable)."
+    ],
+    "existing_theory": {
+     "likely_classification": "closely-related-to-existing",
+     "references": [
+      "Bahr et al. (2009) Sea-level rise from glaciers and ice caps: A lower bound [AAR committed-change framework: \u03b1, pA, pV]",
+      "Mernild et al. (2013) Global glacier changes: a revised assessment of committed mass losses and sampling uncertainties [expanded empirical application; \u03b1\u2013area and \u03b1\u2013MB relations]",
+      "Bahr et al. (1997) The physical basis of glacier volume-area scaling [V\u2013A scaling used to map pA\u2192pV]"
+     ],
+     "what_already_exists": "AAR-based \u03b1 as a disequilibrium metric and the algebraic mappings to committed area/volume change are established; global empirical relationships quantify \u03b1\u2013mass-balance linkage and weak \u03b1\u2013area dependence in one compilation.",
+     "what_is_novel": "An Alaska population-scale operational synthesis: using Alaska-wide Sentinel-2 AAR/ELA inventories as the primary observable, with explicit requirements for estimating AAR0 and for stratifying by dynamic type to avoid calving/surge biases.",
+     "classification_explanation": "The theory\u2019s mathematical core is existing; the novel part is the Alaska-oriented integration of dense remote sensing with \u03b1-based commitment diagnostics under explicit caveats."
+    },
+    "reflected_from_theory_index": 0,
+    "version": "theorizer-literature-supported-accuracy-focused-12102025",
+    "method": "accuracy"
+   },
+   "supporting_evidence_ids": [],
+   "knowledge_cutoff_year": null,
+   "knowledge_cutoff_month": null,
+   "change_log": [],
+   "model_str": "gpt-5.2"
+  },
+  "theory-2": {
+   "id": "theory-2",
+   "name": "Population response-time scaling links geometry and climate to equilibration rates",
+   "description": "This theory explains equilibration/response time across glacier populations by combining (i) the classical response-time scaling \u03c4V \u223c H/|bT| (thickness over terminus ablation), (ii) volume\u2013area scaling that links thickness to glacier area, and (iii) hypsometry (altitude-range) feedbacks that can systematically lengthen response times relative to the classical estimate. The theory predicts that even if disequilibrium magnitude (e.g., \u03b1 from AAR) is not strongly size-biased, the rate at which committed losses are realized will be size- and climate-dependent: thicker/larger glaciers respond more slowly, while warm/wet climates with large balance gradients respond more quickly. For Alaska, applying this theory requires thickness/volume estimates and a representation of terminus ablation/balance gradients; calving/surge glaciers are expected outliers.",
+   "type": "general",
+   "theory_query": "Build theories about cross-cutting relationships across the population of Alaskan mountain glaciers in the ak_diseq dataset, specifically theories about glacier geometry, mass balance, and equilibration/response time that the glaciological literature supports, and which of them hold in the data, based on the following results.",
+   "derived_from": [],
+   "theory_evaluation_ids": [],
+   "components": {
+    "theory_name": "Population response-time scaling links geometry and climate to equilibration rates",
+    "theory_name_plain_language": "How fast glaciers adjust depends on thickness, melt at the terminus, and hypsometry",
+    "theory_description": "This theory explains equilibration/response time across glacier populations by combining (i) the classical response-time scaling \u03c4V \u223c H/|bT| (thickness over terminus ablation), (ii) volume\u2013area scaling that links thickness to glacier area, and (iii) hypsometry (altitude-range) feedbacks that can systematically lengthen response times relative to the classical estimate. The theory predicts that even if disequilibrium magnitude (e.g., \u03b1 from AAR) is not strongly size-biased, the rate at which committed losses are realized will be size- and climate-dependent: thicker/larger glaciers respond more slowly, while warm/wet climates with large balance gradients respond more quickly. For Alaska, applying this theory requires thickness/volume estimates and a representation of terminus ablation/balance gradients; calving/surge glaciers are expected outliers.",
+    "theory_description_plain_language": "Two glaciers can be equally out of balance, but the thicker one usually takes longer to adjust. The adjustment timescale is roughly thickness divided by how fast ice melts near the terminus, and it can be longer if glacier hypsometry creates strong elevation\u2013mass-balance feedbacks.",
+    "theory_statements": [
+     {
+      "law": {
+       "statement_name": "Classical volume response time scaling (J\u00f3hannesson)",
+       "theory_statement": "For glaciers whose dynamic adjustment to a step change in climate can be approximated as an exponential relaxation, the characteristic volume response time (e-folding time) satisfies \u03c4V \u223c H/|bT|, where H is a thickness scale (often mean thickness) and bT is the specific mass balance near the terminus (ablation-dominated, typically negative). Thus \u03c4V increases approximately linearly with thickness and decreases inversely with the magnitude of terminus ablation.",
+       "theory_statement_plain_language": "Glaciers adjust more slowly when they are thick, and faster when melting near the terminus is strong; roughly, response time is thickness divided by terminus melt rate.",
+       "domain_scope": "Applies to land-terminating glaciers and ice caps where SMB-driven adjustment dominates and where a thickness scale and terminus balance (or melt rate) are meaningful predictors of dynamical adjustment. Intended as an order-of-magnitude timescale diagnostic; not reliable for tidewater glaciers undergoing calving instabilities, surge-type glaciers, or regimes with strongly nonlocal controls on terminus change.",
+       "special_cases": [
+        "If bT changes substantially during adjustment (e.g., strong climate trends or terminus retreat into different climate), \u03c4V is not constant and the simple scaling becomes approximate.",
+        "If H is poorly approximated by mean thickness (e.g., very skewed thickness distributions), \u03c4V estimates may be biased."
+       ],
+       "supporting_evidence": [
+        {
+         "text": "Response time is defined/used as an e-folding timescale and operationalized with \u03c4V \u223c H/|bT|; using typical H = 100\u2013500 m and bT = 1\u20135 m yr\u22121 yields \u03c4V on the order of ~100 years for typical glaciers.",
+         "uuids": [
+          "e3.2",
+          "e3.0",
+          "e3.4"
+         ]
+        },
+        {
+         "text": "An empirical mean terminus melt rate around ~3 m yr\u22121 is reported in the compiled dataset used for the committed-change analysis, supporting decades-to-century order-of-magnitude \u03c4V for typical thickness ranges.",
+         "uuids": [
+          "e3.0",
+          "e3.4",
+          "e3.2"
+         ]
+        }
+       ],
+       "conflicting_evidence": [
+        {
+         "text": "RB2009 demonstrates that response times can span from decades to multiple millennia across regions depending on climatic gradients and hypsometry, indicating that \u03c4V \u223c H/|bT| alone can underrepresent systematic climate/hypsometry effects.",
+         "uuids": [
+          "e1.0"
+         ]
+        }
+       ],
+       "unaccounted_for": [
+        {
+         "text": "The evidence provided does not include Alaska-specific bT or H distributions at population scale; applying \u03c4V estimates to Alaska requires additional datasets (thickness/volume inversions and terminus ablation estimates).",
+         "uuids": []
+        }
+       ],
+       "qual_or_quant": "mixed",
+       "novelty_evaluation": {
+        "what_already_exists": "\u03c4V \u223c H/|bT| is the standard classical response-time scaling used widely in glaciology and explicitly referenced in the committed-loss literature.",
+        "what_is_novel": "The novel Alaska-population use is to couple \u03b1-based committed losses with \u03c4V to estimate not just commitment magnitudes but expected realization pacing by glacier size class and terminus climate class.",
+        "classification_explanation": "The scaling itself is existing; novelty is its integration into an Alaska-wide, size-stratified disequilibrium-to-rate workflow.",
+        "likely_classification": "closely-related-to-existing",
+        "references": [
+         "J\u00f3hannesson et al. (1989) Time-scale for adjustment of glaciers to changes in mass balance [classical \u03c4V scaling]",
+         "Mernild et al. (2013) Global glacier changes: revised committed mass losses [uses \u03c4V scaling to discuss timing]"
+        ]
+       }
+      }
+     },
+     {
+      "law": {
+       "statement_name": "Thickness/area scaling induces size dependence of response time",
+       "theory_statement": "If glacier volume scales with area as V = cA^\u03b3 (with \u03b3 > 1), then mean thickness h \u223c V/A \u221d A^(\u03b3\u22121). Combining with \u03c4V \u223c H/|bT| implies \u03c4V \u221d A^(\u03b3\u22121)/|bT| for comparable terminus climate, predicting systematically longer response times for larger-area glaciers even if their disequilibrium magnitude \u03b1 is size-unbiased.",
+       "theory_statement_plain_language": "Because larger glaciers tend to be thicker, their response times tend to be longer (unless they also have much stronger terminus melt).",
+       "domain_scope": "Applies where V\u2013A scaling is reasonable (mountain glaciers and ice caps in aggregate) and where terminus balance can be treated as not strongly increasing with area within a climate subregion. Intended for population-level scaling rather than precise per-glacier \u03c4 estimation.",
+       "special_cases": [
+        "If bT covaries strongly with size (e.g., larger glaciers extend to much lower, warmer elevations), size dependence of \u03c4V may be weaker or even reversed depending on the bT\u2013A relationship.",
+        "Ice caps and complex outlet systems may require different \u03b3 and/or violate simple thickness\u2013area scaling assumptions."
+       ],
+       "supporting_evidence": [
+        {
+         "text": "Volume\u2013area scaling V = cA^\u03b3 and the implied thickness scaling h \u221d A^(\u03b3\u22121) are stated, with typical \u03b3 \u2248 1.375 for glaciers and \u22481.25 for ice caps.",
+         "uuids": [
+          "e3.1",
+          "e3.0",
+          "e3.4"
+         ]
+        },
+        {
+         "text": "The committed-loss studies explicitly combine \u03c4V \u223c H/|bT| with thickness-from-area scaling to argue that response time increases with glacier area via h \u221d A^(\u03b3\u22121).",
+         "uuids": [
+          "e3.0",
+          "e3.4",
+          "e3.2"
+         ]
+        }
+       ],
+       "conflicting_evidence": [
+        {
+         "text": "RB2009 shows that whether \u03c4 increases or decreases with A can depend on hypsometry exponent \u03b7 through D0/R0 scaling; thus \u03c4(A) is not universally monotone across regions without accounting for hypsometry and climate gradients.",
+         "uuids": [
+          "e1.0"
+         ]
+        }
+       ],
+       "unaccounted_for": [
+        {
+         "text": "No Alaskan estimates of \u03b3 (regional), \u03b7 (range\u2013area exponent), or bT distributions are provided here; Alaska-specific \u03c4(A) trends remain to be established empirically.",
+         "uuids": []
+        }
+       ],
+       "qual_or_quant": "mixed",
+       "novelty_evaluation": {
+        "what_already_exists": "The derivation \u03c4V \u221d A^(\u03b3\u22121)/|bT| from V\u2013A scaling and J\u00f3hannesson scaling is standard in scaling-based glaciology discussions.",
+        "what_is_novel": "An Alaska-specific prediction is that \u03c4V should increase with area for land-terminating glaciers within similar climate subregions, enabling size-stratified commitment realization forecasts when paired with \u03b1 from Sentinel-2 AAR/ELA.",
+        "classification_explanation": "Existing scaling laws; novelty is their Alaska-population forecasting use with new AAR/ELA inventories.",
+        "likely_classification": "closely-related-to-existing",
+        "references": [
+         "Bahr et al. (1997) The physical basis of glacier volume-area scaling [\u03b3 exponent; thickness scaling]",
+         "Mernild et al. (2013) Global glacier changes: revised committed mass losses [uses thickness scaling to discuss \u03c4 dependence]"
+        ]
+       }
+      }
+     },
+     {
+      "law": {
+       "statement_name": "Hypsometry feedback lengthens response time by ~1/\u03b7 (RB2009)",
+       "theory_statement": "In a conceptual hypsometry framework where altitude range scales as R \u221d A^\u03b7 and terminus balance can be approximated by bT \u2248 \u2212kR/2 (k = balance gradient), the volume response time can be written as \u03c4RB \u2248 (\u03b3/\u03b7)\u00b7D0/(\u2212bT) and relates to the classical J\u00f3hannesson form \u03c4JRW \u2248 \u03b3\u00b7D0/(\u2212bT) by \u03c4RB = (1/\u03b7)\u00b7\u03c4JRW. For typical \u03b7 \u2248 0.3\u20130.4, this predicts response times ~2\u20133\u00d7 longer than the classical estimate due to mass-balance\u2013elevation feedback encoded by hypsometry.",
+       "theory_statement_plain_language": "If a glacier\u2019s elevation range grows with area in a typical way, hypsometry can slow down equilibration: response times can be a few times longer than the simple thickness/melt-rate estimate.",
+       "domain_scope": "Applies to mountain/valley glaciers where a symmetric/triangular hypsometry approximation is adequate and where calving/surge dynamics do not dominate. RB2009 explicitly excludes ice caps/outlet glaciers in key hypsometry regressions and does not analyze Alaska directly; application to Alaska requires estimating \u03b7 and k for Alaskan glaciers.",
+       "special_cases": [
+        "If inventory biases distort the estimated \u03b7 (RB2009 highlights an anomalously small \u03b7 for Svalbard likely tied to missing small glaciers), the \u03c4RB correction can be misleading.",
+        "If the ELA rises above the glacier top (no accumulation), the equilibrium/linear-response assumption can break down and \u2018response time\u2019 in this sense may be less meaningful."
+       ],
+       "supporting_evidence": [
+        {
+         "text": "RB2009 derives \u03c4RB \u2248 (\u03b3/\u03b7)\u00b7D0/(\u2212bT) and shows \u03c4RB = (1/\u03b7)\u00b7\u03c4JRW; typical \u03b7 values in several regions are ~0.3\u20130.4 implying a factor of ~2\u20133 increase in \u03c4 over the classical scaling.",
+         "uuids": [
+          "e1.0"
+         ]
+        },
+        {
+         "text": "RB2009 provides regionally varying \u03c4 estimates spanning ~30 years (maritime New Zealand) to thousands of years (cold/dry regions), supporting strong climatic/hypsometric control beyond a single universal \u03c4.",
+         "uuids": [
+          "e1.0"
+         ]
+        }
+       ],
+       "conflicting_evidence": [
+        {
+         "text": "Committed-loss studies often use the simpler \u03c4V \u223c H/|bT| estimate for order-of-magnitude timing, which may understate \u03c4 where hypsometry feedback is strong (\u03b7 small).",
+         "uuids": [
+          "e3.0",
+          "e3.4",
+          "e3.2"
+         ]
+        }
+       ],
+       "unaccounted_for": [
+        {
+         "text": "Because Alaska is not included in RB2009\u2019s seven analyzed regions, the magnitude of the 1/\u03b7 correction for Alaskan glaciers is presently unknown in this evidence set.",
+         "uuids": []
+        }
+       ],
+       "qual_or_quant": "mixed",
+       "novelty_evaluation": {
+        "what_already_exists": "The \u03c4RB correction and its dependence on \u03b7 are existing results from RB2009.",
+        "what_is_novel": "A practical Alaska-population hypothesis is that estimating \u03b7 from Alaska inventories and combining it with thickness/terminus-climate estimates will materially change \u03c4 distributions (and thus timing of committed losses) relative to classical \u03c4V estimates.",
+        "classification_explanation": "Existing theory applied to a new target population (Alaska) and integrated with \u03b1-based disequilibrium diagnostics.",
+        "likely_classification": "somewhat-related-to-existing",
+        "references": [
+         "Raper and Braithwaite (2009) Glacier volume response time and its links to climate and topography [\u03c4RB; hypsometry correction]"
+        ]
+       }
+      }
+     }
+    ],
+    "new_predictions_likely": [
+     "In ak_diseq, \u03c4 proxies computed from thickness (from V\u2013A or volume inversion) and terminus melt proxies will show a positive size dependence for land-terminating glaciers within similar climate subregions, consistent with \u03c4 \u221d A^(\u03b3\u22121)/|bT|.",
+     "Glaciers in warmer/wetter Alaskan coastal climates (higher balance gradients / stronger ablation) will have shorter inferred \u03c4 than colder/drier interior glaciers at similar size, analogous to RB2009\u2019s climate-driven \u03c4 contrasts among regions.",
+     "If \u03b7 is estimated for Alaska from inventory altitude ranges, applying \u03c4RB = \u03c4JRW/\u03b7 will systematically increase \u03c4 estimates relative to classical \u03c4JRW for most glaciers (because \u03b7 < 1)."
+    ],
+    "new_predictions_unknown": [
+     "A coupled forecast using (committed loss magnitude from \u03b1) and (realization time from \u03c4) will predict observed decade-scale geodetic mass losses better than using \u03b1 alone; large improvement would validate the combined commitment\u2013timescale framework for Alaska.",
+     "Alaska-specific \u03b7 values may vary strongly by mountain range (e.g., Alaska Range vs coastal ranges), producing distinct \u03c4 distributions that could explain regional differences in observed retreat rates even under similar disequilibrium \u03b1."
+    ],
+    "negative_experiments": [
+     "If observed rates of volume/area loss across Alaska show no relationship to \u03c4 proxies (H/|bT| or \u03c4RB), the response-time scaling framework would be called into question for Alaska (or indicate dominance of unmodeled dynamics).",
+     "If \u03b7 estimated from Alaskan inventories is near 1 (unlikely but testable), the hypsometry correction would vanish; failure to observe any \u03c4 lengthening would challenge the applicability of RB2009-style hypsometry assumptions."
+    ],
+    "special_cases": [
+     "Tidewater glaciers (calving dynamics can dominate adjustment rates and timescales).",
+     "Surge-type glaciers (transient dynamics violate steady relaxation assumptions).",
+     "Strongly debris-covered glaciers (altered melt and AAR interpretation)."
+    ],
+    "existing_theory": {
+     "likely_classification": "closely-related-to-existing",
+     "references": [
+      "J\u00f3hannesson et al. (1989) Time-scale for adjustment of glaciers to changes in mass balance [\u03c4V \u223c H/|bT| scaling; e-folding response time]",
+      "Raper and Braithwaite (2009) Glacier volume response time and its links to climate and topography [hypsometry-based \u03c4RB; \u03c4RB = \u03c4JRW/\u03b7]",
+      "Bahr et al. (1997) The physical basis of glacier volume-area scaling [V\u2013A scaling; thickness\u2013area scaling]"
+     ],
+     "what_already_exists": "Classical response-time scaling and hypsometry-corrected variants are established, as are the geometric scalings linking area to thickness.",
+     "what_is_novel": "An Alaska-population synthesis that combines \u03b1-based disequilibrium magnitude with \u03c4-based realization pacing, enabling size- and climate-stratified timing predictions for committed losses when Alaska-wide AAR/ELA products are available.",
+     "classification_explanation": "Underlying laws are established; novelty lies in their cross-cutting integration and proposed Alaska-scale evaluation using modern inventories."
+    },
+    "reflected_from_theory_index": 0,
+    "version": "theorizer-literature-supported-accuracy-focused-12102025",
+    "method": "accuracy"
+   },
+   "supporting_evidence_ids": [],
+   "knowledge_cutoff_year": null,
+   "knowledge_cutoff_month": null,
+   "change_log": [],
+   "model_str": "gpt-5.2"
+  }
+ },
+ "extraction_schemas": {},
+ "extraction_results": {
+  "extraction-result-1": {
+   "id": "extraction-result-1",
+   "paper_id": "51773152",
+   "extraction_schema_id": "schema-1",
+   "extracted_data": [
+    {
+     "name_short": "RB2009",
+     "name_full": "Glacier volume response time and its links to climate and topography based on a conceptual model of glacier hypsometry",
+     "brief_description": "Derives an analytical expression for glacier volume response time by coupling a simple (triangular, symmetric) hypsometry model with empirical geometric scaling (V\u221dA^\u03b3 and R\u221dA^\u03b7) and degree-day mass-balance diagnostics; separates climatic (mass-balance gradient/sensitivity) and geometric (\u03b3, \u03b7, D0, R0) factors and evaluates \u03c4 for seven regions using World Glacier Inventory data and a degree-day model.",
+     "citation_title": "Glacier volume response time and its links to climate and topography based on a conceptual model of glacier hypsometry",
+     "mention_or_use": "use",
+     "study_region": "Seven regions explicitly analyzed: Axel Heiberg Island (Canada), Svalbard, Northern Scandinavia, Southern Norway, the Alps, the Caucasus, and New Zealand. (Note: Alaska is NOT included in the analyzed regions.)",
+     "glacier_population_description": "Glaciers drawn from the World Glacier Inventory (WGI) within the seven regions; primarily individual mountain/valley glaciers used for hypsometry and scaling regressions. Ice caps and outlet glaciers were excluded from the hypsometry symmetry/regression analyses where noted.",
+     "sample_size": "Total N = 14,387 glaciers (total area 53,481 km^2) across the seven regions (per-region counts in Table 2). Subset used for median vs mid-point altitude comparison: N = 6,831 (excluded ice caps/outlets). Per-region sample sizes for the R vs A regressions shown in Table 4 (e.g., n=777 Axel Heiberg, n=271 Svalbard, n=5291 Alps, etc.).",
+     "glacier_types_included": "Mainly land-terminating mountain/valley glaciers from WGI; ice caps and outlet glaciers (primary classification 3 and 4) excluded from key hypsometry regressions. Tidewater/calving, surging and debris-cover dynamics are NOT modeled explicitly.",
+     "data_sources": "World Glacier Inventory (area, max/min/median altitude, classification); degree-day surface mass-balance model (Braithwaite & Raper 2007) used to compute mass-balance sensitivity (\u0394b per K) and vertical balance gradient k; literature values (Bahr et al. 1997) used for \u03b3 (volume\u2013area scaling). No new geodetic or stake MB observations or direct thickness sounding data are introduced in this paper.",
+     "geometry_variables_reported": "Area A (km^2), Volume V (km^3), mean depth D0 = V0/A0 (m), thickness scale H (m), altitude range R (m), maximum/minimum/median altitude, mid-point altitude, ELA (equilibrium-line altitude), symmetric triangular area\u2013altitude hypsometry assumption, scaling exponents \u03b3 (volume\u2013area) and \u03b7 (range\u2013area), thickness\u2013range ratio D0/R0, and terminus balance bt.",
+     "mass_balance_type": "Modeled surface specific mass balance (SMB) using a degree-day approach; reported as specific mass balance (m w.e. a^-1), temperature sensitivity or 'mass-balance sensitivity' (\u0394b per K), and vertical balance gradient k (m w.e. a^-1 m^-1). The paper treats SMB and terminus ablation as modeled quantities; no geodetic MB or in-situ stake time series are used in the analyses presented.",
+     "mass_balance_results": "Example quantitative value: in a dry part of the Alps a +1 K temperature rise yields \u0394b \u2248 \u22120.66 m w.e. a^-1 and raises ELA by \u2248160 m (from Braithwaite & Raper 2007). Regional diagnostics (Table 5) report the reciprocal of the balance gradient 1/k (units: years) as: Axel Heiberg 1111, Svalbard 455, Northern Scandinavia 250, Southern Norway 204, Alps 233, Caucasus 208, New Zealand 108 (units: a). The authors report a nearly perfect negative linear relationship between mass-balance sensitivity and balance gradient across the seven regions (r = \u22121.00 as reported).",
+     "climate_forcing_variables": "Temperature changes represented via mass-balance sensitivity (\u0394b per K) are the principal forcing; precipitation could be included analogously but is not the focus. Degree-day model parameters (degree-day factors) and a temperature lapse rate govern the relation between sensitivity and balance gradient. ELA change is related to \u0394b and k by ELA1 \u2212 ELA0 = \u2212\u0394b / k (Eq. 2 in paper).",
+     "response_time_terms_used": "Terms used: 'volume response time', 'response time' (\u03c4), 'e-folding time', \u03c4_JRW (J\u00f3hannesson et al. 1989a formulation), and \u03c4_RB (this study's formulation).",
+     "response_time_definition": "Response time is defined as the characteristic e-folding time for glacier volume to approach the new steady state after a step change in specific mass balance (i.e., linear-response time-scale appearing in the linearized ODE dV/dt = A\u00b7b). It can be expressed classically as a thickness scale over ablation at the terminus (H/|b_t|) and here is derived to separate climatic and geometric factors.",
+     "response_time_estimates": "Numerical \u03c4 estimates (years) from Table 5 for generic glaciers: Area = 1 km^2: [Axel Heiberg 771; Svalbard 880; N Scandinavia 144; S Norway 138; Alps 71; Caucasus 54; New Zealand 30]. Area = 10 km^2: [906; 1729; 155; 156; 74; 50; 30]. Area = 50 km^2: [1012; 2766; 162; 171; 76; 47; 29]. Overall the paper reports response times ranging from decades (\u223c30 yr, maritime New Zealand) up to thousands of years (\u223c2.7 kyr, Svalbard/Axel Heiberg depending on size and climate).",
+     "response_time_scaling_relationships": "Key scaling relations and derived formulae: (1) Volume\u2013area: V \u221d A^\u03b3 (adopted \u03b3 = 1.36 from Bahr et al. 1997). (2) Range\u2013area (hypsometry): R \u221d A^\u03b7 with region-specific \u03b7 estimated by non-linear regression (Table 4). (3) Derived simplified e-folding response-time formula (small perturbation, reference state): \u03c4_RB \u2248 (\u03b3/\u03b7) \u00b7 D0 / (k\u00b7R0/2) \u2248 (\u03b3/\u03b7) \u00b7 D0 / (\u2212b_t). Since \u03c4_JRW (J\u00f3hannesson et al. 1989a) \u2248 \u03b3\u00b7D0 / (\u2212b_t), the new formula gives \u03c4_RB = (1/\u03b7) \u00b7 \u03c4_JRW (i.e., inclusion of hypsometry increases the timescale by factor 1/\u03b7). (4) The depth\u2013range scaling implies D0/R0 \u221d A^(\u03b3\u22121\u2212\u03b7), so the sign of (\u03b3 \u2212 1 \u2212 \u03b7) determines whether \u03c4 increases (positive) or decreases (negative) with glacier area.",
+     "geometry_mass_balance_relationships": "Mass-balance at terminus relates to balance gradient and altitude range by b_t \u2248 \u2212k\u00b7R/2 (Eq. 4). Mean specific balance b is a function of the imposed perturbation \u0394b and the current altitude range R (Eq. 3). The paper documents a strong negative correlation between mass-balance sensitivity (\u0394b per K) and balance gradient k across the seven regions (r = \u22121.00), meaning warm/wet glaciers tend to have both larger |\u0394b| and larger k and thus shorter \u03c4. Empirical support for the hypsometry assumption: median altitude \u2248 mid-point altitude (difference \u22123 \u00b1 62 m; Table 3), and RMS error of median vs mid-point regression \u2248 \u00b161 m.",
+     "area_volume_or_thickness_scaling": "Used/quoted scalings: V \u221d A^\u03b3 with \u03b3 = 1.36 (Bahr et al. 1997). Fitted R \u221d A^\u03b7 with region-specific \u03b7 (Table 4): Axel Heiberg \u03b7 = 0.30 \u00b1 0.008 (n=777, corr=0.67); Svalbard \u03b7 = 0.07 \u00b1 0.014 (n=271, corr=0.28); N Scandinavia \u03b7 = 0.34; S Norway \u03b7 = 0.31; Alps \u03b7 = 0.35 \u00b1 0.004 (n=5291, corr=0.73); Caucasus \u03b7 = 0.40 \u00b1 0.007; New Zealand \u03b7 = 0.37 \u00b1 0.003 (see Table 4 for \u00b1SD and counts). Reference mean depths used for generic glaciers (assuming \u03b3 = 1.36): D0(A=1,10,50 km^2) = 28, 65, 117 m respectively (Table 5). The paper notes that \u03b3 may vary regionally but regional \u03b3 was not estimated due to lack of thickness data.",
+     "disequilibrium_or_commitment_concepts": "Equilibrium is defined as mean specific mass balance b = 0 for the glacier at its ELA0; a sudden perturbation \u0394b forces the glacier into disequilibrium and it evolves to a new steady state (A1, V1) on timescale \u03c4. Authors distinguish static response (instantaneous mass-balance applied to fixed area) from dynamic response (geometry/volume/area change). They note that if ELA rises above the glacier top the glacier will disappear rather than reach a new equilibrium. The paper emphasizes that cold/dry glaciers with long \u03c4 may represent long-term committed mass changes.",
+     "models_and_methods": "Conceptual triangular symmetric hypsometry model (area\u2013altitude) with linear balance\u2013altitude gradient k; degree-day SMB model (Braithwaite & Raper 2007) to compute mass-balance sensitivity and k on 0.5\u00b0 grid squares using median glacier altitude; geometric scaling (V\u221dA^\u03b3, R\u221dA^\u03b7) to represent ice dynamics implicitly; truncated McLaurin expansion to linearize small area changes; non-linear regressions of R vs A (raw values) and log\u2013log illustrations; comparisons and algebraic reconciliation with J\u00f6hannesson et al. (1989a) and references to flowline/kinematic wave theory literature (Nye, Oerlemans, Radic et al.).",
+     "key_theoretical_claims": "\u2022 The glacier volume response time can be written in a form that separates climate (k, \u0394b) and geometry (\u03b3, \u03b7, D0, R0). Specifically \u03c4_RB \u2248 (\u03b3/\u03b7)\u00b7D0/(\u2212b_t), i.e. \u2248 (1/\u03b7) times the classical J\u00f3hannesson form.  \n\u2022 Accounting for hypsometry (R\u221dA^\u03b7) introduces a mass-balance\u2013elevation feedback that increases \u03c4 relative to H/|b_t| by factor 1/\u03b7 (typical \u03b7\u22480.3\u20130.4 \u2192 \u03c4 about 2\u20133\u00d7 longer).  \n\u2022 Whether \u03c4 increases or decreases with glacier area depends on the exponent (\u03b3\u22121\u2212\u03b7): positive \u2192 \u03c4 increases with A; negative \u2192 \u03c4 decreases with A.  \n\u2022 Warm/wet glaciers (large k and |\u0394b|) have shorter \u03c4; cold/dry glaciers have longer \u03c4.  \n\u2022 Triangular symmetric hypsometry and median altitude \u2248 ELA are reasonable approximations for many mountain glaciers and allow a vertical-area treatment of mass-balance elevation feedback.",
+     "quantitative_supporting_evidence": "Key quantitative evidence presented: (i) R vs A non-linear regression results in Table 4 (e.g., Alps: R1km = 710 \u00b1 4 m, \u03b7 = 0.35 \u00b1 0.004, corr = 0.73, n = 5291). (ii) Asymmetry test (Table 3): median \u2212 mid-point altitude = \u22123 \u00b1 62 m, altitude range = 417 \u00b1 340 m, difference/altitude range = \u22121 \u00b1 12%. (iii) Mass-balance sensitivity vs gradient correlation r = \u22121.00 across seven regions (Fig.2). (iv) \u03c4 estimates in Table 5 for three area bins (1, 10, 50 km^2) for seven regions (numbers listed under 'response_time_estimates'). (v) Depth scaling used: D0(A=1,10,50 km^2) = 28, 65, 117 m for \u03b3 = 1.36 (Table 5). (vi) Calculated factor \u03c4_RB/\u03c4_JRW \u2248 1/\u03b7 \u2192 using mean \u03b7 \u2248 0.35 gives \u03c4_RB \u2248 2.9 \u00d7 \u03c4_JRW (text).",
+     "noted_failures_limitations_counterexamples": "Explicit limitations and caveats stated in the paper: (1) Assumption of linear balance gradient k is an approximation \u2014 real glaciers have non-linear k (precipitation, wind, avalanching). (2) Triangular symmetric hypsometry is a simplification (but empirically supported within ~\u00b160 m for many glaciers). (3) The approach does not apply to ice caps (upper margin not fixed) nor to outlet/tidewater glaciers (calving dynamics). (4) Svalbard result for \u03b7 (0.07) is anomalous \u2014 likely due to omission of small glaciers in WGI; inventory biases can affect regressions. (5) \u03b3 (volume\u2013area exponent) may vary regionally; authors used a single \u03b3 = 1.36 due to lack of broad thickness data. (6) Important processes are excluded: calving/tidewater dynamics, surging, debris cover effects, subglacial hydrology and bed thermal regime that may modify \u03b3 and dynamic behaviour. (7) Geometric constraint: \u03b7 \u2265 0.5 produces unrealistic thickening above the new ELA for shrinking glaciers, so realistic \u03b7 should be < 0.5. (8) The empirical V\u2013A scaling has been criticized (Haeberli et al. 2007; L\u00fcthi et al. 2008) for statistical dependence; authors defend its utility but caution about limitations.",
+     "implications_for_population_level_tests": "The paper gives explicit, testable prescriptions for population-level analysis: (1) estimate regional \u03b7 by regressing altitude-range R on area A using inventories (prefer raw non-linear regression to emphasize big glaciers); (2) obtain or estimate \u03b3 (volume\u2013area) or D0 from thickness/volume measurements (depth soundings, Farinotti-type inversion) to compute D0(A); (3) compute balance gradient k and mass-balance sensitivity \u0394b (degree-day or other SMB model) to determine terminus ablation b_t (\u2248 \u2212k\u00b7R/2); (4) compute \u03c4_RB = (\u03b3/\u03b7)\u00b7D0/(\u2212b_t) and test predicted \u03c4 vs observed length/volume change histories or against flowline model results. The authors explicitly note Alaska is not in their sample, so application to Alaskan mountain glaciers requires measuring Alaskan \u03b7, k and D0 (or \u03b3) before directly testing the paper's predictions; observables needed for tests at population scale are glacier area, altitude range (or median and min/max), estimates of thickness/volume, and mass-balance gradients or sensitivity (or suitable SMB model output).",
+     "uuid": "e1.0"
+    }
+   ],
+   "potentially_relevant_new_papers": [
+    {
+     "paper_title": "A simple method for determining the response time of glaciers",
+     "rating": 2
+    },
+    {
+     "paper_title": "Response time of glaciers as a function of size and mass balance: 1. Theory",
+     "rating": 2
+    },
+    {
+     "paper_title": "The physical basis of glacier volume-area scaling",
+     "rating": 2
+    },
+    {
+     "paper_title": "Glaciers and climate change",
+     "rating": 2
+    },
+    {
+     "paper_title": "Volume-area scaling vs flowline modelling in glacier volume projections",
+     "rating": 2
+    },
+    {
+     "paper_title": "Analysis of scaling methods in deriving future volume evolutions of valley glaciers",
+     "rating": 2
+    },
+    {
+     "paper_title": "Glaciological conditions in seven contrasting regions estimated with the degree-day model",
+     "rating": 2
+    },
+    {
+     "paper_title": "A geometric glacier model for sea level change calculations",
+     "rating": 1
+    },
+    {
+     "paper_title": "A method to estimate ice volume and ice thickness distribution of alpine glaciers",
+     "rating": 2
+    },
+    {
+     "paper_title": "Calculation of glacier volume from sparse ice-thickness data, applied to Schaufelferner, Austria",
+     "rating": 1
+    }
+   ],
+   "cost": 0.0395725,
+   "model_str": "gpt-5-mini"
+  }
+ },
+ "theory_evaluations": {},
+ "all_ids": [
+  "theory-4",
+  "extraction-result-1",
+  "theory-6",
+  "extraction-result-2",
+  "theory-8",
+  "theory-3",
+  "theory-1",
+  "theory-5",
+  "theory-2",
+  "theory-7",
+  "extraction-result-3"
+ ],
+ "next_ids": {
+  "theory": 8,
+  "extraction-schema": 0,
+  "extraction-result": 3,
+  "theory-evaluation": 0
+ }
+}
