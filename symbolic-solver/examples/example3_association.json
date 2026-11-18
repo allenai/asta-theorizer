@@ -1,0 +1,202 @@
+[
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "yes",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "yes",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "no",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "yes",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "yes",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "yes",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "yes",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "yes",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "yes",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "NA"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "EU"
+  },
+  {
+    "uses_feature": "no",
+    "renewed": "no",
+    "region": "APAC"
+  },
+  {
+    "uses_feature": "yes",
+    "renewed": "yes",
+    "region": "NA"
+  }
+]

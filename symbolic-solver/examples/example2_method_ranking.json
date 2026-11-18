@@ -1,0 +1,107 @@
+[
+  {
+    "method": "baseline",
+    "run": 0,
+    "f1_score": 0.623
+  },
+  {
+    "method": "cnn",
+    "run": 0,
+    "f1_score": 0.732
+  },
+  {
+    "method": "transformer",
+    "run": 0,
+    "f1_score": 0.844
+  },
+  {
+    "method": "baseline",
+    "run": 1,
+    "f1_score": 0.583
+  },
+  {
+    "method": "cnn",
+    "run": 1,
+    "f1_score": 0.767
+  },
+  {
+    "method": "transformer",
+    "run": 1,
+    "f1_score": 0.867
+  },
+  {
+    "method": "baseline",
+    "run": 2,
+    "f1_score": 0.615
+  },
+  {
+    "method": "cnn",
+    "run": 2,
+    "f1_score": 0.752
+  },
+  {
+    "method": "transformer",
+    "run": 2,
+    "f1_score": 0.854
+  },
+  {
+    "method": "baseline",
+    "run": 3,
+    "f1_score": 0.612
+  },
+  {
+    "method": "cnn",
+    "run": 3,
+    "f1_score": 0.755
+  },
+  {
+    "method": "transformer",
+    "run": 3,
+    "f1_score": 0.845
+  },
+  {
+    "method": "baseline",
+    "run": 4,
+    "f1_score": 0.615
+  },
+  {
+    "method": "cnn",
+    "run": 4,
+    "f1_score": 0.728
+  },
+  {
+    "method": "transformer",
+    "run": 4,
+    "f1_score": 0.857
+  },
+  {
+    "method": "baseline",
+    "run": 5,
+    "f1_score": 0.619
+  },
+  {
+    "method": "cnn",
+    "run": 5,
+    "f1_score": 0.748
+  },
+  {
+    "method": "transformer",
+    "run": 5,
+    "f1_score": 0.841
+  },
+  {
+    "method": "baseline",
+    "run": 6,
+    "f1_score": 0.622
+  },
+  {
+    "method": "cnn",
+    "run": 6,
+    "f1_score": 0.727
+  },
+  {
+    "method": "transformer",
+    "run": 6,
+    "f1_score": 0.863
+  }
+]

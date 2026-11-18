@@ -6,8 +6,6 @@ import json
 
 from Struct import *
 from PaperStore import *
-from PaperFinderRequests import *
-from Theorizer import *
 
 from TheorizerProcessing import *
 

@@ -1,0 +1,31 @@
+# Dependencies for the symbolic_solver pattern/law-discovery tool.
+#
+# REQUIRED (core): numpy. With only numpy installed, the suite still runs the
+# pure-numpy built-in solvers; every other tool is OPTIONAL and is skipped
+# gracefully (listed under "tools_skipped" in the report) if its library is absent.
+#
+# All solvers run together on these (latest) versions -- no version rollbacks. Notes:
+#   - installing this set pins numpy to 1.26.4 (a pysubgroup/mlxtend constraint);
+#     the code runs fine under it.
+#   - linear-tree calls an sklearn-private API removed in sklearn>=1.8; bridged by a
+#     compat shim inside symbolic_solver.py (_patch_lineartree), NOT a rollback.
+#   - pysr uses a Julia backend, auto-bootstrapped on first run (slow once).
+
+# --- required ---
+numpy==1.26.4
+
+# --- recommended (covers most solvers: trees, clustering, correlations, gaussian fit) ---
+scipy==1.17.1            # functional_form gaussian fit, spearman
+scikit-learn==1.9.0      # sklearn_tree, classification_tree, clustering, linear_tree
+pandas==3.0.3            # pysubgroup, associations
+
+# --- optional extra solvers ---
+pysubgroup==0.9.0        # pysubgroup
+mlxtend==0.23.4          # associations (apriori/association_rules)
+linear-tree==0.3.5       # linear_tree (model tree with linear leaves)
+imodels==2.0.4           # imodels_rulefit
+causal-learn==0.1.4.7    # causal_pc (PC causal graph)
+
+# --- optional symbolic regressors (powerful but SLOW; --skip them for a fast pass) ---
+gplearn==0.4.3           # gplearn_symbolic
+pysr==1.5.10             # pysr_symbolic (Julia backend)

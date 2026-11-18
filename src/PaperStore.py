@@ -5,7 +5,10 @@ from __future__ import annotations
 
 import os
 import json
+import requests
 import time
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 # Timeout
 from func_timeout import func_timeout, FunctionTimedOut
@@ -18,6 +21,7 @@ import threading
 
 from SemanticScholar import *
 from MistralOCRStore import *
+from Throttle import Throttle
 
 # Make an enumeration for different paper statuses (e.g. full-text, metadata-only, failed, timeout)
 from enum import Enum
@@ -27,21 +31,54 @@ class PaperStatus(Enum):
     FAILED = "failed"                     # A status for papers that failed to be processed (for whatever reason)
     TIMEOUT = "timeout"                   # A status for papers that timed out during processing
 
+# Titles go into log lines truncated, so one long title can't push the
+# corpus_id and the outcome off the end of a line. A paper entered by sha or
+# by URL may have no title at all.
+def log_title(paper_title: Optional[str]) -> str:
+    return (paper_title or "")[:60]
+
+
 # Global thread lock/Rate limiting for Arxiv API
-THREAD_LOCK_ARXIV_API = Lock()
+#THREAD_LOCK_ARXIV_API = Lock()
 # Time of the last Arxiv API call
-LAST_ARXIV_API_CALL = 0
+#LAST_ARXIV_API_CALL = 0
 
 
+@dataclass
+class FullTextResult:
+    fulltext: Optional[str] = None
+    # only the legacy path collects these. here instead of under
+    # LegacyFullTextResult because we put them in a paper record, where
+    # PaperEntry.paper_urls is a list - so the other paths carry [], not None.
+    paper_urls: List[str] = field(default_factory=list)
+
+    def paper_restricted(self) -> Optional[bool]:
+        return None
+
+    def found_fulltext(self) -> bool:
+        return self.fulltext is not None
+
+
+@dataclass
+class LegacyFullTextResult(FullTextResult):
+    def paper_restricted(self) -> Optional[bool]:
+        # we don't know
+        return None
 
 
 class PaperStore():
     #
     #   Constructor
     #
-    def __init__(self, filename_in:str=None):
+    def __init__(self, filename_in:str=None, deserialize_from_dict:dict=None, generation_id:str=None):
+        # The workflow this store belongs to, tagged onto OCR log lines so a failure is traceable
+        # back to a run. None when the store is built outside a workflow (tests, stand-alone use).
+        self.generation_id = generation_id
+
         # Initialize the Mistral OCR store
-        self.ocr_store = MistralOCRStore(api_key=None)      # Will automatically load the API key
+        # Created on first use (see the property below), so constructing a PaperStore -- which a
+        # TheoryStore does -- never needs a Mistral key; only the legacy OCR path does.
+        self._ocr_store = None
 
         # Initialize the Semantic Scholar API
         s2_api_key = load_s2_api_key()
@@ -56,12 +93,14 @@ class PaperStore():
         self.finished_work = {}
         self.next_request_id = 1
 
-        # Parameters
-        self.MIN_TIME_BETWEEN_REQUESTS_SECS = 0.2        # The minimum time between subsequent paper retrieval requests
-        self.required_wait_time_last_request = 1.0       # A request-dependent wait time after the last request. (Certain API calls require longer wait times).
-        self.last_request_time = 0                       # The timestamp of the last request
+        # Rate limiter for Semantic Scholar API calls
+        self._api_throttle = Throttle(0.2)
 
-        # Update message: Show the user the PaperFinder heartbeat every 10 seconds
+        # Parallel paper retrieval
+        self.active_threads = set()
+        self.MAX_THREADS = 10
+
+        # Update message: Show the user a heartbeat every 10 seconds
         self.heartbeat_interval = 10
         self.heartbeat_last_time = 0
 
@@ -79,10 +118,14 @@ class PaperStore():
             if (not success):
                 print("PaperStore.__init__(): WARNING: Failed to load paperstore from file: " + filename_in)
                 exit(1)
+        elif (deserialize_from_dict is not None):
+            success = self.deserialize(deserialize_from_dict)
+            if (not success):
+                print("PaperStore.__init__(): WARNING: Failed to load paperstore from dict.")
+                exit(1)
 
         # Start a background thread to process the queue
         self.worker_thread = None
-        self.actively_processing_work = False
         self.start_thread()
 
 
@@ -99,6 +142,14 @@ class PaperStore():
         # Append to the log file immediately
         with open(self.FILENAME_LOG_FILE, 'a') as f:
             f.write(json.dumps(packed) + "\n")
+
+
+    def log_and_print(self, message:str):
+        # Say it on stdout as well as in the log file. add_log_entry() is a no-op when
+        # LOG_ENABLED is false, so the print is the only line guaranteed to show up when
+        # you are watching a running Theorizer decide where a paper's full text came from.
+        print(message)
+        self.add_log_entry(message)
 
 
 
@@ -167,12 +218,12 @@ class PaperStore():
     def _mk_key_corpus_id(self, corpus_id:str):
         if (corpus_id is None):
             return None
-        return "paper-" + corpus_id
+        return "paper-" + str(corpus_id)
 
     def _mk_key_s2_sha(self, s2_sha:str):
         if (s2_sha is None):
             return None
-        return "paper-" + s2_sha
+        return "paper-" + str(s2_sha)
 
     def _mk_key_title(self, title:str):
         if (title is None):
@@ -272,11 +323,25 @@ class PaperStore():
             return True
         # Check 2: Are we actively processing work?
         with self.THREAD_LOCK_PAPERSTORE:
-            if (self.actively_processing_work):
+            if len(self.active_threads) > 0:
                 return True
 
         # If we reach here, then we're not busy
         return False
+
+
+    # Cancel any requests that haven't completed yet — removes them from the queue
+    # and marks them as finished so callers aren't left waiting.
+    def cancel_incomplete(self, request_ids):
+        with self.THREAD_LOCK_PAPERSTORE:
+            stale = {rid for rid in request_ids if rid not in self.finished_work}
+            if not stale:
+                return
+            # Only remove matching IDs; other workflows may have requests in the same queue.
+            self.queue = [r for r in self.queue if r['id'] not in stale]
+            for rid in stale:
+                self.finished_work[rid] = None
+        print(f"PaperStore.cancel_incomplete(): Cancelled {len(stale)} incomplete requests")
 
 
     # Add finished work to the directory of finished work
@@ -309,82 +374,50 @@ class PaperStore():
 
 
 
-    #
-    #   Main thread: Process the request queue
-    #
+    # Worker thread: process a single paper retrieval request.
+    def _perform_work(self, request):
+        try:
+            self._api_throttle.wait()
+            self.add_log_entry(f"Processing: corpus_id={request.get('corpus_id')}, title={request.get('title')}")
+            paper_key = self.add_paper_start(
+                corpus_id=request.get('corpus_id', None),
+                s2_id=request.get('s2_sha', None),
+                paper_title=request.get('title', None)
+            )
+            self._set_paper_as_processed(request['id'], paper_key)
+        except Exception as e:
+            import traceback
+            error_str = f"Error '{request['id']}': {str(e)}\n{traceback.format_exc()}"
+            self._set_paper_as_processed(request['id'], {"error": error_str})
+            self.add_log_entry("ERROR: " + error_str)
 
-    # This should be running in the background.
+    # Main thread: Process the request queue
     def process_work_monitor(self):
-        #MIN_WAIT_TIME = 0.2
-        MIN_WAIT_TIME = 2.0
-
         print("PaperStore.process_work_monitor(): Worker thread started.")
         while (self.THREAD_ACTIVE):
-            # Step 0: Check if the heartbeat interval has passed
+            time.sleep(1)
+
+            # Heartbeat
             time_since_last_heartbeat = time.time() - self.heartbeat_last_time
             if (time_since_last_heartbeat >= self.heartbeat_interval):
-                # Print a heartbeat message
-                print("PaperStore.process_work_monitor(): Heartbeat: Worker thread is alive. (queue size: " + str(len(self.queue)) + ")")
-                self.add_log_entry("PaperStore.process_work_monitor(): Heartbeat: Worker thread is alive. (queue size: " + str(len(self.queue)) + ")")
+                print(f"PaperStore.process_work_monitor(): Heartbeat (active: {len(self.active_threads)}, queue: {len(self.queue)})")
+                self.add_log_entry(f"PaperStore.process_work_monitor(): Heartbeat (active: {len(self.active_threads)}, queue: {len(self.queue)})")
                 self.heartbeat_last_time = time.time()
 
-
-            #print("PaperStore.process_work_monitor(): Worker thread is running...")
-            # Step 1: See if enough time has passed since the last request
-            time_since_last_request = time.time() - self.last_request_time
-            #if (time_since_last_request < self.MIN_TIME_BETWEEN_REQUESTS_SECS):
-            if (time_since_last_request < self.required_wait_time_last_request):
-                # Sleep for a short time to avoid busy waiting
-                time.sleep(MIN_WAIT_TIME)
-                continue
-
-            # Step 2: If we're here, then enough time has passed since the last request.  Look for work to perform
-            request = None
+            # Step A: Remove completed threads from active set
             with self.THREAD_LOCK_PAPERSTORE:
-                # Show queue size periodically
-                #print("PaperStore.process_work_monitor(): Checking for requests in the queue... (queue size: " + str(len(self.queue)) + ")")
+                for request_id in list(self.active_threads):
+                    if request_id in self.finished_work:
+                        self.active_threads.remove(request_id)
 
-                # Check if there are any requests in the queue
-                if (len(self.queue)) == 0:
-                    # No requests in the queue, so wait a bit before checking again
-                    time.sleep(MIN_WAIT_TIME)
-                    continue
-
-                # Get the next request
-                request = self.queue.pop(0)
-
-
-            # Step 2A: If the request is not valid, then sleep and check again in the next iteration
-            if (request is None):
-                # No request to process, so wait a bit before checking again
-                time.sleep(MIN_WAIT_TIME)
-                continue
-
-
-            # Step 2B: If we reach here, then it's time to process the request
-            # TODO: Process request
+            # Step B: Start new threads up to MAX_THREADS
             with self.THREAD_LOCK_PAPERSTORE:
-                self.actively_processing_work = True
+                while (len(self.active_threads) < self.MAX_THREADS) and (len(self.queue) > 0):
+                    request = self.queue.pop(0)
+                    thread = threading.Thread(target=self._perform_work, args=(request,), daemon=True)
+                    thread.start()
+                    self.active_threads.add(request['id'])
 
-            try:
-                self.add_log_entry("PaperStore.process_work_monitor(): Processing request to add paper: corpus_id=" + str(request.get('corpus_id', None)) + ", s2_sha=" + str(request.get('s2_sha', None)) + ", title=" + str(request.get('title', None)))
-                paper_key = self.add_paper_start(corpus_id=request.get('corpus_id', None), s2_id=request.get('s2_sha', None), paper_title=request.get('title', None))
-                # Step 2C: Store the work result
-                self._set_paper_as_processed(request['id'], paper_key)
-            except Exception as e:
-                import traceback
-                error_str = "PaperStore.process_work_monitor(): Error processing request '" + request['id'] + "': " + str(e) + "\n" + traceback.format_exc()
-                self._set_paper_as_processed(request['id'], {"error": error_str})
-                self.add_log_entry("ERROR: " + error_str)
-                self.required_wait_time_last_request = 1.0   # On error, increase the wait time before the next request
-
-            with self.THREAD_LOCK_PAPERSTORE:
-                self.actively_processing_work = False
-
-            # Step 3: Set the time of the last request
-            self.last_request_time = time.time()
-
-        # If we reach here, then the thread is being stopped
         print("PaperStore.process_work_monitor(): Worker thread has completed.")
 
 
@@ -398,14 +431,17 @@ class PaperStore():
         print("PaperStore.save(): Waiting for threadlock to be released...")
         with self.THREAD_LOCK_PAPERSTORE:
             print("PaperStore.save(): Threadlock available... continuing to save.")
-            packed = {
-                "paperstore_lut": self.paperstore_lut,
-                "paperstore": self.paperstore,
-            }
+            # packed = {
+            #     "paperstore_lut": self.paperstore_lut,
+            #     "paperstore": self.paperstore,
+            # }
+            packed = self.serialize()
 
-            # Save to a file
-            with open(filename, 'w') as f:
+            # Write to a temporary file first, so a crash mid-write leaves the previous store intact
+            tmp_filename = filename + ".tmp"
+            with open(tmp_filename, 'w') as f:
                 json.dump(packed, f, indent=4)
+            os.replace(tmp_filename, filename)
 
             print("PaperStore.save(): Save complete, releasing threadlock.")
 
@@ -421,12 +457,42 @@ class PaperStore():
             packed = json.load(f)
 
         # Unpack the paperstore and paperstore LUT
-        self.paperstore_lut = packed.get("paperstore_lut", {})
-        self.paperstore = packed.get("paperstore", {})
+        self.deserialize(packed)
 
         print("PaperStore.load(): Loaded " + str(len(self.paperstore)) + " papers from the file.")
         return True
 
+    def serialize(self):
+        print("PaperStore.serialize(): Serializing paperstore to dict.")
+        # Pack the paperstore and paperstore LUT
+        packed = {
+            "paperstore_lut": self.paperstore_lut,
+            "paperstore": self.paperstore,
+        }
+        return packed
+
+    def deserialize(self, deserialize_from_dict:dict):
+        print("PaperStore.deserialize(): Deserializing paperstore from dict.")
+        # Unpack the paperstore and paperstore LUT
+        self.paperstore_lut = deserialize_from_dict.get("paperstore_lut", {})
+        self.paperstore = deserialize_from_dict.get("paperstore", {})
+
+        print("PaperStore.deserialize(): Deserialized " + str(len(self.paperstore)) + " papers from the dict.")
+        return True
+
+    def merge_from_dict(self, data:dict):
+        """Merge papers with full text from a wrapped paperstore dict; skip ones without paper_markdown."""
+        for key, paper in data.get("paperstore", {}).items():
+            if paper.get("paper_markdown"):
+                self.paperstore[key] = paper
+                self.paperstore_lut[key] = key
+                # Register the corpus_id alias so a later request for the same
+                # paper dedupes against this seed (it looks papers up by _mk_key_corpus_id)
+                # instead of re-OCRing and storing a duplicate full-text copy.
+                corpus_id = paper.get("corpus_id")
+                if corpus_id is not None:
+                    self.paperstore_lut.setdefault(self._mk_key_corpus_id(str(corpus_id)), key)
+        self.paperstore_lut.update(data.get("paperstore_lut", {}))
 
 
     #
@@ -482,8 +548,6 @@ class PaperStore():
                             print(f"add_paper_start(): Found corpus_id: {corpus_id} for paper with title: {paper_title}")
 
 
-        self.required_wait_time_last_request = 0.1   # Reset the wait time to the default value, signifying a fast request.
-
         # Duplicate checking: Check if the paper already exists in the paperstore
         if (corpus_id is not None):
             corpus_id_key = self._mk_key_corpus_id(corpus_id)
@@ -509,8 +573,6 @@ class PaperStore():
 
         # Wrap in a timeout with a 60 second limit
         MAX_ADD_PAPER_TIMEOUT = 60
-
-        self.required_wait_time_last_request = 2.0   # External (2 second refresh)
 
         # Try to fetch the paper externally
         self.add_log_entry("add_paper_start(): Looking for paper by fetching manually...  corpus_id=" + str(corpus_id) + ", s2_id=" + str(s2_id) + ", paper_title=" + str(paper_title))
@@ -538,6 +600,80 @@ class PaperStore():
         return primary_key
 
 
+    #########################################################################
+    #########################################################################
+
+    # Check how many papers have full-text available
+    def get_num_papers_with_full_text(self, paper_keys:list):
+        count = 0
+        ids = set()
+        for key in paper_keys:
+            try:
+                if (key is not None):
+                    status = self.get_paper_by_key(key).get("status", None)
+                    if (status == PaperStatus.FULL_TEXT.value):
+                        count += 1
+                        ids.add(key)
+            except Exception as e:
+                print(f"Error checking paper with key {key}: {e}")
+        return count, list(ids)
+
+    @property
+    def ocr_store(self):
+        if self._ocr_store is None:
+            self._ocr_store = MistralOCRStore(api_key=None, generation_id=self.generation_id)
+        return self._ocr_store
+
+    def _get_fulltext_from_legacy_path(self, corpus_id, paper_title, paper_data):
+        paper_urls = self.populate_paper_pdf_urls(paper_data)
+        print(
+            f"add_paper(): legacy path Found paper URLs for paper "
+            f"corpus_id={corpus_id} title={log_title(paper_title)}:")
+        for url in paper_urls:
+            print(f"\t- {url}")
+
+        # Fetched PDFs are converted with Mistral OCR and nothing else.  Without a key the paper
+        # stays metadata-only: say so, and move on.
+        if (not os.environ.get("MISTRAL_API_KEY")):
+            self.log_and_print(
+                f"add_paper(): no MISTRAL_API_KEY, so the open-access PDF is not converted (no local conversion) "
+                f"corpus_id={corpus_id} title={log_title(paper_title)}")
+            return LegacyFullTextResult(paper_urls=paper_urls)
+
+        # Try to download the paper and convert it to text/markdown
+        # How many of the paper's URLs to try before giving up. attempt is
+        # 0-based, so the bound below compares attempt + 1 against it.
+        max_attempts = 4
+        for attempt, pdf_url in enumerate(paper_urls):
+            # Use the first URL as the PDF URL
+            print(f"Using PDF URL: {pdf_url}")
+            self.log_and_print(
+                f"add_paper(): legacy path Attempting to process PDF from URL: {pdf_url} (attempt {attempt + 1} of {max_attempts}) "
+                f"corpus_id={corpus_id} title={log_title(paper_title)}")
+            paper_markdown = self.ocr_store.process_pdf(pdf_url, generation_id=self.generation_id)
+
+            # A URL that serves a web page (a publisher's redirect or bot check) comes back as its HTML
+            if (paper_markdown is not None) and (paper_markdown.lstrip()[:15].lower().startswith(("<!doctype html", "<html"))):
+                self.log_and_print(
+                    f"add_paper(): legacy path download is a web page, not a paper corpus_id={corpus_id} url={pdf_url}")
+                paper_markdown = None
+
+            if (paper_markdown is not None) and (len(paper_markdown.strip()) > 100):
+                self.log_and_print(
+                    f"add_paper(): legacy path hit Successfully processed PDF from URL: {pdf_url} "
+                    f"corpus_id={corpus_id} title={log_title(paper_title)} (attempt {attempt + 1})")
+                return LegacyFullTextResult(fulltext=paper_markdown, paper_urls=paper_urls)
+
+            if (attempt + 1 >= max_attempts):
+                self.log_and_print(
+                    f"add_paper(): legacy path miss Failed to process PDFs from available URLs after {max_attempts} attempts. "
+                    f"corpus_id={corpus_id} title={log_title(paper_title)} Skipping.")
+                return LegacyFullTextResult(paper_urls=paper_urls)
+
+        self.log_and_print(
+            f"add_paper(): legacy path miss Failed to process PDFs from available URLs "
+            f"corpus_id={corpus_id} title={log_title(paper_title)} Skipping.")
+        return LegacyFullTextResult(paper_urls=paper_urls)
 
     # Try to retrieve a paper's S2 record (that may include open access URLs), download the paper, and convert it to full-text Markdown.
     def _add_paper(self, corpus_id:str=None, s2_id:str=None, paper_title:str=None):
@@ -598,43 +734,29 @@ class PaperStore():
             # Add a record to the failed papers
             return None
 
-
-        # Step 2: Get a list of possible URLs to find this paper at
-        paper_urls = self.populate_paper_pdf_urls(paper_data)
-        print("add_paper(): Found paper URLs for paper (`" + paper_title + "`):")
-        for url in paper_urls:
-            print(f"\t- {url}")
-
-        # Step 3: Try to download the paper and convert it to text/markdown
-        paper_markdown = None
-        max_attempts = 3    # Try at most 3 URLs
-        for attempt, pdf_url in enumerate(paper_urls):
-            # Use the first URL as the PDF URL
-            print(f"Using PDF URL: {pdf_url}")
-            self.add_log_entry(f"add_paper(): Attempting to process PDF from URL: {pdf_url} (attempt {attempt + 1} of {max_attempts})")
-            paper_markdown = self.ocr_store.process_pdf(pdf_url)
-
-            if (paper_markdown is not None) and (len(paper_markdown.strip()) > 100):
-                print(f"Successfully processed PDF from {pdf_url} (attempt {attempt + 1})")
-                self.add_log_entry(f"add_paper(): Successfully processed PDF from URL: {pdf_url} (attempt {attempt + 1})")
-                break
-
-            if (attempt >= max_attempts):
-                print(f"Failed to process PDF from {pdf_url} after {max_attempts} attempts. Skipping.")
-                self.add_log_entry(f"add_paper(): Failed to process PDF from URL: {pdf_url} after {max_attempts} attempts. Skipping.")
-                paper_markdown = None
-                break
-
+        legacy_result = self._get_fulltext_from_legacy_path(
+            corpus_id=corpusId,
+            paper_title=paper_title,
+            paper_data=paper_data,
+        )
+        if not legacy_result.found_fulltext():
+            self.log_and_print(
+                f"add_paper(): no hits across the sources we tried for paper "
+                f"corpus_id={corpusId} title={log_title(paper_title)}")
+        fulltext_result = legacy_result
 
         # Pick a status
         status = PaperStatus.FULL_TEXT.value        # Default: assume the paper processing worked
 
         # If we have no paper markdown, then set the status to NO_PDF
-        if (paper_markdown is None):
+        if (not fulltext_result.found_fulltext()):
             status = PaperStatus.METADATA_ONLY.value
         # If the markdown is empty or too short, set the status to NO_PDF
-        elif (len(paper_markdown.strip()) <= 100):
+        elif (len(fulltext_result.fulltext.strip()) <= 100):
             status = PaperStatus.METADATA_ONLY.value
+
+        self.log_and_print(
+            f"add_paper(): status={status} corpus_id={corpusId} title={log_title(paper_title)}")
 
         # Additional metadata: Break down the publication date into year and month
         publication_date = paper_data.get("publicationDate", None)
@@ -653,7 +775,6 @@ class PaperStore():
                 except ValueError:
                     print(f"Error parsing publication month from date: {publication_date}")
 
-
         # Create a paper record
         packed = {
             "status": status,
@@ -663,8 +784,8 @@ class PaperStore():
             "publication_year": publication_year,       # Publication year
             "publication_month": publication_month,     # Publication month
             "s2_metadata": paper_data,
-            "paper_urls": paper_urls,                   # List of URLs for the paper PDF
-            "paper_markdown": paper_markdown,
+            "paper_urls": fulltext_result.paper_urls,                   # List of URLs for the paper PDF
+            "paper_markdown": fulltext_result.fulltext,
         }
 
         # Add this paper to the paperstore
@@ -729,99 +850,115 @@ class PaperStore():
                 urls.append(url.strip())
             self.add_log_entry("populate_paper_pdf_urls(): Arxiv API search complete.")
 
+        # Mistral OCR only fetches https URLs: an http one is refused outright (a 422) before any
+        # download is tried.  Semantic Scholar gives arXiv's open-access links as http://arxiv.org/...,
+        # so every arXiv paper spent its first attempt on a certain failure.  Upgrade them, and drop
+        # any duplicate that upgrading makes.
+        upgraded = []
+        for url in urls:
+            if (url.lower().startswith("http://")):
+                url = "https://" + url[len("http://"):]
+            if (url not in upgraded):
+                upgraded.append(url)
+
         # Return the list of URLs
-        return urls
+        return upgraded
 
 
 # Helper function to query the Arxiv API for a paper (by title)
 def find_pdf_arxiv(paper_title:str):
-    global LAST_ARXIV_API_CALL
-    MIN_TIME_BETWEEN_REQUESTS_SEC = 3.5
+    #global LAST_ARXIV_API_CALL
+    #MIN_TIME_BETWEEN_REQUESTS_SEC = 3.5
     # Use the Arxiv API to find a paper by title
     import requests
     import time
 
-    with THREAD_LOCK_ARXIV_API:
-        try:
-            # Step 0: Check how long it's been since the last Arxiv API call
-            current_time = time.time()
-            if (current_time - LAST_ARXIV_API_CALL < MIN_TIME_BETWEEN_REQUESTS_SEC):
-                # If it's been less than the minimum time, wait for the remaining time
-                wait_time = MIN_TIME_BETWEEN_REQUESTS_SEC - (current_time - LAST_ARXIV_API_CALL)
-                print(f"Waiting for {wait_time:.2f} seconds before making the next Arxiv API call...")
-                time.sleep(wait_time)
-            # Update the last Arxiv API call time
-            LAST_ARXIV_API_CALL = time.time()
+#   with THREAD_LOCK_ARXIV_API:
 
-            # Step 1: Make a request to the Arxiv API
-            # Endpoint: http://export.arxiv.org/api/{method_name}?{parameters}
-            base_url = "http://export.arxiv.org/api/query?"
-            search_query = f"search_query={paper_title.replace(' ', '+')}"
-            url = base_url + search_query
-            print(f"Searching Arxiv for paper with title: `{paper_title}`")
-            response = requests.get(url)
+    try:
+        # # Step 0: Check how long it's been since the last Arxiv API call
+        # current_time = time.time()
+        # if (current_time - LAST_ARXIV_API_CALL < MIN_TIME_BETWEEN_REQUESTS_SEC):
+        #     # If it's been less than the minimum time, wait for the remaining time
+        #     wait_time = MIN_TIME_BETWEEN_REQUESTS_SEC - (current_time - LAST_ARXIV_API_CALL)
+        #     print(f"Waiting for {wait_time:.2f} seconds before making the next Arxiv API call...")
+        #     time.sleep(wait_time)
+        # # Update the last Arxiv API call time
+        # LAST_ARXIV_API_CALL = time.time()
 
-            if (response.status_code != 200):
-                print(f"Error: {response.status_code} - {response.text}")
-                return None
+        # Step 0 (replaced): The reality is that the calls are not quick, and we're likely not hitting the rate limit, even across threads.
+        time.sleep(2.0)  # Sleep for 2 seconds before making the API call, just to be safe and avoid hitting rate limits.
 
-            # Step 2: Extract the response (not XML/etc, just the raw text content)
-            content = response.text
 
-            # Convert all the Atom XML entires to JSON
-            import xml.etree.ElementTree as ET
-            root = ET.fromstring(content)
-            entries = root.findall('{http://www.w3.org/2005/Atom}entry')
-            papers = []
-            for entry in entries:
-                paper = {
-                    "id": entry.find('{http://www.w3.org/2005/Atom}id').text,
-                    "updated": entry.find('{http://www.w3.org/2005/Atom}updated').text,
-                    "published": entry.find('{http://www.w3.org/2005/Atom}published').text,
-                    "title": entry.find('{http://www.w3.org/2005/Atom}title').text,
-                    "summary": entry.find('{http://www.w3.org/2005/Atom}summary').text,
-                    "authors": [author.find('{http://www.w3.org/2005/Atom}name').text for author in entry.findall('{http://www.w3.org/2005/Atom}author')],
-                    "links": {link.get('rel'): link.get('href') for link in entry.findall('{http://www.w3.org/2005/Atom}link')}
-                }
-                papers.append(paper)
+        # Step 1: Make a request to the Arxiv API
+        # Endpoint: http://export.arxiv.org/api/{method_name}?{parameters}
+        base_url = "http://export.arxiv.org/api/query?"
+        search_query = f"search_query={paper_title.replace(' ', '+')}"
+        url = base_url + search_query
+        print(f"Searching Arxiv for paper with title: `{paper_title}`")
+        response = requests.get(url)
 
-            # Step 3: Try to find the paper with the best title match
-            def normalize_title(s:str):
-                import re
-                s = s.lower()
-                s = re.sub(r"[^a-z0-9\s]", "", s)
-                s = re.sub(r"\s+", " ", s).strip()
-                return s
-
-            # Returns a float
-            def similarity(a:str, b:str):
-                from difflib import SequenceMatcher
-                return SequenceMatcher(None, a, b).ratio()
-
-            # Find the best match
-            best_match = None
-            best_score = 0.0
-            MIN_THRESH = 0.95
-            normalized_query_str = normalize_title(paper_title)
-            for paper in papers:
-                normalized_paper_title = normalize_title(paper.get("title", ""))
-                score = similarity(normalized_query_str, normalized_paper_title)
-                print(f"Title: {normalized_paper_title}, Score: {score}")
-
-                if score > best_score:
-                    best_score = score
-                    best_match = paper
-
-            if (best_match is None) or (best_score < MIN_THRESH):
-                print(f"No good match found for paper title: {paper_title} (best score: {best_score})")
-                return None
-            print(f"Best match found: {best_match['title']} (score: {best_score})")
-            # Step 4: Print the best match and return it
-            return best_match
-
-        except Exception as e:
-            print(f"Error finding paper on Arxiv: {e}")
+        if (response.status_code != 200):
+            print(f"Error: {response.status_code} - {response.text}")
             return None
+
+        # Step 2: Extract the response (not XML/etc, just the raw text content)
+        content = response.text
+
+        # Convert all the Atom XML entires to JSON
+        import xml.etree.ElementTree as ET
+        root = ET.fromstring(content)
+        entries = root.findall('{http://www.w3.org/2005/Atom}entry')
+        papers = []
+        for entry in entries:
+            paper = {
+                "id": entry.find('{http://www.w3.org/2005/Atom}id').text,
+                "updated": entry.find('{http://www.w3.org/2005/Atom}updated').text,
+                "published": entry.find('{http://www.w3.org/2005/Atom}published').text,
+                "title": entry.find('{http://www.w3.org/2005/Atom}title').text,
+                "summary": entry.find('{http://www.w3.org/2005/Atom}summary').text,
+                "authors": [author.find('{http://www.w3.org/2005/Atom}name').text for author in entry.findall('{http://www.w3.org/2005/Atom}author')],
+                "links": {link.get('rel'): link.get('href') for link in entry.findall('{http://www.w3.org/2005/Atom}link')}
+            }
+            papers.append(paper)
+
+        # Step 3: Try to find the paper with the best title match
+        def normalize_title(s:str):
+            import re
+            s = s.lower()
+            s = re.sub(r"[^a-z0-9\s]", "", s)
+            s = re.sub(r"\s+", " ", s).strip()
+            return s
+
+        # Returns a float
+        def similarity(a:str, b:str):
+            from difflib import SequenceMatcher
+            return SequenceMatcher(None, a, b).ratio()
+
+        # Find the best match
+        best_match = None
+        best_score = 0.0
+        MIN_THRESH = 0.95
+        normalized_query_str = normalize_title(paper_title)
+        for paper in papers:
+            normalized_paper_title = normalize_title(paper.get("title", ""))
+            score = similarity(normalized_query_str, normalized_paper_title)
+            print(f"Title: {normalized_paper_title}, Score: {score}")
+
+            if score > best_score:
+                best_score = score
+                best_match = paper
+
+        if (best_match is None) or (best_score < MIN_THRESH):
+            print(f"No good match found for paper title: {paper_title} (best score: {best_score})")
+            return None
+        print(f"Best match found: {best_match['title']} (score: {best_score})")
+        # Step 4: Print the best match and return it
+        return best_match
+
+    except Exception as e:
+        print(f"Error finding paper on Arxiv: {e}")
+        return None
 
 
 

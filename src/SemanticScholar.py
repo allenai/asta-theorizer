@@ -15,6 +15,8 @@ from threading import Lock
 THREAD_LOCK_CACHE = Lock()
 
 
+# Relative to the working directory unless set; the library points it into the open project
+# (theorizer.Legacy.point_engine_at()).
 FILENAME_S2_CACHE = "s2_cache.json"
 
 global_s2cache = None
@@ -263,7 +265,7 @@ class SemanticScholar():
 
     # Find a paper by its title
     def find_paper_by_title(self, title:str):
-        time.sleep(2)
+        time.sleep(1)
 
         def find_paper(title:str):
             url = "https://api.semanticscholar.org/graph/v1/paper/search/match"
@@ -277,7 +279,7 @@ class SemanticScholar():
                 # Use the API key string, not the object
                 headers["x-api-key"] = self.api_key
             response = requests.get(url, params=params, headers=headers)
-
+            #print("Response Code: " + str(response.status_code))
             if response.status_code == 200:
                 # Success
                 data = response.json()
@@ -285,13 +287,18 @@ class SemanticScholar():
             elif response.status_code == 404:
                 # No results found
                 return {}
+            elif response.status_code == 500:
+                # Server error: In case the service is temporarily unavailable.
+                print("Warning: Semantic Scholar API returned 500 Internal Server Error -- Service is temporarily unavailable.")
+                return None
             else:
                 print("Error:", response.status_code)
                 print(response.text)
                 return None
 
+
         # Try to find the paper
-        MAX_RETRIES = 5
+        MAX_RETRIES = 3
         data = None
         for i in range(MAX_RETRIES):
             data = find_paper(title)
@@ -441,56 +448,22 @@ class SemanticScholar():
         return all_papers
 
 
-# Get PaperFinder results using the local copy of PaperFinder (https://github.com/allenai/asta-paper-finder)
-def _get_paperfinder_results_local(query:str):
-    print("PaperFinder: get_paperfinder_results_local(): Started... (query = '" + query + "')")
-
-    # Step 1: Pack the request
-    paperfinder_request = {
-        "paper_description": query,
-        "operation_mode": "infer",
-        #"inserted_before": "2025-01-01",
-        "read_results_from_cache": False
-    }
-
-    # URL for local PaperFinder instance
-    url = "http://localhost:8000/api/2/rounds"
-
-    # Send the POST request
-    response = requests.post(
-        url,
-        headers={"Content-Type": "application/json"},
-        data=json.dumps(paperfinder_request),
-    )
-
-    # The expected response will be a 204, that will return a relative URL to the results
-    # Step 2: Check the response
-    if (response.status_code == 200):
-        print("Paperfinder local results received.")
-        return response.json()
-
-    else:
-        print("Response Status Code: " + str(response.status_code))
-        print(f"Error: {response.status_code} - {response.text}")
-        return None
-
-
-# Get PaperFinder results based on a query.
-def get_paperfinder_results(query:str):
-    return _get_paperfinder_results_local(query=query)
-
-
-
 # Load the S2 API key
+# The environment wins (SEMANTIC_SCHOLAR_API_KEY, then S2_API_KEY); the key file in the working
+# directory is the fallback.
 def load_s2_api_key():
+    for env_name in ("SEMANTIC_SCHOLAR_API_KEY", "S2_API_KEY"):
+        env_key = os.environ.get(env_name, None)
+        if env_key:
+            return env_key
     filename_s2_api_key = "s2_key.donotcommit.txt"
     if os.path.exists(filename_s2_api_key):
         with open(filename_s2_api_key, 'r') as f:
             s2_api_key = f.read().strip()
-        return s2_api_key
-    else:
-        print(f"Error: Semantic Scholar API key file '{filename_s2_api_key}' not found.")
-        return None
+        if s2_api_key:
+            return s2_api_key
+    print(f"Warning: Semantic Scholar API key not found in the environment or file.")
+    return None
 
 
 # Debug/Tests
@@ -508,7 +481,13 @@ if __name__ == "__main__":
     results = s2_client.get_papers_by_author(author_id = 144949918)
     print(json.dumps(results, indent=4))
 
-    # PaperFinder test
-    query = "Papers about virtual environments for scientific discovery."
-    pf_results = get_paperfinder_results(query=query)
-    print(json.dumps(pf_results, indent=4))
+    # Try out finding a paper by title
+    title = "ScienceWorld: Is your Agent Smarter"
+    paper_data = s2_client.find_paper_by_title(title)
+    print("Find paper by title: " + title)
+    print(json.dumps(paper_data, indent=4))
+
+    # Dump to file
+    with open("test_find_paper_by_title.json", 'w') as f:
+        json.dump(paper_data, f, indent=4)
+

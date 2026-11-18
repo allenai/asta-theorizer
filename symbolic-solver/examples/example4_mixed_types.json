@@ -1,0 +1,62 @@
+[
+  {
+    "is_premium": true,
+    "visits": "12",
+    "spend": "40.50",
+    "tier": "gold",
+    "active01": 1,
+    "meta": {
+      "src": "web"
+    },
+    "revenue": 120.0
+  },
+  {
+    "is_premium": false,
+    "visits": "3",
+    "spend": "9.00",
+    "tier": "silver",
+    "active01": 0,
+    "meta": [
+      1,
+      2,
+      3
+    ],
+    "revenue": 22.0
+  },
+  {
+    "is_premium": true,
+    "visits": "20",
+    "spend": "65.25",
+    "tier": "gold",
+    "active01": 1,
+    "meta": "ok",
+    "revenue": 210.0
+  },
+  {
+    "is_premium": false,
+    "visits": "5",
+    "spend": "11.75",
+    "tier": "silver",
+    "active01": 0,
+    "meta": "ok",
+    "revenue": 30.0
+  },
+  {
+    "is_premium": true,
+    "visits": "16",
+    "spend": "52.00",
+    "tier": "gold",
+    "active01": 1,
+    "meta": "ok",
+    "revenue": 175.0
+  },
+  {
+    "is_premium": false,
+    "visits": "2",
+    "spend": "6.50",
+    "tier": "silver",
+    "active01": 0,
+    "meta": "ok",
+    "revenue": 15.0
+  }
+]

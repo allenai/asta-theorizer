@@ -14,6 +14,7 @@ PATH_RESULTS = "results/"
 PATH_EVALUATIONS = "evaluations/"
 PATH_PREDACC = "predictiveaccuracy/"
 PATH_QUALNOV = "qualifiednovelty/"
+PATH_JSON = "json/"
 
 # Common CSS styles for all pages
 COMMON_STYLES = """
@@ -344,6 +345,9 @@ def export_one_theory(theory, filename_out, uuid_to_extraction_id=None, predicti
     if (theory_statements) and (len(theory_statements) > 0):
 
         for idx, law in enumerate(theory_statements):
+            # Check if it's a length 1 dictionary with a single key (`law`)
+            if (isinstance(law, dict)) and (len(law) == 1) and ('law' in law):
+                law = law['law']  # Unwrap the law dictionary
 
             statement = law.get('theory_statement', None)
             law_name = law.get('statement_name', f'Law {idx}')
@@ -391,15 +395,17 @@ def export_one_theory(theory, filename_out, uuid_to_extraction_id=None, predicti
                     content += f"""            <p><strong>What Already Exists:</strong> {what_already_exists}</p>"""
                 if (what_is_novel != None):
                     content += f"""            <p><strong>What is Novel:</strong> {what_is_novel}</p>"""
-                content += f"""
-        <p><strong>References:</strong> """
-                if references and len(references) > 0:
-                    content += "<ul>\n"
-                    for ref in references:
-                        content += f"    <li>{ref}</li>\n"
-                    content += "</ul>\n"
-                else:
-                    content += '<span class="empty-note">No references provided.</span>'
+
+                # Disabling references for this output, since some of them can be hallucinated
+        #         content += f"""
+        # <p><strong>References:</strong> """
+        #         if references and len(references) > 0:
+        #             content += "<ul>\n"
+        #             for ref in references:
+        #                 content += f"    <li>{ref}</li>\n"
+        #             content += "</ul>\n"
+        #         else:
+        #             content += '<span class="empty-note">No references provided.</span>'
 
             else:
                 content += '            <p class="empty-note">No existing law comparison provided.</p>\n'
@@ -564,7 +570,11 @@ def export_one_extraction_result(extraction, filename_out, paperstore=None, pape
     paper_title = paper_record.get('title', None)
     s2_metadata = paper_record.get('s2_metadata', {})
     paper_venue = s2_metadata.get('venue', None)
+    # A PaperStore record spells this `publication_year`; a flat papers.jsonl spells it `year`.
+    # Accept both, so feeding this a real paperstore does not silently lose the year.
     paper_year = paper_record.get('year', None)
+    if (paper_year is None):
+        paper_year = paper_record.get('publication_year', None)
 
     paper_url = s2_metadata.get('url', None)
     paper_urls = paper_record.get("paper_urls", [])
@@ -1265,6 +1275,7 @@ def export_all(theories, extraction_schemas, extraction_results, theory_evaluati
     os.makedirs(os.path.join(path_out, PATH_SCHEMAS), exist_ok=True)
     os.makedirs(os.path.join(path_out, PATH_RESULTS), exist_ok=True)
     os.makedirs(os.path.join(path_out, PATH_EVALUATIONS), exist_ok=True)
+    os.makedirs(os.path.join(path_out, PATH_JSON), exist_ok=True)
 
     # Export a list of all the theory queries
     print("Exporting theory queries list...")
@@ -1338,21 +1349,87 @@ def export_all(theories, extraction_schemas, extraction_results, theory_evaluati
     print("Creating index page...")
     create_index_page(theories, path_out)
 
+    # Drop the JSON that produced these pages alongside them, so an export is self-describing and
+    # can be re-rendered or inspected without hunting for the store it came from.  This is done
+    # here, in export_all(), so that every caller gets it -- callers that build the store in memory
+    # included, which is why an export could previously come out with an empty json/ directory.
+    print("Exporting raw JSON...")
+    json_out = os.path.join(path_out, PATH_JSON)
+    os.makedirs(json_out, exist_ok=True)
+    theories_only = {}
+    for theory_id, theory in theories.items():
+        theories_only[theory_id] = {k: v for k, v in theory.items() if (k != 'supporting_evidence_ids')}
+    with open(os.path.join(json_out, "theories.json"), 'w', encoding='utf-8') as f:
+        json.dump(theories_only, f, indent=4, default=str)
+    with open(os.path.join(json_out, "theorystore.json"), 'w', encoding='utf-8') as f:
+        json.dump({"theories": theories, "extraction_schemas": extraction_schemas,
+                   "extraction_results": extraction_results,
+                   "theory_evaluations": theory_evaluations}, f, indent=4, default=str)
+    if (paperstore):
+        with open(os.path.join(json_out, "paperstore.json"), 'w', encoding='utf-8') as f:
+            json.dump({"paperstore": paperstore, "paperstore_lut": paperstore_lut}, f, indent=4, default=str)
+    print(f"  ✓ Exported JSON to {json_out}")
+
 
 #
 #   Main Entry Point for exporting the theory store as HTML
 #
 if __name__ == "__main__":
     # Filename of the input theory store and paper store
-    filename_in_theory_store = "theorystore-example2-literaturesupported.json"
-    filename_in_paper_store = "paperstore-example2-literaturesupported.json"
+    # filename_in_theory_store = "theorystore-example2-literaturesupported.json"
+    # filename_in_paper_store = "paperstore-example2-literaturesupported.json"
 
-    # Paths to predictive accuracy evaluations and qualified novelty evaluations (if available).  If not available, set to None.
-    path_predictive_accuracy_evals = "theorystore-example2-predictive-evaluation/predictive-accuracy-evaluation/claude_sonnet_4_5_20250929/"
-    path_qualified_novelty_evals = "qualified-novelty-evaluations/literature-supported/"
+    # # Paths to predictive accuracy evaluations and qualified novelty evaluations (if available).  If not available, set to None.
+    # path_predictive_accuracy_evals = "theorystore-example2-predictive-evaluation/predictive-accuracy-evaluation/claude_sonnet_4_5_20250929/"
+    # path_qualified_novelty_evals = "qualified-novelty-evaluations/literature-supported/"
+
+    #filename_in_theory_store = "data/theorystores/theorystore_caead372-f8bf-48e0-b098-7e31455b4e38.json"
+    #filename_in_paper_store = "data/paperstores/paperstore_caead372-f8bf-48e0-b098-7e31455b4e38.json"
+
+    #filename_in_theory_store = "data/theorystores/theorystore_0e62641f-e796-46e9-a126-6edab0b89b99.json"
+    #filename_in_paper_store = "data/paperstores/paperstore_0e62641f-e796-46e9-a126-6edab0b89b99.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260528_121908-llm-judge-novelty-variability.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260528_121908-llm-judge-novelty-variability.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260529_185311-agent-memory-scientific-discovery.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260529_185311-agent-memory-scientific-discovery.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260529_214024-automated-feasibility-assessment-theories.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260529_214024-automated-feasibility-assessment-theories.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260529_214723-tech-requirement-prediction.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260529_214723-tech-requirement-prediction.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260601_114901-methodological-feasibility-workflow-extraction.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260601_114901-methodological-feasibility-workflow-extraction.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260601_145623-wfa-gapnc1-relationship.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260601_145623-wfa-gapnc1-relationship.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260601_145502-word-problem-sm-complexity.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260601_145502-word-problem-sm-complexity.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260601_223609-cost-benefit-autoresearch-systems.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260601_223609-cost-benefit-autoresearch-systems.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260602_152203-measuring-synthesis-writing-llms.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260602_152203-measuring-synthesis-writing-llms.json"
+    #filename_in_theory_store = "data/debug/theorystore-20260605_174119-driver-negative-lung-adeno.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260605_174119-driver-negative-lung-adeno.json"
+
+    #filename_in_theory_store = "data/debug/theorystore-20260629_110032-cross-disciplinary-inspiration-retrieval.json"
+    #filename_in_paper_store = "data/debug/paperstore-20260629_110032-cross-disciplinary-inspiration-retrieval.json"
+
+    filename_in_theory_store = "data/debug/theorystore-20260629_105720-small-domain-lm-budget.json"
+    filename_in_paper_store = "data/debug/paperstore-20260629_105720-small-domain-lm-budget.json"
+
+
+
+    path_predictive_accuracy_evals = None
+    path_qualified_novelty_evals = None
 
     # Path to export HTML files to
-    path_out_html = "html-output-example2/"
+    #path_out_html = "html-output-example-tech-requirement-prediction-100papers-multi/"
+    #path_out_html = "html-output-debug-methodological-feasibility-workflow-extraction-100papers-multi/"
+    #path_out_html = "html-output-debug-wfa-gapnc1-relationship-100papers-multi/"
+    #path_out_html = "html-output-debug-word-problem-sm-complexity-100papers-multi/"
+    #path_out_html = "html-output-debug-cost-benefit-autoresearch-systems-100papers-multi/"
+    #path_out_html = "html-output-debug-measuring-synthesis-writing-llms-100papers-multi/"
+    #path_out_html = "html-output-debug-driver-negative-lung-adeno-100papers-multi/"
+    #path_out_html = "html-output-debug-cross-disciplinary-inspiration-retrieval-100papers-multi/"
+    path_out_html = "html-output-debug-small-domain-lm-budget-100papers-multi/"
 
     # Debug limit (set to None for no limit)
     DEBUG_LIMIT = None
@@ -1377,6 +1454,24 @@ if __name__ == "__main__":
     # Export all
     print("\nExporting all data to HTML...")
     export_all(theories, extraction_schemas, extraction_results, theory_evaluations, paperstore, paperstore_lut, path_out_html, path_predictive_accuracy_evals, path_qualified_novelty_evals, DEBUG_LIMIT=DEBUG_LIMIT)
+
+    # Export the raw JSON
+    print("Exporting raw JSON files...")
+    # deep copy theories
+    import copy
+    theories_copy = copy.deepcopy(theories)
+    # For each theory, remove the `supporting_evidence_ids` field
+    for theory_id, theory in theories_copy.items():
+        if ('supporting_evidence_ids' in theory):
+            del theory['supporting_evidence_ids']
+    with open(os.path.join(path_out_html, PATH_JSON, "theories.json"), 'w', encoding='utf-8') as f:
+        json.dump(theories_copy, f, indent=4)
+    # Now copies of the theorystore and paperstore JSON files, for easy reference. They should be the same as the input file names.
+    import shutil
+    shutil.copy(filename_in_theory_store, os.path.join(path_out_html, PATH_JSON, os.path.basename(filename_in_theory_store)))
+    shutil.copy(filename_in_paper_store, os.path.join(path_out_html, PATH_JSON, os.path.basename(filename_in_paper_store)))
+
+
 
     print("\n✓ Export complete!")
     print(f"Open {os.path.join(path_out_html, 'index.html')} in your browser to view the theories.")

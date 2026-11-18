@@ -6,9 +6,7 @@ from __future__ import annotations
 import os
 import json
 import time
-
-# Timeout
-from func_timeout import func_timeout, FunctionTimedOut
+import traceback
 
 # Threading
 import concurrent.futures
@@ -16,7 +14,6 @@ from concurrent.futures import ThreadPoolExecutor
 import threading
 
 from Struct import *
-from Theorizer import *
 from PaperStore import *
 from ExtractionUtils import *
 
@@ -36,10 +33,10 @@ class SchemaExtractionQueue():
         self.next_request_id = 1
 
         # Parameters
-        self.MIN_TIME_BETWEEN_REQUESTS_SECS = 1        # The minimum time between subsequent requests
+        self.MIN_TIME_BETWEEN_REQUESTS_SECS = 0.05     # The minimum time between subsequent requests
         self.last_request_time = 0                     # The timestamp of the last request
 
-        # Update message: Show the user the PaperFinder heartbeat every 10 seconds
+        # Update message: Show the user the heartbeat every 10 seconds
         self.heartbeat_interval = 10
         self.heartbeat_last_time = 0
 
@@ -54,7 +51,7 @@ class SchemaExtractionQueue():
 
         # Keep track of the number of active threads
         self.active_threads = set()
-        self.MAX_THREADS = 10           # The maximum number of concurrent extraction threads (each contains an LLM call)
+        self.MAX_THREADS = 100          # The maximum number of concurrent extraction threads (each contains an LLM call)
 
     #
     #   Threading/Queue/Work Processing
@@ -222,18 +219,11 @@ class SchemaExtractionQueue():
     #   Performing Work: Extracting content from papers
     #
     def extract_from_paper(self, extraction_schema_id:str, paper_id:str, model_str:str):
-        # Wrapper for below, with a timeout
-        MAX_EXTRACTION_TIME = 60*5  # Maximum time to wait for extraction to complete (in seconds)
         try:
-            # Call the extraction function with a timeout
-            result = func_timeout(MAX_EXTRACTION_TIME, self._extract_from_paper, args=(extraction_schema_id, paper_id, model_str))
+            result = self._extract_from_paper(extraction_schema_id, paper_id, model_str)
             return result
-        except FunctionTimedOut:
-            print(f"ERROR: SchemaExtractionQueue.extract_from_paper(): Extraction for paper ID '{paper_id}' timed out after {MAX_EXTRACTION_TIME} seconds.")
-            return ""   # Return blank, so signifies that this result was tried, but not extracted successfully
-        # Catch all other exceptions
         except Exception as e:
-            print(f"ERROR: SchemaExtractionQueue.extract_from_paper(): An error occurred while extracting from paper ID '{paper_id}': {str(e)}")
+            print(f"ERROR: SchemaExtractionQueue.extract_from_paper(): An error occurred while extracting from paper ID '{paper_id}': {str(e)}\n{traceback.format_exc()}")
             return ""   # Return blank, so signifies that this result was tried, but not extracted successfully
 
 
@@ -252,6 +242,8 @@ class SchemaExtractionQueue():
             print("ERROR: SchemaExtractionQueue.extract_from_paper(): Full-text for paper with ID '" + paper_id + "' not found.")
             return None
 
+        paper_text = truncate_to_model_context(paper_text, model_str)
+
         # Step 3: Perform the extraction
         max_tokens = 32000
 
@@ -259,6 +251,13 @@ class SchemaExtractionQueue():
         print("SchemaExtractionQueue.extract_from_paper(): Starting extraction for paper ID: " + paper_id + ".")
         extraction_query = extraction_schema.extraction_query
         extraction_schema = extraction_schema.schema
+
+        # DEBUG: Add debug information
+        print("SchemaExtractionQueue.extract_from_paper(): extraction_schema_id: " + extraction_schema_id)
+        print("SchemaExtractionQueue.extract_from_paper(): Paper ID: " + paper_id)
+        print("SchemaExtractionQueue.extract_from_paper(): Extraction query: " + str(extraction_query))
+        print("SchemaExtractionQueue.extract_from_paper(): Extraction schema: " + str(extraction_schema))
+
         extraction_result_output = self.extract_entities_from_paper(extraction_query, extraction_schema, paper_text, model_str=model_str, max_tokens=max_tokens, use_reflection=False)
         print("SchemaExtractionQueue.extract_from_paper(): Worker thread for paper ID: " + paper_id + " has received LLM extraction results.")
 
@@ -281,7 +280,10 @@ class SchemaExtractionQueue():
 
 
     # This is the main function that extracts extraction-schema-specified information (`added_keys`) from a scientific paper (`paper_text`), with the `query` in mind.
-    def extract_entities_from_paper(self, query:str, added_keys:list, paper_text:str, model_str="gpt-4o-mini", max_tokens=8000, temperature=0.0, use_reflection:bool=False):
+    # NOTE: This is a `staticmethod` so that it can also be called directly (i.e. `SchemaExtractionQueue.extract_entities_from_paper(...)`) without having to
+    # construct a queue.  Calling it on an instance (`self.extract_entities_from_paper(...)`) works exactly as before.
+    @staticmethod
+    def extract_entities_from_paper(query:str, added_keys:list, paper_text:str, model_str="gpt-4o-mini", max_tokens=8000, temperature=0.0, use_reflection:bool=False, max_generation_time_seconds:int=None):
         def mkPrompt(query:str, paper_text:str, reflection:str=None):
             prompt = ""
             prompt += "You are ScientistGPT, the most advanced AI scientist in the world.  You can answer any scientific question, and if you don't know the answer, you can use your enormous intellect to find it.  You answer every question accurately, faithfully, and with the highest level of scientific integrity.\n\n"
@@ -327,14 +329,43 @@ class SchemaExtractionQueue():
             prompt += "- `brief_description`(str): A concise but information-dense description of the entity, in 1-2 sentences\n"
             prompt += "- `citation_title`(str): The exact title (and only the title) of the paper this entity appears to be from.  If the entity was first introduced in this paper, this response should be `here`.  If this information is not available with high confidence, leave this a blank string ("").\n"
             prompt += "- `mention_or_use`(str): A categorical string (`mention` or `use`) that indicates whether this entity is only mentioned in the paper (e.g. in an introduction/related work), or whether the paper actually uses this entity in any kind of experiment or analysis.\n"
+
+            def symbolic_key_to_str(dict_in:dict):
+                key_name = key.get("name", "")
+                key_type = key.get("type", "str")
+                key_description = key.get("description", "")
+
+                # Make a details string, that has ALL keys but the above
+                is_symbolic = False
+                details_str = ""
+                if ("inclusion_criteria" in dict_in):   # Check for 'inclusion_criteria' key, which is a good indicator that this is a symbolic key
+                    is_symbolic = True
+                    details_dict = {k: v for k, v in dict_in.items() if k not in ["name", "type", "description"]}
+                    # Remove any keys that are None or empty strings
+                    details_dict = {k: v for k, v in details_dict.items() if (v is not None) and (not (isinstance(v, str) and len(v.strip()) == 0))}
+                    # Sort them alphabetically by key
+                    details_dict = dict(sorted(details_dict.items()))
+                    details_str = str(details_dict)
+
+                if (key_name is not None) and (len(key_name.strip()) > 0):
+                    if (is_symbolic == True):
+                        return f"- `{key_name}`({key_type}): {key_description}.  *SYMBOLIC* PLEASE STRICTLY ADHERE TO THE FOLLOWING EXTENDED DETAILS: {details_str}\n"
+                    else:
+                        return f"- `{key_name}`({key_type}): {key_description}\n"
+                else:
+                    return ""
+
             if (len(added_keys) > 0):
                 prompt += "In addition, results must contain the following task-specific keys:\n"
                 for key in added_keys:
-                    key_name = key.get("name", "")
-                    key_type = key.get("type", "str")
-                    key_description = key.get("description", "")
-                    if (key_name is not None) and (len(key_name.strip()) > 0):
-                        prompt += f"- `{key_name}`({key_type}): {key_description}\n"
+                    # OLD:
+                    #key_name = key.get("name", "")
+                    #key_type = key.get("type", "str")
+                    #key_description = key.get("description", "")
+                    #if (key_name is not None) and (len(key_name.strip()) > 0):
+                    #    prompt += f"- `{key_name}`({key_type}): {key_description}\n"
+                    # NEW (Symbolic-aware):
+                    prompt += symbolic_key_to_str(key)
 
             prompt += "\n"
             prompt += "`follow_on_papers` is a list of dictionaries that suggest references from the paper that are likely to contain additional examples of these entities. The format is:\n"
@@ -371,6 +402,19 @@ class SchemaExtractionQueue():
             prompt += '    ]\n'
             prompt += "```\n"
             prompt += "\n"
+
+            # Check if any of the added keys are symbolic -- if so, add some symbolic notes.
+            has_symbolic_keys = any("inclusion_criteria" in key for key in added_keys)
+            if (has_symbolic_keys == True):
+                prompt += "# Symbolic Extraction Keys\n"
+                prompt += "Some of the keys to be extracted are intended to be used in a symbolic reasoning system. These keys have been explicitly marked as *SYMBOLIC*.  Here are some notes, to help you extract these symbolic keys correctly:\n"
+                prompt += "- There are a small set of allowed extraction categories: int, float, bool, and categorical.\n"
+                prompt += "- The key values must be expressed in the way the symbolic schema defines. `int` and `float` must be numeric (and not numbers embedded in strings). `bool` must be `true` or `false` (again, not in a string). `categorical` must strictly follow the categorization schema provided, and be one of the provided categories, exactly as defined.\n"
+                prompt += "- If no information is present/available for a symbolic key, or you're unsure about it, it's better to leave it as 'null' then to guess.  You must not hallucinate values for keys.\n"
+                prompt += "- The symbolic solver is strongly limited by the quality of the data, and adherence to the extraction schema. If the schema is not adhereed to, then it may not be able to find useful patterns.\n"
+                prompt += "- There is sometimes the pressure to export information, especially for long scheams. Do not feel this pressure. Only export information for keys that is true, accurate, and present. Do not hallucinate.\n"
+                prompt += "\n"
+
             prompt += "# Important Notes\n"
             prompt += "- You must return a JSON response, and it must be valid JSON, or it will not be parsed.\n"
             prompt += "- You are encouraged to think and plan before writing your JSON response, but your JSON response must be the last thing you write, and it must be between a single set of codeblocks (```), and contain valid JSON, or it will not be parsed (which will be a critical error).\n"
@@ -388,7 +432,7 @@ class SchemaExtractionQueue():
 
         # Call the LLM
         all_responses = []
-        responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False)
+        responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False, max_generation_time_seconds=max_generation_time_seconds)
         all_responses.append(responseJSON)
         total_cost += cost
 
@@ -397,7 +441,7 @@ class SchemaExtractionQueue():
             # Create the reflection prompt
             reflection_prompt = mkPrompt(query, paper_text, responseText)
             # Call the LLM again
-            responseJSON, responseText, cost = getLLMResponseJSON(reflection_prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False)
+            responseJSON, responseText, cost = getLLMResponseJSON(reflection_prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False, max_generation_time_seconds=max_generation_time_seconds)
             all_responses.append(responseJSON)
             total_cost += cost
 

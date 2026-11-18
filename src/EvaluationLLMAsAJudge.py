@@ -6,8 +6,6 @@ import json
 
 from Struct import *
 from PaperStore import *
-from PaperFinderRequests import *
-from Theorizer import *
 
 from TheorizerProcessing import *
 
@@ -243,7 +241,7 @@ JSON OUTPUT FORMAT
 
     total_cost = 0.0
     prompt = mkPrompt(law)
-    responseJSON, responseText, cost = getLLMResponseJSON(promptStr=prompt, model=model_str, maxTokens=max_tokens, temperature=temperature, jsonOut=False, max_generation_time_seconds=300)
+    responseJSON, responseText, cost = getLLMResponseJSON(promptStr=prompt, model=model_str, maxTokens=max_tokens, temperature=temperature, jsonOut=False, max_generation_time_seconds=generation_time_seconds(300))
     total_cost += cost
 
     evaluation = None

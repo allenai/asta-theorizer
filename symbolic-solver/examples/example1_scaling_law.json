@@ -1,0 +1,72 @@
+[
+  {
+    "data_size_k": 1,
+    "accuracy": 55.14,
+    "model": "cnn"
+  },
+  {
+    "data_size_k": 2,
+    "accuracy": 60.87,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 4,
+    "accuracy": 66.22,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 6,
+    "accuracy": 68.81,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 10,
+    "accuracy": 73.78,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 15,
+    "accuracy": 76.84,
+    "model": "cnn"
+  },
+  {
+    "data_size_k": 22,
+    "accuracy": 79.51,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 30,
+    "accuracy": 82.44,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 40,
+    "accuracy": 84.66,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 55,
+    "accuracy": 87.18,
+    "model": "cnn"
+  },
+  {
+    "data_size_k": 70,
+    "accuracy": 89.0,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 90,
+    "accuracy": 91.22,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 120,
+    "accuracy": 93.01,
+    "model": "transformer"
+  },
+  {
+    "data_size_k": 160,
+    "accuracy": 95.54,
+    "model": "transformer"
+  }
+]
