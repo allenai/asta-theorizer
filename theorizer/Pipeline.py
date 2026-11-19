@@ -103,6 +103,7 @@ def plan_theory_query(theory_request:str, model_str:str=None, mission_statement:
 
     print("Pipeline.plan_theory_query(): Starting on '" + str(theory_request)[:60] + "...' with " + str(model_str), flush=True)
     packed = Legacy.plan_query_and_schema(theory_request, model_str, max_tokens=max_tokens, temperature=temperature, use_reflection=use_reflection, mission_statement=mission_statement)
+    packed["mission_statement"] = mission_statement
     print("Pipeline.plan_theory_query(): Planned '" + str(theory_request)[:60] + "...' ($" + str(round(packed.get("total_cost", 0.0), 4)) + ")", flush=True)
     save_output(packed, "plan_theory_query", save_as)
     return packed
@@ -440,7 +441,7 @@ def extract_from_papers(papers:list, extraction_query:str, extraction_schema:lis
 
     failures = paper_failures(batch["failures"])
     if (show_progress):
-        print("Pipeline.extract_from_papers(): " + str(num_records) + " record(s) from " + str(num_papers_with_records) + "/" + str(len(batch["results"])) + " papers ($" + str(round(total_cost, 2)) + ")", flush=True)
+        print("Pipeline.extract_from_papers(): " + str(num_records) + " record(s) from " + str(num_papers_with_records) + "/" + str(len(papers)) + " papers ($" + str(round(total_cost, 2)) + ")", flush=True)
         for failure in failures:
             print("Pipeline.extract_from_papers(): WARNING: no extraction for " + str(failure.get("paper_id")) + " (" + str(failure.get("reason")) + "): " + str(failure.get("error"))[:200], flush=True)
 
@@ -477,7 +478,7 @@ def register_schema(theory_store, extraction_schema_id:str, extraction_schema:li
     if (existing is not None):
         existing_slots = existing.schema if hasattr(existing, "schema") else (existing or {}).get("schema")
         if (json.dumps(existing_slots, sort_keys=True, default=str) != json.dumps(extraction_schema, sort_keys=True, default=str)):
-            print("Pipeline.extract_from_papers(): WARNING: the store's " + str(extraction_schema_id) + " is a different schema -- pass extraction_schema_id= to keep the two apart", flush=True)
+            print("Pipeline.extract_from_papers(): WARNING: " + str(extraction_schema_id) + " already holds a different schema in this project; these records are filed under it. Use an unused extraction_schema_id= to keep the two apart", flush=True)
         return extraction_schema_id
     return theory_store.add_extraction_schema(Legacy.ExtractionQuerySchema(
         schema=extraction_schema, extraction_query=extraction_query, supporting_theory_ids=[],
@@ -632,6 +633,7 @@ def make_variable_report(records:list, theory_query_information, model_str:str=N
     if (model_str is None):
         model_str = Config.DEFAULT_MODEL_PRIMARY
 
+    require_records(records, "make_variable_report")
     records, subsampling_rate = subsample(records, max_data_tokens)
     print("Pipeline.make_variable_report(): Starting on " + str(len(records)) + " record(s) with " + str(model_str) + " (one call, this can take several minutes)", flush=True)
     packed = Legacy.generate_variable_report(theory_query_information, records, model_str, max_tokens=max_tokens, temperature=temperature, use_reflection=use_reflection)
@@ -760,6 +762,7 @@ def make_symbolic_schema(records:list, theory_query_information, model_str:str=N
     if (model_str is None):
         model_str = Config.DEFAULT_MODEL_PRIMARY
 
+    require_records(records, "make_symbolic_schema")
     records, subsampling_rate = subsample(records, max_data_tokens)
     print("Pipeline.make_symbolic_schema(): Starting on " + str(len(records)) + " record(s) with " + str(model_str) + " (one call, this can take several minutes)", flush=True)
     packed = Legacy.generate_symbolic_schema(theory_query_information, records, model_str, max_tokens=max_tokens, temperature=temperature, use_reflection=use_reflection)
@@ -796,6 +799,12 @@ def evidence_rng(evidence_seed:int=None):
     # A private generator for the evidence draw: seeded (Config.DEFAULT_EVIDENCE_SEED unless given),
     # so the same records give the same sample every run, and the global generator is left alone.
     return random.Random(Config.DEFAULT_EVIDENCE_SEED if (evidence_seed is None) else evidence_seed)
+
+
+def require_records(records, stage:str):
+    # A stage that takes records would otherwise still make its call on an empty list, and bill it.
+    if (records is None) or (len(records) == 0):
+        raise ValueError("Pipeline." + stage + "(): no records to work from, so no call was made.  Check that the extraction found any (extract_from_papers() prints the count)")
 
 
 def subsample(records:list, max_data_tokens:int=None, evidence_seed:int=None):
@@ -888,6 +897,7 @@ def generate_theories(records:list, theory_query:str, mission_statement:str=None
         build = Legacy.build_theory_attribution_batched
     else:
         raise ValueError("Pipeline.generate_theories(): objective must be 'accuracy', 'novelty', 'attribution' or 'attribution-batched', not " + str(objective))
+    require_records(records, "generate_theories")
 
     # The batched generator is the one case where what does not fit is not thrown away: it takes the
     # subsample as its first batch and the rest as `results_leftover`, and reflects over further
@@ -1024,6 +1034,7 @@ def generate_theories_over_types(records:list, theory_query:str, output_types:li
         if (len(unknown_inference_types) > 0):
             message += "\n  Unknown inference_types: " + str(unknown_inference_types) + "\n  Valid inference_types (Legacy.INFERENCE_TYPES): " + str(Legacy.INFERENCE_TYPES)
         raise ValueError(message)
+    require_records(evidence if (evidence is not None) else records, "generate_theories_over_types")
 
     # Subsample ONCE, not once per run: every run must see the same evidence, or the comparison
     # between types is confounded by which records each one happened to get.
@@ -1122,6 +1133,7 @@ def generate_theories_over_types(records:list, theory_query:str, output_types:li
         "model": model_str,
         "output_types": output_types,
         "inference_types": inference_types,
+        "mission_statement": mission_statement,
         "num_runs": len(requests),
         "runs": batch["results"],
         "failures": batch["failures"],

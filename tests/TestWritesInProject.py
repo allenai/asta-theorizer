@@ -45,7 +45,7 @@ def fake_extract(extraction_query, extraction_schema, paper_text, **kwargs):
 
 
 def fake_discover(theory_query_information, paper_text, **kwargs):
-    return {"response": {"proposed_slots": [{"slot_name": "gain", "slot_description": "..."}]}, "total_cost": 0.0}
+    return {"response": {"proposed_slots": [{"slot_name": "plasticity", "slot_description": "..."}]}, "total_cost": 0.0}
 
 
 def test_a_run_writes_only_inside_its_project(directory):
@@ -56,7 +56,7 @@ def test_a_run_writes_only_inside_its_project(directory):
         os.makedirs(path)
     for name in ("a", "b"):
         with open(os.path.join(corpus, name + ".md"), "w") as f:
-            f.write("# Paper " + name + "\n\nVIP activation raised gain in paper " + name + ".\n")
+            f.write("# Paper " + name + "\n\nVIP activation raised plasticity in paper " + name + ".\n")
 
     package_dirs = sorted({os.path.realpath(th.Legacy.PACKAGE_DIR), os.path.realpath(th.Legacy.SRC_DIR), os.path.realpath(th.Legacy.REPO_ROOT)})
     before = {root: snapshot(root) for root in package_dirs + [corpus]}

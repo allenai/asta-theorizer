@@ -21,7 +21,7 @@ import theorizer as th
 import EvaluationQualifiedNovelty
 
 
-LAW_1 = "VIP activity raises visual response gain."
+LAW_1 = "VIP activity enables tone-evoked plasticity."
 LAW_2 = "SST inhibition lowers it."
 
 VERDICT = {
@@ -41,10 +41,10 @@ def a_project(directory):
                                             potentially_relevant_new_papers=[], model_str="written"))
     uuid = store.extraction_results[result_id].extracted_data[0]["uuid"]
     th.Project.save_theory_store()
-    laws = [{"law": {"statement_name": "Gain", "theory_statement": LAW_1, "supporting_evidence": [{"text": "t", "uuids": [uuid]}]}},
+    laws = [{"law": {"statement_name": "Plasticity", "theory_statement": LAW_1, "supporting_evidence": [{"text": "t", "uuids": [uuid]}]}},
             {"law": {"statement_name": "Inhibition", "theory_statement": LAW_2, "supporting_evidence": [{"text": "t", "uuids": [uuid]}]}}]
     stored = th.Pipeline.to_theorystore([{"theory_name": "VIP disinhibition", "theory_description": "d", "theory_statements": laws}],
-                                        "How do VIP interneurons control gain?", model_str="written", method="written")
+                                        "How do VIP interneurons control plasticity?", model_str="written", method="written")
     return stored, next(iter(stored["theories"]))
 
 
@@ -52,10 +52,12 @@ class FakeNovelty:
     # Stands in for the engine's evaluation: one law evaluated, against one paper
     def __init__(self, theory_id):
         self.theory_id = theory_id
+        self.paper_ids = None
 
-    def __call__(self, theorystore_data, paperstore, model_str_extraction, model_str_decision, num_workers=5, DEBUG_LIMIT=0):
+    def __call__(self, theorystore_data, paperstore, model_str_extraction, model_str_decision, num_workers=5, DEBUG_LIMIT=0, paper_ids=None):
+        self.paper_ids = paper_ids
         statement = {"theory_id": self.theory_id, "statement_index": 0, "theory_query": "q", "num_papers_evaluated": 1,
-                     "theory_statement_law": {"theory_statement": LAW_1, "domain_scope": "mouse V1"},
+                     "theory_statement_law": {"theory_statement": LAW_1, "domain_scope": "mouse A1"},
                      "final_aggregated_novelty_evaluation": VERDICT, "evidence_for_dimension": {},
                      "all_novelty_evaluations": [{"paper_id": "paper-a", "novelty_evaluation": {"best_response": {"novelty_evaluation": {
                          "paper_title": "A paper about VIP cells", "phenomenon_effect": {"degree_of_novelty": "explicit_established",
@@ -118,6 +120,23 @@ def test_a_project_without_novelty_exports_as_before(directory):
     assert (not os.path.exists(os.path.join(os.path.dirname(index), "qualifiednovelty"))) or (len(os.listdir(os.path.join(os.path.dirname(index), "qualifiednovelty"))) == 0)
 
 
+def test_novelty_compares_against_every_paper_in_the_paperstore(directory):
+    # Every paper with full text, not only the ones the laws cite (paper-b is cited by nothing)
+    stored, theory_id = a_project(directory)
+    paper_store = th.Project.get_paper_store()
+    paper_store.merge_from_dict({"paperstore": {"paper-a": {"title": "A", "paper_markdown": "# A"},
+                                                "paper-b": {"title": "B", "paper_markdown": "# B"},
+                                                "paper-c": {"title": "C, metadata only", "paper_markdown": None}}})
+    fake = FakeNovelty(theory_id)
+    saved = EvaluationQualifiedNovelty.do_qualified_novelty_evaluation_persistence
+    EvaluationQualifiedNovelty.do_qualified_novelty_evaluation_persistence = fake
+    try:
+        th.Evaluate.novelty(stored, paperstore=paper_store)
+    finally:
+        EvaluationQualifiedNovelty.do_qualified_novelty_evaluation_persistence = saved
+    assert (sorted(fake.paper_ids or []) == ["paper-a", "paper-b"]), fake.paper_ids
+
+
 def test_an_explicit_novelty_directory_is_used(directory):
     packed, theory_id = run_novelty(directory)
     statements = os.path.join(packed["novelty_dir"], "statements")
@@ -135,6 +154,7 @@ def main():
         test_the_export_shows_the_verdict_and_links_the_evidence,
         test_a_project_without_novelty_exports_as_before,
         test_an_explicit_novelty_directory_is_used,
+        test_novelty_compares_against_every_paper_in_the_paperstore,
     ]
     for test in tests:
         directory = tempfile.mkdtemp()

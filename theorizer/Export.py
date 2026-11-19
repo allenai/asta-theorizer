@@ -17,6 +17,9 @@
 # the newer fields (method, plain-language names, source schema) and to work without a paperstore.
 # With a paperstore (or a papers.jsonl) each evidence page shows the paper's linked title, year,
 # venue, TL;DR and abstract; without one, pages show the paper id alone.
+# With attribution=True (--attribution) it uses ExportTheoryStoreAsHTML_NoPaperstore_attribution
+# instead, which also renders the per-sentence attribution block objective="attribution" adds to
+# each law, into <project>/html-attribution.
 
 from __future__ import annotations
 
@@ -65,7 +68,7 @@ def newest_novelty_statements(project_dir:str):
     return None
 
 
-def export_html(store:str=None, out:str=None, paperstore:str=None, papers:str=None, limit:int=None, project_dir:str=None, novelty:str=None, show_progress:bool=True) -> str:
+def export_html(store:str=None, out:str=None, paperstore:str=None, papers:str=None, limit:int=None, project_dir:str=None, novelty:str=None, show_progress:bool=True, attribution:bool=False) -> str:
     # Write the HTML and return the path of its index.html.
     #
     # store       a theorystore JSON.  Default: the project's theorystore.json (project_dir, else
@@ -78,7 +81,12 @@ def export_html(store:str=None, out:str=None, paperstore:str=None, papers:str=No
     # novelty     a directory of qualified-novelty results (one JSON per law).  Default: the newest
     #             Evaluate.novelty() run in the project, if there is one.  Each evaluated law's theory
     #             page then shows its verdict and links to a page with the per-paper evidence
-    import ExportTheoryStoreAsHTML_NoPaperstore as exporter
+    # attribution render each law's per-sentence attribution block (objective="attribution") with the
+    #             engine's attribution exporter.  Default out: <project>/html-attribution
+    if (attribution):
+        import ExportTheoryStoreAsHTML_NoPaperstore_attribution as exporter
+    else:
+        import ExportTheoryStoreAsHTML_NoPaperstore as exporter
 
     if (project_dir is None) and (store is None) and (Project.is_open()):
         project_dir = Project.DIRECTORY
@@ -89,7 +97,7 @@ def export_html(store:str=None, out:str=None, paperstore:str=None, papers:str=No
     if (project_dir is None):
         project_dir = os.path.dirname(os.path.abspath(store))
     if (out is None):
-        out = os.path.join(project_dir, "html")
+        out = os.path.join(project_dir, "html-attribution" if attribution else "html")
     if (novelty is None):
         novelty = newest_novelty_statements(project_dir)
     if (paperstore is None) and (papers is None):
@@ -97,6 +105,8 @@ def export_html(store:str=None, out:str=None, paperstore:str=None, papers:str=No
         if (os.path.exists(candidate)):
             paperstore = candidate
 
+    if (not os.path.exists(store)):
+        raise FileNotFoundError("Export.export_html(): no theorystore at " + str(store) + " -- theories reach it through Pipeline.to_theorystore(); give store= to name another")
     with open(store) as handle:
         saved = json.load(handle)
     theories = saved.get("theories", {})
@@ -160,13 +170,16 @@ def main(argv:list=None) -> int:
     parser.add_argument("--novelty", default=None,
                         help="a directory of qualified-novelty results (default: the newest Evaluate.novelty() run in the project)")
     parser.add_argument("--limit", type=int, default=None, help="cap how many items are exported (for a quick look)")
+    parser.add_argument("--attribution", action="store_true",
+                        help="also render each law's per-sentence attribution (objective=\"attribution\" theories), "
+                             "into <project>/html-attribution unless --out says otherwise")
     args = parser.parse_args(argv)
 
     if (args.project is None) and (args.store is None):
         parser.error("give --project DIR or --store FILE")
 
     export_html(store=args.store, out=args.out, paperstore=args.paperstore, papers=args.papers, limit=args.limit,
-                project_dir=args.project, novelty=args.novelty)
+                project_dir=args.project, novelty=args.novelty, attribution=args.attribution)
     return 0
 
 

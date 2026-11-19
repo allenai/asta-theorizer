@@ -138,15 +138,15 @@ def test_the_engine_repair_pass_asks_the_configured_model(directory):
     clean_env()
     use_proxy()
     init_in(directory, model_primary="big-model", model_extraction="small-model")
-    broken = "```json\n{\"finding\": \"the gain rises with VIP activity\", \"n\": 3,,}\n```"
-    fixed = "```json\n{\"finding\": \"the gain rises with VIP activity\", \"n\": 3}\n```"
+    broken = "```json\n{\"finding\": \"plasticity rises with VIP activity\", \"n\": 3,,}\n```"
+    fixed = "```json\n{\"finding\": \"plasticity rises with VIP activity\", \"n\": 3}\n```"
     fake = RecordingCompletion([broken, fixed])
     with EngineFakes(fake, library_repair_fails=True):
         parsed, text, cost = th.Legacy.ExtractionUtils.getLLMResponseJSON("a prompt", "openai/big-model", jsonOut=False, repairJSON=True)
 
     models = [call["model"] for call in fake.calls]
     assert (models == ["openai/big-model", "openai/small-model"]), "the repair went to the wrong model: " + str(models)
-    assert (parsed == {"finding": "the gain rises with VIP activity", "n": 3}), parsed
+    assert (parsed == {"finding": "plasticity rises with VIP activity", "n": 3}), parsed
 
 
 #

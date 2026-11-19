@@ -376,11 +376,50 @@ def import_papers(path_or_paths, model_str:str=None, max_workers:int=None, read_
                 num_fallback += 1
         print("PaperImport.import_papers(): Imported " + str(len(papers)) + " paper(s), $" + str(round(total_cost, 2)) + " (" + str(num_fallback) + " fell back to the filename for a title)", flush=True)
 
+    # Add them to the project's PaperStore under their paper_id, in the record shape fetch_papers()
+    # stores, so Evaluate.novelty() and the HTML export find them as they find fetched papers.  No
+    # Semantic Scholar call: only what the lookup above found, if it ran, is kept from it.
+    paper_store = Project.get_paper_store()
+    records = {}
+    for paper in papers:
+        s2_metadata = {}
+        if (paper.get("semantic_scholar_matched")):
+            s2_metadata = {"corpusId": paper.get("corpus_id"), "paperId": paper.get("s2_paper_id"), "title": paper.get("s2_title"), "url": paper.get("url")}
+        records[paper["paper_id"]] = {
+            "status": Legacy.PaperStatus.FULL_TEXT.value,
+            "s2_id": paper.get("s2_paper_id"),
+            "corpus_id": paper.get("corpus_id"),
+            "title": paper.get("title"),
+            "publication_year": paper.get("year"),
+            "publication_month": None,
+            "s2_metadata": s2_metadata,
+            "paper_urls": [],
+            "paper_markdown": paper.get("markdown"),
+        }
+        if (paper.get("title_is_filename_fallback")):
+            records[paper["paper_id"]]["title"] = None      # filled from the store below, else the filename
+    with paper_store.THREAD_LOCK_PAPERSTORE:
+        # merge_from_dict() replaces a stored record whole.  A re-import made with less (no Semantic
+        # Scholar lookup, read_metadata=False) must not wipe what an earlier import stored, so each
+        # field the new record leaves empty keeps its stored value.
+        for paper in papers:
+            record = records[paper["paper_id"]]
+            stored = paper_store.paperstore.get(paper["paper_id"]) or {}
+            for field, value in stored.items():
+                if (record.get(field) is None) or (record.get(field) == "") or (record.get(field) == []) or (record.get(field) == {}):
+                    record[field] = value
+            if (record.get("title") is None):
+                record["title"] = paper.get("title")
+        paper_store.merge_from_dict({"paperstore": records})
+    paper_store_path = Project.save_paper_store()
+
     # Save the corpus, so an import that cost real money is not lost with the session
     if (Project.is_open()):
         saved_path = Project.save(save_as if (save_as is not None) else "papers", papers)
         if (show_progress):
             print("  saved: " + str(saved_path), flush=True)
+            if (paper_store_path is not None):
+                print("  paperstore: " + str(paper_store_path) + " (" + str(len(paper_store.paperstore)) + " papers)", flush=True)
 
     # Pack output
     packed = {
@@ -392,6 +431,8 @@ def import_papers(path_or_paths, model_str:str=None, max_workers:int=None, read_
         "lookup_semantic_scholar": lookup_semantic_scholar,
         "ocr": ocr,
     }
+    if (paper_store_path is not None):
+        packed["paper_store_path"] = paper_store_path
     return packed
 
 

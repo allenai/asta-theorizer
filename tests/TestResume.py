@@ -22,15 +22,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import theorizer as th
 
 
-QUERY = "What sets cortical gain?"
+QUERY = "What sets cortical plasticity?"
 SCHEMA = [{"name": "finding", "type": "str", "description": "The main finding"}]
 
 
 def some_papers():
     return [
-        {"paper_id": "paper-a", "title": "A", "markdown": "# A\n\nVIP activation raised gain."},
-        {"paper_id": "paper-b", "title": "B", "markdown": "# B\n\nSST silencing raised gain."},
-        {"paper_id": "paper-c", "title": "C", "markdown": "# C\n\nLocomotion raised gain."},
+        {"paper_id": "paper-a", "title": "A", "markdown": "# A\n\nVIP activation raised plasticity."},
+        {"paper_id": "paper-b", "title": "B", "markdown": "# B\n\nSST silencing raised plasticity."},
+        {"paper_id": "paper-c", "title": "C", "markdown": "# C\n\nReward raised plasticity."},
     ]
 
 
@@ -45,7 +45,7 @@ class FakeModel:
 
     def discover(self, theory_query_information, paper_text, **kwargs):
         self.calls += 1
-        return {"response": {"proposed_slots": [{"slot_name": "gain", "slot_description": paper_text[:20]}]}, "total_cost": 0.0}
+        return {"response": {"proposed_slots": [{"slot_name": "plasticity", "slot_description": paper_text[:20]}]}, "total_cost": 0.0}
 
 
 class fake_engine:
@@ -133,11 +133,11 @@ def test_a_changed_paper_text_is_extracted_again(directory):
     with fake_engine(FakeModel()) as model:
         extract(some_papers())
         changed = some_papers()
-        changed[0]["markdown"] = "# A\n\nVIP activation lowered gain."
+        changed[0]["markdown"] = "# A\n\nVIP activation lowered plasticity."
         packed = extract(changed)
     assert (model.calls == 4), "the changed paper was served its old result (" + str(model.calls) + " calls)"
     finding = [result for result in packed["results"] if (result["paper_id"] == "paper-a")][0]["records"][0]["finding"]
-    assert (finding == "VIP activation lowered gain."), "paper-a came back with the old text's record: " + str(finding)
+    assert (finding == "VIP activation lowered plasticity."), "paper-a came back with the old text's record: " + str(finding)
 
 
 def test_a_changed_schema_id_or_setting_is_extracted_again(directory):

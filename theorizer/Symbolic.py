@@ -155,6 +155,15 @@ def coerce_value(value, variable:dict):
 #   Building the table
 #
 
+def paper_id_from_uuid(uuid):
+    # A record carries its uuid, not its paper.  The store made the uuid from its result's id
+    # (extraction-result-3 -> e3.0, e3.1, ...), and that result holds the paper_id.
+    if (uuid is None):
+        return None
+    result = Project.get_theory_store().extraction_results.get(str(uuid).split(".")[0].replace("e", "extraction-result-", 1))
+    return getattr(result, "paper_id", None)
+
+
 def build_table(records:list, symbolic_schema, include_paper_id:bool=False, show_progress:bool=True, save_as:str=None):
     # Turn extracted records into rows of typed values.
     #
@@ -207,7 +216,7 @@ def build_table(records:list, symbolic_schema, include_paper_id:bool=False, show
                 filled[name] += 1
 
         if (include_paper_id):
-            row["paper_id"] = record.get("paper_id")
+            row["paper_id"] = record.get("paper_id") or paper_id_from_uuid(record.get("uuid"))
 
         # A row with nothing in it is noise in the table
         has_a_value = False

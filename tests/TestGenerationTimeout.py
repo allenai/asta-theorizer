@@ -30,7 +30,7 @@ from TestLLMTimeout import FakeModel, Patched, engine_function
 
 ENV_KEYS = ["MAX_GENERATION_TIME_SECONDS", "LITELLM_BASE_URL", "LITELLM_USER_KEY"]
 
-RECORDS = [{"uuid": "e1.0", "paper_id": "paper-a", "name_short": "F1", "brief_description": "VIP activity raises gain"}]
+RECORDS = [{"uuid": "e1.0", "paper_id": "paper-a", "name_short": "F1", "brief_description": "VIP activity enables plasticity"}]
 
 
 #
@@ -93,7 +93,7 @@ def test_a_generation_stage_passes_its_setting_to_the_call(directory):
     utils._llm_call_with_retries = recording
     try:
         with Patched(FakeModel()):
-            packed = th.Pipeline.generate_theories(RECORDS, "how VIP interneurons set gain", model_str="fake-model", use_reflection=False, llm_timeout_seconds=1234)
+            packed = th.Pipeline.generate_theories(RECORDS, "how VIP interneurons set plasticity", model_str="fake-model", use_reflection=False, llm_timeout_seconds=1234)
     finally:
         utils._llm_call_with_retries = original
 
@@ -108,7 +108,7 @@ def test_a_generation_stage_passes_its_setting_to_the_call(directory):
 def test_a_generation_call_that_gives_up_is_reported(directory):
     th.Config.init(project_dir=directory, verbose=False)
     with Patched(FakeModel(slow_marker="", slow_seconds=2.5)):
-        packed = th.Pipeline.generate_theories(records=RECORDS, theory_query="how VIP interneurons set gain", model_str="fake-model", use_reflection=False, llm_timeout_seconds=1)
+        packed = th.Pipeline.generate_theories(records=RECORDS, theory_query="how VIP interneurons set plasticity", model_str="fake-model", use_reflection=False, llm_timeout_seconds=1)
 
     failures = packed["call_failures"]
     assert (len(failures) == 1), failures

@@ -432,7 +432,7 @@ class SchemaExtractionQueue():
 
         # Call the LLM
         all_responses = []
-        responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False, max_generation_time_seconds=max_generation_time_seconds)
+        responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False, max_generation_time_seconds=max_generation_time_seconds, repairJSON=True)
         all_responses.append(responseJSON)
         total_cost += cost
 
@@ -441,7 +441,7 @@ class SchemaExtractionQueue():
             # Create the reflection prompt
             reflection_prompt = mkPrompt(query, paper_text, responseText)
             # Call the LLM again
-            responseJSON, responseText, cost = getLLMResponseJSON(reflection_prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False, max_generation_time_seconds=max_generation_time_seconds)
+            responseJSON, responseText, cost = getLLMResponseJSON(reflection_prompt, model_str, temperature=temperature, maxTokens=max_tokens, jsonOut=False, max_generation_time_seconds=max_generation_time_seconds, repairJSON=True)
             all_responses.append(responseJSON)
             total_cost += cost
 

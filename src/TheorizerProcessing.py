@@ -216,7 +216,7 @@ def convert_theory_request_to_query_and_schema(theory_request:str, model_str:str
     # Create the prompt
     prompt = mkPrompt(theory_request, mission_statement, reflection=None)
     # Call the LLM
-    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=0.0, maxTokens=DEFAULT_MAX_TOKENS, jsonOut=False)
+    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=0.0, maxTokens=max(max_tokens, DEFAULT_MAX_TOKENS), jsonOut=False)
     responses.append(responseJSON)
     responses_raw.append(responseText)
     total_cost += cost
@@ -505,7 +505,7 @@ def generate_schema_from_variable_discovery(theory_query_information:str, variab
     #prompt = mkPrompt(theory_request)
     prompt = mkPrompt(theory_query_information, variable_discovery_results, reflection=None)
     # Call the LLM
-    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=0.0, maxTokens=DEFAULT_MAX_TOKENS, jsonOut=False)
+    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=0.0, maxTokens=max(max_tokens, DEFAULT_MAX_TOKENS), jsonOut=False)
     responses.append(responseJSON)
     responses_raw.append(responseText)
     total_cost += cost
@@ -843,7 +843,7 @@ def generate_schema_from_extraction_results_for_symbolic_solvers(theory_query_in
     #prompt = mkPrompt(theory_request)
     prompt = mkPrompt(theory_query_information, extracted_records, reflection=None)
     # Call the LLM
-    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=0.0, maxTokens=DEFAULT_MAX_TOKENS, jsonOut=False)
+    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=0.0, maxTokens=max(max_tokens, DEFAULT_MAX_TOKENS), jsonOut=False)
     responses.append(responseJSON)
     responses_raw.append(responseText)
     total_cost += cost
@@ -1162,7 +1162,7 @@ def generate_variable_discovery_from_data_report(theory_query_information:str, e
     #prompt = mkPrompt(theory_request)
     prompt = mkPrompt(theory_query_information, extracted_records, reflection=None)
     # Call the LLM
-    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=0.0, maxTokens=DEFAULT_MAX_TOKENS, jsonOut=False)
+    responseJSON, responseText, cost = getLLMResponseJSON(prompt, model_str, temperature=0.0, maxTokens=max(max_tokens, DEFAULT_MAX_TOKENS), jsonOut=False)
     responses.append(responseJSON)
     responses_raw.append(responseText)
     total_cost += cost
@@ -1553,8 +1553,8 @@ def build_theory_from_results_single_theory_reflection3(query:str, results:list,
         all_responses.append(responseJSON)
         total_cost += cost
 
-        print("## Initial response:")
-        print(responseText)
+        printVerbose("## Initial response:")
+        printVerbose(responseText)
 
         # New one-theory-at-a-time reflection approach
         reflected_response = None
@@ -2129,8 +2129,8 @@ def build_theory_from_results_single_theory_reflection4(query:str, results:list,
         all_responses.append(responseJSON)
         total_cost += cost
 
-        print("## Initial response:")
-        print(responseText)
+        printVerbose("## Initial response:")
+        printVerbose(responseText)
 
         # New one-theory-at-a-time reflection approach
         reflected_response = None
@@ -2776,8 +2776,8 @@ def build_theory_from_results_single_theory_reflection5_inferencetypes(query:str
         all_responses.append(responseJSON)
         total_cost += cost
 
-        print("## Initial response:")
-        print(responseText)
+        printVerbose("## Initial response:")
+        printVerbose(responseText)
 
         # New one-theory-at-a-time reflection approach
         reflected_response = None
@@ -3413,8 +3413,8 @@ def build_theory_from_results_single_theory_reflection4a_attribution(query:str, 
         all_responses.append(responseJSON)
         total_cost += cost
 
-        print("## Initial response:")
-        print(responseText)
+        printVerbose("## Initial response:")
+        printVerbose(responseText)
 
         # Save a copy of the theories after the first reflection
         theories_after_first_reflection = []
@@ -4219,8 +4219,8 @@ def build_theory_from_results_single_theory_reflection4b_attribution_batchedevid
         all_responses.append(responseJSON)
         total_cost += cost
 
-        print("## Initial response:")
-        print(responseText)
+        printVerbose("## Initial response:")
+        printVerbose(responseText)
 
         # Save a copy of the theories after the first reflection
         theories_after_first_reflection = []
@@ -5560,6 +5560,9 @@ def build_theory_from_results_single_theory_reflection4_nonsafebasin(query:str, 
         prompt += "For `supporting_evidence` and `unaccounted_for`, the list should be a list of dictionaries with keys:\n"
         prompt += "- `text`(str): Description of the evidence\n"
         prompt += "- `uuids`(list): UUIDs for provided evidence; for background_principle/inference you may leave blank\n"
+        prompt += "\n"
+        prompt += "Similarly, the `theory_statements` field is a list of dictionaries, where each dictionary has the following key:\n"
+        prompt += "- `law`(dict): A dictionary that describes a single qualitative or quantitative law, in the format described above, and specific supporting evidence that supports the development of this law.\n"
         prompt += "\n"
 
         prompt += "NOTE: Do not hallucinate. If evidence is absent, label evidence items as background_principle or inference and do not invent studies.\n"

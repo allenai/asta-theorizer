@@ -22,15 +22,15 @@ import theorizer as th
 SCHEMA = {"variables": [
     {"name": "vip_activation", "type": "float", "unit": "normalized", "inclusion_criteria": "..."},
     {"name": "baseline_rate", "type": "float", "unit": "Hz", "inclusion_criteria": "..."},
-    {"name": "gain_change", "type": "float", "unit": "ratio", "inclusion_criteria": "..."},
+    {"name": "plasticity_change", "type": "float", "unit": "ratio", "inclusion_criteria": "..."},
     {"name": "n_cells", "type": "int", "inclusion_criteria": "..."},
     {"name": "was_awake", "type": "bool", "inclusion_criteria": "..."},
-    {"name": "brain_state", "type": "categorical", "categorical_values": ["quiet", "locomotion"], "inclusion_criteria": "..."},
+    {"name": "behavioral_state", "type": "categorical", "categorical_values": ["quiet", "rewarded"], "inclusion_criteria": "..."},
 ]}
 
 
 def make_records(count:int=60):
-    # A table with a law planted in it: gain_change = 2 * vip_activation + 1
+    # A table with a law planted in it: plasticity_change = 2 * vip_activation + 1
     records = []
     for i in range(count):
         activation = i / float(count)
@@ -39,10 +39,10 @@ def make_records(count:int=60):
             "paper_title": "Paper " + str(i),
             "vip_activation": activation,
             "baseline_rate": 5.0 + (i % 7),
-            "gain_change": (2.0 * activation) + 1.0,
+            "plasticity_change": (2.0 * activation) + 1.0,
             "n_cells": 10 + i,
             "was_awake": (i % 2 == 0),
-            "brain_state": "locomotion" if (i % 2 == 0) else "quiet",
+            "behavioral_state": "rewarded" if (i % 2 == 0) else "quiet",
         })
     return records
 
@@ -81,8 +81,8 @@ def test_good_values_are_kept(directory):
         ({"type": "int"}, "42", 42),
         ({"type": "bool"}, True, True),
         ({"type": "bool"}, "false", False),
-        ({"type": "categorical", "categorical_values": ["quiet", "locomotion"]}, "quiet", "quiet"),
-        ({"type": "categorical", "categorical_values": ["quiet", "locomotion"]}, "QUIET", "quiet"),
+        ({"type": "categorical", "categorical_values": ["quiet", "rewarded"]}, "quiet", "quiet"),
+        ({"type": "categorical", "categorical_values": ["quiet", "rewarded"]}, "QUIET", "quiet"),
     ]
     for variable, given, expected in checks:
         value, reason = th.Symbolic.coerce_value(given, variable)
@@ -102,8 +102,8 @@ def test_bad_values_are_dropped_not_repaired(directory):
         ({"type": "int"}, True),
         ({"type": "bool"}, "yes"),
         ({"type": "bool"}, 1),
-        ({"type": "categorical", "categorical_values": ["quiet", "locomotion"]}, "asleep"),
-        ({"type": "categorical", "categorical_values": ["quiet", "locomotion"]}, "quiet-ish"),
+        ({"type": "categorical", "categorical_values": ["quiet", "rewarded"]}, "asleep"),
+        ({"type": "categorical", "categorical_values": ["quiet", "rewarded"]}, "quiet-ish"),
     ]
     for variable, given in checks:
         value, reason = th.Symbolic.coerce_value(given, variable)
@@ -126,7 +126,7 @@ def test_missing_values_are_missing_not_errors(directory):
 
 def test_build_table_reports_coverage_and_drops(directory):
     records = make_records(20)
-    records.append({"paper_id": "bad-1", "vip_activation": "0.5 mV", "brain_state": "asleep", "gain_change": 3.0})
+    records.append({"paper_id": "bad-1", "vip_activation": "0.5 mV", "behavioral_state": "asleep", "plasticity_change": 3.0})
 
     table = th.Symbolic.build_table(records, SCHEMA, show_progress=False)
     assert (table["num_rows"] == 21), "expected 21 rows, got " + str(table["num_rows"])
@@ -138,7 +138,7 @@ def test_build_table_reports_coverage_and_drops(directory):
 
     assert (by_name["vip_activation"]["filled"] == 20), "a good column lost values"
     assert (by_name["vip_activation"]["dropped"] == 1), "the bad float was not counted as dropped"
-    assert (by_name["brain_state"]["dropped"] == 1), "the bad category was not counted as dropped"
+    assert (by_name["behavioral_state"]["dropped"] == 1), "the bad category was not counted as dropped"
     assert (len(by_name["vip_activation"]["drop_reasons"]) > 0), "no reason was recorded for the drop"
     print("  test_build_table_reports_coverage_and_drops: OK")
 
@@ -191,7 +191,7 @@ def test_an_empty_table_raises_with_a_useful_message(directory):
 #
 
 def test_the_solver_finds_a_planted_law(directory):
-    # End to end over the real solver: gain_change = 2 * vip_activation + 1 must come back.
+    # End to end over the real solver: plasticity_change = 2 * vip_activation + 1 must come back.
     th.Project.close()
     records = make_records(60)
     result = th.Symbolic.discover_laws(records, SCHEMA, skip=th.Symbolic.SLOW_TOOLS, timeout=60, show_progress=False)
@@ -199,7 +199,7 @@ def test_the_solver_finds_a_planted_law(directory):
     found = False
     for highlight in result["highlights"]:
         text = str(highlight.get("description") or highlight.get("pattern") or highlight)
-        if ("gain_change" in text) and ("vip_activation" in text):
+        if ("plasticity_change" in text) and ("vip_activation" in text):
             found = True
 
     assert (found is True), "the solver did not recover the planted law; highlights were: " + str(result["highlights"][:3])
@@ -214,7 +214,7 @@ def test_report_to_markdown_is_readable(directory):
     markdown = th.Symbolic.report_to_markdown(result)
     assert ("# Symbolic solver report" in markdown), "the report has no heading"
     assert ("## Highlights" in markdown), "the report has no highlights section"
-    assert ("gain_change" in markdown), "the report does not mention the variables"
+    assert ("plasticity_change" in markdown), "the report does not mention the variables"
 
     # It must also accept the raw report, not just the packed dict
     also = th.Symbolic.report_to_markdown(result["report"])

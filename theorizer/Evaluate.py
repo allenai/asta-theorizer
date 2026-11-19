@@ -6,7 +6,7 @@
 #
 #   judge       LLM-as-a-judge: six 1-10 scores per law from the model's own knowledge
 #   belief      self-assessed belief: the model's probability that each law is true, sampled N times
-#   novelty     qualified novelty: each law against the papers it was built from
+#   novelty     qualified novelty: each law against every paper in the PaperStore
 
 import glob
 import json
@@ -19,6 +19,8 @@ from . import Project
 
 
 def run_dir(kind:str):
+    if (not Project.is_open()):
+        raise ValueError("Evaluate." + kind + "(): no project is open, and its working files go in <project>/evaluations/. Open one first: th.Config.init(project_dir=...)")
     path = os.path.join(Project.DIRECTORY, "evaluations", kind, time.strftime("%Y%m%d-%H%M%S"))
     os.makedirs(path, exist_ok=True)
     return path
@@ -57,7 +59,13 @@ def judge(store:dict, model_str:str=None, only_novel:bool=False, num_workers:int
     laws_path, laws = laws_file(store, only_novel, path)
     results_path = os.path.join(path, "judge.json")
     averages, counts = EvaluationLLMAsAJudge.do_llm_law_evaluation_llm_as_a_judge(filename_in=laws_path, filename_out=results_path, model_str=model_str, num_workers=num_workers)
-    packed = {"model": model_str, "num_laws": len(laws), "averages": averages, "counts": {k: v.get("count") for k, v in counts.items()}, "results_path": results_path}
+    data = {}
+    if (os.path.exists(results_path)):
+        with open(results_path) as f:
+            data = json.load(f)
+    total_cost = sum((result or {}).get("total_cost", 0.0) for result in (data.get("raw_results") or []))
+    packed = {"model": model_str, "num_laws": len(laws), "averages": averages, "counts": {k: v.get("count") for k, v in counts.items()}, "results_path": results_path,
+              "total_cost": total_cost}
     Pipeline.save_output(packed, "evaluation-judge", save_as)
     return packed
 
@@ -78,15 +86,18 @@ def belief(store:dict, model_str:str=None, only_novel:bool=False, num_samples:in
         with open(outputs[-1]) as f:
             data = json.load(f)
     packed = {"model": model_str, "num_laws": data.get("total_laws_scored", 0), "num_samples": num_samples,
-              "mean_probability_true": data.get("avg_of_avg_probability_true"), "results_path": outputs[-1] if outputs else None}
+              "mean_probability_true": data.get("avg_of_avg_probability_true"), "results_path": outputs[-1] if outputs else None,
+              "total_cost": sum((result or {}).get("total_cost", 0.0) for result in (data.get("raw_results") or []))}
     Pipeline.save_output(packed, "evaluation-belief", save_as)
     return packed
 
 
 @Pipeline.stage_llm_limits
 def novelty(store:dict, paperstore=None, model_extraction:str=None, model_decision:str=None, num_workers:int=5, limit:int=None, save_as:str=None):
-    # Qualified novelty: each law against the papers its theory was built from, on seven dimensions,
-    # each judged novel or not.  Only laws the generator itself called new or somewhat new are
+    # Qualified novelty: each law against every paper with full text in the PaperStore (the project's,
+    # unless paperstore= names another), on seven dimensions, each judged novel or not.  Every input
+    # paper counts, not only the papers its laws cite.  It is one call per paper per law, so the cost
+    # grows with the PaperStore.  Only laws the generator itself called new or somewhat new are
     # checked.  limit picks that many at random.
     import EvaluationQualifiedNovelty
     Config.ensure_initialized()
@@ -94,20 +105,15 @@ def novelty(store:dict, paperstore=None, model_extraction:str=None, model_decisi
     model_decision = model_decision or Config.DEFAULT_MODEL_PRIMARY
     if (len(store.get("theories") or {}) == 0):
         raise ValueError("Evaluate: the store holds no theories")
-    for theory in store["theories"].values():
-        # A theory registered without supporting_evidence_ids still cites its findings by uuid
-        # (e3.0 -> extraction-result-3); the papers are found through those.
-        if (not theory.get("supporting_evidence_ids")):
-            cited = set()
-            for statement in ((theory.get("components") or {}).get("theory_statements") or []):
-                law = statement.get("law") if (isinstance(statement, dict) and isinstance(statement.get("law"), dict)) else statement
-                for evidence in ((law or {}).get("supporting_evidence") or []):
-                    cited.update(str(u).split(".")[0].replace("e", "extraction-result-", 1) for u in ((evidence or {}).get("uuids") or []) if isinstance(evidence, dict))
-            theory["supporting_evidence_ids"] = sorted(cited)
-    result = EvaluationQualifiedNovelty.do_qualified_novelty_evaluation_persistence(theorystore_data=store, paperstore=(paperstore or Project.get_paper_store()),
+    paper_store = paperstore or Project.get_paper_store()
+    paper_ids = [key for key in list(paper_store.paperstore.keys()) if paper_store.get_paper_text_by_key(key)]
+    print("Evaluate.novelty(): comparing each law against all " + str(len(paper_ids)) + " paper(s) with full text in the PaperStore (one call per paper per law)", flush=True)
+    result = EvaluationQualifiedNovelty.do_qualified_novelty_evaluation_persistence(theorystore_data=store, paperstore=paper_store,
                                                                                     model_str_extraction=model_extraction, model_str_decision=model_decision,
-                                                                                    num_workers=num_workers, DEBUG_LIMIT=(limit or 0))
+                                                                                    num_workers=num_workers, DEBUG_LIMIT=(limit or 0), paper_ids=paper_ids)
     verdicts = {key: value.get("final_aggregated_novelty_evaluation") for key, value in (result["theorystore_data"].get("qualified_novelty_evaluations") or {}).items()}
+    if (len(verdicts) == 0):
+        print("Evaluate.novelty(): WARNING: no law was scored.  Only laws the generator itself rated new or somewhat new are checked; if there were some, see the errors above", flush=True)
 
     # Everything the evaluation produced goes into the project, where the HTML export finds it:
     # one file per law (the verdict and every paper's evaluation behind it), and the store with

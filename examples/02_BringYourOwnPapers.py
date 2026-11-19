@@ -3,7 +3,7 @@
 # ocr="mistral" (Mistral OCR, needs MISTRAL_API_KEY); otherwise convert them to markdown first.
 #
 # A file on disk has no title, authors or abstract, unlike a paper fetched through PaperStore.  An
-# extraction record that says only "paper-doi101016jcell201401050" does not tell you where the
+# extraction record that says only "paper-doi101234jexample201900001" does not tell you where the
 # evidence came from, so every imported paper gets metadata read out of the document, and can
 # optionally be matched against Semantic Scholar for the things a local file cannot carry.
 #

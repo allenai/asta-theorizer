@@ -6,7 +6,7 @@ Seven scripts covering the main stages. Each is runnable, small by default, and 
 |---|---|---|
 | `01_FirstRun.py` | the full flow: plan → papers → extract → theories | ~$0.45 |
 | `02_BringYourOwnPapers.py` | your own markdown/text (PDFs: `ocr="mistral"`), metadata, Semantic Scholar lookup | ~$0.003/paper |
-| `03_IteratingOnASchema.py` | pilot → variable **report** → new schemas → extract again | ~$0.35 |
+| `03_IteratingOnASchema.py` | pilot → variable **report** → extended schema → extract again | ~$0.35 |
 | `04_PickingUpLater.py` | reopening a project and continuing from disk | free |
 | `05_SymbolicLaws.py` | symbolic schema → typed table → fitted quantitative laws | ~$0.60 |
 | `06_VariableDiscovery.py` | per-paper variable **discovery** → schemas → extract | ~$0.25 |
@@ -15,6 +15,10 @@ Seven scripts covering the main stages. Each is runnable, small by default, and 
 ```bash
 python examples/01_FirstRun.py /path/to/papers
 ```
+
+`01`, `03`, `05` and `06` plan from a fixed request, *how VIP interneurons control plasticity in
+auditory cortex*, so the papers you give them must be on that topic, or the extraction finds nothing to record.
+For papers on another topic, edit `REQUEST` at the top of each script.
 
 ## Where each capability is covered
 
