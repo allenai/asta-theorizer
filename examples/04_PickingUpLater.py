@@ -50,9 +50,17 @@ def main():
     #
     #   Look at the evidence before deciding what to do with it
     #
+    # A record does not carry its paper; its uuid does.  The store made the uuid from its extraction
+    # result's id (extraction-result-3 -> e3.0, e3.1, ...), and that result holds the paper_id.  The
+    # title comes from the project's PaperStore, which fetch_papers() and import_papers() fill.
+    store = th.Project.get_theory_store()
+    paper_store = th.Project.get_paper_store()
     papers_seen = set()
     for record in records:
-        papers_seen.add(record.get("paper_title"))
+        result = store.extraction_results.get(str(record.get("uuid")).split(".")[0].replace("e", "extraction-result-", 1))
+        paper_id = getattr(result, "paper_id", None)
+        paper = paper_store.get_paper_by_key(paper_id) if (paper_id is not None) else None
+        papers_seen.add(str((paper or {}).get("title") or paper_id))
 
     print("Those records came from " + str(len(papers_seen)) + " paper(s):")
     for title in sorted(papers_seen):
@@ -68,6 +76,10 @@ def main():
     print("    query = plan['output']")
     print("    more  = th.Pipeline.generate_theories(records, query['theory_request_normalized'],")
     print("                                          objective='novelty', save_as='theories-novelty')")
+    # Theories reach theorystore.json (what reloads and the HTML export read) only through
+    # to_theorystore(), so the printed next step includes it.
+    print("    found = more['theory_response']['theories_general'] + more['theory_response']['theories_specific']")
+    print("    th.Pipeline.to_theorystore(found, query['theory_request_normalized'], model_str=more['model'], method='novelty')")
     print("")
     print("The earlier files are untouched -- new work is numbered after them, never over them.")
     return 0

@@ -28,6 +28,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import theorizer as th
 
 
+def save_to_store(result, theory_query:str, method:str):
+    # generate_theories() saves its own output file, but a theory reaches theorystore.json -- what
+    # reloads and the HTML export read -- only through to_theorystore(), which also records the model
+    # and generator that wrote it.  Call it after every generation.
+    response = result.get("theory_response") or {}
+    found = (response.get("theories_general") or []) + (response.get("theories_specific") or [])
+    th.Pipeline.to_theorystore(found, theory_query, model_str=result["model"], method=method)
+
+
 def show_theories(result, label:str):
     response = result.get("theory_response") or {}
     general = response.get("theories_general") or []
@@ -82,6 +91,7 @@ def main():
     accurate = th.Pipeline.generate_theories(records, theory_query, objective="accuracy",
                                              use_reflection=False, save_as="theories-accuracy")
     show_theories(accurate, "accuracy")
+    save_to_store(accurate, theory_query, "accuracy")
 
     #
     #   Novelty: a different generator, pushed away from the safe answer
@@ -89,6 +99,7 @@ def main():
     novel = th.Pipeline.generate_theories(records, theory_query, objective="novelty",
                                           use_reflection=False, save_as="theories-novelty")
     show_theories(novel, "novelty")
+    save_to_store(novel, theory_query, "novelty")
 
     #
     #   The same evidence, a different model, without touching the defaults
@@ -103,6 +114,7 @@ def main():
                                               model_str=OTHER_MODEL, use_reflection=False,
                                               save_as="theories-accuracy-other-model")
         show_theories(other, "accuracy on " + OTHER_MODEL)
+        save_to_store(other, theory_query, "accuracy")
 
     #
     #   Reflection

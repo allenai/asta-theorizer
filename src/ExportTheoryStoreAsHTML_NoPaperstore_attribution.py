@@ -9,6 +9,7 @@
 
 import os
 import json
+import html as html_lib
 import markdown
 
 
@@ -393,7 +394,7 @@ def format_attribution(attribution_list, results_path="../results/", uuid_to_ext
     return html
 
 
-def export_one_theory(theory, filename_out, uuid_to_extraction_id=None, predictive_accuracy_evaluations_by_statement_lut={}, qualified_novelty_evaluations_by_statement_lut={}):
+def export_one_theory(theory, filename_out, uuid_to_extraction_id=None, predictive_accuracy_evaluations_by_statement_lut={}, qualified_novelty_evaluations_by_statement_lut={}, qualified_novelty_summary_by_statement_lut={}):
     """Export a single theory to HTML"""
     theory_id = theory.get('id', 'Unknown')
     name = theory.get('name', 'Unknown')
@@ -598,9 +599,11 @@ def export_one_theory(theory, filename_out, uuid_to_extraction_id=None, predicti
                 novelty_evaluation_link = qualified_novelty_evaluations_by_statement_lut[statement]
             if novelty_evaluation_link:
                 short_name = os.path.basename(novelty_evaluation_link).replace('.html', '')
-                content += f'            <p><strong>Novelty Evaluation:</strong> <a href="../{novelty_evaluation_link}" class="evidence-link">[qualified novelty evaluation ' + str(short_name) + ']</a></p>\n'
+                summary = qualified_novelty_summary_by_statement_lut.get(statement)
+                summary_html = (" " + html_lib.escape(summary)) if summary else ""
+                content += f'            <p><strong>Novelty Evaluation:</strong>{summary_html} <a href="../{novelty_evaluation_link}" class="evidence-link">[qualified novelty evaluation ' + str(short_name) + ']</a></p>\n'
             else:
-                content += f'            <p><strong>Novelty Evaluation:</strong> <span class="empty-note">Not available (available only for a randomly selected subset of 100 laws, due to cost).</span></p>\n'
+                content += f'            <p><strong>Novelty Evaluation:</strong> <span class="empty-note">Not evaluated. Qualified novelty (theorizer.Evaluate.novelty) scores only the laws the generator rated new or somewhat new.</span></p>\n'
 
             # Add a horizontal rule between laws
             content += "            <hr/>\n"
@@ -1286,6 +1289,30 @@ def export_predictive_accuracy_evaluations(path_in:str, path_out:str):
 
 
 
+# One line per evaluated law for its theory page: how many of the seven dimensions got each degree of
+# novelty, e.g. "derivable_unstated x4, explicit_established x2, no evidence x1".
+def load_qualified_novelty_summaries(path_in:str):
+    summaries = {}
+    if (path_in is None) or (not os.path.isdir(path_in)):
+        return summaries
+    for filename in sorted(os.listdir(path_in)):
+        if (not filename.endswith(".json")):
+            continue
+        with open(os.path.join(path_in, filename), 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        statement = (data.get('theory_statement_law') or {}).get("theory_statement", "Unknown Statement")
+        verdict = data.get('final_aggregated_novelty_evaluation') or {}
+        counts = {}
+        for dim_eval in verdict.values():
+            degree = dim_eval.get('degree_of_novelty') if isinstance(dim_eval, dict) else None
+            degree = degree if degree else "no evidence"
+            counts[degree] = counts.get(degree, 0) + 1
+        order = ["genuinely_new", "derivable_unstated", "explicit_peripheral", "explicit_established", "no evidence"]
+        parts = [k + " x" + str(counts[k]) for k in sorted(counts, key=lambda k: order.index(k) if k in order else len(order))]
+        summaries[statement] = ", ".join(parts)
+    return summaries
+
+
 def export_qualified_novelty_evaluations(path_in:str, path_out:str):
     # Make the output folder
     if (not os.path.exists(path_out)):
@@ -1484,14 +1511,16 @@ def export_all(theories, extraction_schemas, extraction_results, theory_evaluati
     # Export qualified novelty evaluations
     print("Exporting qualified novelty evaluations...")
     qualified_novelty_evaluations_by_statement_lut = {}
+    qualified_novelty_summary_by_statement_lut = {}
     if (path_qualified_novelty_evals != None):
         qualified_novelty_evaluations_by_statement_lut = export_qualified_novelty_evaluations(path_qualified_novelty_evals, os.path.join(path_out, PATH_QUALNOV))
+        qualified_novelty_summary_by_statement_lut = load_qualified_novelty_summaries(path_qualified_novelty_evals)
 
     # Export theories
     print("Exporting theories...")
     for theory_id, theory in theories.items():
         filename = os.path.join(path_out, PATH_THEORIES, f"{theory_id}.html")
-        export_one_theory(theory, filename, uuid_to_extraction_id, predictive_accuracy_evaluations_by_statement_lut, qualified_novelty_evaluations_by_statement_lut)
+        export_one_theory(theory, filename, uuid_to_extraction_id, predictive_accuracy_evaluations_by_statement_lut, qualified_novelty_evaluations_by_statement_lut, qualified_novelty_summary_by_statement_lut)
     print(f"  ✓ Exported {len(theories)} theories")
 
     # Export extraction schemas

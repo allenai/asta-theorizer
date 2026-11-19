@@ -35,7 +35,7 @@ DISCOVERY = {
             {"slot_name": "circuit_regime", "slot_description": "...", "impact_rating": 6},
         ]}},
         {"paper_id": "paper-b", "paper_title": "Paper B", "proposed": {"proposed_slots": [
-            {"slot_name": "gain_measure", "slot_description": "...", "impact_rating": 8},
+            {"slot_name": "plasticity_measure", "slot_description": "...", "impact_rating": 8},
         ]}},
         # A paper whose proposal did not come back in the expected shape -- these are dropped
         {"paper_id": "paper-c", "paper_title": "Paper C", "proposed": {"something_else": "..."}},
@@ -47,12 +47,12 @@ DISCOVERY = {
 SUGGESTIONS = [
     {"suggestion_short_name": "Define sign/target of VIP modulation",
      "suggested_slots_and_extraction_instructions": [
-         {"slot_name": "vip_modulation_sign", "slot_description_and_extraction_instructions": "Extract whether VIP activation increases or decreases the response."},
+         {"slot_name": "vip_modulation_sign", "slot_description_and_extraction_instructions": "Extract whether VIP activation strengthens or weakens the plasticity."},
          {"slot_name": "vip_modulation_target", "slot_description_and_extraction_instructions": "Extract which cell type is modulated."},
      ]},
-    {"suggestion_short_name": "Formalize gain as a transform",
+    {"suggestion_short_name": "Formalize plasticity as a measure",
      "suggested_slots_and_extraction_instructions": [
-         {"slot_name": "gain_definition", "slot_description_and_extraction_instructions": "Extract how gain was defined."},
+         {"slot_name": "plasticity_definition", "slot_description_and_extraction_instructions": "Extract how plasticity was defined."},
      ]},
     {"suggestion_short_name": "Circuit regime labels",
      "suggested_slots_and_extraction_instructions": [
@@ -122,7 +122,7 @@ def test_extend_schema_appends_the_suggested_slots():
     assert (names[1] == "cell_type"), "the original schema was reordered"
 
     assert ("vip_modulation_sign" in names), "a suggested slot was not added"
-    assert ("gain_definition" in names), "a suggested slot was not added"
+    assert ("plasticity_definition" in names), "a suggested slot was not added"
     assert (len(extended) == 2 + 4), "expected 2 original + 4 added, got " + str(len(extended))
     print("  test_extend_schema_appends_the_suggested_slots: OK")
 

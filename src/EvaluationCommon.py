@@ -56,7 +56,10 @@ def convert_theorystore_to_single_laws_with_filtering(filename_theorystore:str, 
         components = theory.get("components", {})
         theory_statements = components.get("theory_statements", [])
         for statement in theory_statements:
-            law = statement
+            if ("law" in statement):
+                law = statement["law"]
+            else:
+                law = statement
             law_name = law.get("statement_name")
             theory_statement = law.get("theory_statement", "")
             domain_scope = law.get("domain_scope", "")

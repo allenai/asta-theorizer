@@ -136,7 +136,7 @@ def test_a_markdown_heading_is_the_title_without_metadata(directory):
     # with "# Title" has already said what it is called.  A file with no such heading keeps its
     # filename, and only that one counts as a filename fallback.
     with open(os.path.join(directory, "with-heading.md"), "w") as f:
-        f.write("Preprint notice\n\n# Gain Control by VIP Interneurons\n\n## Methods\n\nBody text.\n")
+        f.write("Preprint notice\n\n# Plasticity Control by VIP Interneurons\n\n## Methods\n\nBody text.\n")
     with open(os.path.join(directory, "no-heading.md"), "w") as f:
         f.write("## Only a second-level heading\n\nBody text.\n")
 
@@ -145,7 +145,7 @@ def test_a_markdown_heading_is_the_title_without_metadata(directory):
     by_file = {os.path.basename(paper["source_file"]): paper for paper in papers}
 
     titled = by_file["with-heading.md"]
-    assert (titled["title"] == "Gain Control by VIP Interneurons"), "the # heading was not used as the title: " + str(titled["title"])
+    assert (titled["title"] == "Plasticity Control by VIP Interneurons"), "the # heading was not used as the title: " + str(titled["title"])
     assert (not titled.get("title_is_filename_fallback")), "a heading title was counted as a filename fallback"
 
     untitled = by_file["no-heading.md"]

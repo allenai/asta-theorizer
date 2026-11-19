@@ -587,13 +587,12 @@ def _getLLMResponseJSONMaybeCached(promptStr:str, model:str, temperature:float=0
 
     # Dump the whole thing to a file called (prompt-debug.txt)
     # Check 'prompts' directory exists, and make it otherwise
-    if not os.path.exists(PROMPTS_DIRECTORY):
-        os.makedirs(PROMPTS_DIRECTORY)
-    print("Writing prompt to prompt-debug.txt...")
+    os.makedirs(PROMPTS_DIRECTORY, exist_ok=True)     # exist_ok: parallel first calls race to create it
     timestamp = time.strftime("%Y%m%d-%H%M%S")
     # Also add a random 4 digit number to the filename
     timestamp += "-" + str(random.randint(1000, 9999))
     filenameOut = os.path.join(PROMPTS_DIRECTORY, "prompt-debug." + timestamp + ".txt")
+    print("Writing prompt to " + filenameOut + "...")
     with open(filenameOut, "w") as f:
         f.write(promptStr)
 
@@ -889,12 +888,11 @@ def _getLLMResponseJSONWithMetadata(promptStr:str, model:str, temperature:float=
 
     # Dump the whole thing to a file called (prompt-debug.txt)
     # Check 'prompts' directory exists, and make it otherwise
-    if not os.path.exists(PROMPTS_DIRECTORY):
-        os.makedirs(PROMPTS_DIRECTORY)
-    print("Writing prompt to prompt-debug.txt...")
+    os.makedirs(PROMPTS_DIRECTORY, exist_ok=True)     # exist_ok: parallel first calls race to create it
     timestamp = time.strftime("%Y%m%d-%H%M%S")
     # Also add a random 4 digit number to the filename
     timestamp += "-" + str(random.randint(1000, 9999))
+    print("Writing prompt to " + os.path.join(PROMPTS_DIRECTORY, "prompt-debug." + timestamp + (".manual.txt" if (manualMessages != None) else ".txt")) + "...")
     if (manualMessages != None):
         filenameOut = os.path.join(PROMPTS_DIRECTORY, "prompt-debug." + timestamp + ".manual.json")
         with open(filenameOut, "w") as f:

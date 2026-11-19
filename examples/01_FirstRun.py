@@ -17,12 +17,15 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import theorizer as th
 
 
-REQUEST = "Build a theory of how VIP interneurons control gain in visual cortex"
+# The papers must be about this request, or the extraction finds nothing to record.
+# For papers on another topic, change it to a request that fits them.
+REQUEST = "Build a theory of how VIP interneurons control plasticity in auditory cortex"
 
 
 def main():
     if (len(sys.argv) < 2):
         print("Usage: python examples/01_FirstRun.py /path/to/papers")
+        print("  (papers on VIP interneurons and auditory-cortex plasticity; for other papers, edit REQUEST at the top of this file)")
         return 1
 
     papers_path = sys.argv[1]
@@ -58,7 +61,14 @@ def main():
     theories = th.Pipeline.generate_theories(records, query["theory_request_normalized"])
 
     response = theories["theory_response"] or {}
-    for theory in (response.get("theories_general") or []) + (response.get("theories_specific") or []):
+    found = (response.get("theories_general") or []) + (response.get("theories_specific") or [])
+
+    # 6. Save them to the project's theorystore.  generate_theories() saves its own output file, but a
+    #    theory reaches theorystore.json -- what reloads and the HTML export read -- only through
+    #    to_theorystore(), which also records the model and generator that wrote it.
+    th.Pipeline.to_theorystore(found, query["theory_request_normalized"], model_str=theories["model"], method="accuracy")
+
+    for theory in found:
         print("  - " + str(theory.get("theory_name")))
 
     print("")

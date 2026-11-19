@@ -24,13 +24,16 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import theorizer as th
 
 
-REQUEST = "Build a theory of how VIP interneurons control gain in visual cortex"
+# The papers must be about this request, or the extraction finds nothing to record.
+# For papers on another topic, change it to a request that fits them.
+REQUEST = "Build a theory of how VIP interneurons control plasticity in auditory cortex"
 NUM_PAPERS = 5
 
 
 def main():
     if (len(sys.argv) < 2):
         print("Usage: python examples/06_VariableDiscovery.py /path/to/papers [model]")
+        print("  (papers on VIP interneurons and auditory-cortex plasticity; for other papers, edit REQUEST at the top of this file)")
         return 1
 
     model = sys.argv[2] if (len(sys.argv) > 2) else None

@@ -25,10 +25,10 @@ def make_extraction_batch():
     # The shape extract_from_papers() produces: one entry per paper, each with its records
     return [
         {"paper_id": "paper-a", "paper_title": "Paper A", "cost": 0.01, "suggested_papers": [],
-         "records": [{"name_short": "finding one", "gain_effect": "increase"},
-                     {"name_short": "finding two", "gain_effect": "decrease"}]},
+         "records": [{"name_short": "finding one", "plasticity_effect": "increase"},
+                     {"name_short": "finding two", "plasticity_effect": "decrease"}]},
         {"paper_id": "paper-b", "paper_title": "Paper B", "cost": 0.01, "suggested_papers": [],
-         "records": [{"name_short": "finding three", "gain_effect": "no change"}]},
+         "records": [{"name_short": "finding three", "plasticity_effect": "no change"}]},
     ]
 
 
@@ -132,7 +132,7 @@ def test_theorystore_export_carries_the_evidence(directory):
               "requested_inference_type": "TRIANGULATION", "requested_output_type": None}
 
     exported = th.Pipeline.to_theorystore([theory], "a query", model_str="test-model",
-                                          extraction_schema=[{"name": "gain_effect"}], theory_store=store)
+                                          extraction_schema=[{"name": "plasticity_effect"}], theory_store=store)
 
     assert (len(exported["extraction_results"]) == 2), "the extraction results did not make it into the store"
 
@@ -178,8 +178,8 @@ def test_extract_from_papers_itself_stamps_uuids(directory):
     th.Project.close()
 
     def fake_extract(extraction_query, extraction_schema, paper_text, **kwargs):
-        return {"response": {"results": [{"name_short": "a finding", "gain_effect": "increase"},
-                                         {"name_short": "another finding", "gain_effect": "decrease"}],
+        return {"response": {"results": [{"name_short": "a finding", "plasticity_effect": "increase"},
+                                         {"name_short": "another finding", "plasticity_effect": "decrease"}],
                              "follow_on_papers": []},
                 "total_cost": 0.0}
 
@@ -189,7 +189,7 @@ def test_extract_from_papers_itself_stamps_uuids(directory):
                   {"paper_id": "paper-y", "title": "Paper Y", "markdown": "text"}]
         # A store of its own, so this asserts on this call's results rather than on whatever the
         # session store has accumulated from earlier tests in the same process.
-        packed = th.Pipeline.extract_from_papers(papers, "a query", [{"name": "gain_effect"}],
+        packed = th.Pipeline.extract_from_papers(papers, "a query", [{"name": "plasticity_effect"}],
                                                  max_workers=2, show_progress=False,
                                                  theory_store=th.Legacy.TheoryStore())
     finally:

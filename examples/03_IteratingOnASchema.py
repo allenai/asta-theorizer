@@ -18,7 +18,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import theorizer as th
 
 
-REQUEST = "Build a theory of how VIP interneurons control gain in visual cortex"
+# The papers must be about this request, or the extraction finds nothing to record.
+# For papers on another topic, change it to a request that fits them.
+REQUEST = "Build a theory of how VIP interneurons control plasticity in auditory cortex"
 PILOT_PAPERS = 2
 
 
@@ -39,6 +41,7 @@ def show_records(records:list, label:str):
 def main():
     if (len(sys.argv) < 2):
         print("Usage: python examples/03_IteratingOnASchema.py /path/to/papers")
+        print("  (papers on VIP interneurons and auditory-cortex plasticity; for other papers, edit REQUEST at the top of this file)")
         return 1
 
     model = sys.argv[2] if (len(sys.argv) > 2) else None
@@ -85,8 +88,12 @@ def main():
     for slot in extended_schema[len(query["extraction_schema"]):]:
         print("  + " + str(slot.get("name")))
 
+    # The extended schema needs its own extraction_schema_id.  Without one it defaults to "schema-1",
+    # the first round's id, and the TheoryStore files round 2's records under the first schema (the
+    # library only warns).  The id is just a unique label: any id no other extraction in this project
+    # has used.
     second = th.Pipeline.extract_from_papers(papers, query["extraction_query"], extended_schema,
-                                             save_as="extraction-pilot-v2")
+                                             extraction_schema_id="schema-2", save_as="extraction-pilot-v2")
     records_v2 = th.Pipeline.flatten_records(second, save_as="records-pilot-v2")
     show_records(records_v2, "round 2, the extended schema")
 
@@ -98,9 +105,11 @@ def main():
     print("")
     print("Happy with v2?  Run it over the whole corpus -- the same call with more papers:")
     print("")
+    # The code printed here must run as written when pasted after this script's own lines: it uses
+    # `query` and `extended_schema` from above, and keeps round 2's id, since it is the same schema.
     print("    papers = th.PaperImport.import_papers('" + str(sys.argv[1]) + "')['papers']")
-    print("    ext = th.Pipeline.extract_from_papers(papers, chosen['extraction_query'],")
-    print("                                          chosen['extraction_schema'],")
+    print("    ext = th.Pipeline.extract_from_papers(papers, query['extraction_query'],")
+    print("                                          extended_schema, extraction_schema_id='schema-2',")
     print("                                          max_workers=25, save_as='extraction-full')")
     print("")
     print("It checkpoints per paper, so a crash partway through does not lose what it already did.")

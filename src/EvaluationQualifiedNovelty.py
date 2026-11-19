@@ -1440,7 +1440,7 @@ def do_qualified_novelty_evaluation(filename_theorystore:str, filename_paperstor
     # Debug limit
     if (DEBUG_LIMIT != None) and (DEBUG_LIMIT > 0):
         theory_statements_to_evaluate_theorizer = theory_statements_to_evaluate_theorizer[:DEBUG_LIMIT]
-        print(f"DEBUG: Limiting to first {DEBUG_LIMIT} theory statements to evaluate for qualified novelty.")
+        print(f"DEBUG: Limiting to {DEBUG_LIMIT} theory statements, picked at random, to evaluate for qualified novelty.")
 
     # Perform the qualified novelty evaluation, in parallel.
     print(f"Starting qualified novelty evaluations with {num_workers} workers...")
@@ -1487,7 +1487,7 @@ def do_qualified_novelty_evaluation(filename_theorystore:str, filename_paperstor
     }
 
 # This is a main high-level control function that takes a TheoryStore (and its associated PaperStore) as input, and performs qualified novelty evaluation on all theory statements in the TheoryStore.
-def do_qualified_novelty_evaluation_persistence(theorystore_data:dict, paperstore:PaperStore, model_str_extraction:str, model_str_decision:str, num_workers:int=5, DEBUG_LIMIT:int=2):
+def do_qualified_novelty_evaluation_persistence(theorystore_data:dict, paperstore:PaperStore, model_str_extraction:str, model_str_decision:str, num_workers:int=5, DEBUG_LIMIT:int=2, paper_ids:list=None):
     # Make the output directory if it doesn't exist
     #if (not os.path.exists(path_out)):
     #    os.makedirs(path_out)
@@ -1509,6 +1509,11 @@ def do_qualified_novelty_evaluation_persistence(theorystore_data:dict, paperstor
     # Generate the look-up table mapping theory queries to paper IDs
     theory_query_to_paper_ids = generate_lut_theory_query_to_paper_ids(theories=theories, extraction_results=extraction_results)
     print(f"Generated look-up table mapping {len(theory_query_to_paper_ids)} theory queries to paper IDs.")
+    # paper_ids, when given, replaces each theory's own papers: every law is compared against all of them
+    # (theorizer's Evaluate.novelty() passes every paper with full text in the PaperStore).
+    if (paper_ids is not None):
+        theory_query_to_paper_ids = {theory_query: list(paper_ids) for theory_query in theory_query_to_paper_ids}
+        print(f"Comparing every theory statement against the {len(paper_ids)} paper IDs given.")
 
     # Load the theories that we're evaluating.
     #theory_statements_to_evaluate_theorizer = load_theory_statements_to_evaluate_from_theorystore(filename_in=filename_theorystore)
@@ -1521,7 +1526,7 @@ def do_qualified_novelty_evaluation_persistence(theorystore_data:dict, paperstor
     # Debug limit
     if (DEBUG_LIMIT != None) and (DEBUG_LIMIT > 0):
         theory_statements_to_evaluate_theorizer = theory_statements_to_evaluate_theorizer[:DEBUG_LIMIT]
-        print(f"DEBUG: Limiting to first {DEBUG_LIMIT} theory statements to evaluate for qualified novelty.")
+        print(f"DEBUG: Limiting to {DEBUG_LIMIT} theory statements, picked at random, to evaluate for qualified novelty.")
 
     # Perform the qualified novelty evaluation, in parallel.
     print(f"Starting qualified novelty evaluations with {num_workers} workers...")

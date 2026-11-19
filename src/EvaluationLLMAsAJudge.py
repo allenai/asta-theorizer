@@ -321,14 +321,16 @@ def do_llm_law_evaluation_llm_as_a_judge(filename_in:str, filename_out:str, mode
                 print("Current average evaluation scores:")
                 averages = {}
                 for dim_name, dim_data in average_results.items():
-                    averages[dim_name] = 0.0
+                    # None, not 0.0, when no law got a number for this dimension (the model answered
+                    # null for all of them): scores run 1-10, so 0.0 would read as a real, very low score.
+                    averages[dim_name] = None
                     if (dim_data["count"] > 0):
                         #avg_score = dim_data["total_score"] / dim_data["count"]
                         averages[dim_name] = dim_data["total_score"] / dim_data["count"]
                         # Round to 3 decimal places
                         averages[dim_name] = round(averages[dim_name], 3)
 
-                    print(f"  {dim_name}: {averages[dim_name]:.2f}")
+                    print(f"  {dim_name}: " + (f"{averages[dim_name]:.2f}" if (averages[dim_name] is not None) else "not scored (null for every law)"))
 
                 # Pack it
                 packed = {
